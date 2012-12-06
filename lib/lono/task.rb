@@ -2,7 +2,7 @@ module Lono
   class Task
     def self.init(options={})
       project_root = options[:project_root] || '.'
-      puts "Settin up lono project" unless options[:quiet]
+      puts "Setting up lono project" unless options[:quiet]
       %w[Guardfile config/lono.rb templates/app.json.erb].each do |name|
         source = File.expand_path("../../files/#{name}", __FILE__)
         dirname = File.dirname(name)
