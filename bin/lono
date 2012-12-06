@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require File.expand_path("../../lib/lono", __FILE__)
+Lono::CLI.start
