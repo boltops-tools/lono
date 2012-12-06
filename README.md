@@ -20,7 +20,7 @@ $ lono generate
 
 This generates the templates that have been defined in config/lono.rb.
 
-The example starter confog/lono.rb looks like this:
+The example starter config/lono.rb looks like this:
 
 ```ruby
 template "prod-api-app.json" do
