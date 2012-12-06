@@ -24,4 +24,4 @@ This generates the templates that have been defined in config/lono.rb.
 $ guard
 </pre>
 
-The initial lono it also sets up guard-lono and guard-cloudformation.  This continuously generate the cloud formation templates and continuously verify the cloud formation templates via AWS's cfn-validate-template command.
+The lono init comamnd also sets up guard-lono and guard-cloudformation.  Guard-lono continuously generates the cloud formation templates and guard-cloudformation continuously verifies that the cloud formation templates are valid via AWS's cfn-validate-template command.
