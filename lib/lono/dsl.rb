@@ -1,4 +1,5 @@
 require 'erb'
+require 'json'
 
 module Lono
   class DSL
@@ -30,7 +31,8 @@ module Lono
       @results.each do |name,json|
         path = "#{output_path}/#{name}"
         puts "  #{path}" if options[:verbose]
-        File.open(path, 'w') {|f| f.write(json) }
+        pretty_json = JSON.pretty_generate(JSON.parse(json))
+        File.open(path, 'w') {|f| f.write(pretty_json) }
       end
     end
 
