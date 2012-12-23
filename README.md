@@ -1,7 +1,7 @@
 Lono
 ===========
 
-Lono generates Cloud Formation templates based on ERB templates. 
+Lono is a Cloud Formation Template ruby generator.  Lono generates Cloud Formation templates based on ERB templates.
 
 Usage
 ------------
