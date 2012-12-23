@@ -267,14 +267,14 @@
                                 {
                                     "Ref": "AWS::StackName"
                                 }, 
-                                " > /data/etc/stack_name\n", 
+                                " > /tmp/stackname\n", 
                                 "echo \"\" >> /etc/profile.d/base.sh\n", 
                                 "'\" >> /etc/profile.d/base.sh\n", 
                                 "source /etc/profile.d/base.sh\n", 
                                 "set +e\n", 
                                 "rvm use system --default\n", 
                                 "set -e\n",
-                                "echo 'running' > /data/etc/type_of_instance\n", 
+                                "echo 'running' > /tmp/type-of-instance\n", 
                                 "cat /proc/uptime | cut -f1 -d'.' > /tmp/time-to-boot\n"
                             ]
                         ]
