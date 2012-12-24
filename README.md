@@ -69,12 +69,6 @@ end
 
 The example ERB template file is in templates/app.json.erb.
 
-<pre>
-$ guard
-</pre>
-
-The lono init comamnd also sets up guard-lono and guard-cloudformation.  Guard-lono continuously generates the cloud formation templates and guard-cloudformation continuously verifies that the cloud formation templates are valid via AWS's cfn-validate-template command.
-
 ## User Data Helper
 
 In the template files, there's user_data helper method available which can be used to include a user data script.  The user data script should be in in the templates/user_data folder of the project.  So:
@@ -95,3 +89,17 @@ Here's how you would call it in the template.
     ]
   }
 ```
+
+## Generate
+
+You can generate the CF templates by running:
+
+<pre>
+$ lono generate
+</pre>
+
+The lono init comamnd also sets up guard-lono and guard-cloudformation.  Guard-lono continuously generates the cloud formation templates and guard-cloudformation continuously verifies that the cloud formation templates are valid via AWS's cfn-validate-template command.  Just run guard.
+
+<pre>
+$ guard
+</pre>
