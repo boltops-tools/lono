@@ -1,8 +1,8 @@
-= Lono
+# Lono
 
 Lono is a Cloud Formation Template ruby generator.  Lono generates Cloud Formation templates based on ERB templates.
 
-== Usage
+## Usage
 
 <pre>
 $ gem install lono
@@ -70,7 +70,7 @@ $ guard
 
 The lono init comamnd also sets up guard-lono and guard-cloudformation.  Guard-lono continuously generates the cloud formation templates and guard-cloudformation continuously verifies that the cloud formation templates are valid via AWS's cfn-validate-template command.
 
-== User Data Helper
+## User Data Helper
 
 In the template files, there's user_data helper method available which can be used to include a user data script.  The user data script should be in in the config/lono folder of the project.  So:
 
