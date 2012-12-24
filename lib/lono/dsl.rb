@@ -45,6 +45,7 @@ module Lono
 
   class Template
     include ERB::Util
+
     def initialize(name, block, options={})
       @name = name
       @block = block
@@ -66,6 +67,12 @@ module Lono
       vars.each do |var,value|
         instance_variable_set("@#{var}", value)
       end
+    end
+
+    def user_data(path)
+      path = "#{@options[:project_root]}/config/lono/#{path}"
+      template = IO.read(path)
+      ERB.new(template).result(binding).split("\n").to_json
     end
   end
 end
