@@ -72,10 +72,10 @@ The lono init comamnd also sets up guard-lono and guard-cloudformation.  Guard-l
 
 ## User Data Helper
 
-In the template files, there's user_data helper method available which can be used to include a user data script.  The user data script should be in in the config/lono folder of the project.  So:
+In the template files, there's user_data helper method available which can be used to include a user data script.  The user data script should be in in the templates/user_data folder of the project.  So:
 
-* user_data('bootstrap.sh') corresponds to config/lono/bootstrap.sh
-* user_data('db.sh') corresponds to config/lono/db.sh
+* user_data('bootstrap.sh.erb') -> templates/user_data/bootstrap.sh.erb
+* user_data('db.sh.erb') -> templates/user_data/db.sh.erb
 
 Here's how you would call it in the template.
 
@@ -85,7 +85,7 @@ Here's how you would call it in the template.
     "Fn::Join": [
       "",
       [
-        <%= user_data('bootstrap.sh') %>
+        <%= user_data('bootstrap.sh.erb') %>
       ]
     ]
   }
