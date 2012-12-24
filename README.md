@@ -1,5 +1,10 @@
 # Lono
 
+[![Build History][2]][1]
+
+[1]: http://travis-ci.org/tongueroo/lono
+[2]: https://secure.travis-ci.org/tongueroo/lono.png?branch=master
+
 Lono is a Cloud Formation Template ruby generator.  Lono generates Cloud Formation templates based on ERB templates.
 
 ## Usage
