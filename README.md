@@ -98,7 +98,7 @@ You can generate the CF templates by running:
 $ lono generate
 </pre>
 
-The lono init comamnd also sets up guard-lono and guard-cloudformation.  Guard-lono continuously generates the cloud formation templates and guard-cloudformation continuously verifies that the cloud formation templates are valid via AWS's cfn-validate-template command.  Just run guard.
+The lono init command also sets up guard-lono.  Guard-lono continuously generates the cloud formation templates.  Just run guard.
 
 <pre>
 $ guard
