@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["tongueroo@gmail.com"]
   gem.description   = %q{Lono is a Cloud Formation Template ruby generator.  Lono generates Cloud Formation templates based on ERB templates.}
   gem.summary       = %q{Lono is a Cloud Formation Template ruby generator.  Lono generates Cloud Formation templates based on ERB templates.}
-  gem.homepage      = ""
+  gem.homepage      = "http://github.com/tongueroo/lono"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
