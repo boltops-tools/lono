@@ -72,7 +72,7 @@ module Lono
     def user_data(path)
       path = "#{@options[:project_root]}/templates/user_data/#{path}"
       template = IO.read(path)
-      ERB.new(template).result(binding).split("\n").to_json
+      ERB.new(template).result(binding).split("\n").collect {|l| "#{l}\n"}.to_json
     end
   end
 end
