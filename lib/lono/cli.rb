@@ -17,6 +17,7 @@ Examples:
 
 Builds the cloud formation templates files based on config/lono.rb and writes them to the output folder on the filesystem.
 EOL
+    method_option :clean, :type => :boolean, :aliases => "-c", :desc => "remove all output files before generating"
     def generate
       Lono::Task.generate(options.dup.merge(:verbose => true))
     end

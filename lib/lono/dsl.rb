@@ -26,6 +26,7 @@ module Lono
 
     def output(options={})
       output_path = options[:output_path] || 'output'
+      FileUtils.rm_rf(output_path) if options[:clean]
       FileUtils.mkdir(output_path) unless File.exist?(output_path)
       puts "Generating Cloud Formation templates:" if options[:verbose]
       @results.each do |name,json|
