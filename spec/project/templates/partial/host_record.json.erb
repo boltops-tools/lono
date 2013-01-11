@@ -1,0 +1,28 @@
+    "HostRecord": {
+      "Properties": {
+        "Comment": "DNS name for my stack.",
+        "HostedZoneName": "mydomain.net.",
+        "Name": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AWS::StackName"
+              },
+              ".mydomain.net"
+            ]
+          ]
+        },
+        "ResourceRecords": [
+          {
+            "Fn::GetAtt": [
+              "elb",
+              "DNSName"
+            ]
+          }
+        ],
+        "TTL": "60",
+        "Type": "CNAME"
+      },
+      "Type": "AWS::Route53::RecordSet"
+    },

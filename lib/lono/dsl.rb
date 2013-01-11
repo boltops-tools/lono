@@ -70,6 +70,12 @@ module Lono
       end
     end
 
+    def partial(path)
+      path = "#{@options[:project_root]}/templates/partial/#{path}"
+      template = IO.read(path)
+      ERB.new(template).result(binding)
+    end
+
     def user_data(path)
       path = "#{@options[:project_root]}/templates/user_data/#{path}"
       template = IO.read(path)
