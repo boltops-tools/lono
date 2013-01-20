@@ -90,7 +90,7 @@ Here's how you would call it in the template.
   }
 ```
 
-#### Breaking up config/lono.rb
+## Breaking up config/lono.rb
 
 If you have a lot of templates, the config/lono.rb file can get unwieldy long.  You can break up the lono.rb file and put template defintions in the config/lono directory.  Any file in this directory will be automatically loaded. 
 
