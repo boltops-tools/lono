@@ -12,6 +12,14 @@ module Lono
 
     def evaluate
       instance_eval(File.read(@path), @path)
+      load_subfolder
+    end
+
+    # load any templates defined in project/config/lono/*
+    def load_subfolder
+      Dir.glob("#{File.dirname(@path)}/lono/*").each do |path|
+        instance_eval(File.read(path), path)
+      end
     end
 
     def template(name, &block)
