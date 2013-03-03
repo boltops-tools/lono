@@ -1,11 +1,9 @@
-require 'erb'
-require 'json'
-
 module Lono
   class DSL
     def initialize(options={})
       @options = options
-      @path = options[:config_path] || 'config/lono.rb'
+      @options[:project_root] ||= '.'
+      @path = "#{@options[:project_root]}/config/lono.rb"
       @templates = []
       @results = {}
     end
@@ -32,14 +30,14 @@ module Lono
       end
     end
 
-    def output(options={})
-      output_path = options[:output_path] || 'output'
-      FileUtils.rm_rf(output_path) if options[:clean]
+    def output
+      output_path = "#{@options[:project_root]}/output"
+      FileUtils.rm_rf(output_path) if @options[:clean]
       FileUtils.mkdir(output_path) unless File.exist?(output_path)
-      puts "Generating Cloud Formation templates:" if options[:verbose]
+      puts "Generating Cloud Formation templates:" unless @options[:quiet]
       @results.each do |name,json|
         path = "#{output_path}/#{name}"
-        puts "  #{path}" if options[:verbose]
+        puts "  #{path}" unless @options[:quiet]
         pretty_json = JSON.pretty_generate(JSON.parse(json))
         File.open(path, 'w') {|f| f.write(pretty_json) }
       end
@@ -48,46 +46,7 @@ module Lono
     def run(options={})
       evaluate
       build
-      options.empty? ? output : output(options)
-    end
-  end
-
-  class Template
-    include ERB::Util
-
-    def initialize(name, block, options={})
-      @name = name
-      @block = block
-      @options = options
-      @options[:project_root] ||= '.'
-    end
-
-    def build
-      instance_eval(&@block)
-      template = IO.read(@source)
-      ERB.new(template).result(binding)
-    end
-
-    def source(path)
-      @source = "#{@options[:project_root]}/templates/#{path}"
-    end
-
-    def variables(vars={})
-      vars.each do |var,value|
-        instance_variable_set("@#{var}", value)
-      end
-    end
-
-    def partial(path)
-      path = "#{@options[:project_root]}/templates/partial/#{path}"
-      template = IO.read(path)
-      ERB.new(template).result(binding)
-    end
-
-    def user_data(path)
-      path = "#{@options[:project_root]}/templates/user_data/#{path}"
-      template = IO.read(path)
-      ERB.new(template).result(binding).split("\n").collect {|l| "#{l}\n"}.to_json
+      output
     end
   end
 end

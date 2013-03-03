@@ -1,11 +1,12 @@
 template "prod-api-app.json" do
+  env,app,role = name.sub('.json','').split('-')
   source "app.json.erb"
   variables(
-    :env => 'prod',
-    :app => 'api',
-    :role => "app",
+    :env => env,
+    :app => app,
+    :role => role,
     :ami => "ami-123",
-    :instance_type => "c1.xlarge",
+    :instance_type => "m1.small",
     :port => "80",
     :high_threshold => "15",
     :high_periods => "4",
@@ -18,22 +19,18 @@ template "prod-api-app.json" do
     :ssl_cert => "arn:aws:iam::12345:server-certificate/wildcard"
   )
 end
-template "prod-br-app.json" do
-  source "app.json.erb"
+
+template "prod-api-redis.json" do
+  env,app,role = name.sub('.json','').split('-')
+  source "db.json.erb"
   variables(
-    :env => "prod",
-    :app => 'br',
-    :role => "app",
+    :env => env,
+    :app => app,
+    :role => role,
     :ami => "ami-456",
-    :instance_type => "m1.medium",
+    :instance_type => "m1.small",
     :port => "80",
-    :high_threshold => "35",
-    :high_periods => "4",
-    :low_threshold => "20",
-    :low_periods => "2",
-    :max_size => "6",
-    :min_size => "3",
-    :down_adjustment => "-1",
-    :up_adjustment => "2"
+    :volume_size => "20",
+    :availability_zone => "us-east-1e"
   )
 end

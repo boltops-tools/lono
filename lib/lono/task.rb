@@ -3,19 +3,23 @@ module Lono
     def self.init(options={})
       project_root = options[:project_root] || '.'
       puts "Setting up lono project" unless options[:quiet]
-      %w[Guardfile config/lono.rb templates/app.json.erb].each do |name|
-        source = File.expand_path("../../files/#{name}", __FILE__)
-        dirname = File.dirname(name)
-        FileUtils.mkdir(dirname) unless File.exist?(dirname)
-        dest = "#{project_root}/#{name}"
+      source_root = File.expand_path("../../starter_project", __FILE__)
+      paths = Dir.glob("#{source_root}/**/*").
+                select {|p| File.file?(p) }
+      paths.each do |src|
+        dest = src.gsub(%r{.*starter_project/},'')
+        dest = "#{project_root}/#{dest}"
 
-        if File.exist?(dest)
+        if File.exist?(dest) and !options[:force]
           puts "already exists: #{dest}" unless options[:quiet]
         else
           puts "creating: #{dest}" unless options[:quiet]
-          FileUtils.cp(source, dest)
+          dirname = File.dirname(dest)
+          FileUtils.mkdir_p(dirname) unless File.exist?(dirname)
+          FileUtils.cp(src, dest)
         end
       end
+      puts "Starter lono project created"
     end
     def self.generate(options)
       new(options).generate
@@ -23,11 +27,7 @@ module Lono
 
     def initialize(options={})
       @options = options
-      if options.empty?
-        @dsl = DSL.new
-      else
-        @dsl = DSL.new(options)
-      end
+      @dsl = options.empty? ? DSL.new : DSL.new(options)
     end
     def generate
       @dsl.run(@options)
