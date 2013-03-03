@@ -11,29 +11,31 @@ Lono is a Cloud Formation Template ruby generator.  Lono generates Cloud Formati
 
 <pre>
 $ gem install lono
-$ mkdir lono_project
-$ lono init 
+$ mkdir lono
+$ cd lono
+$ lono init
 </pre>
 
-This sets up the basic lono project with an example template in source/app.json.erb.
+This sets up a starter lono project with example templates.
 
 <pre>
 $ lono generate
 </pre>
 
-This generates the templates that have been defined in config/lono.rb.
+This generates the templates that have been defined in config folder of the lono project.
 
-The example starter config/lono.rb looks like this:
+The one of starter lono config files looks like this:
 
 ```ruby
 template "prod-api-app.json" do
+  env,app,role = name.sub('.json','').split('-')
   source "app.json.erb"
   variables(
-    :env => 'prod',
-    :app => 'api',
-    :role => "app",
+    :env => env,
+    :app => app,
+    :role => role,
     :ami => "ami-123",
-    :instance_type => "c1.xlarge",
+    :instance_type => "m1.small",
     :port => "80",
     :high_threshold => "15",
     :high_periods => "4",
@@ -46,35 +48,20 @@ template "prod-api-app.json" do
     :ssl_cert => "arn:aws:iam::12345:server-certificate/wildcard"
   )
 end
-template "prod-br-app.json" do
-  source "app.json.erb"
-  variables(
-    :env => "prod",
-    :app => 'br',
-    :role => "app",
-    :ami => "ami-456",
-    :instance_type => "m1.medium",
-    :port => "80",
-    :high_threshold => "35",
-    :high_periods => "4",
-    :low_threshold => "20",
-    :low_periods => "2",
-    :max_size => "6",
-    :min_size => "3",
-    :down_adjustment => "-1",
-    :up_adjustment => "2"
-  )
-end
 ```
 
-The example ERB template file is in templates/app.json.erb.
+The corresponding ERB template example file is [here](lib/starter_project/templates/app.json.erb).
 
-## User Data Helper
+## Template helper methods
 
-In the template files, there's user_data helper method available which can be used to include a user data script.  The user data script should be in in the templates/user_data folder of the project.  So:
+There are helper methods that available in templates.
 
-* user_data('bootstrap.sh.erb') -> templates/user_data/bootstrap.sh.erb
-* user_data('db.sh.erb') -> templates/user_data/db.sh.erb
+* partial - can be use to embed other files in a template.  The partial should be placed in the templates/partial folder of the project.  So:
+  * partial('launch_config.json.erb') -> templates/partial/launch_config.json.erb
+
+* user_data - can be used to include a user data script which is written in bash script form.  The user data script should be placed in the templates/user_data folder of the project.  So:
+  * user_data('bootstrap.sh.erb') -> templates/user_data/bootstrap.sh.erb
+  * user_data('db.sh.erb') -> templates/user_data/db.sh.erb
 
 Here's how you would call it in the template.
 
@@ -83,20 +70,19 @@ Here's how you would call it in the template.
   "Fn::Base64": {
     "Fn::Join": [
       "",
-      [
-        <%= user_data('bootstrap.sh.erb') %>
-      ]
+      <%= user_data('bootstrap.sh.erb') %>
     ]
   }
 ```
 
+Within a user_data script you can call another helper method called ref.
+
+* ref - can be use to reference other parameter or resource value within the cloud formation template.  An [example](lib/starter_project/templates/user_data/db.sh.erb) is in the [starter_project](lib/starter_project).
+
 ## Breaking up config/lono.rb
 
-If you have a lot of templates, the config/lono.rb file can get unwieldy long.  You can break up the lono.rb file and put template defintions in the config/lono directory.  Any file in this directory will be automatically loaded. 
+If you have a lot of templates, the config/lono.rb file can get unwieldy long.  You can break up the lono.rb file and put template defintions in the config/lono directory.  Any file in this directory will be automatically loaded. An [example](lib/starter_project/config/lono/api.rb) is in the starter project.
 
-An example is in the spec/project folder:
-
-* config/lono/api.rb
 
 ## Generate
 
@@ -104,6 +90,7 @@ You can generate the CF templates by running:
 
 <pre>
 $ lono generate
+$ lono g -c # shortcut
 </pre>
 
 The lono init command also sets up guard-lono.  Guard-lono continuously generates the cloud formation templates.  Just run guard.

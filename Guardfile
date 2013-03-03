@@ -1,6 +1,6 @@
-# guard 'bundler' do
-#   watch('Gemfile')
-# end
+guard 'bundler' do
+  watch('Gemfile')
+end
 
 guard 'rspec' do
   watch(%r{^spec/.+_spec\.rb$})

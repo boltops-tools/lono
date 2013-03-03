@@ -1,0 +1,42 @@
+    "server": {
+      "Properties": {
+        "AvailabilityZone": "<%= @availability_zone %>",
+        "ImageId": {
+          "Ref": "Ami"
+        },
+        "InstanceType": {
+          "Ref": "InstanceType"
+        },
+        "KeyName": {
+          "Ref": "KeyName"
+        },
+        "SecurityGroups": [
+          "global",
+          {
+            "Fn::Join": [
+              "-",
+              [
+                {
+                  "Ref": "Environment"
+                },
+                {
+                  "Ref": "Application"
+                }
+              ]
+            ]
+          },
+          {
+            "Ref": "ServiceSecurityGroup"
+          }
+        ],
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "",
+              <%= user_data('db.sh.erb') %>
+            ]
+          }
+        }
+      },
+      "Type": "AWS::EC2::Instance"
+    }
