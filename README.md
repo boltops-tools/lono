@@ -79,6 +79,8 @@ Within a user_data script you can call another helper method called ref.
 
 * ref - can be use to reference other parameter or resource value within the cloud formation template.  An [example](lib/starter_project/templates/user_data/db.sh.erb) is in the [starter_project](lib/starter_project).
 
+* findinmap - can be use to call the findinmap function within the cloud formation template.  An [example](lib/starter_project/templates/user_data/db.sh.erb) is in the [starter_project](lib/starter_project).
+
 ## Breaking up config/lono.rb
 
 If you have a lot of templates, the config/lono.rb file can get unwieldy long.  You can break up the lono.rb file and put template defintions in the config/lono directory.  Any file in this directory will be automatically loaded. An [example](lib/starter_project/config/lono/api.rb) is in the starter project.
