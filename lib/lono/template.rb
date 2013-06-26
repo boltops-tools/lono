@@ -50,8 +50,8 @@ module Lono
       %Q|{"Ref"=>"#{name}"}|
     end
 
-    # http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-ref.html
-    def findinmap(*args)
+    # http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-findinmap.html
+    def find_in_map(*args)
       args.map! {|x| x =~ /=>/ ? x : x.inspect }
       %Q|{"Fn::FindInMap" => [ #{args.join(',')} ]}|
     end

@@ -79,7 +79,7 @@ Within a user_data script you can call another helper method called ref.
 
 * ref - can be use to reference other parameter or resource value within the cloud formation template.  An [example](lib/starter_project/templates/user_data/db.sh.erb) is in the [starter_project](lib/starter_project).
 
-* findinmap - can be use to call the findinmap function within the cloud formation template.  An [example](lib/starter_project/templates/user_data/db.sh.erb) is in the [starter_project](lib/starter_project).
+* find_in_map - can be use to call the find_in_map function within the cloud formation template.  An [example](lib/starter_project/templates/user_data/db.sh.erb) is in the [starter_project](lib/starter_project).
 
 ## Breaking up config/lono.rb
 
