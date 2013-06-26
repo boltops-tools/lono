@@ -48,6 +48,7 @@ describe Lono do
           "SecondLevelKey"
         ]
       })
+      user_data.should include({"Ref" => "DRINK"})
     end
 
     it "should transform bash script to CF template user_data" do

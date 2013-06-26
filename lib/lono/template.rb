@@ -61,12 +61,8 @@ module Lono
     def transform(line)
       # Fn::FindInMap transform, also takes care of nested Ref transform
       data = evaluate(line,/({"Fn::FindInMap" => \[ .* \]})/)
-
       # Ref transform
-      already_transformed = data.size > 1
-      unless already_transformed
-        data = evaluate(line,/({"Ref"=>".*?"})/)
-      end
+      data = evaluate(data,/({"Ref"=>".*?"})/)
 
       # add newline at the end
       if data[-1].is_a?(String)
@@ -76,13 +72,20 @@ module Lono
       end
     end
 
+    # Input:
+    #   String or Array
+    #   Array is result of another evaluate call
+    # Output:
     # if regex found in line, the match is eval into ruby code
     #   returns array of evaluated items
     # if regex pattern not found
     #   returns array with original line
     def evaluate(line, regex)
-      data = line.split(regex)
-      data.map {|l| l.is_a?(String) && l.match(regex) ? eval(l) : l }
+      data = [line].flatten
+      result = data.map do |item|
+        item.is_a?(String) ? item.split(regex) : item
+      end.flatten
+      result.map {|l| l.is_a?(String) && l.match(regex) ? eval(l) : l }
     end
   end
 end

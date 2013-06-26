@@ -3,6 +3,7 @@ exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 
 FINDINMAP_TEST=<%= find_in_map("MapName", "TopLevelKey", "SecondLevelKey") %>
 HOSTNAME_PREFIX=<%= find_in_map("EnvironmentMapping", "HostnamePrefix", ref("Environment")) %>
+BAR=<%= ref("DRINK") %> ; MORE=<%= find_in_map("MapName", "TopLevelKey", "SecondLevelKey") %>
 
 echo <%= ref("AWS::StackName") %> > /tmp/stack_name
 # Helper function
