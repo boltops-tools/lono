@@ -1,0 +1,369 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Api redis",
+  "Outputs": {
+    "DBHostname": {
+      "Description": "Hostname for Redis",
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "",
+            {
+              "Fn::GetAtt": [
+                "server",
+                "PublicDnsName"
+              ]
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "Parameters": {
+    "Ami": {
+      "Default": "ami-456",
+      "Description": "deploy ami",
+      "Type": "String"
+    },
+    "Application": {
+      "Default": "api",
+      "Description": "foo, bar, etc",
+      "Type": "String"
+    },
+    "Environment": {
+      "Default": "prod",
+      "Description": "stag, prod etc",
+      "Type": "String"
+    },
+    "InstanceType": {
+      "AllowedValues": [
+        "t1.micro",
+        "m1.small",
+        "m1.medium",
+        "m1.large",
+        "m1.xlarge",
+        "m2.xlarge",
+        "m2.2xlarge",
+        "m2.4xlarge",
+        "c1.medium",
+        "c1.xlarge",
+        "cc1.4xlarge",
+        "cc2.8xlarge",
+        "cg1.4xlarge"
+      ],
+      "ConstraintDescription": "must be a valid EC2 instance type.",
+      "Default": "m1.small",
+      "Description": "server EC2 instance type",
+      "Type": "String"
+    },
+    "KeyName": {
+      "AllowedPattern": "[-_ a-zA-Z0-9]*",
+      "ConstraintDescription": "can contain only alphanumeric characters, spaces, dashes and underscores.",
+      "Default": "default",
+      "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instances",
+      "MaxLength": "64",
+      "MinLength": "1",
+      "Type": "String"
+    },
+    "Role": {
+      "Default": "redis",
+      "Description": "redis, psql, app, etc",
+      "Type": "String"
+    },
+    "StackNumber": {
+      "Default": "",
+      "Description": "s1, s2, s3, etc",
+      "Type": "String"
+    },
+    "VolumeSize": {
+      "ConstraintDescription": "must be between 5 and 1024 Gb.",
+      "Default": "20",
+      "Description": "Size of Volume",
+      "MaxValue": "1024",
+      "MinValue": "5",
+      "Type": "Number"
+    }
+  },
+  "Resources": {
+    "CfnUser": {
+      "Properties": {
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": "cloudformation:DescribeStackResource",
+                  "Effect": "Allow",
+                  "Resource": "*"
+                }
+              ]
+            },
+            "PolicyName": "root"
+          }
+        ]
+      },
+      "Type": "AWS::IAM::User"
+    },
+    "DataVolume": {
+      "DeletionPolicy": "Snapshot",
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::GetAtt": [
+            "server",
+            "AvailabilityZone"
+          ]
+        },
+        "Size": {
+          "Ref": "VolumeSize"
+        },
+        "Tags": [
+          {
+            "Key": "Usage",
+            "Value": "Data Volume"
+          }
+        ]
+      },
+      "Type": "AWS::EC2::Volume"
+    },
+    "HostKeys": {
+      "Properties": {
+        "UserName": {
+          "Ref": "CfnUser"
+        }
+      },
+      "Type": "AWS::IAM::AccessKey"
+    },
+    "HostRecord": {
+      "Properties": {
+        "Comment": "DNS name for my stack.",
+        "HostedZoneName": ".mydomain.net.",
+        "Name": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AWS::StackName"
+              },
+              ".mydomain.net."
+            ]
+          ]
+        },
+        "ResourceRecords": [
+          {
+            "Fn::GetAtt": [
+              "server",
+              "PublicDnsName"
+            ]
+          }
+        ],
+        "TTL": "60",
+        "Type": "CNAME"
+      },
+      "Type": "AWS::Route53::RecordSet"
+    },
+    "MountPoint": {
+      "Properties": {
+        "Device": "/dev/sdf",
+        "InstanceId": {
+          "Ref": "server"
+        },
+        "VolumeId": {
+          "Ref": "DataVolume"
+        }
+      },
+      "Type": "AWS::EC2::VolumeAttachment"
+    },
+    "ServiceSecurityGroup": {
+      "Properties": {
+        "GroupDescription": "Enable SSH access.",
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "FromPort": "22",
+            "IpProtocol": "tcp",
+            "ToPort": "22"
+          }
+        ]
+      },
+      "Type": "AWS::EC2::SecurityGroup"
+    },
+    "WaitCondition": {
+      "DependsOn": "MountPoint",
+      "Metadata": {
+        "Comment1": "Note that the WaitCondition is dependent on the volume mount point allowing the volume to be created and attached to the EC2 instance",
+        "Comment2": "The instance bootstrap script waits for the volume to be attached to the instance prior to signalling completion."
+      },
+      "Properties": {
+        "Handle": {
+          "Ref": "WaitHandle"
+        },
+        "Timeout": "3000"
+      },
+      "Type": "AWS::CloudFormation::WaitCondition"
+    },
+    "WaitHandle": {
+      "Type": "AWS::CloudFormation::WaitConditionHandle"
+    },
+    "server": {
+      "Properties": {
+        "AvailabilityZone": "us-east-1e",
+        "ImageId": {
+          "Ref": "Ami"
+        },
+        "InstanceType": {
+          "Ref": "InstanceType"
+        },
+        "KeyName": {
+          "Ref": "KeyName"
+        },
+        "SecurityGroups": [
+          "global",
+          {
+            "Fn::Join": [
+              "-",
+              [
+                {
+                  "Ref": "Environment"
+                },
+                {
+                  "Ref": "Application"
+                }
+              ]
+            ]
+          },
+          {
+            "Ref": "ServiceSecurityGroup"
+          }
+        ],
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "",
+              [
+                "#!/bin/bash -lexv\n",
+                "exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1\n",
+                "\n",
+                "FIND_IN_MAP=",
+                {
+                  "Fn::FindInMap": [
+                    "MapName",
+                    "TopLevelKey",
+                    "SecondLevelKey"
+                  ]
+                },
+                "\n",
+                "HOSTNAME_PREFIX=",
+                {
+                  "Fn::FindInMap": [
+                    "EnvironmentMapping",
+                    "HostnamePrefix",
+                    {
+                      "Ref": "Environment"
+                    }
+                  ]
+                },
+                "\n",
+                "BAR=",
+                {
+                  "Ref": "DRINK"
+                },
+                " ; MORE=",
+                {
+                  "Fn::FindInMap": [
+                    "MapName",
+                    "TopLevelKey",
+                    "SecondLevelKey"
+                  ]
+                },
+                "\n",
+                "\n",
+                "BASE64=",
+                {
+                  "Fn::Base64": "value to encode"
+                },
+                "\n",
+                "GET_ATT=",
+                {
+                  "Fn::GetAtt": [
+                    "server",
+                    "PublicDnsName"
+                  ]
+                },
+                "\n",
+                "GET_AZS=",
+                {
+                  "Fn::GetAZs": "AWS::Region"
+                },
+                "\n",
+                "JOIN=",
+                {
+                  "Fn::Join": [
+                    ":",
+                    [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  ]
+                },
+                "\n",
+                "SELECT=",
+                {
+                  "Fn::Select": [
+                    "1",
+                    [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  ]
+                },
+                "\n",
+                "\n",
+                "echo ",
+                {
+                  "Ref": "AWS::StackName"
+                },
+                " > /tmp/stack_name\n",
+                "# Helper function\n",
+                "function error_exit\n",
+                "{\n",
+                "  /usr/local/bin/cfn-signal -e 1 -r \"$1\" '",
+                {
+                  "Ref": "WaitHandle"
+                },
+                "'\n",
+                "exit 1\n",
+                "}\n",
+                "# Wait for the EBS volume to show up\n",
+                "while [ ! -e /dev/xvdf ]; do echo Waiting for EBS volume to attach; sleep 1; done\n",
+                "/bin/mkdir /media/redis\n",
+                "/sbin/mkfs -t ext4 /dev/xvdf\n",
+                "echo \"/dev/xvdf /media/redis auto defaults 0 0\" >> /etc/fstab\n",
+                "/bin/mount /media/redis\n",
+                "/usr/bin/redis-cli shutdown\n",
+                "sleep 10\n",
+                "mv /var/lib/redis/* /media/redis/\n",
+                "rm -r /var/lib/redis\n",
+                "ln -s /media/redis /var/lib/redis\n",
+                "chown -R redis:redis /var/lib/redis\n",
+                "chown -R redis:redis /media/redis\n",
+                "/usr/bin/redis-server\n",
+                "# If all is well so signal success\n",
+                "/usr/local/bin/cfn-signal -e $? -r \"Ready to rock\" '",
+                {
+                  "Ref": "WaitHandle"
+                },
+                "'\n",
+                "cat /proc/uptime | cut -f1 -d'.' > /tmp/time-to-boot\n"
+              ]
+            ]
+          }
+        }
+      },
+      "Type": "AWS::EC2::Instance"
+    }
+  }
+}

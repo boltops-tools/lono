@@ -32,5 +32,10 @@ module Lono
     def generate
       @dsl.run(@options)
     end
+
+    def self.bashify(path)
+      @bashify = Lono::Bashify.new(:path => path)
+      @bashify.run
+    end
   end
 end

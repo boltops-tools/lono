@@ -81,6 +81,17 @@ Within a user_data script you can call another helper method called ref.
 
 * find_in_map - can be use to call the find_in_map function within the cloud formation template.  An [example](lib/starter_project/templates/user_data/db.sh.erb) is in the [starter_project](lib/starter_project).
 
+## Converting UserData scripts
+
+You can convert UserData scripts in existing Cloud Formation Templates to a starter bash script via:
+
+<pre>
+$ lono bashify cloud_formation_template.json
+$ lono bash cloud_formation_template.json # shorthand
+</pre>
+
+The convert method will generate a snippet that is meant to be copied and pasted either a bash script or a UserData property in the Cloud Formation template.
+
 ## Breaking up config/lono.rb
 
 If you have a lot of templates, the config/lono.rb file can get unwieldy long.  You can break up the lono.rb file and put template defintions in the config/lono directory.  Any file in this directory will be automatically loaded. An [example](lib/starter_project/config/lono/api.rb) is in the starter project.

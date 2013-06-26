@@ -11,6 +11,14 @@ describe Lono do
     FileUtils.rm_rf(@project)
   end
 
+  describe "bashify" do
+    it "should convert cfn user_data to bash script" do
+      path = "#{$root}/spec/fixtures/cfn.json"
+      out = execute("./bin/lono bashify #{path}")
+      out.should match /bash -lexv/
+    end
+  end
+
   describe "ruby specs" do
     before(:each) do
       @dsl = Lono::DSL.new(

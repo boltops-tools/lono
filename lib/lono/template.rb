@@ -50,7 +50,6 @@ module Lono
       %Q|{"Ref"=>"#{name}"}|
     end
 
-    # http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-findinmap.html
     def find_in_map(*args)
       args.map! {|x| x =~ /=>/ ? x : x.inspect }
       %Q|{"Fn::FindInMap" => [ #{args.join(',')} ]}|
@@ -90,7 +89,6 @@ module Lono
       data = evaluate(data,/({"Fn::Join" => \[".*?", \[ .* \]\]})/)
       data = evaluate(data,/({"Fn::Select" => \[".*?", \[ .* \]\]})/)
 
-      # add newline at the end
       if data[-1].is_a?(String)
         data[0..-2] + ["#{data[-1]}\n"] 
       else

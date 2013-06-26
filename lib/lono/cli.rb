@@ -9,7 +9,7 @@ module Lono
     method_option :project_root, :default => ".", :aliases => "-r", :desc => "project root"
     method_option :quiet, :type => :boolean, :aliases => "-q", :desc => "silence the output"
     def init
-      Lono::Task.init(options)
+      Lono::Task.init(options.clone)
     end
 
     desc "generate", "Generate the cloud formation templates"
@@ -25,7 +25,12 @@ EOL
     method_option :project_root, :default => ".", :aliases => "-r", :desc => "project root"
     method_option :quiet, :type => :boolean, :aliases => "-q", :desc => "silence the output"
     def generate
-      Lono::Task.generate(options)
+      Lono::Task.generate(options.clone)
+    end
+
+    desc "bashify [cloudformation-path]", "Convert the UserData section of an existing Cloud Formation Template to a starter bash script that is compatiable with lono"
+    def bashify(path)
+      Lono::Task.bashify(path)
     end
   end
   
