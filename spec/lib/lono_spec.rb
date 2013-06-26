@@ -34,6 +34,20 @@ describe Lono do
       user_data = json['Resources']['server']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
       user_data.should include({"Ref" => "AWS::StackName"})
       user_data.should include({"Ref" => "WaitHandle"})
+      user_data.should include({
+        "Fn::FindInMap" => [
+          "EnvironmentMapping",
+          "HostnamePrefix",
+          {"Ref" => "Environment"}
+        ]
+      })
+      user_data.should include({
+        "Fn::FindInMap" => [
+          "MapName",
+          "TopLevelKey",
+          "SecondLevelKey"
+        ]
+      })
     end
 
     it "should transform bash script to CF template user_data" do
