@@ -56,13 +56,39 @@ module Lono
       %Q|{"Fn::FindInMap" => [ #{args.join(',')} ]}|
     end
 
+    def base64(value)
+      %Q|{"Fn::Base64"=>"#{value}"}|
+    end
+
+    def get_att(*args)
+      args.map! {|x| x =~ /=>/ ? x : x.inspect }
+      %Q|{"Fn::GetAtt" => [ #{args.join(',')} ]}|
+    end
+
+    def get_azs(region="AWS::Region")
+      %Q|{"Fn::GetAZs"=>"#{region}"}|
+    end
+
+    def join(delimiter, values)
+      values.map! {|x| x =~ /=>/ ? x : x.inspect }
+      %Q|{"Fn::Join" => ["#{delimiter}", [ #{values.join(',')} ]]}|
+    end
+
+    def select(index, list)
+      list.map! {|x| x =~ /=>/ ? x : x.inspect }
+      %Q|{"Fn::Select" => ["#{index}", [ #{list.join(',')} ]]}|
+    end
+
     # transform each line of the bash script into a UserData compatiable with CF template.
     #   any {"Ref"=>"..."} string get turned into CF Hash elements
-    def transform(line)
-      # Fn::FindInMap transform, also takes care of nested Ref transform
-      data = evaluate(line,/({"Fn::FindInMap" => \[ .* \]})/)
-      # Ref transform
+    def transform(data)
+      data = evaluate(data,/({"Fn::FindInMap" => \[ .* \]})/)
       data = evaluate(data,/({"Ref"=>".*?"})/)
+      data = evaluate(data,/({"Fn::Base64"=>".*?"})/)
+      data = evaluate(data,/({"Fn::GetAtt" => \[ .* \]})/)
+      data = evaluate(data,/({"Fn::GetAZs"=>".*?"})/)
+      data = evaluate(data,/({"Fn::Join" => \[".*?", \[ .* \]\]})/)
+      data = evaluate(data,/({"Fn::Select" => \[".*?", \[ .* \]\]})/)
 
       # add newline at the end
       if data[-1].is_a?(String)
@@ -73,19 +99,22 @@ module Lono
     end
 
     # Input:
-    #   String or Array
-    #   Array is result of another evaluate call
+    #   String or Array of items (Strings or evaluated objects)
     # Output:
-    # if regex found in line, the match is eval into ruby code
-    #   returns array of evaluated items
-    # if regex pattern not found
-    #   returns array with original line
+    #   Array of items (Strings or evaluated objects)
+    #
+    # if regex found in String, then match is eval into ruby code
+    # if regex pattern not found, then original line is left alone
     def evaluate(line, regex)
-      data = [line].flatten
-      result = data.map do |item|
-        item.is_a?(String) ? item.split(regex) : item
+      items = [line].flatten
+      result = items.map do |item|
+        if item.is_a?(String)
+          data = item.split(regex)
+          data.map {|l| l.match(regex) ? eval(l) : l }
+        else
+          item
+        end
       end.flatten
-      result.map {|l| l.is_a?(String) && l.match(regex) ? eval(l) : l }
     end
   end
 end

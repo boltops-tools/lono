@@ -1,9 +1,15 @@
 #!/bin/bash -lexv
 exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 
-FINDINMAP_TEST=<%= find_in_map("MapName", "TopLevelKey", "SecondLevelKey") %>
+FIND_IN_MAP=<%= find_in_map("MapName", "TopLevelKey", "SecondLevelKey") %>
 HOSTNAME_PREFIX=<%= find_in_map("EnvironmentMapping", "HostnamePrefix", ref("Environment")) %>
 BAR=<%= ref("DRINK") %> ; MORE=<%= find_in_map("MapName", "TopLevelKey", "SecondLevelKey") %>
+
+BASE64=<%= base64("value to encode") %>
+GET_ATT=<%= get_att("server", "PublicDnsName") %>
+GET_AZS=<%= get_azs %>
+JOIN=<%= join(":", ['a','b','c']) %>
+SELECT=<%= select("1", ['a','b','c']) %>
 
 echo <%= ref("AWS::StackName") %> > /tmp/stack_name
 # Helper function

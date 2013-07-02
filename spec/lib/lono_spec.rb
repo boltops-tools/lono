@@ -49,6 +49,12 @@ describe Lono do
         ]
       })
       user_data.should include({"Ref" => "DRINK"})
+
+      user_data.should include({"Fn::Base64" => "value to encode"})
+      user_data.should include({"Fn::GetAtt" => ["server", "PublicDnsName"]})
+      user_data.should include({"Fn::GetAZs" => "AWS::Region"})
+      user_data.should include({"Fn::Join" => [ ':', ['a','b','c']]})
+      user_data.should include({"Fn::Select" => [ '1', ['a','b','c']]})
     end
 
     it "should transform bash script to CF template user_data" do
