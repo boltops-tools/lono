@@ -24,6 +24,10 @@ module Lono
       raw = open(@path).read
       json = JSON.load(raw)
       paths = user_data_paths(json)
+      if paths.empty?
+        puts "No UserData script found"
+        return
+      end
       paths.each do |path|
         puts "UserData script for #{path}:"
         key = path.sub('/','').split("/").map {|x| "['#{x}']"}.join('')
