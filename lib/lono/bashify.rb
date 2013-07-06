@@ -18,14 +18,6 @@ module Lono
       paths.select {|p| p =~ /UserData/ && p =~ /Fn::Join/ }
     end
 
-    def find_user_data
-      raw = IO.read(@path)
-      json = JSON.load(raw)
-
-      user_data = json['Resources']['server']['Properties']['UserData']['Fn::Base64']['Fn::Join']
-      @delimiter, @data = user_data
-    end
-
     def run
       raw = IO.read(@path)
       json = JSON.load(raw)
