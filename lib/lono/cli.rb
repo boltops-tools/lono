@@ -32,6 +32,11 @@ EOL
     def bashify(path)
       Lono::Task.bashify(path)
     end
-  end
-  
+
+    desc "version", "Prints version"
+    def version
+      puts Lono::VERSION
+    end
+
+  end  
 end
