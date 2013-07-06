@@ -84,6 +84,7 @@ You can convert UserData scripts in existing Cloud Formation Templates to a star
 <pre>
 $ lono bashify cloud_formation_template.json
 $ lono bash cloud_formation_template.json # shorthand
+$ lono b https://s3.amazonaws.com/cloudformation-templates-us-east-1/LAMP_Single_Instance.template # shorthand and url
 </pre>
 
 This is useful if you want to take an existing [Cloud Formation Template example](http://aws.amazon.com/cloudformation/aws-cloudformation-templates/) and quicklly change the UserData section into a bash script. The bashify command will generate a snippet that is meant to be copied and pasted into a bash script and used with user_data helper method.  The bash script should work right off the bat as lono will transform the generated Cloud Formation object references to json objects, there's no need to manually change what is generated to the helper methods, though you can if you prefer the look of the helper methods.

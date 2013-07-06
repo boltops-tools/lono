@@ -1,3 +1,5 @@
+require 'open-uri'
+
 module Lono
   class Bashify
     def initialize(options={})
@@ -19,7 +21,7 @@ module Lono
     end
 
     def run
-      raw = IO.read(@path)
+      raw = open(@path).read
       json = JSON.load(raw)
       paths = user_data_paths(json)
       paths.each do |path|
