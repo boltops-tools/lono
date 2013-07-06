@@ -22,9 +22,9 @@ This sets up a starter lono project with example templates.
 $ lono generate
 </pre>
 
-This generates the templates that have been defined in config folder of the lono project.
+This generates the templates that have been defined in the config folder of the lono project.
 
-The one of starter lono config files looks like this:
+The starter lono template project config files looks like [this](lib/starter_project/config/lono.rb) and [this](lib/starter_project/config/lono/api.rb).  Here's a snippet from one of the config files with the template call:
 
 ```ruby
 template "prod-api-app.json" do
@@ -54,7 +54,7 @@ The corresponding ERB template example file is [here](lib/starter_project/templa
 
 ## Template helper methods
 
-There are helper methods that available in templates.
+There are helper methods that are available in templates.
 
 * partial - can be use to embed other files in a template.  The partial should be placed in the templates/partial folder of the project.  So:
   * partial('launch_config.json.erb') -> templates/partial/launch_config.json.erb
@@ -75,11 +75,7 @@ Here's how you would call it in the template.
   }
 ```
 
-Within a user_data script you can call another helper method called ref.
-
-* ref - can be use to reference other parameter or resource value within the cloud formation template.  An [example](lib/starter_project/templates/user_data/db.sh.erb) is in the [starter_project](lib/starter_project).
-
-* find_in_map - can be use to call the find_in_map function within the cloud formation template.  An [example](lib/starter_project/templates/user_data/db.sh.erb) is in the [starter_project](lib/starter_project).
+Within a user_data script you can user helper methods that correspond to Cloud Formation [Instrinic Functions](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/concept-intrinsic-functions.html).  Currently, base64, find_in_map, get_att, get_azs, join, and ref are supported.  Examples of their usage are found in the starter [project template](https://github.com/tongueroo/lono/blob/master/lib/starter_project/templates/user_data/db.sh.erb)
 
 ## Converting UserData scripts
 
@@ -90,7 +86,7 @@ $ lono bashify cloud_formation_template.json
 $ lono bash cloud_formation_template.json # shorthand
 </pre>
 
-The convert method will generate a snippet that is meant to be copied and pasted either a bash script or a UserData property in the Cloud Formation template.
+This is useful if you want to take an existing [Cloud Formation Template example](http://aws.amazon.com/cloudformation/aws-cloudformation-templates/) and quicklly change the UserData section into a bash script. The bashify command will generate a snippet that is meant to be copied and pasted into a bash script and used with user_data helper method.  The bash script should work right off the bat as lono will transform the generated Cloud Formation object references to json objects, there's no need to manually change what is generated to the helper methods, though you can if you prefer the look of the helper methods.
 
 ## Breaking up config/lono.rb
 
