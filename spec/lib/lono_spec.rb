@@ -19,6 +19,47 @@ describe Lono do
     end
   end
 
+  describe "parsing" do
+    it "should transform bash script into json array with cloud formation objects" do
+      block = Proc.new { }
+      template = Lono::Template.new("foo", block)
+
+      line = '0{2345}7'
+      template.bracket_positions(line).should == [[1,6]]
+      line = '0{2}4{6}' # more than one bracket
+      template.bracket_positions(line).should == [[1,3],[5,7]]
+      line = '0{2}4{6{8}0}2' # nested brackets
+      template.bracket_positions(line).should == [[1,3],[5,11]]
+
+      line = '0{2=>5}7'
+      template.parse_positions(line).should == [1,7]
+      line = '0{2=>5}4{6=>{8=>9}}2' # nested brackets
+      template.parse_positions(line).should == [1, 7, 8, 19]
+      line = '0{2=>5}4{' # nested brackets
+      template.parse_positions(line).should == [1, 7]
+
+      line = '{'
+      template.decompose(line).should == ['{']
+
+      line = 'a{"foo"=>"bar"}h'
+      template.decompose(line).should == ['a','{"foo"=>"bar"}','h']
+      line = 'a{"foo"=>"bar"}c{"dog"=>{"cat"=>"mouse"}}e' # nested brackets
+      template.decompose(line).should == ['a','{"foo"=>"bar"}','c','{"dog"=>{"cat"=>"mouse"}}','e']
+
+      line = 'test{"hello"=>"world"}me' # nested brackets
+      decomposition = template.decompose(line)
+      result = template.recompose(decomposition)
+      result.should == ["test", {"hello" => "world"}, "me"]
+
+      line = 'test{"hello"=>"world"}me'
+      template.transform(line).should == ["test", {"hello" => "world"}, "me\n"]
+      line = '{"hello"=>"world"}'
+      template.transform(line).should == [{"hello" => "world"}, "\n"]
+      line = '{'
+      template.transform(line).should == ["{\n"]
+    end
+  end
+
   describe "ruby specs" do
     before(:each) do
       @dsl = Lono::DSL.new(
@@ -76,6 +117,14 @@ describe Lono do
       line = 'echo {"Ref"=>"AWS::StackName"} > /tmp/stack_name'
       data = template.transform(line)
       data.should == ["echo ", {"Ref"=>"AWS::StackName"}, " > /tmp/stack_name\n"]
+
+      line = 'echo {"Fn::FindInMap" => [ "A", "B", {"Ref"=>"AWS::StackName"} ]}'
+      data = template.transform(line)
+      data.should == ["echo ", {"Fn::FindInMap" => ["A", "B", {"Ref"=>"AWS::StackName"}]}, "\n"]
+
+      line = 'echo {"Fn::FindInMap" => [ "A", "B", {"Ref"=>"AWS::StackName"} ]} > /tmp/stack_name ; {"Ref"=>"Ami"}'
+      data = template.transform(line)
+      data.should == ["echo ", {"Fn::FindInMap" => ["A", "B", {"Ref"=>"AWS::StackName"}]}, " > /tmp/stack_name ; ", {"Ref"=>"Ami"}, "\n"]
     end
 
     it "task should generate cloud formation templates" do

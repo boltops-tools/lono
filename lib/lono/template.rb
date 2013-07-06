@@ -39,8 +39,7 @@ module Lono
       template = IO.read(path)
       result = ERB.new(template).result(binding)
       output = []
-      lines = result.split("\n")
-      lines.each do |line|
+      result.split("\n").each do |line|
         output += transform(line)
       end
       output.to_json
@@ -51,8 +50,7 @@ module Lono
     end
 
     def find_in_map(*args)
-      args.map! {|x| x =~ /=>/ ? x : x.inspect }
-      %Q|{"Fn::FindInMap" => [ #{args.join(',')} ]}|
+      %Q|{"Fn::FindInMap" => [ #{transform_array(args)} ]}|
     end
 
     def base64(value)
@@ -60,8 +58,7 @@ module Lono
     end
 
     def get_att(*args)
-      args.map! {|x| x =~ /=>/ ? x : x.inspect }
-      %Q|{"Fn::GetAtt" => [ #{args.join(',')} ]}|
+      %Q|{"Fn::GetAtt" => [ #{transform_array(args)} ]}|
     end
 
     def get_azs(region="AWS::Region")
@@ -69,26 +66,21 @@ module Lono
     end
 
     def join(delimiter, values)
-      values.map! {|x| x =~ /=>/ ? x : x.inspect }
-      %Q|{"Fn::Join" => ["#{delimiter}", [ #{values.join(',')} ]]}|
+      %Q|{"Fn::Join" => ["#{delimiter}", [ #{transform_array(values)} ]]}|
     end
 
     def select(index, list)
-      list.map! {|x| x =~ /=>/ ? x : x.inspect }
-      %Q|{"Fn::Select" => ["#{index}", [ #{list.join(',')} ]]}|
+      %Q|{"Fn::Select" => ["#{index}", [ #{transform_array(list)} ]]}|
     end
 
-    # transform each line of the bash script into a UserData compatiable with CF template.
-    #   any {"Ref"=>"..."} string get turned into CF Hash elements
-    def transform(data)
-      data = evaluate(data,/({"Fn::FindInMap" => \[ .* \]})/)
-      data = evaluate(data,/({"Ref"=>".*?"})/)
-      data = evaluate(data,/({"Fn::Base64"=>".*?"})/)
-      data = evaluate(data,/({"Fn::GetAtt" => \[ .* \]})/)
-      data = evaluate(data,/({"Fn::GetAZs"=>".*?"})/)
-      data = evaluate(data,/({"Fn::Join" => \[".*?", \[ .* \]\]})/)
-      data = evaluate(data,/({"Fn::Select" => \[".*?", \[ .* \]\]})/)
+    def transform_array(arr)
+      arr.map! {|x| x =~ /=>/ ? x : x.inspect }
+      arr.join(',')
+    end
 
+    # transform each line of bash script to array with cloud formation template objects
+    def transform(data)
+      data = evaluate(data)
       if data[-1].is_a?(String)
         data[0..-2] + ["#{data[-1]}\n"] 
       else
@@ -97,22 +89,84 @@ module Lono
     end
 
     # Input:
-    #   String or Array of items (Strings or evaluated objects)
+    #   String
     # Output:
-    #   Array of items (Strings or evaluated objects)
+    #   Array of parse positions
     #
-    # if regex found in String, then match is eval into ruby code
-    # if regex pattern not found, then original line is left alone
-    def evaluate(line, regex)
-      items = [line].flatten
-      result = items.map do |item|
-        if item.is_a?(String)
-          data = item.split(regex)
-          data.map {|l| l.match(regex) ? eval(l) : l }
-        else
-          item
+    # The positions indicate when the brackets start and close.  
+    # Handles nested brackets.
+    def bracket_positions(line)
+      positions,pair,count = [],[],0
+      line.split('').each_with_index do |char,i|
+        if char == '{'
+          count += 1
+          pair << i if count == 1
+          next
         end
-      end.flatten
+
+        if char == '}'
+          count -= 1
+          if count == 0
+            pair << i
+            positions << pair
+            pair = []
+          end
+        end
+      end
+      positions
+    end
+
+    # Input:
+    #   Array - bracket_positions
+    # Ouput:
+    #   Array - positions that can be use to determine what to parse
+    def parse_positions(line)
+      positions = bracket_positions(line)
+      # add 1 to the element in the position pair to make parsing easier in decompose
+      positions.map {|pair| [pair[0],pair[1]+1]}.flatten
+    end
+
+    # Input
+    #   String line of code to decompose into chunks, some can be transformed into objects
+    # Output
+    #   Array of strings, some can be transformed into objects
+    #
+    # Example:
+    # line = 'a{b}c{d{d}d}e' # nested brackets
+    # template.decompose(line).should == ['a','{b}','c','{d{d}d}','e']
+    def decompose(line)
+      positions = parse_positions(line)
+      return [line] if positions.empty?
+
+      result = []
+      str = ''
+      last_index = line.size - 1
+      parse_position = positions.shift
+
+      line.split('').each_with_index do |char,current_i|
+        # the current item's creation will end when
+        #   the next item's index is reached
+        #   or the end of the line is reached
+        str << char
+        next_i = current_i + 1
+        end_of_item = next_i == parse_position
+        end_of_line = current_i == last_index
+        if end_of_item or end_of_line
+          parse_position = positions.shift
+          result << str
+          str = ''
+        end
+      end
+
+      result
+    end
+
+    def recompose(decomposition)
+      decomposition.map { |s| (s =~ /^{/ && s =~ /=>/) ? eval(s) : s }
+    end
+
+    def evaluate(line)
+      recompose(decompose(line))
     end
   end
 end
