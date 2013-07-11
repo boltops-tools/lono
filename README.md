@@ -22,7 +22,7 @@ This sets up a starter lono project with example templates.
 $ lono generate
 </pre>
 
-This generates the templates that have been defined in the config folder of the lono project.
+This generates the templates that have been defined in the config folder of the lono project to the output folder.
 
 The starter lono template project config files looks like [this](lib/starter_project/config/lono.rb) and [this](lib/starter_project/config/lono/api.rb).  Here's a snippet from one of the config files with the template call:
 
@@ -70,12 +70,102 @@ Here's how you would call it in the template.
   "Fn::Base64": {
     "Fn::Join": [
       "",
-      <%= user_data('bootstrap.sh.erb') %>
+      <%= user_data('db.sh.erb') %>
     ]
   }
 ```
 
-Within a user_data script you can user helper methods that correspond to Cloud Formation [Instrinic Functions](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/concept-intrinsic-functions.html).  Currently, base64, find_in_map, get_att, get_azs, join, and ref are supported.  Examples of their usage are found in the starter [project template](https://github.com/tongueroo/lono/blob/master/lib/starter_project/templates/user_data/db.sh.erb)
+Within the user_data script you can use helper methods that correspond to Cloud Formation [Instrinic Functions](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/concept-intrinsic-functions.html).  Currently, base64, find_in_map, get_att, get_azs, join, and ref are supported.  Here's a short example of a user_data script using a helper method:
+
+If you have a templates/user_data/db.sh.erb that looks like this:
+
+```bash
+#!/bin/bash -lexv
+
+HOSTNAME_PREFIX=<%= find_in_map("EnvironmentMapping", "HostnamePrefix", ref("Environment")) %>
+
+echo <%= ref("AWS::StackName") %> > /tmp/stack_name
+# Helper function
+function error_exit
+{
+  /usr/local/bin/cfn-signal -e 1 -r "$1" '<%= ref("WaitHandle") %>'
+exit 1
+}
+# Wait for the EBS volume to show up
+while [ ! -e /dev/xvdf ]; do echo Waiting for EBS volume to attach; sleep 1; done
+/bin/mkdir /media/redis
+/sbin/mkfs -t ext4 /dev/xvdf
+echo "/dev/xvdf /media/redis auto defaults 0 0" >> /etc/fstab
+/bin/mount /media/redis
+/usr/bin/redis-cli shutdown
+sleep 10
+mv /var/lib/redis/* /media/redis/
+rm -r /var/lib/redis
+ln -s /media/redis /var/lib/redis
+chown -R redis:redis /var/lib/redis
+chown -R redis:redis /media/redis
+/usr/bin/redis-server
+# If all is well so signal success
+/usr/local/bin/cfn-signal -e $? -r "Ready to rock" '<%= ref("WaitHandle") %>'
+```
+
+The user_data helper will transform the bash script into a json array of elements for Cloud Formation:
+
+```json
+[
+  "#!/bin/bash -lexv\n",
+  "\n",
+  "HOSTNAME_PREFIX=",
+  {
+    "Fn::FindInMap": [
+      "EnvironmentMapping",
+      "HostnamePrefix",
+      {
+        "Ref": "Environment"
+      }
+    ]
+  },
+  "\n",
+  "\n",
+  "echo ",
+  {
+    "Ref": "AWS::StackName"
+  },
+  " > /tmp/stack_name\n",
+  "# Helper function\n",
+  "function error_exit\n",
+  "{\n",
+  "  /usr/local/bin/cfn-signal -e 1 -r \"$1\" '",
+  {
+    "Ref": "WaitHandle"
+  },
+  "'\n",
+  "exit 1\n",
+  "}\n",
+  "# Wait for the EBS volume to show up\n",
+  "while [ ! -e /dev/xvdf ]; do echo Waiting for EBS volume to attach; sleep 1; done\n",
+  "/bin/mkdir /media/redis\n",
+  "/sbin/mkfs -t ext4 /dev/xvdf\n",
+  "echo \"/dev/xvdf /media/redis auto defaults 0 0\" >> /etc/fstab\n",
+  "/bin/mount /media/redis\n",
+  "/usr/bin/redis-cli shutdown\n",
+  "sleep 10\n",
+  "mv /var/lib/redis/* /media/redis/\n",
+  "rm -r /var/lib/redis\n",
+  "ln -s /media/redis /var/lib/redis\n",
+  "chown -R redis:redis /var/lib/redis\n",
+  "chown -R redis:redis /media/redis\n",
+  "/usr/bin/redis-server\n",
+  "# If all is well so signal success\n",
+  "/usr/local/bin/cfn-signal -e $? -r \"Ready to rock\" '",
+  {
+    "Ref": "WaitHandle"
+  },
+  "'\n"
+]
+```
+
+More examples of user_data and instrinic function helper method usage are found in the starter [project template](https://github.com/tongueroo/lono/blob/master/lib/starter_project/templates/user_data/db.sh.erb)
 
 ## Converting UserData scripts
 
