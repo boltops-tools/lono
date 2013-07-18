@@ -76,6 +76,12 @@ describe Lono do
       json['Mappings']['AWSRegionArch2AMI']['us-east-1']['64'].should == 'ami-123'
     end
 
+    it "should make trailing options pass to the partial helper available as instance variables" do
+      raw = IO.read("#{@project}/output/prod-api-app.json")
+      json = JSON.load(raw)
+      json['Resources']['HostRecord']['Properties']['Comment'].should == 'DNS name for mydomain.com'
+    end
+
     it "should generate db template" do
       raw = IO.read("#{@project}/output/prod-api-redis.json")
       json = JSON.load(raw)

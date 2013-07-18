@@ -1,6 +1,6 @@
     "HostRecord": {
       "Properties": {
-        "Comment": "DNS name for my stack.",
+        "Comment": "DNS name for <%= @domain %>",
         "HostedZoneName": ".mydomain.net.",
         "Name": {
           "Fn::Join": [
@@ -9,7 +9,7 @@
               {
                 "Ref": "AWS::StackName"
               },
-              ".mydomain.net"
+              ".<%= @domain %>"
             ]
           ]
         },

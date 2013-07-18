@@ -28,19 +28,22 @@ module Lono
       end
     end
 
-    def partial(path)
+    def partial(path,vars={})
       path = "#{@options[:project_root]}/templates/partial/#{path}"
       template = IO.read(path)
+      variables(vars)
       ERB.new(template).result(binding)
     end
 
-    def user_data(path)
-      path = "#{@options[:project_root]}/templates/user_data/#{path}"
-      template = IO.read(path)
-      result = ERB.new(template).result(binding)
+    def user_data(*paths)
       output = []
-      result.split("\n").each do |line|
-        output += transform(line)
+      paths.each do |path|
+        path = "#{@options[:project_root]}/templates/user_data/#{path}"
+        template = IO.read(path)
+        result = ERB.new(template).result(binding)
+        result.split("\n").each do |line|
+          output += transform(line)
+        end
       end
       output.to_json
     end
