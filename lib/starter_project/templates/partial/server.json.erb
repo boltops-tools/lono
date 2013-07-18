@@ -33,7 +33,7 @@
           "Fn::Base64": {
             "Fn::Join": [
               "",
-              <%= user_data('db.sh.erb') %>
+              <%= user_data('db.sh.erb', 'db2.sh.erb') %>
             ]
           }
         }

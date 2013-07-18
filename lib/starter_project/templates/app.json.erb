@@ -178,7 +178,7 @@
       },
       "Type": "AWS::CloudWatch::Alarm"
     },
-    <%= partial("host_record.json.erb") %>
+    <%= partial("host_record.json.erb", :domain => "mydomain.com") %>
     "LaunchConfig": {
       "Properties": {
         "BlockDeviceMappings": [
