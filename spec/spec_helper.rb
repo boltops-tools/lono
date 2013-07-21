@@ -7,6 +7,9 @@ $root = File.expand_path('../../', __FILE__)
 
 require "#{$root}/lib/lono"
 
+require 'coveralls'
+Coveralls.wear!
+
 module Helpers
   def execute(cmd)
     puts "Running: #{cmd}" if ENV['DEBUG']

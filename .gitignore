@@ -1,6 +1,7 @@
 .DS_Store
 *.gem
 .bundle
+coverage
 Gemfile.lock
 pkg
 tmp
