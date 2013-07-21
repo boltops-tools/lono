@@ -149,6 +149,14 @@ describe Lono do
       data.should == ["echo ", {"Fn::FindInMap" => ["A", "B", {"Ref"=>"AWS::StackName"}]}, " > /tmp/stack_name ; ", {"Ref"=>"Ami"}, "\n"]
     end
 
+    it "should not transform user_data ruby scripts" do
+      raw = IO.read("#{@project}/output/prod-api-worker.json")
+      json = JSON.load(raw)
+      user_data = json['Resources']['LaunchConfig']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
+      user_data.should include(%Q|ec2.tags.create(ec2.instances[my_instance_id], "Name", {:value => Facter.hostname})\n|)
+      user_data.should include(%Q{find_all{ |record_set| record_set[:name] == record_name }\n})
+    end
+
     it "task should generate cloud formation templates" do
       Lono::Task.generate(
         :project_root => @project,

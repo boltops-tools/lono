@@ -20,6 +20,29 @@ template "prod-api-app.json" do
   )
 end
 
+template "prod-api-worker.json" do
+  env,app,role = name.sub('.json','').split('-')
+  source "app.json.erb"
+  variables(
+    :env => env,
+    :app => app,
+    :role => role,
+    :ami => "ami-123",
+    :instance_type => "m1.small",
+    :port => "80",
+    :high_threshold => "15",
+    :high_periods => "4",
+    :low_threshold => "5",
+    :low_periods => "10",
+    :max_size => "24",
+    :min_size => "6",
+    :down_adjustment => "-3",
+    :up_adjustment => "3",
+    :user_data_script => "ruby_script.rb.erb",
+    :ssl_cert => "arn:aws:iam::12345:server-certificate/wildcard"
+  )
+end
+
 template "prod-api-redis.json" do
   env,app,role = name.sub('.json','').split('-')
   source "db.json.erb"

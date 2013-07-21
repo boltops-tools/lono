@@ -233,7 +233,8 @@
           "Fn::Base64": {
             "Fn::Join": [
               "",
-              <%= user_data('app.sh.erb') %>
+              <% script = @user_data_script || 'app.sh.erb' %>
+              <%= user_data(script) %>
             ]
           }
         }
