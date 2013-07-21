@@ -96,26 +96,45 @@ module Lono
     # Output:
     #   Array of parse positions
     #
-    # The positions indicate when the brackets start and close.  
-    # Handles nested brackets.
+    # The positions of tokens taking into account when brackets start and close, 
+    # handles nested brackets.
     def bracket_positions(line)
       positions,pair,count = [],[],0
-      line.split('').each_with_index do |char,i|
-        if char == '{'
-          count += 1
-          pair << i if count == 1
-          next
-        end
 
-        if char == '}'
-          count -= 1
-          if count == 0
+      line.split('').each_with_index do |char,i|
+        pair << i if pair.empty?
+
+        first_pair_char = line[pair[0]]  
+        if first_pair_char == '{' # object logic
+          if char == '{'
+            count += 1
+          end
+
+          if char == '}'
+            count -= 1
+            if count == 0
+              pair << i
+              positions << pair
+              pair = []
+            end
+          end
+        else # string logic
+          lookahead = line[i+1]
+          if lookahead == '{'
             pair << i
             positions << pair
             pair = []
           end
         end
+      end # end of loop
+
+      # for string logic when lookahead does not contain a object token
+      # need to clear out what's left to match the final pair
+      if !pair.empty?
+        pair << line.size - 1
+        positions << pair
       end
+
       positions
     end
 
@@ -125,8 +144,7 @@ module Lono
     #   Array - positions that can be use to determine what to parse
     def parse_positions(line)
       positions = bracket_positions(line)
-      # add 1 to the element in the position pair to make parsing easier in decompose
-      positions.map {|pair| [pair[0],pair[1]+1]}.flatten
+      positions.flatten
     end
 
     # Input
@@ -143,29 +161,46 @@ module Lono
 
       result = []
       str = ''
-      last_index = line.size - 1
-      parse_position = positions.shift
-
-      line.split('').each_with_index do |char,current_i|
-        # the current item's creation will end when
-        #   the next item's index is reached
-        #   or the end of the line is reached
-        str << char
-        next_i = current_i + 1
-        end_of_item = next_i == parse_position
-        end_of_line = current_i == last_index
-        if end_of_item or end_of_line
-          parse_position = positions.shift
-          result << str
-          str = ''
+      until positions.empty?
+        left = positions.shift
+        right = positions.shift
+        token = line[left..right]
+        # if cfn object, add to the result set but after clearing out
+        # the temp str that is being built up when the token is just a string
+        if cfn_object?(token)
+          unless str.empty? # first token might be a object
+            result << str
+            str = ''
+          end
+          result << token
+        else
+          str << token # keeps building up the string
         end
       end
+
+      # at the of the loop there's a leftover string, unless the last token
+      # is an object
+      result << str unless str.empty?
 
       result
     end
 
+    def cfn_object?(s)
+      whitelist = %w[
+        Ref
+        Fn::FindInMap
+        Fn::Base64
+        Fn::GetAtt
+        Fn::GetAZs
+        Fn::Join
+        Fn::Select
+      ]
+      whitelisted = !!whitelist.detect {|word| s.include?(word)}
+      whitelisted && s =~ /^{/ && s =~ /=>/
+    end
+
     def recompose(decomposition)
-      decomposition.map { |s| (s =~ /^{/ && s =~ /=>/) ? eval(s) : s }
+      decomposition.map { |s| cfn_object?(s) ? eval(s) : s }
     end
 
     def evaluate(line)

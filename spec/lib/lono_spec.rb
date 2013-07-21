@@ -25,38 +25,54 @@ describe Lono do
       template = Lono::Template.new("foo", block)
 
       line = '0{2345}7'
-      template.bracket_positions(line).should == [[1,6]]
+      template.bracket_positions(line).should == [[0,0],[1,6],[7,7]]
       line = '0{2}4{6}' # more than one bracket
-      template.bracket_positions(line).should == [[1,3],[5,7]]
+      template.bracket_positions(line).should == [[0,0],[1,3],[4,4],[5,7]]
       line = '0{2}4{6{8}0}2' # nested brackets
-      template.bracket_positions(line).should == [[1,3],[5,11]]
-
-      line = '0{2=>5}7'
-      template.parse_positions(line).should == [1,7]
-      line = '0{2=>5}4{6=>{8=>9}}2' # nested brackets
-      template.parse_positions(line).should == [1, 7, 8, 19]
-      line = '0{2=>5}4{' # nested brackets
-      template.parse_positions(line).should == [1, 7]
+      template.bracket_positions(line).should == [[0,0],[1,3],[4,4],[5,11],[12,12]]
 
       line = '{'
       template.decompose(line).should == ['{']
 
-      line = 'a{"foo"=>"bar"}h'
-      template.decompose(line).should == ['a','{"foo"=>"bar"}','h']
-      line = 'a{"foo"=>"bar"}c{"dog"=>{"cat"=>"mouse"}}e' # nested brackets
-      template.decompose(line).should == ['a','{"foo"=>"bar"}','c','{"dog"=>{"cat"=>"mouse"}}','e']
+      ##########################
+      line = '1{"Ref"=>"A"}{"Ref"=>"B"}'
+      template.decompose(line).should == ['1','{"Ref"=>"A"}','{"Ref"=>"B"}']
 
-      line = 'test{"hello"=>"world"}me' # nested brackets
+      line = '{"Ref"=>"A"}{"Ref"=>"B"}2'
+      template.decompose(line).should == ['{"Ref"=>"A"}','{"Ref"=>"B"}','2']
+
+      line = '1{"Ref"=>"A"}{"Ref"=>"B"}2'
+      template.decompose(line).should == ['1','{"Ref"=>"A"}','{"Ref"=>"B"}','2']
+
+      line = '{"Ref"=>"A"}{"Ref"=>"B"}'
+      template.decompose(line).should == ['{"Ref"=>"A"}','{"Ref"=>"B"}']
+
+      line = 'Ref{"Ref"=>"B"}'
+      template.decompose(line).should == ['Ref','{"Ref"=>"B"}']
+      ##############################
+
+      # only allow whitelist
+      line = 'a{b}{"foo"=>"bar"}h'
+      template.decompose(line).should == ['a{b}{"foo"=>"bar"}h']
+
+      line = 'a{b}{"Ref"=>"bar"}h'
+      template.decompose(line).should == ['a{b}','{"Ref"=>"bar"}','h']
+      line = 'a{"Ref"=>"bar"}c{"Ref"=>{"cat"=>"mouse"}}e' # nested brackets
+      template.decompose(line).should == ['a','{"Ref"=>"bar"}','c','{"Ref"=>{"cat"=>"mouse"}}','e']
+
+      line = 'test{"Ref"=>"world"}me' # nested brackets
       decomposition = template.decompose(line)
       result = template.recompose(decomposition)
-      result.should == ["test", {"hello" => "world"}, "me"]
+      result.should == ["test", {"Ref" => "world"}, "me"]
 
-      line = 'test{"hello"=>"world"}me'
-      template.transform(line).should == ["test", {"hello" => "world"}, "me\n"]
-      line = '{"hello"=>"world"}'
-      template.transform(line).should == [{"hello" => "world"}, "\n"]
+      line = 'test{"Ref"=>"world"}me'
+      template.transform(line).should == ["test", {"Ref" => "world"}, "me\n"]
+      line = '{"Ref"=>"world"}'
+      template.transform(line).should == [{"Ref" => "world"}, "\n"]
       line = '{'
       template.transform(line).should == ["{\n"]
+      line = 'Ref{"Ref"=>"B"}'
+      template.transform(line).should == ['Ref',{"Ref"=>"B"}, "\n"]
     end
   end
 
