@@ -11,6 +11,8 @@ GET_AZS=<%= get_azs %>
 JOIN=<%= join(":", ['a','b','c']) %>
 SELECT=<%= select("1", ['a','b','c']) %>
 
+VARTEST=<%= @vartest %>
+
 echo <%= ref("AWS::StackName") %> > /tmp/stack_name
 # Helper function
 function error_exit
