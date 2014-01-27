@@ -44,7 +44,9 @@ module Lono
       result.split("\n").each do |line|
         output += transform(line)
       end
-      output.to_json
+      json = output.to_json
+      json[0] = '' # remove first char: [
+      json.chop!   # remove last char:  ]
     end
 
     def ref(name)

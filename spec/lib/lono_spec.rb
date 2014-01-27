@@ -106,6 +106,14 @@ describe Lono do
       user_data.should include("VARTEST=foo\n")
     end
 
+    it "should include multiple user_data scripts" do
+      raw = IO.read("#{@project}/output/prod-api-redis.json")
+      json = JSON.load(raw)
+      json['Description'].should == "Api redis"
+      user_data = json['Resources']['server']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
+      user_data.should include("DB2=test\n")
+    end
+
     it "should generate db template" do
       raw = IO.read("#{@project}/output/prod-api-redis.json")
       json = JSON.load(raw)
