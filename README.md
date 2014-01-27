@@ -78,7 +78,9 @@ Here's how you would call it in the template.
   "Fn::Base64": {
     "Fn::Join": [
       "",
-      <%= user_data('db.sh.erb') %>
+      [
+        <%= user_data('db.sh.erb') %>
+      ]
     ]
   }
 ```
