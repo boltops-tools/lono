@@ -69,7 +69,7 @@ There are helper methods that are available in templates.
 * user_data - can be used to include a user data script which is written in bash script form.  The user data script should be placed in the templates/user_data folder of the project.  So:
   * user_data('bootstrap.sh.erb') -> templates/user_data/bootstrap.sh.erb
   * user_data('db.sh.erb') -> templates/user_data/db.sh.erb
-  * user_data('script1.sh.erb', 'script2.sh.erb') - multiple files can be used to build the user_data script, script1 and script2 will be combined
+  * user_data('script1.sh.erb', :foo => "bar", :hello => "world") - variables can be passed to the partial helper method and will be available to the partial as instance variables.  So, in this case @foo and @hello will be available in script1.sh.erb.
 
 Here's how you would call it in the template.
 

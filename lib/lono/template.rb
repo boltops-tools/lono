@@ -35,15 +35,14 @@ module Lono
       ERB.new(template).result(binding)
     end
 
-    def user_data(*paths)
+    def user_data(path, vars={})
+      path = "#{@options[:project_root]}/templates/user_data/#{path}"
+      template = IO.read(path)
+      variables(vars)
+      result = ERB.new(template).result(binding)
       output = []
-      paths.each do |path|
-        path = "#{@options[:project_root]}/templates/user_data/#{path}"
-        template = IO.read(path)
-        result = ERB.new(template).result(binding)
-        result.split("\n").each do |line|
-          output += transform(line)
-        end
+      result.split("\n").each do |line|
+        output += transform(line)
       end
       output.to_json
     end
@@ -186,17 +185,11 @@ module Lono
     end
 
     def cfn_object?(s)
-      whitelist = %w[
-        Ref
-        Fn::FindInMap
-        Fn::Base64
-        Fn::GetAtt
-        Fn::GetAZs
-        Fn::Join
-        Fn::Select
-      ]
-      whitelisted = !!whitelist.detect {|word| s.include?(word)}
-      whitelisted && s =~ /^{/ && s =~ /=>/
+      exact = %w[Ref]
+      pattern = %w[Fn::]
+      exact_match = !!exact.detect {|word| s.include?(word)}
+      pattern_match = !!pattern.detect {|p| s =~ Regexp.new(p)}
+      (exact_match || pattern_match) && s =~ /^{/ && s =~ /=>/
     end
 
     def recompose(decomposition)
