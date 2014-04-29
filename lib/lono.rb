@@ -1,5 +1,6 @@
 require 'json'
 require 'pp'
+require 'colorize'
 
 $:.unshift File.dirname(__FILE__)
 require 'ext/hash'

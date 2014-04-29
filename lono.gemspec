@@ -23,6 +23,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rb-fsevent'
   gem.add_dependency "guard-cloudformation"
   gem.add_dependency "guard-lono"
+  gem.add_dependency "colorize"
 
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'guard-rspec'

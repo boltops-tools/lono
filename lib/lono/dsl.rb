@@ -38,8 +38,26 @@ module Lono
       @results.each do |name,json|
         path = "#{output_path}/#{name}"
         puts "  #{path}" unless @options[:quiet]
-        pretty_json = JSON.pretty_generate(JSON.parse(json))
-        File.open(path, 'w') {|f| f.write(pretty_json) }
+        validate(json, path)
+        File.open(path, 'w') {|f| f.write(output_json(json)) }
+      end
+    end
+
+    def validate(json, path)
+      begin
+        JSON.parse(json)
+      rescue JSON::ParserError => e
+        puts "Invalid json.  Output written to #{path} for debugging".colorize(:red)
+        File.open(path, 'w') {|f| f.write(json) }
+        exit 1
+      end
+    end
+
+    def output_json(json)
+      if @options[:no_pretty]
+        json
+      else
+        JSON.pretty_generate(JSON.parse(json))
       end
     end
 
