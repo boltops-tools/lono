@@ -1,14 +1,19 @@
 module Lono
-  class Task
-    def self.init(options={})
-      project_root = options[:project_root] || '.'
+  class New
+    attr_reader :options
+    def initialize(options)
+      @options = options
+      @project_root = options[:project_root] || '.'
+    end
+
+    def run
       puts "Setting up lono project" unless options[:quiet]
       source_root = File.expand_path("../../starter_project", __FILE__)
       paths = Dir.glob("#{source_root}/**/*").
                 select {|p| File.file?(p) }
       paths.each do |src|
         dest = src.gsub(%r{.*starter_project/},'')
-        dest = "#{project_root}/#{dest}"
+        dest = "#{@project_root}/#{dest}"
 
         if File.exist?(dest) and !options[:force]
           puts "already exists: #{dest}" unless options[:quiet]
@@ -20,22 +25,6 @@ module Lono
         end
       end
       puts "Starter lono project created"
-    end
-    def self.generate(options)
-      new(options).generate
-    end
-
-    def initialize(options={})
-      @options = options
-      @dsl = options.empty? ? DSL.new : DSL.new(options)
-    end
-    def generate
-      @dsl.run(@options)
-    end
-
-    def self.bashify(path)
-      @bashify = Lono::Bashify.new(:path => path)
-      @bashify.run
     end
   end
 end

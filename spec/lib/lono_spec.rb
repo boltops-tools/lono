@@ -2,13 +2,16 @@ require File.expand_path("../../spec_helper", __FILE__)
 
 describe Lono do
   before(:each) do
-    @project = File.expand_path("../../project", __FILE__)
-    FileUtils.mkdir(@project) unless File.exist?(@project)
-    execute("./bin/lono init -f -q --project-root #{@project}")
+    lono_bin = File.expand_path("../../../bin/lono", __FILE__)
+    @project = File.expand_path("../../../tmp/lono_project", __FILE__)
+    dir = File.dirname(@project)
+    name = File.basename(@project)
+    FileUtils.mkdir(dir) unless File.exist?(dir)
+    execute("cd #{dir} && #{lono_bin} new #{name} -f -q ")
   end
 
   after(:each) do
-    FileUtils.rm_rf(@project)
+    FileUtils.rm_rf(@project) unless ENV['LEAVE_TMP_PROJECT']
   end
 
   describe "bashify" do
@@ -174,10 +177,10 @@ describe Lono do
     end
 
     it "task should generate cloud formation templates" do
-      Lono::Task.generate(
+      Lono::DSL.new(
         :project_root => @project,
         :quiet => true
-      )
+      ).run
       raw = IO.read("#{@project}/output/prod-api-app.json")
       json = JSON.load(raw)
       json['Description'].should == "Api Stack"

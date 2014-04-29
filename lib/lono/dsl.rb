@@ -54,7 +54,7 @@ module Lono
     end
 
     def output_json(json)
-      @options[:no_pretty] ? json : JSON.pretty_generate(JSON.parse(json))
+      @options[:pretty] ? JSON.pretty_generate(JSON.parse(json)) : json
     end
 
     def run(options={})
