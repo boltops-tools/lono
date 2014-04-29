@@ -1,10 +1,6 @@
 template "prod-api-app.json" do
-  env,app,role = name.sub('.json','').split('-')
   source "app.json.erb"
   variables(
-    :env => env,
-    :app => app,
-    :role => role,
     :ami => "ami-123",
     :instance_type => "m1.small",
     :port => "80",
@@ -21,12 +17,8 @@ template "prod-api-app.json" do
 end
 
 template "prod-api-worker.json" do
-  env,app,role = name.sub('.json','').split('-')
   source "app.json.erb"
   variables(
-    :env => env,
-    :app => app,
-    :role => role,
     :ami => "ami-123",
     :instance_type => "m1.small",
     :port => "80",
@@ -44,12 +36,8 @@ template "prod-api-worker.json" do
 end
 
 template "prod-api-redis.json" do
-  env,app,role = name.sub('.json','').split('-')
   source "db.json.erb"
   variables(
-    :env => env,
-    :app => app,
-    :role => role,
     :ami => "ami-456",
     :instance_type => "m1.small",
     :port => "80",
