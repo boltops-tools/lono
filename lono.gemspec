@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "lono"
   gem.require_paths = ["lib"]
   gem.version       = Lono::VERSION
+  gem.license       = 'MIT'
 
   gem.add_dependency "rake"
   gem.add_dependency "json"
@@ -23,6 +24,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rb-fsevent'
   gem.add_dependency "guard-cloudformation"
   gem.add_dependency "guard-lono"
+  gem.add_dependency "colorize"
 
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'guard-rspec'

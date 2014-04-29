@@ -1,36 +1,31 @@
 require 'thor'
+require 'lono/cli/help'
 
 module Lono
   class CLI < Thor
 
-    desc "init", "Setup lono starter project"
-    long_desc "Sets up config/lono.rb"
-    method_option :force, :type => :boolean, :aliases => "-f", :desc => "override existing starter files"
-    method_option :project_root, :default => ".", :aliases => "-r", :desc => "project root"
-    method_option :quiet, :type => :boolean, :aliases => "-q", :desc => "silence the output"
-    def init
-      Lono::Task.init(options.clone)
+    desc "new [NAME]", "Generates lono starter project"
+    Help.new_long_desc
+    option :force, :type => :boolean, :aliases => "-f", :desc => "override existing starter files"
+    option :quiet, :type => :boolean, :aliases => "-q", :desc => "silence the output"
+    def new(project_root)
+      Lono::New.new(options.clone.merge(:project_root => project_root)).run
     end
 
     desc "generate", "Generate the cloud formation templates"
-    long_desc <<EOL
-Examples:
-
-1. lono generate
-2. lono g -c # shortcut
-
-Builds the cloud formation templates files based on config/lono.rb and writes them to the output folder on the filesystem.
-EOL
-    method_option :clean, :type => :boolean, :aliases => "-c", :desc => "remove all output files before generating"
-    method_option :project_root, :default => ".", :aliases => "-r", :desc => "project root"
-    method_option :quiet, :type => :boolean, :aliases => "-q", :desc => "silence the output"
+    Help.generate
+    option :clean, :type => :boolean, :aliases => "-c", :desc => "remove all output files before generating"
+    option :project_root, :default => ".", :aliases => "-r", :desc => "project root"
+    option :quiet, :type => :boolean, :aliases => "-q", :desc => "silence the output"
+    option :pretty, :type => :boolean, :defautlt => true, :desc => "do not json prettier the output"
     def generate
-      Lono::Task.generate(options.clone)
+      Lono::DSL.new(options.clone).run
     end
 
-    desc "bashify [cloudformation-path]", "Convert the UserData section of an existing Cloud Formation Template to a starter bash script that is compatiable with lono"
+    desc "bashify [URL-OR-PATH]", "Convert the UserData section of an existing Cloud Formation Template to a starter bash script that is compatiable with lono"
+    Help.bashify
     def bashify(path)
-      Lono::Task.bashify(path)
+      Lono::Bashify.new(:path => path).run
     end
 
     desc "version", "Prints version"

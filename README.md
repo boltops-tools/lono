@@ -16,10 +16,7 @@ Lono is a Cloud Formation Template ruby generator.  Lono generates Cloud Formati
 ## Usage
 
 <pre>
-$ gem install lono
-$ mkdir lono
-$ cd lono
-$ lono init
+$ lono new lono
 </pre>
 
 This sets up a starter lono project with example templates.
