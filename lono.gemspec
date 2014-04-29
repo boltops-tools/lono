@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "lono"
   gem.require_paths = ["lib"]
   gem.version       = Lono::VERSION
+  gem.license       = 'MIT'
 
   gem.add_dependency "rake"
   gem.add_dependency "json"
