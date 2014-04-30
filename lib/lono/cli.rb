@@ -17,7 +17,7 @@ module Lono
     option :clean, :type => :boolean, :aliases => "-c", :desc => "remove all output files before generating"
     option :project_root, :default => ".", :aliases => "-r", :desc => "project root"
     option :quiet, :type => :boolean, :aliases => "-q", :desc => "silence the output"
-    option :pretty, :type => :boolean, :defautlt => true, :desc => "do not json prettier the output"
+    option :pretty, :type => :boolean, :default => true, :desc => "json pretty the output"
     def generate
       Lono::DSL.new(options.clone).run
     end
