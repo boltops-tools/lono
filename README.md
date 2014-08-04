@@ -8,7 +8,7 @@
 
 [1]: http://travis-ci.org/tongueroo/lono
 [2]: https://secure.travis-ci.org/tongueroo/lono.png?branch=master
-[3]: https://codeclimate.com/repos/51d7f1407e00a4042c010ab4/badges/5273fe6cdb5a13e58554/gpa.png)
+[3]: https://codeclimate.com/repos/51d7f1407e00a4042c010ab4/badges/5273fe6cdb5a13e58554/gpa.png
 [4]: https://codeclimate.com/repos/51d7f1407e00a4042c010ab4/feed
 
 Lono is a Cloud Formation Template ruby generator.  Lono generates Cloud Formation templates based on ERB templates.
