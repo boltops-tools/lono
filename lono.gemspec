@@ -19,7 +19,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency "rake"
   gem.add_dependency "json"
   gem.add_dependency "thor"
-  gem.add_dependency "aws-sdk"
   gem.add_dependency 'guard'
   gem.add_dependency 'rb-fsevent'
   gem.add_dependency "guard-cloudformation"
