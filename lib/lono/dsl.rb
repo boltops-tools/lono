@@ -15,7 +15,7 @@ module Lono
 
     # load any templates defined in project/config/lono/*
     def load_subfolder
-      Dir.glob("#{File.dirname(@path)}/lono/*").each do |path|
+      Dir.glob("#{File.dirname(@path)}/lono/**/*").select{ |e| File.file? e }.each do |path|
         instance_eval(File.read(path), path)
       end
     end
