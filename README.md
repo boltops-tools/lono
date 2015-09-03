@@ -1,5 +1,6 @@
 # Lono
 
+[![ReadmeCI](http://www.readmeci.com/assets/readmeci-badge-71d13f10714510d6534285156a30963bb0a914a2c83737b16ec99e5e708ee658.svg)](http://www.readmeci.com/docs/tongueroo/readmeci-ruby-demo/branch/master/frames.html)
 [![Gem Version](https://badge.fury.io/rb/lono.png)](http://badge.fury.io/rb/lono)
 [![Build History][2]][1]
 [![Code Climate][3]][4]
