@@ -18,7 +18,7 @@ $ lono generate
 
 $ lono g -c # shortcut
 
-Builds the cloud formation templates files based on lono project and writes them to the output folder on the filesystem.
+Builds the cloudformation templates files based on lono project and writes them to the output folder on the filesystem.
 EOL
     end
 

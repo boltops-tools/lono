@@ -4,8 +4,8 @@ require File.expand_path('../lib/lono/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Tung Nguyen"]
   gem.email         = ["tongueroo@gmail.com"]
-  gem.description   = %q{Lono is a Cloud Formation Template ruby generator.  Lono generates Cloud Formation templates based on ERB templates.}
-  gem.summary       = %q{Lono is a Cloud Formation Template ruby generator.  Lono generates Cloud Formation templates based on ERB templates.}
+  gem.description   = %q{Lono is a CloudFormation Template ruby generator.  Lono generates CloudFormation templates based on ERB templates.}
+  gem.summary       = %q{Lono is a CloudFormation Template ruby generator.  Lono generates CloudFormation templates based on ERB templates.}
   gem.homepage      = "http://github.com/tongueroo/lono"
 
   gem.files         = `git ls-files`.split($\)

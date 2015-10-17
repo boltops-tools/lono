@@ -12,7 +12,7 @@
 [3]: https://codeclimate.com/repos/51d7f1407e00a4042c010ab4/badges/5273fe6cdb5a13e58554/gpa.png
 [4]: https://codeclimate.com/repos/51d7f1407e00a4042c010ab4/feed
 
-Lono is a Cloud Formation Template ruby generator.  Lono generates Cloud Formation templates based on ERB templates.
+Lono is a CloudFormation Template ruby generator.  Lono generates CloudFormation templates based on ERB templates.
 
 ## Usage
 
@@ -83,7 +83,7 @@ Here's how you would call it in the template.
   }
 ```
 
-Within the user_data script you can use helper methods that correspond to Cloud Formation [Instrinic Functions](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/concept-intrinsic-functions.html).  Currently, base64, find_in_map, get_att, get_azs, join, and ref are supported.  Here's a short example of a user_data script using a helper method:
+Within the user_data script you can use helper methods that correspond to CloudFormation [Instrinic Functions](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/concept-intrinsic-functions.html).  Currently, base64, find_in_map, get_att, get_azs, join, and ref are supported.  Here's a short example of a user_data script using a helper method:
 
 If you have a templates/user_data/db.sh.erb that looks like this:
 
@@ -117,7 +117,7 @@ chown -R redis:redis /media/redis
 /usr/local/bin/cfn-signal -e $? -r "Ready to rock" '<%= ref("WaitHandle") %>'
 ```
 
-The user_data helper will transform the bash script into a json array of elements for Cloud Formation:
+The user_data helper will transform the bash script into a json array of elements for CloudFormation:
 
 ```json
 [
@@ -177,7 +177,7 @@ More examples of user_data and instrinic function helper method usage are found 
 
 ## Converting UserData scripts
 
-You can convert UserData scripts in existing Cloud Formation Templates to a starter bash script via:
+You can convert UserData scripts in existing CloudFormation Templates to a starter bash script via:
 
 <pre>
 $ lono bashify cloud_formation_template.json
@@ -185,7 +185,7 @@ $ lono bash cloud_formation_template.json # shorthand
 $ lono b https://s3.amazonaws.com/cloudformation-templates-us-east-1/LAMP_Single_Instance.template # shorthand and url
 </pre>
 
-This is useful if you want to take an existing [Cloud Formation Template example](http://aws.amazon.com/cloudformation/aws-cloudformation-templates/) and quicklly change the UserData section into a bash script. The bashify command will generate a snippet that is meant to be copied and pasted into a bash script and used with user_data helper method.  The bash script should work right off the bat as lono will transform the generated Cloud Formation object references to json objects, there's no need to manually change what is generated to the helper methods, though you can if you prefer the look of the helper methods.
+This is useful if you want to take an existing [CloudFormation Template example](http://aws.amazon.com/cloudformation/aws-cloudformation-templates/) and quicklly change the UserData section into a bash script. The bashify command will generate a snippet that is meant to be copied and pasted into a bash script and used with user_data helper method.  The bash script should work right off the bat as lono will transform the generated CloudFormation object references to json objects, there's no need to manually change what is generated to the helper methods, though you can if you prefer the look of the helper methods.
 
 ## Breaking up config/lono.rb
 
@@ -201,7 +201,7 @@ $ lono generate
 $ lono g -c # shortcut
 </pre>
 
-The lono init command also sets up guard-lono.  Guard-lono continuously generates the cloud formation templates.  Just run guard.
+The lono init command also sets up guard-lono.  Guard-lono continuously generates the cloudformation templates.  Just run guard.
 
 <pre>
 $ guard
