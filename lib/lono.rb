@@ -1,6 +1,7 @@
 require 'json'
 require 'pp'
 require 'colorize'
+require 'fileutils'
 
 $:.unshift File.dirname(__FILE__)
 require 'lono/version'

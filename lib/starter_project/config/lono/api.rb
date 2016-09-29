@@ -45,3 +45,14 @@ template "prod-api-redis.json" do
     availability_zone: "us-east-1e"
   )
 end
+
+template "parent/db-stack.json" do
+  source "db.json.erb"
+  variables(
+    ami: "ami-456",
+    instance_type: "m1.small",
+    port: "80",
+    volume_size: "20",
+    availability_zone: "us-east-1e"
+  )
+end

@@ -11,7 +11,7 @@ describe Lono do
   end
 
   after(:each) do
-    FileUtils.rm_rf(@project) unless ENV['LEAVE_TMP_PROJECT']
+    FileUtils.rm_rf(@project) unless ENV['KEEP_TMP_PROJECT']
   end
 
   describe "bashify" do
@@ -174,6 +174,11 @@ describe Lono do
       user_data = json['Resources']['LaunchConfig']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
       user_data.should include(%Q|ec2.tags.create(ec2.instances[my_instance_id], "Name", {value: Facter.hostname})\n|)
       user_data.should include(%Q{find_all{ |record_set| record_set[:name] == record_name }\n})
+    end
+
+    it "should create parent folders for parent/db-stack.json" do
+      directory_created = File.exist?("#{@project}/output/parent")
+      expect(directory_created).to be true
     end
 
     it "task should generate cloud formation templates" do

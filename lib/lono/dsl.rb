@@ -39,7 +39,10 @@ module Lono
         path = "#{output_path}/#{name}"
         puts "  #{path}" unless @options[:quiet]
         validate(json, path)
-        File.open(path, 'w') {|f| f.write(output_json(json)) }
+        ensure_parent_dir(path)
+        File.open(path, 'w') do |f|
+          f.write(output_json(json))
+        end
       end
     end
 
@@ -55,6 +58,11 @@ module Lono
 
     def output_json(json)
       @options[:pretty] ? JSON.pretty_generate(JSON.parse(json)) : json
+    end
+
+    def ensure_parent_dir(path)
+      dir = File.dirname(path)
+      FileUtils.mkdir_p(dir) unless File.exist?(dir)
     end
 
     def run(options={})
