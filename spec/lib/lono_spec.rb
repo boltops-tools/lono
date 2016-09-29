@@ -23,7 +23,7 @@ describe Lono do
   end
 
   describe "parsing" do
-    it "should transform bash script into json array with cloud formation objects" do
+    it "should transform bash script into json array with cloudformation objects" do
       block = Proc.new { }
       template = Lono::Template.new("foo", block)
 
@@ -88,7 +88,7 @@ describe Lono do
       dsl.run
     end
 
-    it "should generate cloud formation template" do
+    it "should generate cloudformation template" do
       raw = IO.read("#{@project}/output/prod-api-app.json")
       json = JSON.load(raw)
       expect(json['Description']).to eq "Api Stack"
@@ -181,7 +181,7 @@ describe Lono do
       expect(directory_created).to be true
     end
 
-    it "task should generate cloud formation templates" do
+    it "task should generate CloudFormation templates" do
       raw = IO.read("#{@project}/output/prod-api-app.json")
       json = JSON.load(raw)
       expect(json['Description']).to eq "Api Stack"
@@ -192,7 +192,7 @@ describe Lono do
   describe "cli specs" do
     it "should generate templates" do
       out = execute("./bin/lono generate -c --project-root #{@project}")
-      expect(out).to match /Generating Cloud Formation templates/
+      expect(out).to match /Generating CloudFormation templates/
     end
   end
 end

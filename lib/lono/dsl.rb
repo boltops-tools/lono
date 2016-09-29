@@ -34,7 +34,7 @@ module Lono
       output_path = "#{@options[:project_root]}/output"
       FileUtils.rm_rf(output_path) if @options[:clean]
       FileUtils.mkdir(output_path) unless File.exist?(output_path)
-      puts "Generating Cloud Formation templates:" unless @options[:quiet]
+      puts "Generating CloudFormation templates:" unless @options[:quiet]
       @results.each do |name,json|
         path = "#{output_path}/#{name}"
         puts "  #{path}" unless @options[:quiet]

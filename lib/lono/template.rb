@@ -82,7 +82,7 @@ module Lono
       arr.join(',')
     end
 
-    # transform each line of bash script to array with cloud formation template objects
+    # transform each line of bash script to array with cloudformation template objects
     def transform(data)
       data = evaluate(data)
       if data[-1].is_a?(String)
