@@ -206,3 +206,11 @@ The lono init command also sets up guard-lono.  Guard-lono continuously generate
 <pre>
 $ guard
 </pre>
+
+## Extras
+
+There are some helper lono gems also useful for working with CloudFormation:
+
+* [lono-cfn](https://github.com/tongueroo/lono-cfn) - Wrapper cfn tool to quickly create CloudFormation stacks from lono templates and params files.
+* [lono-params](https://github.com/tongueroo/lono-params) - Tool to generate a CloudFormation params json formatted file from a simplier env like file.
+
