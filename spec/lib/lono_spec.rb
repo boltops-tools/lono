@@ -18,7 +18,7 @@ describe Lono do
     it "should convert cfn user_data to bash script" do
       path = "#{$root}/spec/fixtures/cfn.json"
       out = execute("./bin/lono bashify #{path}")
-      out.should match /bash -lexv/
+      expect(out).to match /bash -lexv/
     end
   end
 
@@ -28,123 +28,123 @@ describe Lono do
       template = Lono::Template.new("foo", block)
 
       line = '0{2345}7'
-      template.bracket_positions(line).should == [[0,0],[1,6],[7,7]]
+      expect(template.bracket_positions(line)).to eq [[0,0],[1,6],[7,7]]
       line = '0{2}4{6}' # more than one bracket
-      template.bracket_positions(line).should == [[0,0],[1,3],[4,4],[5,7]]
+      expect(template.bracket_positions(line)).to eq [[0,0],[1,3],[4,4],[5,7]]
       line = '0{2}4{6{8}0}2' # nested brackets
-      template.bracket_positions(line).should == [[0,0],[1,3],[4,4],[5,11],[12,12]]
+      expect(template.bracket_positions(line)).to eq [[0,0],[1,3],[4,4],[5,11],[12,12]]
 
       line = '{'
-      template.decompose(line).should == ['{']
+      expect(template.decompose(line)).to eq ['{']
 
       ##########################
       line = '1{"Ref"=>"A"}{"Ref"=>"B"}'
-      template.decompose(line).should == ['1','{"Ref"=>"A"}','{"Ref"=>"B"}']
+      expect(template.decompose(line)).to eq ['1','{"Ref"=>"A"}','{"Ref"=>"B"}']
 
       line = '{"Ref"=>"A"}{"Ref"=>"B"}2'
-      template.decompose(line).should == ['{"Ref"=>"A"}','{"Ref"=>"B"}','2']
+      expect(template.decompose(line)).to eq ['{"Ref"=>"A"}','{"Ref"=>"B"}','2']
 
       line = '1{"Ref"=>"A"}{"Ref"=>"B"}2'
-      template.decompose(line).should == ['1','{"Ref"=>"A"}','{"Ref"=>"B"}','2']
+      expect(template.decompose(line)).to eq ['1','{"Ref"=>"A"}','{"Ref"=>"B"}','2']
 
       line = '{"Ref"=>"A"}{"Ref"=>"B"}'
-      template.decompose(line).should == ['{"Ref"=>"A"}','{"Ref"=>"B"}']
+      expect(template.decompose(line)).to eq ['{"Ref"=>"A"}','{"Ref"=>"B"}']
 
       line = 'Ref{"Ref"=>"B"}'
-      template.decompose(line).should == ['Ref','{"Ref"=>"B"}']
+      expect(template.decompose(line)).to eq ['Ref','{"Ref"=>"B"}']
       ##############################
 
       # only allow whitelist
       line = 'a{b}{"foo"=>"bar"}h'
-      template.decompose(line).should == ['a{b}{"foo"=>"bar"}h']
+      expect(template.decompose(line)).to eq ['a{b}{"foo"=>"bar"}h']
 
       line = 'a{b}{"Ref"=>"bar"}h'
-      template.decompose(line).should == ['a{b}','{"Ref"=>"bar"}','h']
+      expect(template.decompose(line)).to eq ['a{b}','{"Ref"=>"bar"}','h']
       line = 'a{"Ref"=>"bar"}c{"Ref"=>{"cat"=>"mouse"}}e' # nested brackets
-      template.decompose(line).should == ['a','{"Ref"=>"bar"}','c','{"Ref"=>{"cat"=>"mouse"}}','e']
+      expect(template.decompose(line)).to eq ['a','{"Ref"=>"bar"}','c','{"Ref"=>{"cat"=>"mouse"}}','e']
 
       line = 'test{"Ref"=>"world"}me' # nested brackets
       decomposition = template.decompose(line)
       result = template.recompose(decomposition)
-      result.should == ["test", {"Ref" => "world"}, "me"]
+      expect(result).to eq ["test", {"Ref" => "world"}, "me"]
 
       line = 'test{"Ref"=>"world"}me'
-      template.transform(line).should == ["test", {"Ref" => "world"}, "me\n"]
+      expect(template.transform(line)).to eq ["test", {"Ref" => "world"}, "me\n"]
       line = '{"Ref"=>"world"}'
-      template.transform(line).should == [{"Ref" => "world"}, "\n"]
+      expect(template.transform(line)).to eq [{"Ref" => "world"}, "\n"]
       line = '{'
-      template.transform(line).should == ["{\n"]
+      expect(template.transform(line)).to eq ["{\n"]
       line = 'Ref{"Ref"=>"B"}'
-      template.transform(line).should == ['Ref',{"Ref"=>"B"}, "\n"]
+      expect(template.transform(line)).to eq ['Ref',{"Ref"=>"B"}, "\n"]
     end
   end
 
   describe "ruby specs" do
     before(:each) do
-      @dsl = Lono::DSL.new(
+      dsl = Lono::DSL.new(
         project_root: @project,
         quiet: true
       )
-      @dsl.run
+      dsl.run
     end
 
     it "should generate cloud formation template" do
       raw = IO.read("#{@project}/output/prod-api-app.json")
       json = JSON.load(raw)
-      json['Description'].should == "Api Stack"
-      json['Mappings']['AWSRegionArch2AMI']['us-east-1']['64'].should == 'ami-123'
+      expect(json['Description']).to eq "Api Stack"
+      expect(json['Mappings']['AWSRegionArch2AMI']['us-east-1']['64']).to eq 'ami-123'
     end
 
     it "should make trailing options pass to the partial helper available as instance variables" do
       raw = IO.read("#{@project}/output/prod-api-app.json")
       json = JSON.load(raw)
-      json['Resources']['HostRecord']['Properties']['Comment'].should == 'DNS name for mydomain.com'
+      expect(json['Resources']['HostRecord']['Properties']['Comment']).to eq 'DNS name for mydomain.com'
     end
 
     it "should generate user data with variables" do
       raw = IO.read("#{@project}/output/prod-api-redis.json")
       json = JSON.load(raw)
-      json['Description'].should == "Api redis"
+      expect(json['Description']).to eq "Api redis"
       user_data = json['Resources']['server']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
-      user_data.should include("VARTEST=foo\n")
+      expect(user_data).to include("VARTEST=foo\n")
     end
 
     it "should include multiple user_data scripts" do
       raw = IO.read("#{@project}/output/prod-api-redis.json")
       json = JSON.load(raw)
-      json['Description'].should == "Api redis"
+      expect(json['Description']).to eq "Api redis"
       user_data = json['Resources']['server']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
-      user_data.should include("DB2=test\n")
+      expect(user_data).to include("DB2=test\n")
     end
 
     it "should generate db template" do
       raw = IO.read("#{@project}/output/prod-api-redis.json")
       json = JSON.load(raw)
-      json['Description'].should == "Api redis"
+      expect(json['Description']).to eq "Api redis"
       user_data = json['Resources']['server']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
-      user_data.should include({"Ref" => "AWS::StackName"})
-      user_data.should include({"Ref" => "WaitHandle"})
-      user_data.should include({
+      expect(user_data).to include({"Ref" => "AWS::StackName"})
+      expect(user_data).to include({"Ref" => "WaitHandle"})
+      expect(user_data).to include({
         "Fn::FindInMap" => [
           "EnvironmentMapping",
           "HostnamePrefix",
           {"Ref" => "Environment"}
         ]
       })
-      user_data.should include({
+      expect(user_data).to include({
         "Fn::FindInMap" => [
           "MapName",
           "TopLevelKey",
           "SecondLevelKey"
         ]
       })
-      user_data.should include({"Ref" => "DRINK"})
+      expect(user_data).to include({"Ref" => "DRINK"})
 
-      user_data.should include({"Fn::Base64" => "value to encode"})
-      user_data.should include({"Fn::GetAtt" => ["server", "PublicDnsName"]})
-      user_data.should include({"Fn::GetAZs" => "AWS::Region"})
-      user_data.should include({"Fn::Join" => [ ':', ['a','b','c']]})
-      user_data.should include({"Fn::Select" => [ '1', ['a','b','c']]})
+      expect(user_data).to include({"Fn::Base64" => "value to encode"})
+      expect(user_data).to include({"Fn::GetAtt" => ["server", "PublicDnsName"]})
+      expect(user_data).to include({"Fn::GetAZs" => "AWS::Region"})
+      expect(user_data).to include({"Fn::Join" => [ ':', ['a','b','c']]})
+      expect(user_data).to include({"Fn::Select" => [ '1', ['a','b','c']]})
     end
 
     it "should transform bash script to CF template user_data" do
@@ -153,27 +153,27 @@ describe Lono do
 
       line = 'echo {"Ref"=>"AWS::StackName"} > /tmp/stack_name ; {"Ref"=>"Ami"}'
       data = template.transform(line)
-      data.should == ["echo ", {"Ref"=>"AWS::StackName"}, " > /tmp/stack_name ; ", {"Ref"=>"Ami"}, "\n"]
+      expect(data).to eq ["echo ", {"Ref"=>"AWS::StackName"}, " > /tmp/stack_name ; ", {"Ref"=>"Ami"}, "\n"]
 
       line = 'echo {"Ref"=>"AWS::StackName"} > /tmp/stack_name'
       data = template.transform(line)
-      data.should == ["echo ", {"Ref"=>"AWS::StackName"}, " > /tmp/stack_name\n"]
+      expect(data).to eq ["echo ", {"Ref"=>"AWS::StackName"}, " > /tmp/stack_name\n"]
 
       line = 'echo {"Fn::FindInMap" => [ "A", "B", {"Ref"=>"AWS::StackName"} ]}'
       data = template.transform(line)
-      data.should == ["echo ", {"Fn::FindInMap" => ["A", "B", {"Ref"=>"AWS::StackName"}]}, "\n"]
+      expect(data).to eq ["echo ", {"Fn::FindInMap" => ["A", "B", {"Ref"=>"AWS::StackName"}]}, "\n"]
 
       line = 'echo {"Fn::FindInMap" => [ "A", "B", {"Ref"=>"AWS::StackName"} ]} > /tmp/stack_name ; {"Ref"=>"Ami"}'
       data = template.transform(line)
-      data.should == ["echo ", {"Fn::FindInMap" => ["A", "B", {"Ref"=>"AWS::StackName"}]}, " > /tmp/stack_name ; ", {"Ref"=>"Ami"}, "\n"]
+      expect(data).to eq ["echo ", {"Fn::FindInMap" => ["A", "B", {"Ref"=>"AWS::StackName"}]}, " > /tmp/stack_name ; ", {"Ref"=>"Ami"}, "\n"]
     end
 
     it "should not transform user_data ruby scripts" do
       raw = IO.read("#{@project}/output/prod-api-worker.json")
       json = JSON.load(raw)
       user_data = json['Resources']['LaunchConfig']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
-      user_data.should include(%Q|ec2.tags.create(ec2.instances[my_instance_id], "Name", {value: Facter.hostname})\n|)
-      user_data.should include(%Q{find_all{ |record_set| record_set[:name] == record_name }\n})
+      expect(user_data).to include(%Q|ec2.tags.create(ec2.instances[my_instance_id], "Name", {value: Facter.hostname})\n|)
+      expect(user_data).to include(%Q{find_all{ |record_set| record_set[:name] == record_name }\n})
     end
 
     it "should create parent folders for parent/db-stack.json" do
@@ -182,21 +182,17 @@ describe Lono do
     end
 
     it "task should generate cloud formation templates" do
-      Lono::DSL.new(
-        project_root: @project,
-        quiet: true
-      ).run
       raw = IO.read("#{@project}/output/prod-api-app.json")
       json = JSON.load(raw)
-      json['Description'].should == "Api Stack"
-      json['Mappings']['AWSRegionArch2AMI']['us-east-1']['64'].should == 'ami-123'
+      expect(json['Description']).to eq "Api Stack"
+      expect(json['Mappings']['AWSRegionArch2AMI']['us-east-1']['64']).to eq 'ami-123'
     end
   end
 
   describe "cli specs" do
     it "should generate templates" do
       out = execute("./bin/lono generate -c --project-root #{@project}")
-      out.should match /Generating Cloud Formation templates/
+      expect(out).to match /Generating Cloud Formation templates/
     end
   end
 end
