@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-ec2.tags.create(ec2.instances[my_instance_id], "Name", {:value => Facter.hostname})
+ec2.tags.create(ec2.instances[my_instance_id], "Name", {value: Facter.hostname})
 
 find_all{ |record_set| record_set[:name] == record_name }

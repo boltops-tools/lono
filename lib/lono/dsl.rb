@@ -21,7 +21,7 @@ module Lono
     end
 
     def template(name, &block)
-      @templates << {:name => name, :block => block}
+      @templates << {name: name, block: block}
     end
 
     def build
