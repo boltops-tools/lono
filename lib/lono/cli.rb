@@ -6,18 +6,18 @@ module Lono
 
     desc "new [NAME]", "Generates lono starter project"
     Help.new_long_desc
-    option :force, :type => :boolean, :aliases => "-f", :desc => "override existing starter files"
-    option :quiet, :type => :boolean, :aliases => "-q", :desc => "silence the output"
+    option :force, type: :boolean, aliases: "-f", desc: "override existing starter files"
+    option :quiet, type: :boolean, aliases: "-q", desc: "silence the output"
     def new(project_root)
-      Lono::New.new(options.clone.merge(:project_root => project_root)).run
+      Lono::New.new(options.clone.merge(project_root: project_root)).run
     end
 
     desc "generate", "Generate the cloud formation templates"
     Help.generate
-    option :clean, :type => :boolean, :aliases => "-c", :desc => "remove all output files before generating"
-    option :project_root, :default => ".", :aliases => "-r", :desc => "project root"
-    option :quiet, :type => :boolean, :aliases => "-q", :desc => "silence the output"
-    option :pretty, :type => :boolean, :default => true, :desc => "json pretty the output"
+    option :clean, type: :boolean, aliases: "-c", desc: "remove all output files before generating"
+    option :project_root, default: ".", aliases: "-r", desc: "project root"
+    option :quiet, type: :boolean, aliases: "-q", desc: "silence the output"
+    option :pretty, type: :boolean, default: true, desc: "json pretty the output"
     def generate
       Lono::DSL.new(options.clone).run
     end
@@ -25,7 +25,7 @@ module Lono
     desc "bashify [URL-OR-PATH]", "Convert the UserData section of an existing Cloud Formation Template to a starter bash script that is compatiable with lono"
     Help.bashify
     def bashify(path)
-      Lono::Bashify.new(:path => path).run
+      Lono::Bashify.new(path: path).run
     end
 
     desc "version", "Prints version"

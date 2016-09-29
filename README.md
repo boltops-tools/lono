@@ -35,21 +35,21 @@ template "prod-api-app.json" do
   env,app,role = name.sub('.json','').split('-')
   source "app.json.erb"
   variables(
-    :env => env,
-    :app => app,
-    :role => role,
-    :ami => "ami-123",
-    :instance_type => "m1.small",
-    :port => "80",
-    :high_threshold => "15",
-    :high_periods => "4",
-    :low_threshold => "5",
-    :low_periods => "10",
-    :max_size => "24",
-    :min_size => "6",
-    :down_adjustment => "-3",
-    :up_adjustment => "3",
-    :ssl_cert => "arn:aws:iam::12345:server-certificate/wildcard"
+    env: env,
+    app: app,
+    role: role,
+    ami: "ami-123",
+    instance_type: "m1.small",
+    port: "80",
+    high_threshold: "15",
+    high_periods: "4",
+    low_threshold: "5",
+    low_periods: "10",
+    max_size: "24",
+    min_size: "6",
+    down_adjustment: "-3",
+    up_adjustment: "3",
+    ssl_cert: "arn:aws:iam::12345:server-certificate/wildcard"
   )
 end
 ```
@@ -62,12 +62,12 @@ There are helper methods that are available in templates.
 
 * partial - can be use to embed other files in a template.  The partial should be placed in the templates/partial folder of the project.  So:
   * partial('launch_config.json.erb') -> templates/partial/launch_config.json.erb
-  * partial('launch_config.json.erb', :foo => "bar", :hello => "world") - variables can be passed to the partial helper method and will be available to the partial as instance variables.  So, in this case @foo and @hello will be available in the launch_config.json.erb partial.
+  * partial('launch_config.json.erb', foo: "bar", hello: "world") - variables can be passed to the partial helper method and will be available to the partial as instance variables.  So, in this case @foo and @hello will be available in the launch_config.json.erb partial.
 
 * user_data - can be used to include a user data script which is written in bash script form.  The user data script should be placed in the templates/user_data folder of the project.  So:
   * user_data('bootstrap.sh.erb') -> templates/user_data/bootstrap.sh.erb
   * user_data('db.sh.erb') -> templates/user_data/db.sh.erb
-  * user_data('script1.sh.erb', :foo => "bar", :hello => "world") - variables can be passed to the user_data helper method and will be available to the partial as instance variables.  So, in this case @foo and @hello will be available in script1.sh.erb.
+  * user_data('script1.sh.erb', foo: "bar", hello: "world") - variables can be passed to the user_data helper method and will be available to the partial as instance variables.  So, in this case @foo and @hello will be available in script1.sh.erb.
 
 Here's how you would call it in the template.
 

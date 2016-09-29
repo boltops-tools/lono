@@ -82,8 +82,8 @@ describe Lono do
   describe "ruby specs" do
     before(:each) do
       @dsl = Lono::DSL.new(
-        :project_root => @project,
-        :quiet => true
+        project_root: @project,
+        quiet: true
       )
       @dsl.run
     end
@@ -172,14 +172,14 @@ describe Lono do
       raw = IO.read("#{@project}/output/prod-api-worker.json")
       json = JSON.load(raw)
       user_data = json['Resources']['LaunchConfig']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
-      user_data.should include(%Q|ec2.tags.create(ec2.instances[my_instance_id], "Name", {:value => Facter.hostname})\n|)
+      user_data.should include(%Q|ec2.tags.create(ec2.instances[my_instance_id], "Name", {value: Facter.hostname})\n|)
       user_data.should include(%Q{find_all{ |record_set| record_set[:name] == record_name }\n})
     end
 
     it "task should generate cloud formation templates" do
       Lono::DSL.new(
-        :project_root => @project,
-        :quiet => true
+        project_root: @project,
+        quiet: true
       ).run
       raw = IO.read("#{@project}/output/prod-api-app.json")
       json = JSON.load(raw)

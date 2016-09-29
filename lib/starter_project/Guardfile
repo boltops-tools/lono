@@ -7,6 +7,6 @@ guard "lono" do
 end
 
 # Commented out due to CF rate limiting
-# guard "cloudformation", :templates_path => "output" do
+# guard "cloudformation", templates_path: "output" do
 #   watch(%r{^output/.+\.json$})
 # end
