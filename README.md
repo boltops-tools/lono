@@ -17,12 +17,13 @@ Lono is a CloudFormation Template ruby generator.  Lono generates CloudFormation
 ## Usage
 
 <pre>
-$ lono new lono
+$ lono new infra
 </pre>
 
-This sets up a starter lono project with example templates.
+This sets up a starter lono project called infra with example templates.  Next you cd into the folder and generate the templates.
 
 <pre>
+$ cd infra
 $ lono generate
 </pre>
 
