@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [0.5.1]
+- move ensure_dir up above validation so folder gets created even with bad json.  fixes #14
+
 ## [0.5.0]
 
 - Update use newer ruby syntax.
