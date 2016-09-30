@@ -38,8 +38,8 @@ module Lono
       @results.each do |name,json|
         path = "#{output_path}/#{name}"
         puts "  #{path}" unless @options[:quiet]
-        validate(json, path)
         ensure_parent_dir(path)
+        validate(json, path)
         File.open(path, 'w') do |f|
           f.write(output_json(json))
         end
