@@ -1,5 +1,6 @@
 require 'erb'
 require 'json'
+require "base64"
 
 module Lono
   class Template
@@ -200,6 +201,13 @@ module Lono
 
     def evaluate(line)
       recompose(decompose(line))
+    end
+
+    # For simple just parameters files that can also be generated with lono, the CFN 
+    # Fn::Base64 function is not available and as lono is not being used in the context 
+    # of CloudFormation.  So this can be used in it's place.
+    def encode_base64(text)
+      Base64.strict_encode64(text).strip
     end
   end
 end
