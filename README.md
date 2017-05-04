@@ -12,7 +12,7 @@
 [3]: https://codeclimate.com/repos/51d7f1407e00a4042c010ab4/badges/5273fe6cdb5a13e58554/gpa.png
 [4]: https://codeclimate.com/repos/51d7f1407e00a4042c010ab4/feed
 
-Lono is a CloudFormation Template generator.  Lono generates CloudFormation templates based on ERB ruby templates.
+Lono is a CloudFormation Template generator.  Lono generates CloudFormation templates based on ERB ruby templates in either `yaml` or `json` format.
 
 ## Usage
 
