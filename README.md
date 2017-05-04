@@ -98,7 +98,7 @@ Resources:
 
 ```
 
-The `output/blog-web-prod.yml` looks like this:
+The generated `output/blog-web-prod.yml` CloudFormation template looks like this:
 
 ```yaml
 ---
