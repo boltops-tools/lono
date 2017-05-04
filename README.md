@@ -58,7 +58,7 @@ end
 The corresponding ERB template looks like the following.  Note that some of the output has been shorten for brevity.
 
 ```yaml
-<% @app,@role,@env = name.sub('.yml','').split('-') %>
+<% @app,@role,@env = name.sub('.yml','').split('-') -%>
 ---
 AWSTemplateFormatVersion: '2010-09-09'
 Description: <%= @app.capitalize %> Stack
