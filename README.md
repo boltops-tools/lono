@@ -29,7 +29,7 @@ $ lono generate
 
 This generates the templates in the `config` and `templates` folders to the `output` folder.
 
-The starter lono template project config files looks like [this](lib/starter_project/config/lono.rb) and [this](lib/starter_project/config/lono/api.rb).  Here's a snippet from one of the config files with the template call:
+The starter lono template project config files looks like [this](lib/starter_project_yaml/config/lono.rb) and [this](lib/starter_project_yaml/config/lono/api.rb).  Here's a snippet from one of the config files: [config/lono.rb](lib/starter_project_yaml/config/lono.rb).
 
 ```ruby
 template "api-web-prod.yml" do
@@ -55,7 +55,7 @@ template "api-web-prod.yml" do
 end
 ```
 
-The corresponding ERB template looks like the following.  Note that some of the output has been shorten for brevity.
+Here is the corresponding ERB template [templates/web.yml.erb](lib/starter_project_yaml/templates/web.yml.erb).  Note that some of the source code has been shorten for brevity.
 
 ```yaml
 <% @app,@role,@env = name.sub('.yml','').split('-') -%>
@@ -98,7 +98,7 @@ Resources:
 
 ```
 
-The output looks like this:
+The `output/blog-web-prod.yml` looks like this:
 
 ```yaml
 ---
