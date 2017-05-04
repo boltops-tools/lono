@@ -1,4 +1,4 @@
-<% @env,@app,@role = name.sub('.json','').split('-') %>
+<% @app,@role,@env = name.sub('.json','').split('-') %>
 {
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "<%= @app.capitalize %> <%= @role %>",

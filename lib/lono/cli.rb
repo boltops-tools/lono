@@ -8,6 +8,7 @@ module Lono
     Help.new_long_desc
     option :force, type: :boolean, aliases: "-f", desc: "override existing starter files"
     option :quiet, type: :boolean, aliases: "-q", desc: "silence the output"
+    option :format, type: :string, default: "yaml", desc: "starter project template format: json or yaml"
     def new(project_root)
       Lono::New.new(options.clone.merge(project_root: project_root)).run
     end
@@ -17,7 +18,7 @@ module Lono
     option :clean, type: :boolean, aliases: "-c", desc: "remove all output files before generating"
     option :project_root, default: ".", aliases: "-r", desc: "project root"
     option :quiet, type: :boolean, aliases: "-q", desc: "silence the output"
-    option :pretty, type: :boolean, default: true, desc: "json pretty the output"
+    option :pretty, type: :boolean, default: true, desc: "json pretty the output.  only applies with json format"
     def generate
       Lono::DSL.new(options.clone).run
     end
@@ -33,5 +34,5 @@ module Lono
       puts Lono::VERSION
     end
 
-  end  
+  end
 end

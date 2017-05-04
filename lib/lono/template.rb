@@ -16,7 +16,7 @@ module Lono
     def build
       instance_eval(&@block)
       template = IO.read(@source)
-      ERB.new(template).result(binding)
+      erb_result(template)
     end
 
     def source(path)
@@ -29,18 +29,31 @@ module Lono
       end
     end
 
-    def partial(path,vars={})
+    def partial(path,vars={}, options={})
       path = "#{@options[:project_root]}/templates/partial/#{path}"
       template = IO.read(path)
       variables(vars)
-      ERB.new(template).result(binding)
+      result = erb_result(template)
+      result = indent(result, options[:indent]) if options[:indent]
+      result
+    end
+
+    # add indentation
+    def indent(result, indentation_amount)
+      result.split("\n").map do |line|
+        " " * indentation_amount + line
+      end.join("\n")
+    end
+
+    def erb_result(template)
+      ERB.new(template, nil, "-").result(binding)
     end
 
     def user_data(path, vars={})
       path = "#{@options[:project_root]}/templates/user_data/#{path}"
       template = IO.read(path)
       variables(vars)
-      result = ERB.new(template).result(binding)
+      result = erb_result(template)
       output = []
       result.split("\n").each do |line|
         output += transform(line)
@@ -87,7 +100,7 @@ module Lono
     def transform(data)
       data = evaluate(data)
       if data[-1].is_a?(String)
-        data[0..-2] + ["#{data[-1]}\n"] 
+        data[0..-2] + ["#{data[-1]}\n"]
       else
         data + ["\n"]
       end
@@ -98,7 +111,7 @@ module Lono
     # Output:
     #   Array of parse positions
     #
-    # The positions of tokens taking into account when brackets start and close, 
+    # The positions of tokens taking into account when brackets start and close,
     # handles nested brackets.
     def bracket_positions(line)
       positions,pair,count = [],[],0
@@ -106,7 +119,7 @@ module Lono
       line.split('').each_with_index do |char,i|
         pair << i if pair.empty?
 
-        first_pair_char = line[pair[0]]  
+        first_pair_char = line[pair[0]]
         if first_pair_char == '{' # object logic
           if char == '{'
             count += 1
@@ -203,8 +216,8 @@ module Lono
       recompose(decompose(line))
     end
 
-    # For simple just parameters files that can also be generated with lono, the CFN 
-    # Fn::Base64 function is not available and as lono is not being used in the context 
+    # For simple just parameters files that can also be generated with lono, the CFN
+    # Fn::Base64 function is not available and as lono is not being used in the context
     # of CloudFormation.  So this can be used in it's place.
     def encode_base64(text)
       Base64.strict_encode64(text).strip
