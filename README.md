@@ -192,6 +192,8 @@ Running `lono generate` and building up the `aws cloudformation create-stack` co
 ```
 $ lono-cfn create mystack-$(date +%Y%m%d%H%M%S) --template mystack --params mystack
 $ lono-cfn create mystack-$(date +%Y%m%d%H%M%S) # shorthand if template and params file matches.
+$ lono-cfn update mystack-1493859659
+$ lono-cfn delete mystack-1493859659
 ```
 
 More info about lono-cfn here: [lono-cfn](https://github.com/tongueroo/lono-cfn) - Wrapper cfn tool to quickly create CloudFormation stacks from lono templates and params files.
