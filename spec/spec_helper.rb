@@ -1,4 +1,5 @@
 require "pp"
+require "byebug"
 require "bundler"
 
 Bundler.require(:development)

@@ -1,0 +1,14 @@
+  HostRecord:
+    Properties:
+      Comment: DNS name for <%= @domain %>
+      HostedZoneName: <%= @domain %>.
+      Name:
+        Fn::Join:
+        - ''
+        - - Ref: AWS::StackName
+          - ".<%= @domain %>"
+      ResourceRecords:
+      - !GetAtt elb.DNSName
+      TTL: '60'
+      Type: CNAME
+    Type: AWS::Route53::RecordSet

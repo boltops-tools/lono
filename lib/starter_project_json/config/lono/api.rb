@@ -1,8 +1,8 @@
-template "prod-api-app.json" do
-  source "app.json.erb"
+template "api-web-prod.json" do
+  source "web.json.erb"
   variables(
     ami: "ami-123",
-    instance_type: "m1.small",
+    instance_type: "t2.small",
     port: "80",
     high_threshold: "15",
     high_periods: "4",
@@ -16,11 +16,11 @@ template "prod-api-app.json" do
   )
 end
 
-template "prod-api-worker.json" do
-  source "app.json.erb"
+template "api-worker-prod.json" do
+  source "web.json.erb"
   variables(
     ami: "ami-123",
-    instance_type: "m1.small",
+    instance_type: "t2.small",
     port: "80",
     high_threshold: "15",
     high_periods: "4",
@@ -35,11 +35,11 @@ template "prod-api-worker.json" do
   )
 end
 
-template "prod-api-redis.json" do
+template "api-redis-prod.json" do
   source "db.json.erb"
   variables(
     ami: "ami-456",
-    instance_type: "m1.small",
+    instance_type: "t2.small",
     port: "80",
     volume_size: "20",
     availability_zone: "us-east-1e"
@@ -50,7 +50,7 @@ template "parent/db-stack.json" do
   source "db.json.erb"
   variables(
     ami: "ami-456",
-    instance_type: "m1.small",
+    instance_type: "t2.small",
     port: "80",
     volume_size: "20",
     availability_zone: "us-east-1e"

@@ -1,12 +1,12 @@
-template "prod-blog-app.json" do
-  env,app,role = name.sub('.json','').split('-')
-  source "app.json.erb"
+template "blog-web-prod.json" do
+  app,role,env = name.sub('.json','').split('-')
+  source "web.json.erb"
   variables(
     env: env,
     app: app,
     role: role,
-    ami: "ami-456",
-    instance_type: "m1.small",
+    ami: "ami-4836a428", # us-west-2
+    instance_type: "t2.small",
     port: "80",
     high_threshold: "35",
     high_periods: "4",

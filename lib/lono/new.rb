@@ -4,15 +4,17 @@ module Lono
     def initialize(options)
       @options = options
       @project_root = options[:project_root] || '.'
+      @format = options[:format] || 'json'
     end
 
     def run
       puts "Setting up lono project" unless options[:quiet]
-      source_root = File.expand_path("../../starter_project", __FILE__)
+      source_root = File.expand_path("../../starter_project_#{@format}", __FILE__)
       paths = Dir.glob("#{source_root}/**/*").
                 select {|p| File.file?(p) }
       paths.each do |src|
-        dest = src.gsub(%r{.*starter_project/},'')
+        regexp = Regexp.new(".*starter_project_#{@format}/")
+        dest = src.gsub(regexp,'')
         dest = "#{@project_root}/#{dest}"
 
         if File.exist?(dest) and !options[:force]

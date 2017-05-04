@@ -1,4 +1,5 @@
 require 'json'
+require 'yaml'
 require 'pp'
 require 'colorize'
 require 'fileutils'
