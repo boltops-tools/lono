@@ -14,6 +14,10 @@
 
 Lono is a CloudFormation Template generator.  Lono generates CloudFormation templates based on ERB ruby templates in either `yaml` or `json` format.
 
+**UPDATE**: lono now supports yaml format for CloudFormation! The old json format is still supported. For current projects, you do not have to change anything as the format is autodetected as part of `lono generate`.
+
+Newly generated projects with `lono new infra` will use the yaml format by default.  If you prefer the json format use `lono new --format json infra`. You cannot mix and match json and yaml format in one project, it's either all json or yaml. If any one has questions feel free to ping me: tongueroo@gmail.com.
+
 ## Usage
 
 <pre>
