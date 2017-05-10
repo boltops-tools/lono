@@ -108,9 +108,15 @@ module Lono
       @options[:pretty] ? prettify(text) : text
     end
 
-    # do not prettify yaml format because it removes the !Ref like CloudFormation notation
+    # Input text is either yaml or json.
+    # Do not prettify yaml format because it removes the !Ref like CloudFormation notation
     def prettify(text)
-      @detected_format == "json" ? JSON.pretty_generate(JSON.parse(text)) : text
+      @detected_format == "json" ? JSON.pretty_generate(JSON.parse(text)) : remove_blank_lines(text)
+    end
+
+    # ERB templates leaves blank lines around, remove those lines
+    def remove_blank_lines(text)
+      text.split("\n").reject { |l| l.strip == '' }.join("\n") + "\n"
     end
 
     def ensure_parent_dir(path)
