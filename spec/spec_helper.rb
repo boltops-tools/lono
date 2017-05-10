@@ -2,6 +2,8 @@ require "pp"
 require "byebug"
 require "bundler"
 
+ENV['TEST'] = '1'
+
 Bundler.require(:development)
 
 $root = File.expand_path('../../', __FILE__)
