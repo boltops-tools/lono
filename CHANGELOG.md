@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [1.0.2]
+- remove blank lines from yaml output
+
 ## [1.0.1]
 - update starter project instance type allowed values
 
