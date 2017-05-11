@@ -26,7 +26,7 @@ module Lono
           FileUtils.cp(src, dest)
         end
       end
-      puts "Starter lono project created"
+      puts "Starter lono project created" unless options[:quiet]
     end
   end
 end
