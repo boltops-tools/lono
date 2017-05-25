@@ -34,8 +34,13 @@ module Lono
         puts "All the source values in the template blocks in the config folder must have the same format extension."
         exit 1
       else
-        detected_format = formats.first.sub(/^\./,'')
-        detected_format = "yaml" if detected_format == "yml"
+        found_format = formats.first
+        if found_format
+          detected_format = found_format.sub(/^\./,'')
+          detected_format = "yaml" if detected_format == "yml"
+        else # empty templates, no templates defined yet
+          detected_format = "yaml" # defaults to yaml
+        end
       end
       detected_format
     end
