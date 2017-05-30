@@ -68,7 +68,7 @@ module Lono
       FileUtils.mkdir(output_path) unless File.exist?(output_path)
       puts "Generating CloudFormation templates:" unless @options[:quiet]
       @results.each do |name,text|
-        path = "#{output_path}/#{name}"
+        path = "#{output_path}/#{name}".sub(/^\.\//,'')
         puts "  #{path}" unless @options[:quiet]
         ensure_parent_dir(path)
         validate(text, path)
