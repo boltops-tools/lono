@@ -14,6 +14,15 @@
 
 Lono is a CloudFormation Template generator.  Lono generates CloudFormation templates based on ERB ruby templates in either `yaml` or `json` format.
 
+Lono can be used with [lono-cfn](https://github.com/tongueroo/lono-cfn). Lono-cfn automatically calls `lono generate` as part of launching the stack so you never forget to run it.  These blog posts cover both lono and lono-cfn:
+
+* [Why Generate CloudFormation Templates with Lono](https://medium.com/boltops/why-generate-cloudformation-templates-with-lono-65b8ea5eb87d)
+* [Generating CloudFormation Templates with Lono](https://medium.com/boltops/generating-cloudformation-templates-with-lono-4709afa1299b)
+* [AutoScaling CloudFormation Template with Lono](https://medium.com/boltops/autoscaling-cloudformation-template-with-lono-3dc520480c5f)
+* [CloudFormation Tools: lono, lono-params and lono-cfn Together
+](https://medium.com/boltops/cloudformation-tools-lono-lono-params-and-lono-cfn-play-together-620af51e616)
+* [AWS CloudFormation dry-run with lono-cfn plan](https://medium.com/boltops/aws-cloudformation-dry-run-with-lono-cfn-plan-2a1e0f80d13c)
+
 **UPDATE**: lono now supports yaml format for CloudFormation! The old json format is still supported. For current projects, you do not have to change anything as the format is autodetected as part of `lono generate`.
 
 Newly generated projects with `lono new infra` will use the yaml format by default.  If you prefer the json format use `lono new --format json infra`. You cannot mix and match json and yaml format in one project, it's either all json or yaml. If any one has questions feel free to ping me: tongueroo@gmail.com.
@@ -158,6 +167,10 @@ Resources:
     Type: AWS::AutoScaling::LaunchConfiguration
 ```
 
+You can use the generated CloudFormation templates in the `output` folder just as you would a normal CloudFormation template.  Here's a flow chart of the overall process.
+
+![Lono flowchart](http://tongueroo.com/images/github-readmes/lono-flowchart.png "Lono flowchart")
+
 ## Template helper methods
 
 There are helper methods that are available in templates.
@@ -224,4 +237,4 @@ Verus the rather verbose standard CloudFormation parameters json file:
 ]
 ```
 
-More info about lono-parmas here: [lono-params](https://github.com/tongueroo/lono-params) - Tool to generate a CloudFormation parameters json formatted file from a simplier env like file.
+More info about lono-params here: [lono-params](https://github.com/tongueroo/lono-params) - Tool to generate a CloudFormation parameters json formatted file from a simplier env like file.

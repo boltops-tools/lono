@@ -62,7 +62,7 @@ module Lono
 
         template_lines = template.split("\n")
         context = 5 # lines of context
-        top, bottom = [line-context, 0].max, line+context
+        top, bottom = [line-context-1, 0].max, line+context-1
         spacing = template_lines.size.to_s.size
         template_lines[top..bottom].each_with_index do |line_content, index|
           line_number = top+index+1
