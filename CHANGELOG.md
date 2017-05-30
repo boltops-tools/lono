@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [1.1.3]
+- make display output path prettier
+
 ## [1.1.2]
 - erb error fix context off by 1
 
