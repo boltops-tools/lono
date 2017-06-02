@@ -1,8 +1,9 @@
 require 'thor'
+require 'lono/command'
 require 'lono/cli/help'
 
 module Lono
-  class CLI < Thor
+  class CLI < Command
 
     desc "new [NAME]", "Generates lono starter project"
     Help.new_long_desc
