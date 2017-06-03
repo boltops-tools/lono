@@ -5,14 +5,14 @@ module Lono
     class << self
       def dispatch(m, args, options, config)
         # Allow calling for help via:
-        #   ufo docker help
-        #   ufo docker -h
-        #   ufo docker --help
-        #   ufo docker -D
+        #   lono generate help
+        #   lono generate -h
+        #   lono generate --help
+        #   lono generate -D
         #
         # as well thor's nomral setting as
         #
-        #   ufo help docker
+        #   lono help generate
         help_flags = Thor::HELP_MAPPINGS + ["help"]
         if args.length > 1 && !(args & help_flags).empty?
           args -= help_flags
