@@ -213,7 +213,7 @@ There are helper methods that are available in templates.
 If you have a lot of templates, the config/lono.rb file can get unwieldy long.  You can break up the lono.rb file and put template defintions in the config/lono directory.  Any file in this directory will be automatically loaded. An [example](lib/starter_project_yaml/config/lono/api.rb) is in the starter project.
 
 
-## Generate
+## lono generate
 
 You can generate the CloudFormation templates by running:
 
@@ -231,7 +231,7 @@ $ guard
 # lono cfn
 
 ## Summary
-Lono also provides a `lono cfn` wrapper command that allows you to launch stacks from the lono templates.  The `lono cfn` tool automatically runs `lono generate` internally and then launches the CloudFormation stack all in one command.  Provided that you are in a lono project and have a `my-stack` lono template definition.  To create a stack you can simply run:
+Lono also provides a `lono cfn` management command that allows you to launch stacks from the lono templates.  The `lono cfn` tool automatically runs `lono generate` internally and then launches the CloudFormation stack all in one command.  Provided that you are in a lono project and have a `my-stack` lono template definition.  To create a stack you can simply run:
 
 ```
 $ lono cfn create my-stack
