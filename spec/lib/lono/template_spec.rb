@@ -1,46 +1,31 @@
-require File.expand_path("../../../spec_helper", __FILE__)
+require_relative "../../spec_helper"
 
-describe Lono::Template do
-  let(:template) do
-    block = Proc.new {}
-    template = Lono::Template.new("output_name.yml", block)
-
-    # override the puts and printf methods within the test
-    def template.messages
-      @messages
-    end
-
-    def template.puts(msg)
-      @messages ||= []
-      @messages << msg
-      nil
-    end
-
-    def template.printf(*args)
-      @messages ||= []
-      @messages << args
-    end
-
-    template
+describe Lono do
+  before(:each) do
+    lono_bin = File.expand_path("../../../../bin/lono", __FILE__)
+    @project_root = File.expand_path("../../../../tmp/lono_project", __FILE__)
+    dir = File.dirname(@project_root)
+    name = File.basename(@project_root)
+    FileUtils.mkdir(dir) unless File.exist?(dir)
+    execute("cd #{dir} && #{lono_bin} new #{name} -f -q --format json")
   end
 
-  context "valid erb template" do
-    it "should be able to lono generate" do
-      template.erb_result("path", "template")
+  after(:each) do
+    FileUtils.rm_rf(@project_root) unless ENV['KEEP_TMP_PROJECT']
+  end
+
+  describe "bashify" do
+    it "should convert cfn user_data to bash script" do
+      path = "#{$root}/spec/fixtures/cfn.json"
+      out = execute("./bin/lono template bashify #{path}")
+      expect(out).to match /bash -lexv/
     end
   end
 
-  context "invalid erb template" do
-    it "should print out useful error message about undefined variable" do
-      template.erb_result("path", "variable does not exist\n<% variable %>\nanother line")
-      errors = template.messages.grep(/Error evaluating ERB template on line/)
-      expect(errors).not_to be_empty
-    end
-
-    it "should print out useful error message about syntax error" do
-      template.erb_result("path", "<%s dsfds ?%>\nanother line")
-      errors = template.messages.grep(/Error evaluating ERB template on line/)
-      expect(errors).not_to be_empty
+  describe "cli specs" do
+    it "should generate templates" do
+      out = execute("./bin/lono template generate -c --project-root #{@project_root}")
+      expect(out).to match /Generating CloudFormation templates/
     end
   end
 end

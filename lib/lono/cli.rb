@@ -1,8 +1,9 @@
 require 'thor'
 require 'lono/command'
-require 'lono/cli/help'
 
 module Lono
+  autoload :Help, 'lono/help'
+
   class CLI < Command
 
     desc "new [NAME]", "Generates lono starter project"
@@ -14,20 +15,16 @@ module Lono
       Lono::New.new(options.clone.merge(project_root: project_root)).run
     end
 
-    desc "generate", "Generate the cloudformation templates"
+    desc "generate", "Generate both CloudFormation templates and parameters files"
     Help.generate
     option :clean, type: :boolean, aliases: "-c", desc: "remove all output files before generating"
     option :project_root, default: ".", aliases: "-r", desc: "project root"
     option :quiet, type: :boolean, aliases: "-q", desc: "silence the output"
     option :pretty, type: :boolean, default: true, desc: "json pretty the output.  only applies with json format"
     def generate
-      Lono::DSL.new(options.clone).run
-    end
-
-    desc "bashify [URL-OR-PATH]", "Convert the UserData section of an existing CloudFormation Template to a starter bash script that is compatiable with lono"
-    Help.bashify
-    def bashify(path)
-      Lono::Bashify.new(path: path).run
+      puts "Generating both CloudFormation template and parameter files."
+      Lono::Template::DSL.new(options.clone).run
+      Lono::Param::Generator.generate_all(options.clone)
     end
 
     desc "version", "Prints version"
@@ -35,5 +32,16 @@ module Lono
       puts Lono::VERSION
     end
 
+    desc "template ACTION", "template subcommand tasks"
+    long_desc Help.template
+    subcommand "template", Template
+
+    desc "cfn ACTION", "cfn subcommand tasks"
+    long_desc Help.cfn
+    subcommand "cfn", Cfn
+
+    desc "param ACTION", "param subcommand tasks"
+    long_desc Help.param
+    subcommand "param", Lono::Param
   end
 end

@@ -1,4 +1,4 @@
-require File.expand_path("../../../spec_helper", __FILE__)
+require_relative "../../spec_helper"
 
 describe Lono::New do
   before(:each) do
@@ -20,7 +20,7 @@ describe Lono::New do
     end
 
     it "should be able to lono generate" do
-      dsl = Lono::DSL.new(
+      dsl = Lono::Template::DSL.new(
         project_root: @project_root,
         quiet: true
       )
@@ -42,7 +42,7 @@ describe Lono::New do
     end
 
     it "should be able to lono generate" do
-      dsl = Lono::DSL.new(
+      dsl = Lono::Template::DSL.new(
         project_root: @project_root,
         quiet: true
       )
