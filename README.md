@@ -16,7 +16,7 @@ Lono is a tool for managing CloudFormation templates.
 * Lono takes simple env-like files to and generates the CloudFormation parameter files.
 * Lono wraps the CloudFormation api calls in a simple interface using the generated files to launch the CloudFormation stacks.
 
-These blog posts lono:
+These blog posts cover lono:
 
 * [Why Generate CloudFormation Templates with Lono](https://medium.com/boltops/why-generate-cloudformation-templates-with-lono-65b8ea5eb87d)
 * [Generating CloudFormation Templates with Lono](https://medium.com/boltops/generating-cloudformation-templates-with-lono-4709afa1299b)
