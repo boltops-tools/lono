@@ -8,7 +8,7 @@ class Lono::Cfn::Base
     @stack_name = stack_name
     @options = options
     @project_root = options[:project_root] || '.'
-    ProjectChecker.check(@project_root) unless options[:lono] # already ran checker in lono generate
+    Lono::ProjectChecker.check(@project_root) unless options[:lono] # already ran checker in lono generate
 
     template_name = options[:template] || @stack_name
     param_name = options[:param] || template_name

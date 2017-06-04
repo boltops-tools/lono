@@ -49,11 +49,11 @@ class Lono::Cfn::Update < Lono::Cfn::Base
 
   def preview
     options = @options.merge(lono: false, mute_params: true, mute_using: true, keep: true)
-    @preview ||= Preview.new(@stack_name, options)
+    @preview ||= Lono::Cfn::Preview.new(@stack_name, options)
   end
 
   def diff
-    @diff ||= Diff.new(@stack_name, @options.merge(lono: false, mute_params: true, mute_using: true))
+    @diff ||= Lono::Cfn::Diff.new(@stack_name, @options.merge(lono: false, mute_params: true, mute_using: true))
   end
 
   def change_set_update
