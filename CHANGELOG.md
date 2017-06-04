@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [1.1.4]
+- allow --help or -h at the end of the command
+
 ## [1.1.3]
 - make display output path prettier
 
