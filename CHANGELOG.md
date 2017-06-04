@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [2.0.0]
+- added lono cfn subcommand to launch CloudFormation stacks
+- added lono params subcommand to generate CloudFormation parameter files
+- moved lono template methods into subcommand.  lono generate still available at top level.
+
 ## [1.1.4]
 - allow --help or -h at the end of the command
 
