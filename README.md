@@ -316,7 +316,7 @@ $ lono cfn delete my-stack --sure
 
 ### lono cfn preview
 
-If you want to see the CloudFormation preview without updating the stack you can also use the `lono cfn preview` command.  The preview command is also covered in this blog post: [AWS CloudFormation dry-run with lono cfn preview](https://medium.com/boltops/aws-cloudformation-dry-run-with-lono cfn-plan-2a1e0f80d13c)
+If you want to see the CloudFormation preview without updating the stack you can also use the `lono cfn preview` command.  The preview command is also covered in this blog post: [AWS CloudFormation dry-run with lono cfn preview](https://medium.com/boltops/aws-cloudformation-dry-run-with-lono-cfn-plan-2a1e0f80d13c)
 
 ```
 $ lono cfn preview example --template single_instance --params single_instance
