@@ -9,11 +9,12 @@ module Lono
 
     def run
       puts "Setting up lono project" unless options[:quiet]
-      source_root = File.expand_path("../../starter_project_#{@format}", __FILE__)
+      source_root = File.expand_path("../../starter_projects/#{@format}_project", __FILE__)
       paths = Dir.glob("#{source_root}/**/*").
                 select {|p| File.file?(p) }
       paths.each do |src|
-        regexp = Regexp.new(".*starter_project_#{@format}/")
+        # starter_projects/yaml_project/ ->
+        regexp = Regexp.new(".*starter_projects/#{@format}_project/")
         dest = src.gsub(regexp,'')
         dest = "#{@project_root}/#{dest}"
 

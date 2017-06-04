@@ -1,6 +1,6 @@
-require File.expand_path("../../../spec_helper", __FILE__)
+require_relative "../../../spec_helper"
 
-describe Lono::DSL do
+describe Lono::Template::DSL do
   before(:each) do
     @project_root = File.expand_path("../../../../tmp/lono_project", __FILE__)
   end
@@ -20,11 +20,11 @@ describe Lono::DSL do
     end
 
     it "json" do
-      dsl = Lono::DSL.new(
+      dsl = Lono::Template::DSL.new(
         project_root: @project_root,
         quiet: true
       )
-      dsl.evaluate # run the dependent instance_eval and load_subfoler so @templates is assigned
+      dsl.evaluate_templates # run the dependent instance_eval and load_subfoler so @templates is assigned
       detected_format = dsl.detect_format
       expect(detected_format).to eq 'json'
     end
@@ -42,11 +42,11 @@ describe Lono::DSL do
     end
 
     it "yaml" do
-      dsl = Lono::DSL.new(
+      dsl = Lono::Template::DSL.new(
         project_root: @project_root,
         quiet: true
       )
-      dsl.evaluate # run the dependent instance_eval and load_subfoler so @templates is assigned
+      dsl.evaluate_templates # run the dependent instance_eval and load_subfoler so @templates is assigned
       detected_format = dsl.detect_format
       expect(detected_format).to eq 'yaml'
     end
@@ -54,7 +54,7 @@ describe Lono::DSL do
 
   context "multiple format starter project" do
     # it "yaml" do
-    #   dsl = Lono::DSL.new(
+    #   dsl = Lono::Template::DSL.new(
     #     project_root: @project,
     #     quiet: true
     #   )
@@ -73,7 +73,7 @@ describe Lono::DSL do
       )
       new_project.run
 
-      dsl = Lono::DSL.new(
+      dsl = Lono::Template::DSL.new(
         project_root: @project_root,
         quiet: true
       )
@@ -141,7 +141,7 @@ describe Lono::DSL do
 
     it "should transform bash script to CF template user_data" do
       block = Proc.new { }
-      template = Lono::Template.new("foo", block)
+      template = Lono::Template::Template.new("foo", block)
 
       line = 'echo {"Ref"=>"AWS::StackName"} > /tmp/stack_name ; {"Ref"=>"Ami"}'
       data = template.transform(line)
