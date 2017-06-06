@@ -105,6 +105,7 @@ class Lono::Cfn::Base
                 map { |path| path.sub(/\.erb$/, '') }.
                 map { |path| File.extname(path) }.
                 reject { |s| s.empty? }. # reject ""
+                select { |s| s.include?("yml") || s.include?("json") }.
                 uniq
     if formats.size > 1
       puts "ERROR: Detected multiple formats: #{formats.join(", ")}".colorize(:red)
