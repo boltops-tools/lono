@@ -1,4 +1,5 @@
 require "lono"
+require "byebug"
 
 class Lono::Cfn::Base
   include Lono::Cfn::AwsServices
@@ -100,8 +101,8 @@ class Lono::Cfn::Base
 
   # Returns String with value of "yml" or "json".
   def detect_format
-    formats = Dir.glob("#{@project_root}/output/**/*").map { |path| path }.
-                reject { |s| s =~ %r{/params/} }. # reject output/params folder
+    formats = Dir.glob("#{@project_root}/templates/**/*").
+                map { |path| path.sub(/\.erb$/, '') }.
                 map { |path| File.extname(path) }.
                 reject { |s| s.empty? }. # reject ""
                 uniq
@@ -112,7 +113,7 @@ class Lono::Cfn::Base
     elsif formats.size == 1
       formats.first.sub(/^\./,'')
     else
-      puts "WARN: Did not detect any template formats. Defaulting to yml.  Please check the config and templates folders."
+      puts "WARN: Did not detect any template formats. Defaulting to yml.  Please check the config and templates folders.".colorize(:yellow)
       "yml" # default format
     end
   end

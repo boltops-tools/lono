@@ -3,8 +3,7 @@ require 'lono/command'
 
 module Lono
   autoload :Help, 'lono/help'
-
-  class CLI < Command
+  class CLI < Lono::Command
 
     desc "new [NAME]", "Generates lono starter project"
     Help.new_long_desc
@@ -25,6 +24,11 @@ module Lono
       puts "Generating both CloudFormation template and parameter files."
       Lono::Template::DSL.new(options.clone).run
       Lono::Param::Generator.generate_all(options.clone)
+    end
+
+    desc "clean", "Clean up generated files"
+    def clean
+      Lono::Clean.new(options.clone).run
     end
 
     desc "version", "Prints version"

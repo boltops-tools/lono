@@ -19,4 +19,5 @@ module Lono
   autoload :Template, 'lono/template'
   autoload :Cfn, 'lono/cfn'
   autoload :Param, 'lono/param'
+  autoload :Clean, 'lono/clean'
 end
