@@ -10,10 +10,10 @@ class Lono::Cfn::Base
     @project_root = options[:project_root] || '.'
     Lono::ProjectChecker.check(@project_root) unless options[:lono] # already ran checker in lono generate
 
-    template_name = options[:template] || @stack_name
-    param_name = options[:param] || template_name
-    @template_path = get_source_path(template_name, :template)
-    @param_path = get_source_path(param_name, :param)
+    @template_name = options[:template] || @stack_name
+    @param_name = options[:param] || @template_name
+    @template_path = get_source_path(@template_name, :template)
+    @param_path = get_source_path(@param_name, :param)
     puts "Using template: #{@template_path}" unless @options[:mute_using]
     puts "Using parameters: #{@param_path}" unless @options[:mute_using]
   end
@@ -42,7 +42,7 @@ class Lono::Cfn::Base
       path: @param_path,
       allow_no_file: true
     }.merge(options)
-    generator = Lono::Param::Generator.new(@stack_name, generator_options)
+    generator = Lono::Param::Generator.new(@param_name, generator_options)
     generator.generate  # Writes the json file in CamelCase keys format
     generator.params    # Returns Array in underscore keys format
   end
