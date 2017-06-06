@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [2.0.3]
+- fix param generation with cfn preview when stack name is different from param name
+
 ## [2.0.2]
 - fix starter project param files
 
