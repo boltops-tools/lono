@@ -2,6 +2,11 @@ class Lono::Cfn::Diff < Lono::Cfn::Base
   include Lono::Cfn::AwsServices
 
   def run
+    unless stack_exists?(@stack_name)
+      puts "WARN: Cannot create a diff for the stack because the #{@stack_name} does not exists.".colorize(:yellow)
+      return
+    end
+
     if @options[:noop]
       puts "NOOP Generating CloudFormation source code diff..."
     else

@@ -5,20 +5,20 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
       puts "NOOP CloudFormation preview for #{@stack_name} update"
     else
       params = generate_all
-      preview_change_set(params)
-      delete_change_set unless @options[:keep] # Clean up and delete the change set
+      success = preview_change_set(params)
+      delete_change_set if success && !@options[:keep] # Clean up and delete the change set
     end
   end
 
   def preview_change_set(params)
-    create_change_set(params)
-    display_change_set
+    success = create_change_set(params)
+    display_change_set if success
   end
 
   def create_change_set(params)
     unless stack_exists?(@stack_name)
-      puts "Cannot create a change set for the stack because the #{@stack_name} does not exists."
-      return
+      puts "WARN: Cannot create a change set for the stack because the #{@stack_name} does not exists.".colorize(:yellow)
+      return false
     end
     exist_unless_updatable(stack_status(@stack_name))
 
@@ -39,6 +39,7 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
     #     raise
     #   end
     # end
+    true
   end
 
   def display_change_set
