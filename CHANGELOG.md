@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [2.0.4]
+- cfn preview: exit gracefully when stack doesnt exist
+- exit gracefully with ctrl-c
+
 ## [2.0.3]
 - fix param generation with cfn preview when stack name is different from param name
 
