@@ -2,10 +2,10 @@
 title: Preview the Stack
 ---
 
-You can also preview the stack changes with `lono cfn preview`.  Here's an example:
+You can also preview the stack changes with `lono cfn preview` without running an update.  Here's an example:
 
 ```sh
-lono cfn create example --template instance_and_route53
+lono cfn preview example --template instance_and_route53
 ```
 
 The output shoud look similar to this:

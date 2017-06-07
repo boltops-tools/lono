@@ -2,7 +2,13 @@
 title: Build from Existing Template
 ---
 
-If you already have an existing CloudFormation template and would like to add it to a lono project it is a straightforward process.  We will use `lono new` to get quickly up and running.
+If you already have an existing CloudFormation template and would like to add it to a lono project it is a straightforward process.  A summary of the process:
+
+1. Download template and move it into the templates folder
+2. Create a params file associated with downloaded stack
+3. Add a template declaration to `config/lono.rb`
+
+We will use `lono new` to get quickly up and running.
 
 ```sh
 lono new infra
@@ -17,7 +23,7 @@ For this example, I'm going to download the [Load-based auto scaling](http://doc
 curl -o "asg.json" https://s3.amazonaws.com/cloudformation-templates-us-east-1/AutoScalingMultiAZWithNotifications.template
 ```
 
-You can use either the download json format or convert it to yaml with this command:
+You can use either the downloaded json format or convert it to yaml with this command:
 
 ```sh
 ruby -ryaml -rjson -e 'puts YAML.dump(JSON.load(ARGF))' < asg.json > templates/asg.yml.erb
@@ -27,18 +33,29 @@ Notice that you named the template with a `.erb` extension.
 
 #### Inspect Template Parameters
 
-Before deleting the `asg.json` file let's `jq` to inspect the parameter values.
+Before deleting the `asg.json` file let's use it and `jq` to inspect the possible parameter that the CloudFormation expects.
 
 ```sh
-$ cat templates/asg.json | jq -r '.Parameters | to_entries[] | {name: .key, default: .value.Default} | select(.default == null) | .name'
+$ cat asg.json | jq -r '.Parameters | to_entries[] | {name: .key, default: .value.Default} | select(.default == null) | .name'
 VpcId
 Subnets
 OperatorEMail
 KeyName
-$ rm -f asg.json
 ```
 
-With this info, we can now create a lono params file.  Your `params/asg.txt` file should look similar to this:
+Let's create a starter `params/asg.txt` file.
+
+```sh
+cat asg.json | jq -r '.Parameters | to_entries[] | {name: .key, default: .value.Default} | select(.default == null) | .name' | sed 's/$/=/' > params/asg.txt
+```
+
+We no longer need the `asg.json` file so we'll delete it:
+
+```sh
+rm -f asg.json
+```
+
+Now we can create a lono params file.  Your `params/asg.txt` file should look similar to this:  Substitute the values from your own AWS account.
 
 ```
 VpcId=vpc-427d5123 # should use your real vpc

@@ -143,6 +143,7 @@ ul.tools li {
     border-top: thin solid white;
     border-bottom: thin solid white;
     padding: 20px 0;
+    margin-top: 80px;
 }
 
 .edit-on-github h2,

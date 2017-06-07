@@ -23,7 +23,7 @@ The output should look similiar to this:
 
 <img src="/img/tutorial/cfn-update.png" alt="Stack Update" class="doc-photo">
 
-Notice that before the update gets performed lono provides a preview of the changes that are about to take place. There are actually types of "diffs" in previews.
+Notice that before the update gets performed lono provides a preview of the changes that are about to take place. There are actually two types of "diffs" in the previews.
 
 1. Source code diff of the templates. This is generated via downloading the current CloudFormation template and comparing it with the locally genreated one using `diff`.
 2. CloudFormation Change Set list of changes. This is generated using [AWS CloudFormation Change Set](https://medium.com/boltops/a-simple-introduction-to-cloudformation-part-4-change-sets-dry-run-mode-c14e41dfeab7) feature.

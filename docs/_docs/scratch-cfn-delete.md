@@ -12,7 +12,7 @@ Deleted example stack.
 $
 ```
 
-Lono prompts with an "Are you sure?" message before the stack gets deleted.  If you would like to bypass the prompt, you can use the `--sure` flag.
+Lono prompts you with an "Are you sure?" message before the stack gets deleted.  If you would like to bypass the prompt, you can use the `--sure` flag.
 
 ```
 $ lono cfn delete example --sure
