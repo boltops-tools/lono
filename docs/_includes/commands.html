@@ -1,0 +1,73 @@
+ <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Commands</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="commands">
+{% highlight sh %}
+lono new infra
+
+lono generate
+
+lono cfn create
+
+lono cfn update
+
+lono cfn preview
+
+lono cfn delete
+{% endhighlight %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-5 col-lg-offset-1">
+                    <p><code>config/lono.rb</code>:
+{% highlight ruby %}
+template "single_instance.yml" do
+  source "instance.yml.erb"
+end
+
+template "instance_and_route53.yml" do
+  source "instance.yml.erb"
+  variables(
+    route53: true
+  )
+end
+{% endhighlight %}
+                    </p>
+                </div>
+                <div class="col-lg-5">
+                    <p><code>templates/example.yml.erb</code>:
+{% highlight yaml %}
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+<% if @route53 %>
+  DnsRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: !Ref 'HostedZoneName'
+      Comment: DNS name for my instance.
+      Name: !Ref 'Subdomain'
+      Type: CNAME
+      TTL: '900'
+      ResourceRecords:
+      - !GetAtt EC2Instance.PublicIp
+<% end %>
+Outputs:
+  InstanceId:
+    Description: InstanceId of the EC2 instance
+{% endhighlight %}
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
