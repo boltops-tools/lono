@@ -8,9 +8,11 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Lono is a CloudFormation Template ruby generator.  Lono generates CloudFormation templates based on ERB templates.}
   gem.homepage      = "http://github.com/tongueroo/lono"
 
-  gem.files         = `git ls-files`.split($\) + Dir.glob("vendor/**/*")
+  files = `git ls-files`.split($\) + Dir.glob("vendor/**/*")
+  files = files.reject { |p| p =~ /^docs/ }
+  gem.files         = files
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
+  gem.test_files    = gem.files.grep(%r{^(test|spec|features|docs)/})
   gem.name          = "lono"
   gem.require_paths = ["lib"]
   gem.version       = Lono::VERSION
