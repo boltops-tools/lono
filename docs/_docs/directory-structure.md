@@ -2,7 +2,7 @@
 title: Directory Structure
 ---
 
-A basic lono project usually likes something like this:
+A basic lono project usually looks something like this:
 
 ```sh
 .
