@@ -17,7 +17,7 @@ template "instance_and_route53.yml" do
 end
 ```
 
-This will tell lono to generate 2 CloudFormation template to the output folder using `templates/instance.yml.erb`.  We will generate the templates in the next step.
+This will tell lono to generate 2 CloudFormation templates to the output folder using `templates/instance.yml.erb`.  We will generate the templates in the next step.
 
 <a class="btn btn-basic" href="/docs/scratch-template-build/">Back</a>
 <a class="btn btn-primary" href="/docs/scratch-template-generate/">Next Step</a>
