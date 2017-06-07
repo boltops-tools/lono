@@ -1,5 +1,5 @@
 ---
-title: Quick Start Guide
+title: Quick Start
 ---
 
 In a hurry? No problem!  Here's a quick start to using lono that takes only a few minutes.  The commands below launches a CloudFormation stack.  It's that simple.
