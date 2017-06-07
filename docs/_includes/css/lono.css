@@ -137,3 +137,17 @@ ul.tools li {
     color: #fff;
     background-color: #{{ site.data.template.color.primary }};
 }
+
+.edit-on-github {
+    font-size: 0.9em;
+    border-top: thin solid white;
+    border-bottom: thin solid white;
+    padding: 20px 0;
+}
+
+.edit-on-github h2,
+.edit-on-github p,
+.edit-on-github li {
+    font-size: 1.5em;
+}
+
