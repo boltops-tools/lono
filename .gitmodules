@@ -1,3 +1,3 @@
 [submodule "vendor/plissken"]
 	path = vendor/plissken
-	url = git@github.com:tongueroo/plissken.git
+	url = https://github.com/tongueroo/plissken.git
