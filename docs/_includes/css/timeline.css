@@ -68,8 +68,8 @@
 }
 
 .timeline>li .timeline-image h4 {
-    margin-top: 12px;
-    font-size: 10px;
+    margin-top: 26px;
+    font-size: 18px;
     line-height: 14px;
 }
 
@@ -136,8 +136,8 @@
     }
 
     .timeline>li .timeline-image h4 {
-        margin-top: 16px;
-        font-size: 13px;
+        margin-top: 32px;
+        font-size: 20px;
         line-height: 18px;
     }
 
@@ -164,8 +164,8 @@
     }
 
     .timeline>li .timeline-image h4 {
-        margin-top: 30px;
-        font-size: 18px;
+        margin-top: 55px;
+        font-size: 38px;
         line-height: 26px;
     }
 
@@ -190,7 +190,9 @@
     }
 
     .timeline>li .timeline-image h4 {
-        margin-top: 40px;
+        /*margin-top: 40px;*/
+        margin-top: 65px;
+        font-size: 42px;
     }
 
     .timeline>li.timeline-inverted>.timeline-panel {
