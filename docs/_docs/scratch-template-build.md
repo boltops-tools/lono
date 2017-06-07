@@ -15,7 +15,7 @@ mv instance.yml.erb templates/instance.yml.erb
 
 The starter template that was created above is more powerful than a standard CloudFormation template.  It is an ERB template which means it can contain loops, if statements and variables. Here is a good post covering ERB templates [An Introduction to ERB Templating](http://www.stuartellis.name/articles/erb/).
 
-Let's take a look at some of the variables in our template.  Variables available in the templates are indicated by a '@' character.  So we can get a quick overview of them by searching for them with grep.
+Let's take a look at some of the variables in our template.  Variables available in the templates are indicated by a '@' character.  We can get a quick overview of them by searching for them with grep.
 
 ```sh
 $ grep '@' templates/instance.yml.erb
