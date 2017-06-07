@@ -11,15 +11,6 @@ KeyName=tutorial
 InstanceType=t2.micro
 ```
 
-Next add the following to your `params/instance_with_route53.txt` file.
-
-```sh
-KeyName=tutorial
-InstanceType=t2.micro
-HostedZoneName=subdomain.example.local.
-Subdomain=testsubdomain
-```
-
 NOTE: This example uses a `tutorial` ssh keypair that allows you to log into the instance. You must create the keypair first before you are able to launch the stack.
 
 NOTE: Also you need to create the stack.local HostZoneName first.
@@ -41,7 +32,6 @@ Generating CloudFormation templates:
   output/single_instance.yml
   output/instance_and_route53.yml
 Generating params files
-Params file generated for instance_with_route53 at output/params/instance_with_route53.json
 Params file generated for single_instance at output/params/single_instance.json
 $
 ```

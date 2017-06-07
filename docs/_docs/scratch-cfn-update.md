@@ -2,20 +2,31 @@
 title: Update the Stack
 ---
 
-Let's add a route53 record to the template and update the stack. We will do this by specifying the `--template` option to use instance_and_route as the template and parameter files instead of single_instance.  Run the following command:
+Let's add a route53 record to the template and update the stack.
+
+First, create an additional params file at `params/instance_with_route53.txt` and add the following to it:
+
+```sh
+KeyName=tutorial
+InstanceType=t2.micro
+HostedZoneName=subdomain.example.local.
+Subdomain=testsubdomain
+```
+
+Now we can update the stack by using the `--template instance_and_route` .  Run the following command:
 
 ```sh
 lono cfn update example --template instance_and_route53
 ```
 
-The output show look similiar to this:
+The output should look similiar to this:
 
 <img src="/img/tutorial/cfn-update.png" alt="Stack Update" class="doc-photo">
 
-Notice that before the update gets performed lono provides a preview of the changes that are about to take place. There are actually types of previews.
+Notice that before the update gets performed lono provides a preview of the changes that are about to take place. There are actually types of "diffs" in previews.
 
-1. Source code diff of the old existing template vs the new generated template
-2. CloudFormation Change Set list of changes.
+1. Source code diff of the templates. This is generated via downloading the current CloudFormation template and comparing it with the locally genreated one using `diff`.
+2. CloudFormation Change Set list of changes. This is generated using [AWS CloudFormation Change Set](https://medium.com/boltops/a-simple-introduction-to-cloudformation-part-4-change-sets-dry-run-mode-c14e41dfeab7) feature.
 
 You are prompted with an "Are you sure?" confirmation before lono continues.
 
