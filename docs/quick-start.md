@@ -9,7 +9,7 @@ brew tap boltopslabs/boltops
 brew cask install bolts
 lono new infra
 cd infra
-lono cfn create example-stack
+lono cfn create example
 {% endhighlight %}
 
 Check out the newly launch stack in the AWS console:
