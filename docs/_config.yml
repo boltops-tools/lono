@@ -37,6 +37,8 @@ footer:
   location: San Francisco, CA
   social: BoltOps
   credits:
+  contact: contact@boltops.com
+  phone:
 
 # Social networks usernames (many more available: google-plus, flickr, dribbble, pinterest, instagram, tumblr, linkedin, etc.)
 social:
@@ -46,7 +48,7 @@ social:
     url: http://github.com/boltopslabs
 
 # Credits content
-credits: 'BoltOps, LLC'
+credits:
 
 # Build settings
 markdown: kramdown
