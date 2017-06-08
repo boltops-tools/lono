@@ -9,7 +9,7 @@ Lono is a tool to help you easily manage your CloudFormation templates.  Lono is
 {:.overview-stages}
 1. The first stage of lono is you crafting and writing the CloudFormation templates. Once you are ready then you generate the templates with `lono generate`.
 2. You then specify the desired parameters that you want the CloudFormation template to launch with. You do this with simple env-like params files. It's easy on the eye.
-3. Lono puts it all together and launches the stack for you! It takes what is normally complicated multiple step process and simpifies it down to a single command.
+3. Lono puts it all together and launches the stack for you! It takes what is normally complicated multiple step process and simpifies it down to a single command: `lono cfn create`.
 
 
 Here is a overview of how lono works.
