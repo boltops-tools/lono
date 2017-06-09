@@ -1,8 +1,10 @@
+ENV['TEST'] = '1'
+# Ensures aws api never called. Fixture home folder does not contain ~/.aws/credentails
+ENV['HOME'] = "spec/fixtures/home"
+
 require "pp"
 require "byebug"
 require "bundler"
-
-ENV['TEST'] = '1'
 
 Bundler.require(:development)
 
