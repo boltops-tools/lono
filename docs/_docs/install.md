@@ -26,5 +26,5 @@ Or you can add lono to your Gemfile in your project if you are working with a ru
 gem "lono"
 {% endhighlight %}
 
-<a class="btn btn-basic" href="/quick-start/">Back</a>
+<a class="btn btn-basic" href="{% link docs.md %}">Back</a>
 <a class="btn btn-primary" href="{% link _docs/directory-structure.md %}">Next Step</a>

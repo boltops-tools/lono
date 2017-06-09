@@ -4,15 +4,15 @@ title: Docs
 
 ### Overview
 
-Lono is a tool to help you easily manage your CloudFormation templates.  Lono is a part of the entire lifecyle. It starts with helping you craft of the templates and helps you all the way to end when you provision of the infrastructure.
+Lono is a tool to help you easily manage your CloudFormation templates.  Lono handles the entire CloudFormation lifecyle. It starts with helping you craft of the templates and helps you all the way to end when you provision of the infrastructure.
 
 {:.overview-stages}
-1. The first stage of lono is you crafting and writing the CloudFormation templates. Once you are ready then you generate the templates with `lono generate`.
-2. You then specify the desired parameters that you want the CloudFormation template to launch with. You do this with simple env-like params files. It's easy on the eye.
-3. Lono puts it all together and launches the stack for you! It takes what is normally complicated multiple step process and simpifies it down to a single command: `lono cfn create`.
+1. The first stage of lono is you crafting and writing the CloudFormation templates. Lono enables you to write your CloudFormation templates in an ERB templating language and provides useful helper methods. Once you are ready then you generate the templates with `lono generate`.
+2. You then specify the desired parameters that you want the CloudFormation template to launch with. You do this with simple env-like params files. The format is easy on the eye.
+3. Lono puts it all together in and the end and launches the stack for you! It takes what is normally a complicated multiple step process and simpifies it down to a single command: `lono cfn create`.
 
 
-Here is a overview of how lono works.
+Here is a diagram of how lono works.
 
 <img src="/img/tutorial/lono-flowchart.png" alt="Stack Created" class="doc-photo lono-flowchart">
 
