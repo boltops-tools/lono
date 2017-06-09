@@ -17,4 +17,4 @@ Check out the newly launch stack in the AWS console:
 
 Congratulations!  You have successfully created a CloudFormation stack with lono. It was really that simple 😁
 
-<a class="btn btn-primary" href="{% link _docs/install.md %}">Next Step</a>
+<a class="btn btn-primary" href="{% link docs.md %}">Next Step</a>
