@@ -11,3 +11,6 @@ Name  | Description
 [Docker Daemon]()  | Spins up a Docker remote daemon and automaticaly generates the certs for you encrypting and storing them in s3.
 
 If you would like to add any to this list please free to do so by editing this page!
+
+<a class="btn btn-basic" href="{% link _docs/next-steps.md %}">Back</a>
+<a class="btn btn-primary" href="{% link articles.md %}">Next Step</a>

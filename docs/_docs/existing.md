@@ -85,4 +85,4 @@ $ lono cfn create asg
 Congratulations! 🍾 You have successfully added an existing CloudFormation template to a lono project.
 
 <a class="btn btn-basic" href="{% link _docs/directory-structure.md %}">Back</a>
-<a class="btn btn-primary" href="{% link examples.md %}">Next Step</a>
+<a class="btn btn-primary" href="{% link _docs/next-steps.md %}">Next Step</a>
