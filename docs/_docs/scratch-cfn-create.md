@@ -30,5 +30,7 @@ You can check on the status of the stack creation with the AWS Console.  It shou
 
 Congratulations!  You have successfully created a CloudFormation stack with lono.  In the next steps you'll see that lono has some useful commands to help you update the templates.
 
-<a class="btn btn-basic" href="{% link _docs/scratch-params-build.md %}">Back</a>
-<a class="btn btn-primary" href="{% link _docs/scratch-cfn-update.md %}">Next Step</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/scratch-params-build.md %}">Back</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/scratch-cfn-update.md %}">Next Step</a>
+<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
+

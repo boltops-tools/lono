@@ -167,3 +167,13 @@ ul.tools li {
 .use-cases li {
     margin-bottom: 15px;
 }
+
+.keyboard-tip {
+    display: none;
+}
+@media(min-width:992px) {
+    .keyboard-tip {
+        display: block;
+        font-size: 0.9em;
+    }
+}

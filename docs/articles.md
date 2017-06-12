@@ -8,3 +8,5 @@ title: Articles
 * [AutoScaling CloudFormation Template with Lono](https://medium.com/boltops/autoscaling-cloudformation-template-with-lono-3dc520480c5f)
 * [Easily Manage CloudFormation Templates with lono cfn](https://medium.com/boltops/cloudformation-tools-lono-lono-params-and-lono-cfn-play-together-620af51e616)
 * [AWS CloudFormation dry-run with lono cfn preview](https://medium.com/boltops/aws-cloudformation-dry-run-with-lono-cfn-plan-2a1e0f80d13c)
+
+<a id="prev" class="btn btn-basic" href="{% link examples.md %}">Back</a>

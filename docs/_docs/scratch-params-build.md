@@ -53,5 +53,7 @@ Let's take a look at one of the `output/params/single_instance.json` files:
 
 The simple `params/single_instance.txt` has been converted to the CloudFormation parameter file format.
 
-<a class="btn btn-basic" href="{% link _docs/scratch-template-generate.md %}">Back</a>
-<a class="btn btn-primary" href="{% link _docs/scratch-cfn-create.md %}">Next Step</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/scratch-template-generate.md %}">Back</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/scratch-cfn-create.md %}">Next Step</a>
+<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
+

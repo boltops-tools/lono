@@ -22,5 +22,7 @@ $
 
 Congratulations! 🎉 You have successfully created a lono project from scratch!
 
-<a class="btn btn-basic" href="{% link _docs/scratch-cfn-preview.md %}">Back</a>
-<a class="btn btn-primary" href="{% link _docs/new.md %}">Next Step</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/scratch-cfn-preview.md %}">Back</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/new.md %}">Next Step</a>
+<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
+

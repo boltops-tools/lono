@@ -56,5 +56,7 @@ $
 
 So in this downloaded template, there's an `<% if @route53 %>` block of code that will add some extra code when the `@route53` variable is `true`.  The `@route53` variable controls whether or not route53 logic is added to final generated CloudFormation template.  Let's move onto the template configuration to see how to set the @route53 variable.
 
-<a class="btn btn-basic" href="{% link _docs/scratch.md %}">Back</a>
-<a class="btn btn-primary" href="{% link _docs/scratch-template-config.md %}">Next Step</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/scratch.md %}">Back</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/scratch-template-config.md %}">Next Step</a>
+<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
+

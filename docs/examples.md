@@ -12,5 +12,7 @@ Name  | Description
 
 If you would like to add any to this list please free to do so by editing this page!
 
-<a class="btn btn-basic" href="{% link _docs/next-steps.md %}">Back</a>
-<a class="btn btn-primary" href="{% link articles.md %}">Next Step</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/next-steps.md %}">Back</a>
+<a id="next" class="btn btn-primary" href="{% link articles.md %}">Next Step</a>
+<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
+

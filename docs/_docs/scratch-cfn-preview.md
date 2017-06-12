@@ -12,5 +12,7 @@ The output shoud look similar to this:
 
 <img src="/img/tutorial/cfn-preview.png" alt="Stack Preview" class="doc-photo">
 
-<a class="btn btn-basic" href="{% link _docs/scratch-cfn-update.md %}">Back</a>
-<a class="btn btn-primary" href="{% link _docs/scratch-cfn-delete.md %}">Next Step</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/scratch-cfn-update.md %}">Back</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/scratch-cfn-delete.md %}">Next Step</a>
+<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
+
