@@ -16,9 +16,43 @@ class Lono::Template::DSL
   end
 
   def evaluate_templates
-    instance_eval(File.read(@path), @path)
+    evaluate_template(@path)
     load_subfolder
     @detected_format = detect_format
+  end
+
+  def evaluate_template(path)
+    begin
+      instance_eval(File.read(path), path)
+    rescue Exception => e
+      template_evaluation_error(e)
+      puts "\nFull error:"
+      raise
+    end
+  end
+
+  # Prints out a user friendly task_definition error message
+  def template_evaluation_error(e)
+    error_info = e.backtrace.first
+    path, line_no, _ = error_info.split(':')
+    line_no = line_no.to_i
+    puts "Error evaluating #{path}:".colorize(:red)
+    puts e.message
+    puts "Here's the line in #{path} with the error:\n\n"
+
+    contents = IO.read(path)
+    content_lines = contents.split("\n")
+    context = 5 # lines of context
+    top, bottom = [line_no-context-1, 0].max, line_no+context-1
+    spacing = content_lines.size.to_s.size
+    content_lines[top..bottom].each_with_index do |line_content, index|
+      line_number = top+index+1
+      if line_number == line_no
+        printf("%#{spacing}d %s\n".colorize(:red), line_number, line_content)
+      else
+        printf("%#{spacing}d %s\n", line_number, line_content)
+      end
+    end
   end
 
   # Detects the format of the templates.  Simply checks the extension of all the
@@ -48,7 +82,7 @@ class Lono::Template::DSL
   # load any templates defined in project/config/lono/*
   def load_subfolder
     Dir.glob("#{File.dirname(@path)}/lono/**/*").select{ |e| File.file? e }.each do |path|
-      instance_eval(File.read(path), path)
+      evaluate_template(path)
     end
   end
 
