@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [2.1.0]
+- improve instance_eval error when lono.rb errors, print out line of code and context
+
 ## [2.0.5]
 - add example template to starter app
 - add docs website
