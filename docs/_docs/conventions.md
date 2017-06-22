@@ -46,5 +46,5 @@ $ lono cfn create my-stack --template different-name3 --param different-name4
 The template that will be use is `output/different-name3.json` and the parameters that will use `param/different-name4.json`.
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/existing.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/lono-help.md %}">Next Step</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/template-helpers.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

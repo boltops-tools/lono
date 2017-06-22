@@ -4,7 +4,7 @@ title: Build the Params
 
 #### Create the params files
 
-With lono you can specify CloudFormation parameters in a concise env-like file.  Add the folowing to your `params/single_instance.txt` file.
+With lono you can specify CloudFormation parameters with simple formatted `key=value` env-like file.  Add the folowing to your `params/single_instance.txt` file.
 
 ```sh
 KeyName=tutorial

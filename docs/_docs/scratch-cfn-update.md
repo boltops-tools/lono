@@ -30,6 +30,12 @@ Notice that before the update gets performed lono provides a preview of the chan
 
 You are prompted with an "Are you sure?" confirmation before lono continues.
 
+By default the update command will display a preview of the stack changes before applying the update and prompt to check if you are sure.  If you want to bypass the are you sure prompt, use the `--sure` option.
+
+```
+lono cfn update example --template instance_and_route53 --sure
+```
+
 <a id="prev" class="btn btn-basic" href="{% link _docs/scratch-cfn-create.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/scratch-cfn-preview.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

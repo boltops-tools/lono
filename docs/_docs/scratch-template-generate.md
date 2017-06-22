@@ -20,7 +20,92 @@ Generating params files
 $
 ```
 
-Take a look at the generated CloudFormation templates in the output folder and compare them.  You will notice that the route53 logic is in the `instance_with_route53.yml` file and is not in the `single_instance.yml` file.  A quick way to see this is with th `diff` or `colordiff` command.
+The `lono generate` command combines the configuration from `config/lono.rb` and template from `templates/instance.yml.erb` and generates 2 CloudFormation templates in the `output` folder.
+
+Here's the `templates/instance.yml.erb` ERB template. Note that some of the source code has been shorten for brevity.
+
+```yaml
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'AWS CloudFormation Sample Template EC2InstanceWithSecurityGroupSample:
+...
+Parameters:
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
+    Type: AWS::EC2::KeyPair::KeyName
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+  InstanceType:
+    Description: WebServer EC2 instance type
+...
+<% if @route53 %>
+  HostedZoneName:
+    Description: The route53 HostedZoneName. For example, "mydomain.com."  Don't forget the period at the end.
+    Type: String
+  Subdomain:
+    Description: The subdomain of the dns entry. For example, hello -> hello.mydomain.com, hello is the subdomain.
+    Type: String
+<% end %>
+...
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType:
+        Ref: InstanceType
+...
+```
+
+Here's the `config/lono.rb` configuration:
+
+```ruby
+template "single_instance.yml" do
+  source "instance.yml.erb"
+end
+
+template "instance_and_route53.yml" do
+  source "instance.yml.erb"
+  variables(
+    route53: true
+  )
+end
+```
+
+And here is one of the output templates `output/instance_and_route53.yml`. Note that some of the source code has been shorten for brevity.
+
+```yaml
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'AWS CloudFormation Sample Template EC2InstanceWithSecurityGroupSample:
+Parameters:
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
+    Type: AWS::EC2::KeyPair::KeyName
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType:
+        Ref: InstanceType
+...
+  DnsRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: !Ref 'HostedZoneName'
+      Comment: DNS name for my instance.
+      Name: !Join ['', [!Ref 'Subdomain', ., !Ref 'HostedZoneName']]
+      Type: CNAME
+      TTL: '900'
+      ResourceRecords:
+      - !GetAtt EC2Instance.PublicIp
+...
+```
+
+You can use the generated CloudFormation templates in the `output` folder just as you would a normal CloudFormation template.  Here's a flow chart of the overall process.
+
+<img src="/img/tutorial/lono-flowchart.png" alt="Stack Created" class="doc-photo lono-flowchart">
+
+Let's also compare the generated `instance_with_route53.yml` and `single_instance.yml` CloudFormation templates files in the output folder.  You will notice that the route53 logic is only one of the files.  A quick way to see this is with th `diff` or `colordiff` command.
 
 ```
 $ diff output/single_instance.yml output/instance_and_route53.yml
