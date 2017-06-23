@@ -10,3 +10,6 @@
     <script src="/js/new-age.min.js"></script>
     <script src="/js/nav.js"></script>
 
+    {% if site.google_analytics and jekyll.environment == "production" %}
+    {% include google_analytics.html %}
+    {% endif %}
