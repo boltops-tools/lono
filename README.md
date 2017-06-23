@@ -1,5 +1,7 @@
 # Lono
 
+[![Join the chat at https://gitter.im/tongueroo/lono](https://badges.gitter.im/tongueroo/lono.svg)](https://gitter.im/tongueroo/lono?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![ReadmeCI](http://www.readmeci.com/images/readmeci-badge.svg)](http://www.readmeci.com/tongueroo/lono)
 [![Gem Version](https://badge.fury.io/rb/lono.png)](http://badge.fury.io/rb/lono)
 [![CircleCI](https://circleci.com/gh/tongueroo/lono.svg?style=svg)](https://circleci.com/gh/tongueroo/lono)
