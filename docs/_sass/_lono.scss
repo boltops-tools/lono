@@ -1,3 +1,20 @@
+.homepage-logo {
+    width: 60%;
+    margin: auto;
+    text-align: center;
+    display: block;
+    padding-bottom: 30px;
+
+    @media (min-width: 575px) {
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        max-width: none;
+        margin: 0;
+        transform: translateY(-50%);
+    }
+}
+
 pre {
     background-color: #ecf0f1;
     padding: 10px;
