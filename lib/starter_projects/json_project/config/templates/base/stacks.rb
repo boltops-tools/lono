@@ -1,5 +1,5 @@
-template "api-web-prod.json" do
-  source "web.json.erb"
+template "api-web-prod" do
+  source "web"
   variables(
     ami: "ami-123",
     instance_type: "t2.small",
@@ -16,8 +16,8 @@ template "api-web-prod.json" do
   )
 end
 
-template "api-worker-prod.json" do
-  source "web.json.erb"
+template "api-worker-prod" do
+  source "web"
   variables(
     ami: "ami-123",
     instance_type: "t2.small",
@@ -30,13 +30,13 @@ template "api-worker-prod.json" do
     min_size: "6",
     down_adjustment: "-3",
     up_adjustment: "3",
-    user_data_script: "ruby_script.rb.erb",
+    user_data_script: "ruby_script.rb",
     ssl_cert: "arn:aws:iam::12345:server-certificate/wildcard"
   )
 end
 
-template "api-redis-prod.json" do
-  source "db.json.erb"
+template "api-redis-prod" do
+  source "db"
   variables(
     ami: "ami-456",
     instance_type: "t2.small",
@@ -46,8 +46,8 @@ template "api-redis-prod.json" do
   )
 end
 
-template "parent/db-stack.json" do
-  source "db.json.erb"
+template "parent/db-stack" do
+  source "db"
   variables(
     ami: "ami-456",
     instance_type: "t2.small",

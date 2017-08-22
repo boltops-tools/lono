@@ -2,7 +2,7 @@ class Lono::Template::DSL
   def initialize(options={})
     @options = options
     @project_root = @options[:project_root] || '.'
-    @path = "#{@project_root}/config/lono.rb"
+    @config_path = "#{@project_root}/config"
     Lono::ProjectChecker.check(@project_root)
     @templates = []
     @results = {}
@@ -15,10 +15,21 @@ class Lono::Template::DSL
     write_output
   end
 
+  # Instance eval's all the files within each folder under
+  #   config/lono/base and config/lono/[LONO_ENV]
+  # Base gets base first and then the LONO_ENV configs get evaluate second.
+  # This means the env specific configs override the base configs.
   def evaluate_templates
-    evaluate_template(@path)
-    load_subfolder
+    evaluate_folder("base")
+    evaluate_folder(LONO_ENV)
     @detected_format = detect_format
+  end
+
+  def evaluate_folder(folder)
+    paths = Dir.glob("#{@config_path}/templates/#{folder}/**/*")
+    paths.select{ |e| File.file?(e) }.each do |path|
+      evaluate_template(path)
+    end
   end
 
   def evaluate_template(path)
@@ -55,35 +66,14 @@ class Lono::Template::DSL
     end
   end
 
-  # Detects the format of the templates.  Simply checks the extension of all the
+  # Detects the format of the templates.  Checks the extension of all the
   # templates files.
   # All the templates must be of the same format, either all json or all yaml.
   def detect_format
-    # @templates contains Array of Hashes. Example:
-    # [{name: ""blog-web-prod.json", block: ...},
-    #  {name: ""api-web-prod.json", block: ...}]
-    formats = @templates.map{ |t| File.extname(t[:name]) }.uniq
-    if formats.size > 1
-      puts "ERROR: Detected multiple formats: #{formats.join(", ")}".colorize(:red)
-      puts "All the source values in the template blocks in the config folder must have the same format extension."
-      exit 1
-    else
-      found_format = formats.first
-      if found_format
-        detected_format = found_format.sub(/^\./,'')
-        detected_format = "yaml" if detected_format == "yml"
-      else # empty templates, no templates defined yet
-        detected_format = "yaml" # defaults to yaml
-      end
-    end
-    detected_format
-  end
-
-  # load any templates defined in project/config/lono/*
-  def load_subfolder
-    Dir.glob("#{File.dirname(@path)}/lono/**/*").select{ |e| File.file? e }.each do |path|
-      evaluate_template(path)
-    end
+    extensions = Dir.glob("#{@project_root}/templates/**/*").map do |path|
+      File.extname(path).sub(/^\./,'')
+    end.reject(&:empty?).uniq
+    extensions.include?('yml') ? 'yml' : 'json' # defaults to yml - falls back to json
   end
 
   def template(name, &block)
@@ -91,8 +81,9 @@ class Lono::Template::DSL
   end
 
   def build_templates
+    options = @options.merge(detected_format: @detected_format)
     @templates.each do |t|
-      @results[t[:name]] = Lono::Template::Template.new(t[:name], t[:block], @options).build
+      @results[t[:name]] = Lono::Template::Template.new(t[:name], t[:block], options).build
     end
   end
 
@@ -102,7 +93,8 @@ class Lono::Template::DSL
     FileUtils.mkdir(output_path) unless File.exist?(output_path)
     puts "Generating CloudFormation templates:" unless @options[:quiet]
     @results.each do |name,text|
-      path = "#{output_path}/#{name}".sub(/^\.\//,'')
+      path = "#{output_path}/#{name}".sub(/^\.\//,'') # strip leading '.'
+      path += ".#{@detected_format}"
       puts "  #{path}" unless @options[:quiet]
       ensure_parent_dir(path)
       validate(text, path)
@@ -112,7 +104,6 @@ class Lono::Template::DSL
     end
   end
 
-  # TODO: set @detected_format upon DSL.new
   def validate(text, path)
     if @detected_format == "json"
       validate_json(text, path)
@@ -156,7 +147,7 @@ class Lono::Template::DSL
   def yaml_format(text)
     comment =<<~EOS
       # This file was generated with lono. Do not edit directly, the changes will be lost.
-      # More info: https://github.com/tongueroo/lono
+      # More info: http://lono.cloud
     EOS
     "#{comment}#{remove_blank_lines(text)}"
   end

@@ -19,13 +19,13 @@ Congratulations!  You have successfully created a CloudFormation stack with lono
 
 ### lono cfn summary
 
-Lono also provides a `lono cfn` management command that allows you to launch stacks from the lono templates.  The `lono cfn` tool automatically runs `lono generate` internally and then launches the CloudFormation stack all in one command.  Provided that you are in a lono project and have a `my-stack` lono template definition.  To create a stack you can simply run:
+Lono provides a `lono cfn` management command that allows you to launch stacks from the generated lono templates. The `lono cfn` tool automatically runs `lono generate` internally and then launches the CloudFormation stack in a single command. Provided that you are in a lono project and have a `my-stack` lono template definition. To create a stack you can simply run::
 
 ```
 $ lono cfn create my-stack
 ```
 
-The above command will generate files to `output/my-stack.json` and `output/params/my-stack.txt` and use them to create a CloudFormation stack.  Here are some more examples of cfn commands:
+The above command will generate files to `output/prod/my-stack.json` and `output/params/prod/my-stack.txt` and use them to create a CloudFormation stack. Here are some more examples of cfn commands::
 
 ```
 $ lono cfn create mystack-$(date +%Y%m%d%H%M%S) --template mystack --params mystack

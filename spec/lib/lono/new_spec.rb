@@ -30,7 +30,7 @@ describe Lono::New do
     end
   end
 
-  context "yaml starter project" do
+  context "yml starter project" do
     before(:each) do
       new_project = Lono::New.new(
         force: true,

@@ -1,17 +1,18 @@
 require "lono"
-require "byebug"
 
 class Lono::Cfn::Base
   include Lono::Cfn::AwsServices
   include Lono::Cfn::Util
 
+  attr_reader :randomize_stack_name
   def initialize(stack_name, options={})
-    @stack_name = stack_name
+    @randomize_stack_name = options[:randomize_stack_name]
+    @stack_name = randomize(stack_name)
     @options = options
     @project_root = options[:project_root] || '.'
     Lono::ProjectChecker.check(@project_root) unless options[:lono] # already ran checker in lono generate
 
-    @template_name = options[:template] || @stack_name
+    @template_name = options[:template] || derandomize(@stack_name)
     @param_name = options[:param] || @template_name
     @template_path = get_source_path(@template_name, :template)
     @param_path = get_source_path(@param_name, :param)
@@ -21,17 +22,57 @@ class Lono::Cfn::Base
 
   def run
     params = generate_all
-    save_stack(params) # defined in the sub class
+    begin
+      save_stack(params) # defined in the sub class
+    rescue Aws::CloudFormation::Errors::InsufficientCapabilitiesException => e
+      capabilities = e.message.match(/\[(.*)\]/)[1]
+      confirm = prompt_for_iam(capabilities)
+      if confirm =~ /^y/
+        @options.merge!(capabilities: [capabilities])
+        puts "Re-running: #{command_with_iam(capabilities).colorize(:green)}"
+        retry
+      else
+        puts "Exited"
+        exit 1
+      end
+    end
+  end
+
+  def prompt_for_iam(capabilities)
+    puts "This stack will create IAM resources.  Please approve to run the command again with #{capabilities} capabilities."
+    puts "  #{command_with_iam(capabilities)}"
+
+    puts "Please confirm (y/n)"
+    confirm = $stdin.gets
+  end
+
+  def command_with_iam(capabilities)
+    "#{File.basename($0)} #{ARGV.join(' ')} --capabilities #{capabilities}"
   end
 
   def generate_all
-    generate_templates if @options[:lono]
+    if @options[:lono]
+      generate_templates
+      upload_templates if @options[:s3_upload] and !@options[:noop]
+    end
+    params = generate_params(mute: @options[:mute_params])
     check_for_errors
-    generate_params(mute: @options[:mute_params])
+    params
   end
 
   def generate_templates
     Lono::Template::DSL.new(
+      project_root: @project_root,
+      pretty: true
+    ).run
+  end
+
+  def upload_templates
+    # only upload templates if s3.path configured in settings
+    settings = Lono::Settings.new(@project_root)
+    return unless settings.s3_path
+
+    Lono::Template::Upload.new(
       project_root: @project_root,
       pretty: true
     ).run
@@ -66,8 +107,13 @@ class Lono::Cfn::Base
     unless File.exist?(@template_path)
       warns << "Template file missing: could not find #{@template_path}"
     end
-    if @options[:param] && !File.exist?(@param_path)
-      warns << "Parameters file missing: could not find #{@param_path}"
+    # Examples:
+    #   @param_path = params/prod/ecs.txt
+    #              => output/params/prod/ecs.json
+    output_param_path = @param_path.sub(/\.txt/, '.json')
+    output_param_path = "#{@project_root}/output/#{output_param_path}"
+    if @options[:param] && !File.exist?(output_param_path)
+      warns << "Parameters file missing: could not find #{output_param_path}"
     end
     [errors, warns]
   end
@@ -92,7 +138,7 @@ class Lono::Cfn::Base
       format = detect_format
       "#{@project_root}/output/#{name}.#{format}"
     when :param
-      "#{@project_root}/params/#{name}.txt"
+      "#{@project_root}/params/#{LONO_ENV}/#{name}.txt"
     else
       raise "hell: dont come here"
     end
@@ -142,5 +188,36 @@ class Lono::Cfn::Base
   # To allow mocking in specs
   def quit(signal)
     exit signal
+  end
+
+  # Do nothing unless in Create class
+  def randomize(stack_name)
+    stack_name
+  end
+
+  # Strip the random string at end of the template name
+  def derandomize(template_name)
+    if randomize_stack_name?
+      template_name.sub(/-(\w{3})/,'') # strip the random part
+    else
+      template_name
+    end
+  end
+
+  def randomize_stack_name?
+    if !randomize_stack_name.nil?
+      return randomize_stack_name # CLI option takes highest precedence
+    end
+
+    # otherwise use the settings preference
+    settings = Lono::Settings.new(@project_root)
+    settings.data['randomize_stack_name']
+  end
+
+  def capabilities
+    return @options[:capabilities] if @options[:capabilities]
+    if @options[:iam]
+      ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
+    end
   end
 end

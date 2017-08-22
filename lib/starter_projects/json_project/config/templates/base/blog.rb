@@ -1,10 +1,6 @@
-template "example.yml" do
-  source "example.yml.erb"
-end
-
-template "blog-web-prod.yml" do
-  app,role,env = name.sub('.yml','').split('-')
-  source "web.yml.erb"
+template "blog-web-prod" do
+  app,role,env = name.split('-')
+  source "web"
   variables(
     env: env,
     app: app,

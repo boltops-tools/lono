@@ -1,7 +1,8 @@
-template "api-web-prod.yml" do
-  source "web.yml.erb"
+template "example"
+
+template "api-web-prod" do
+  source "web"
   variables(
-    ami: "ami-123",
     instance_type: "t2.small",
     port: "80",
     high_threshold: "15",
@@ -16,10 +17,9 @@ template "api-web-prod.yml" do
   )
 end
 
-template "api-worker-prod.yml" do
-  source "web.yml.erb"
+template "api-worker-prod" do
+  source "web"
   variables(
-    ami: "ami-123",
     instance_type: "t2.small",
     port: "80",
     high_threshold: "15",
@@ -30,15 +30,14 @@ template "api-worker-prod.yml" do
     min_size: "6",
     down_adjustment: "-3",
     up_adjustment: "3",
-    user_data_script: "ruby_script.rb.erb",
+    user_data_script: "ruby_script.rb",
     ssl_cert: "arn:aws:iam::12345:server-certificate/wildcard"
   )
 end
 
-template "api-redis-prod.yml" do
-  source "db.yml.erb"
+template "api-redis-prod" do
+  source "db"
   variables(
-    ami: "ami-456",
     instance_type: "t2.small",
     port: "80",
     volume_size: "20",
@@ -46,10 +45,9 @@ template "api-redis-prod.yml" do
   )
 end
 
-template "parent/db-stack.yml" do
-  source "db.yml.erb"
+template "parent/db-stack" do
+  source "db"
   variables(
-    ami: "ami-456",
     instance_type: "t2.small",
     port: "80",
     volume_size: "20",

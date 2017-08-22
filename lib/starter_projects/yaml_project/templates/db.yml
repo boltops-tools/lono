@@ -145,4 +145,4 @@ Resources:
     Type: AWS::CloudFormation::WaitCondition
   WaitHandle:
     Type: AWS::CloudFormation::WaitConditionHandle
-<%= partial("server.yml.erb") %>
+<%= partial("server") %>

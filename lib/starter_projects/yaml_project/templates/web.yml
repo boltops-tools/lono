@@ -105,7 +105,7 @@ Resources:
       Statistic: Average
       Threshold: '<%= @low_threshold %>'
     Type: AWS::CloudWatch::Alarm
-<%= partial("host_record.yml.erb", domain: "mydomain.net") %>
+<%= partial("host_record", domain: "mydomain.net") %>
   LaunchConfig:
     Properties:
       BlockDeviceMappings:
@@ -124,7 +124,7 @@ Resources:
       - Ref: ServiceSecurityGroup
       UserData:
         Fn::Base64: !Sub | # No more Fn::Join needed
-<%= partial("user_data/bootstrap.sh.erb", {}, indent: 10) %>
+<%= partial("user_data/bootstrap.sh", {}, indent: 10) %>
     Type: AWS::AutoScaling::LaunchConfiguration
   ServiceSecurityGroup:
     Properties:

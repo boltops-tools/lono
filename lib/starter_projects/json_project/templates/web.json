@@ -179,7 +179,7 @@
       },
       "Type": "AWS::CloudWatch::Alarm"
     },
-    <%= partial("host_record.json.erb", domain: "mydomain.com") %>
+    <%= partial("host_record", domain: "mydomain.com") %>
     "LaunchConfig": {
       "Properties": {
         "BlockDeviceMappings": [
@@ -235,7 +235,7 @@
             "Fn::Join": [
               "",
               [
-                <% script = @user_data_script || 'app.sh.erb' %>
+                <% script = @user_data_script || 'app.sh' %>
                 <%= user_data(script) %>
               ]
             ]

@@ -34,8 +34,8 @@
             "Fn::Join": [
               "",
               [
-                <%= user_data('db.sh.erb', vartest: 'foo') %>,
-                <%= user_data('db2.sh.erb') %>
+                <%= user_data('db.sh', vartest: 'foo') %>,
+                <%= user_data('db2.sh') %>
               ]
             ]
           }

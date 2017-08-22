@@ -23,22 +23,23 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
     exist_unless_updatable(stack_status(@stack_name))
 
     template_body = IO.read(@template_path)
-    # begin
+    begin
       cfn.create_change_set(
         change_set_name: change_set_name,
         stack_name: @stack_name,
         template_body: template_body,
-        parameters: params
+        parameters: params,
+        capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
       )
-    # rescue Aws::CloudFormation::Errors::ValidationError => e
-    #   if e.message =~ /^Parameters: /
-    #     puts "Error creating CloudFormation preview because invalid CloudFormation parameters. Full error message:".colorize(:red)
-    #     puts e.message
-    #     quit(1)
-    #   else
-    #     raise
-    #   end
-    # end
+    rescue Aws::CloudFormation::Errors::ValidationError => e
+      if e.message =~ /^Parameters: /
+        puts "Error creating CloudFormation preview because invalid CloudFormation parameters. Full error message:".colorize(:red)
+        puts e.message
+        quit(1)
+      else
+        raise
+      end
+    end
     true
   end
 

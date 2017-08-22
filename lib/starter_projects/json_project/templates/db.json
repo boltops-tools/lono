@@ -207,6 +207,6 @@
     "WaitHandle": {
       "Type": "AWS::CloudFormation::WaitConditionHandle"
     },
-    <%= partial("server.json.erb") %>
+    <%= partial("server") %>
   }
 }

@@ -3,23 +3,77 @@ require 'json'
 require 'base64'
 
 class Lono::Template::Template
+  include Lono::Template::Helpers
   include ERB::Util
 
-  attr_reader :name
-  def initialize(name, block, options={})
-    @name = name
-    @block = block
-    @options = options
+  def initialize(name, block=nil, options={})
+    # Taking care to name instance variables with _ in front because we load the
+    # variables from config/variables and those instance variables can clobber these
+    # instance variables
+    @_name = name
+    @_options = options
+    @_detected_format = options[:detected_format]
+    @_block = block
+    @_project_root = options[:project_root] || '.'
+    @_config_path = "#{@_project_root}/config"
+    @_source = default_source(name)
+  end
+
+  def default_source(name)
+    "#{@_project_root}/templates/#{name}.#{@_detected_format}" # defaults to name, source method overrides
   end
 
   def build
-    instance_eval(&@block)
-    template = IO.read(@source)
-    erb_result(@source, template)
+    load_variables
+    load_custom_helpers
+    instance_eval(&@_block) if @_block
+    template = IO.read(@_source)
+    erb_result(@_source, template)
+  end
+
+  def load_variables
+    load_variables_folder("base")
+    load_variables_folder(LONO_ENV)
+  end
+
+  # Load the variables defined in config/variables/* to make available in the
+  # template blocks in config/templates/*.
+  #
+  # Example:
+  #
+  #   `config/variables/base/variables.rb`:
+  #     @foo = 123
+  #
+  #   `config/templates/base/resources.rb`:
+  #      template "mytemplate.yml" do
+  #        source "mytemplate.yml.erb"
+  #        variables(foo: @foo)
+  #      end
+  #
+  # NOTE: Only able to make instance variables avaialble with instance_eval
+  #   Wasnt able to make local variables available.
+  def load_variables_folder(folder)
+    paths = Dir.glob("#{@_config_path}/variables/#{folder}/**/*")
+    paths.select{ |e| File.file? e }.each do |path|
+      instance_eval(IO.read(path))
+    end
+  end
+
+  # Load custom helper methods from the user's infra repo
+  def load_custom_helpers
+    Dir.glob("#{@_project_root}/helpers/**/*_helper.rb").each do |path|
+      filename = path.sub(%r{.*/},'').sub('.rb','')
+      module_name = filename.classify
+
+      require path
+      self.class.send :include, module_name.constantize
+    end
+
   end
 
   def source(path)
-    @source = path[0..0] == '/' ? path : "#{@options[:project_root]}/templates/#{path}"
+    @_source = path[0..0] == '/' ? path : "#{@_project_root}/templates/#{path}"
+    @_source += ".#{@_detected_format}"
   end
 
   def variables(vars={})
@@ -28,27 +82,12 @@ class Lono::Template::Template
     end
   end
 
-  def partial(path,vars={}, options={})
-    path = "#{@options[:project_root]}/templates/partial/#{path}"
-    template = IO.read(path)
-    variables(vars)
-    result = erb_result(path, template)
-    result = indent(result, options[:indent]) if options[:indent]
-    result
-  end
-
-  # add indentation
-  def indent(result, indentation_amount)
-    result.split("\n").map do |line|
-      " " * indentation_amount + line
-    end.join("\n")
-  end
-
   def erb_result(path, template)
     begin
       ERB.new(template, nil, "-").result(binding)
     rescue Exception => e
       puts e
+      puts e.backtrace if ENV['DEBUG']
 
       # how to know where ERB stopped? - https://www.ruby-forum.com/topic/182051
       # syntax errors have the (erb):xxx info in e.message
@@ -73,48 +112,6 @@ class Lono::Template::Template
       end
       exit 1 unless ENV['TEST']
     end
-  end
-
-  def user_data(path, vars={})
-    path = "#{@options[:project_root]}/templates/user_data/#{path}"
-    template = IO.read(path)
-    variables(vars)
-    result = erb_result(path, template)
-    output = []
-    result.split("\n").each do |line|
-      output += transform(line)
-    end
-    json = output.to_json
-    json[0] = '' # remove first char: [
-    json.chop!   # remove last char:  ]
-  end
-
-  def ref(name)
-    %Q|{"Ref"=>"#{name}"}|
-  end
-
-  def find_in_map(*args)
-    %Q|{"Fn::FindInMap" => [ #{transform_array(args)} ]}|
-  end
-
-  def base64(value)
-    %Q|{"Fn::Base64"=>"#{value}"}|
-  end
-
-  def get_att(*args)
-    %Q|{"Fn::GetAtt" => [ #{transform_array(args)} ]}|
-  end
-
-  def get_azs(region="AWS::Region")
-    %Q|{"Fn::GetAZs"=>"#{region}"}|
-  end
-
-  def join(delimiter, values)
-    %Q|{"Fn::Join" => ["#{delimiter}", [ #{transform_array(values)} ]]}|
-  end
-
-  def select(index, list)
-    %Q|{"Fn::Select" => ["#{index}", [ #{transform_array(list)} ]]}|
   end
 
   def transform_array(arr)
@@ -247,5 +244,9 @@ class Lono::Template::Template
   # of CloudFormation.  So this can be used in it's place.
   def encode_base64(text)
     Base64.strict_encode64(text).strip
+  end
+
+  def name
+    @_name
   end
 end
