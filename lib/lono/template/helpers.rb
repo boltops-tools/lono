@@ -73,7 +73,7 @@ module Lono::Template::Helpers
   def partial_exist?(path)
     path = partial_path_for(path)
     path = auto_add_format(path)
-    File.exist?(path)
+    path && File.exist?(path)
   end
 
   # The partial's path is a relative path given without the extension and
@@ -92,24 +92,53 @@ module Lono::Template::Helpers
     variables(vars)
     result = erb_result(path, template)
     result = indent(result, options[:indent]) if options[:indent]
-    result
+    if options[:indent]
+      # Add empty line at beginning because empty lines gets stripped during
+      # processing anyway. This allows the user to call partial without having
+      # to put the partial call at very beginning of the line.
+      # This only should happen if user is using indent option.
+      ["\n", result].join("\n")
+    else
+      result
+    end
   end
 
+  # add indentation
+  def indent(text, indentation_amount)
+    text.split("\n").map do |line|
+      " " * indentation_amount + line
+    end.join("\n")
+  end
+
+private
   def partial_path_for(path)
     "#{@_project_root}/templates/partial/#{path}"
   end
 
   def auto_add_format(path)
-    extension = File.extname(path)
-    path += ".#{@_detected_format}" if extension.empty?
-    path
-  end
+    # Return immediately if user provided explicit extension
+    extension = File.extname(path) # current extension
+    return path if !extension.empty?
 
-  # add indentation
-  def indent(result, indentation_amount)
-    result.split("\n").map do |line|
-      " " * indentation_amount + line
-    end.join("\n")
-  end
+    # Else let's auto detect
+    paths = Dir.glob("#{path}.*")
 
+    if paths.size == 1 # non-ambiguous match
+      return paths.first
+    end
+
+    if paths.size > 1 # ambiguous match
+      puts "ERROR: Multiple possible partials found:".colorize(:red)
+      paths.each do |path|
+        puts "  #{path}"
+      end
+      puts "Please specify an extension in the name to remove the ambiguity.".colorize(:green)
+      exit 1
+    end
+
+    # Account for case when user wants to include a file with no extension at all
+    return path if File.exist?(path) && !File.directory?(path)
+
+    path # original path if this point is reached
+  end
 end

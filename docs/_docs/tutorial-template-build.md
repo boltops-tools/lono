@@ -2,20 +2,20 @@
 title: Build the Template
 ---
 
-#### Download the Template
+### Download the Template
 
-Let's build the CloudFormation template.  Copy and paste this [starter CloudFormation template](https://github.com/tongueroo/cloudformation-examples-lono/blob/master/templates/instance.yml.erb) into `templates/instance.yml.erb`.  Or you can simply use `wget` to download the file:
+Let's build the CloudFormation template.  Copy and paste this [starter CloudFormation template](https://github.com/tongueroo/cloudformation-examples-lono/blob/master/templates/instance.yml) into `templates/instance.yml`.  Here's also a `wget` to download the file:
 
 ```sh
-wget https://raw.githubusercontent.com/tongueroo/cloudformation-examples-lono/master/templates/instance.yml.erb
-mv instance.yml.erb templates/instance.yml.erb
+wget https://raw.githubusercontent.com/tongueroo/cloudformation-examples-lono/master/templates/instance.yml
+mv instance.yml templates/instance.yml
 ```
 
-#### ERB Template vs CloudFormation Template
+### ERB Template vs CloudFormation Template
 
 The starter template that was created above is more powerful than a standard CloudFormation template.  It is an ERB template which means it can contain loops, if statements and variables. Here is a good post covering ERB templates [An Introduction to ERB Templating](http://www.stuartellis.name/articles/erb/).
 
-Here's what the ERB template looks like. Note that some of the source code has been shorten for brevity.
+Here's what the ERB template looks like. Note that some of the source code has been shortened for brevity.
 
 ```yaml
 ---
@@ -70,15 +70,15 @@ Outputs:
 Let's focus in on the variables in our template.  Variables available in the templates are indicated by a '@' character.  We can get a quick overview of them by searching for them with grep.
 
 ```sh
-$ grep '@' templates/instance.yml.erb
+$ grep '@' templates/instance.yml
 <% if @route53 %>
 <% if @route53 %>
 ```
 
-There are 2 `@route53` variables in the `templates/instance.yml.erb`.  Let's provide a little context around the grep to get better feel of their purpose.
+There are 2 `@route53` variables in the `templates/instance.yml`.  Let's provide a little context around the grep to get a better feel of their purpose.
 
 ```diff
-$ grep -5 '@' templates/instance.yml.erb
+$ grep -5 '@' templates/instance.yml
     MinLength: '9'
     MaxLength: '18'
     Default: 0.0.0.0/0
@@ -108,7 +108,6 @@ $
 
 So in this downloaded template, there's an `<% if @route53 %>` block of code that will add some extra code when the `@route53` variable is `true`.  The `@route53` variable controls whether or not route53 logic is added to final generated CloudFormation template.  Let's move onto the template configuration to see how to set the @route53 variable.
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/scratch.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/scratch-template-config.md %}">Next Step</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/tutorial-build-from-scratch.md %}">Back</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/tutorial-template-config.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
-

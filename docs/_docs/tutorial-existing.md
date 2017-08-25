@@ -26,10 +26,8 @@ curl -o "asg.json" https://s3.amazonaws.com/cloudformation-templates-us-east-1/A
 You can use either the downloaded json format or convert it to yaml with this command:
 
 ```sh
-ruby -ryaml -rjson -e 'puts YAML.dump(JSON.load(ARGF))' < asg.json > templates/asg.yml.erb
+ruby -ryaml -rjson -e 'puts YAML.dump(JSON.load(ARGF))' < asg.json > templates/asg.yml
 ```
-
-Notice that you named the template with a `.erb` extension.
 
 #### Inspect Template Parameters
 
@@ -43,10 +41,10 @@ OperatorEMail
 KeyName
 ```
 
-Let's create a starter `params/asg.txt` file.
+Let's create a starter `params/base/asg.txt` file.
 
 ```sh
-cat asg.json | jq -r '.Parameters | to_entries[] | {name: .key, default: .value.Default} | select(.default == null) | .name' | sed 's/$/=/' > params/asg.txt
+cat asg.json | jq -r '.Parameters | to_entries[] | {name: .key, default: .value.Default} | select(.default == null) | .name' | sed 's/$/=/' > params/base/asg.txt
 ```
 
 We no longer need the `asg.json` file so we'll delete it:
@@ -55,7 +53,7 @@ We no longer need the `asg.json` file so we'll delete it:
 rm -f asg.json
 ```
 
-Now we can create a lono params file.  Your `params/asg.txt` file should look similar to this:  Substitute the values from your own AWS account.
+Now we can create a lono param file.  Your `params/base/asg.txt` file should look similar to this:  Substitute the values from your own AWS account.
 
 ```
 VpcId=vpc-427d5123 # should use your real vpc
@@ -69,8 +67,8 @@ KeyName=tutorial
 Remember to add a template declaration in the `config/lono.rb` file.  It should look like this:
 
 ```ruby
-template "asg.yml" do
-  source "asg.yml.erb"
+template "asg" do
+  source "asg"
 end
 ```
 
@@ -84,7 +82,7 @@ $ lono cfn create asg
 
 Congratulations! 🍾 You have successfully added an existing CloudFormation template to a lono project.
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/new.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/conventions.md %}">Next Step</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/tutorial-new.md %}">Back</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/docs-start.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
 

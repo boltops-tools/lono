@@ -23,6 +23,6 @@ class Lono::Settings
     s3 = data['s3']
     # s3['default']['path'] - key will always exist because of default lono/settings.yml
     #   defauult value is nil though
-    s3[LONO_ENV]['path'] rescue s3['default']['path']
+    s3['path'][LONO_ENV] || s3['path']['default']
   end
 end

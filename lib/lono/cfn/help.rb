@@ -14,15 +14,15 @@ Here are examples of overriding the template and params name conventions.
 
 $ lono cfn create my-stack --template different1
 
-The template used is output/different1.json and the parameters used is params/different1.json.
+The template used is output/different1.json and the parameters used is output/params/prod/different1.json.
 
 $ lono cfn create my-stack --params different2
 
-The template used is output/my-stack.json and the parameters used is params/different2.json.
+The template used is output/my-stack.json and the parameters used is output/params/prod/different2.json.
 
 $ lono cfn create my-stack --template different3 --params different4
 
-The template used is output/different3.json and the parameters used is params/different4.json.
+The template used is output/different3.json and the parameters used is output/params/prod/different4.json.
 
 EOL
     end
@@ -41,15 +41,15 @@ Here are examples of overriding the template and params name conventions.
 
 $ lono cfn update my-stack --template different1
 
-The template used is output/different1.json and the parameters used is params/different1.json.
+The template used is output/different1.json and the parameters used is output/params/prod/different1.json.
 
 $ lono cfn update my-stack --params different2
 
-The template used is output/my-stack.json and the parameters used is params/different2.json.
+The template used is output/my-stack.json and the parameters used is output/params/prod/different2.json.
 
 $ lono cfn update my-stack --template different3 --params different4
 
-The template used is output/different3.json and the parameters used is params/different4.json.
+The template used is output/different3.json and the parameters used is output/params/prod/different4.json.
 
 EOL
     end

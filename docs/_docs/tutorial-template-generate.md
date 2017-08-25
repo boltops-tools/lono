@@ -2,7 +2,7 @@
 title: Generate the Template
 ---
 
-With the `config/lono.rb` and `templates/instance.yml.erb` in place, we are ready to generate the CloudFormation templates.  Run the following command:
+With the `config/templates/base/stacks.rb` and `templates/instance.yml` in place, we are ready to generate the CloudFormation templates.  Run the following command:
 
 ```sh
 lono generate
@@ -20,9 +20,9 @@ Generating params files
 $
 ```
 
-The `lono generate` command combines the configuration from `config/lono.rb` and template from `templates/instance.yml.erb` and generates 2 CloudFormation templates in the `output` folder.
+The `lono generate` command combines the configuration from `config/templates/base/lono.rb` and template from `templates/instance.yml` and generates 2 CloudFormation templates in the `output` folder.
 
-Here's the `templates/instance.yml.erb` ERB template. Note that some of the source code has been shorten for brevity.
+Here's the `templates/instance.yml` ERB template. Note that some of the source code has been shortened for brevity.
 
 ```yaml
 ---
@@ -70,7 +70,7 @@ template "instance_and_route53.yml" do
 end
 ```
 
-And here is one of the output templates `output/instance_and_route53.yml`. Note that some of the source code has been shorten for brevity.
+And here is one of the output templates `output/instance_and_route53.yml`. Note that some of the source code has been shortened for brevity.
 
 ```yaml
 ---
@@ -105,7 +105,7 @@ You can use the generated CloudFormation templates in the `output` folder just a
 
 <img src="/img/tutorial/lono-flowchart.png" alt="Stack Created" class="doc-photo lono-flowchart">
 
-Let's also compare the generated `instance_with_route53.yml` and `single_instance.yml` CloudFormation templates files in the output folder.  You will notice that the route53 logic is only one of the files.  A quick way to see this is with th `diff` or `colordiff` command.
+Let's also compare the generated `instance_with_route53.yml` and `single_instance.yml` CloudFormation templates files in the `output` folder.  You will notice that the route53 logic is only one of the files.  A quick way to see this is with the `diff` or `colordiff` command.
 
 ```
 $ diff output/single_instance.yml output/instance_and_route53.yml
@@ -130,9 +130,8 @@ $ diff output/single_instance.yml output/instance_and_route53.yml
 $
 ```
 
-Next we'lll move onto specifying the parameters to be use for lauching the CloudFormation stack.
+Next, we'll specify the parameters to be used for launching the CloudFormation stack.
 
-<a id="prev" class="btn btn-basic" href="/docs/scratch-template-config/">Back</a>
-<a id="next" class="btn btn-primary" href="/docs/scratch-params-build/">Next Step</a>
+<a id="prev" class="btn btn-basic" href="/docs/tutorial-template-config/">Back</a>
+<a id="next" class="btn btn-primary" href="/docs/tutorial-params-build/">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
-

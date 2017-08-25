@@ -17,8 +17,9 @@ class Lono::Param::Generator
   # Returns:
   #   param_names("base") => ["a", "b", "c"]
   def self.param_names(project_root, folder)
-    Dir.glob("#{project_root}/params/#{folder}/*.txt").map do |path|
-      File.basename(path).sub('.txt','')
+    base_folder = "#{project_root}/params/#{folder}" # Example: "./params/base"
+    Dir.glob("#{base_folder}/**/*.txt").map do |path|
+      path.sub("#{base_folder}/", '').sub('.txt','')
     end
   end
 
@@ -39,7 +40,10 @@ class Lono::Param::Generator
       data = convert_to_cfn_format(contents)
       json = JSON.pretty_generate(data)
       write_output(json)
-      puts "Params file generated for #{@_name} at #{output_path}" unless @_options[:mute]
+      # Example: @_name = stag/ecs/private
+      #          pretty_name = ecs/private
+      pretty_name = @_name.sub("#{LONO_ENV}/", '')
+      puts "Params file generated for #{pretty_name} at #{output_path}" unless @_options[:mute]
     else
       puts "#{@_base_path} or #{@_env_path} could not be found?  Are you sure it exist?"
       exit 1
