@@ -109,7 +109,7 @@ At this point the `do...end` block is optional so then the template declaration 
 template "example"
 ```
 
-You might think that you will always need to specify template variables in the code block but it is not always necessary depending on how you use global template variables which are covered next.
+You might think that you will always need to specify template variables in the code block but it is not always necessary depending on how you use shared variables which are covered next.
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/lono-env.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/config-variables.md %}">Next Step</a>

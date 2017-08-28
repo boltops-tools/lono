@@ -126,7 +126,7 @@ $ LONO_ENV=stag lono cfn create example # InstanceType=m4.small
 
 ### Summary
 
-Lono's layering concept provides you with the ability to define common infrastructure components and override them for specific environments when necessary. This helps you build multiple environments in an organized way. The layering processing happens for all important components of the lono framework:
+Lono's layering concept provides you with the ability to define common infrastructure components and override them for specific environments when necessary. This helps you build multiple environments in an organized way. The layering processing happens for these lono components:
 
 * config/templates - your template definitions and configurations.
 * config/variables - your shared variables available to all of your templates.
