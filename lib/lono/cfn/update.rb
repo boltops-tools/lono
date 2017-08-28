@@ -38,8 +38,9 @@ class Lono::Cfn::Update < Lono::Cfn::Base
       cfn.update_stack(
         stack_name: @stack_name,
         template_body: template_body,
-        parameters: params#,
-        # capabilities: ["CAPABILITY_IAM"]
+        parameters: params,
+        capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
+        disable_rollback: !@options[:rollback],
       )
     rescue Aws::CloudFormation::Errors::ValidationError => e
       puts "ERROR: #{e.message}".red

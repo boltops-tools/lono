@@ -48,7 +48,7 @@ describe Lono::Template::DSL do
       )
       dsl.evaluate_templates # run the dependent instance_eval and load_subfoler so @templates is assigned
       detected_format = dsl.detect_format
-      expect(detected_format).to eq 'yaml'
+      expect(detected_format).to eq 'yml'
     end
   end
 

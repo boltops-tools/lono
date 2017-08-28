@@ -8,7 +8,8 @@ layout: default
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="header-content">
                         <div class="header-content-inner">
-                            <h1>Easily manage your entire CloudFormation template lifecycle with Lono!</h1>
+                            <h1>Lono CloudFormation Framework</h1>
+                            <h2>Learning to build infrastructure as code is a daunting task. Lono makes it much easier and more fun. It includes everything you need to build CloudFormation templates and manage the entire stack lifecycle.</h2>
                             <a href="{% link quick-start.md %}" class="btn btn-outline btn-xl">Learn More!</a>
                         </div>
                     </div>
@@ -30,10 +31,10 @@ layout: default
             </div>
             <div class="row">
                 <div class="col-lg-6">
-                    <p>Lono is a tool to help you easily manage your CloudFormation templates.  Lono handles the entire CloudFormation lifecyle. It starts with helping you craft of the templates and helps you all the way to end when you provision of the infrastructure.</p>
+                    <p>Lono is a CloudFormation framework tool that helps you build your CloudFormation templates and manage the entire CloudFormation stack lifecyle. It helps you craft the templates and takes you all the way to the final infrastructure provisioning step.</p>
                 </div>
                 <div class="col-lg-6">
-                    <p>Lono was built directly from real life use cases and asking the right questions.  It has been successfully used to manage over hundreds of CloudFormation templates. It automates an otherwise painstaking and brittle process of managing your CloudFormation workflow.</p>
+                    <p>Lono was built directly from real life use cases and asking the right questions.  It has been successfully used to manage over hundreds of CloudFormation templates. It automates an otherwise painstakingly manual process of managing your CloudFormation workflow.</p>
                 </div>
             </div>
         </div>
@@ -69,15 +70,15 @@ lono cfn delete
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <h3>config/lono.rb</h3>
+                                <h3>config/templates/base/lono.rb</h3>
                                 <div class="commands">
 {% highlight ruby %}
-template "single_instance.yml" do
-  source "instance.yml.erb"
+template "single_instance" do
+  source "instance"
 end
 
-template "instance_and_route53.yml" do
-  source "instance.yml.erb"
+template "instance_and_route53" do
+  source "instance"
   variables(
     route53: true
   )
@@ -88,7 +89,7 @@ end
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
-                                <h3>templates/example.yml.erb</h3>
+                                <h3>templates/instance.yml</h3>
                                 <div class="commands">
 {% highlight yaml %}
   InstanceSecurityGroup:
@@ -112,7 +113,7 @@ Outputs:
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <h3>params/example.txt</h3>
+                                <h3>params/base/instance.txt</h3>
                                 <div class="commands">
 {% highlight yaml %}
 InstanceType=t2.micro

@@ -9,7 +9,7 @@ $ lono generate
 $ lono g -c # shortcut
 ```
 
-The lono init command also sets up [guard-lono](https://github.com/tongueroo/guard-lono).  Guard-lono continuously generates the cloudformation templates.  Just run guard.
+The `lono init` command also sets up [guard-lono](https://github.com/tongueroo/guard-lono).  Guard-lono continuously generates the CloudFormation templates.  Just run guard.
 
 ```sh
 $ guard

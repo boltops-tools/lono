@@ -27,5 +27,10 @@ describe Lono do
       out = execute("./bin/lono template generate -c --project-root #{@project_root}")
       expect(out).to match /Generating CloudFormation templates/
     end
+
+    it "should generate templates" do
+      out = execute("./bin/lono template upload --project-root #{@project_root} --noop")
+      expect(out).to match /Templates uploaded to s3/
+    end
   end
 end

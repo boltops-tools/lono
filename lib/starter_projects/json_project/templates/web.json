@@ -1,0 +1,386 @@
+<% @app,@role,@env = name.sub('.json','').split('-') %>
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "<%= @app.capitalize %> Stack",
+  "Mappings": {
+    "AWSInstanceType2Arch": {
+      "c1.medium": {
+        "Arch": "64"
+      },
+      "c1.xlarge": {
+        "Arch": "64"
+      },
+      "cc1.4xlarge": {
+        "Arch": "64"
+      },
+      "cc2.8xlarge": {
+        "Arch": "64"
+      },
+      "cg1.4xlarge": {
+        "Arch": "64"
+      },
+      "m1.large": {
+        "Arch": "64"
+      },
+      "m1.medium": {
+        "Arch": "64"
+      },
+      "m1.small": {
+        "Arch": "64"
+      },
+      "m1.xlarge": {
+        "Arch": "64"
+      },
+      "m2.2xlarge": {
+        "Arch": "64"
+      },
+      "m2.4xlarge": {
+        "Arch": "64"
+      },
+      "m2.xlarge": {
+        "Arch": "64"
+      },
+      "t1.micro": {
+        "Arch": "64"
+      }
+    },
+    "AWSRegionArch2AMI": {
+      "us-east-1": {
+        "32": "",
+        "64": "<%= @ami %>"
+      },
+      "us-west-1": {
+        "32": "",
+        "64": ""
+      }
+    }
+  },
+  "Outputs": {
+    "ELBHostname": {
+      "Description": "The URL of the website",
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "http://",
+            {
+              "Fn::GetAtt": [
+                "elb",
+                "DNSName"
+              ]
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "Parameters": {
+    "Application": {
+      "Default": "<%= @app %>",
+      "Description": "Application name",
+      "Type": "String"
+    },
+    "Environment": {
+      "Default": "<%= @env %>",
+      "Description": "stag, prod etc",
+      "Type": "String"
+    },
+    "InstanceType": {
+      "AllowedValues": [
+        "t1.micro",
+        "m1.small",
+        "m1.medium",
+        "m1.large",
+        "m1.xlarge",
+        "m2.xlarge",
+        "m2.2xlarge",
+        "m2.4xlarge",
+        "c1.medium",
+        "c1.xlarge",
+        "cc1.4xlarge",
+        "cc2.8xlarge",
+        "cg1.4xlarge"
+      ],
+      "ConstraintDescription": "must be a valid EC2 instance type.",
+      "Default": "<%= @instance_type %>",
+      "Description": "WebServer EC2 instance type",
+      "Type": "String"
+    },
+    "KeyName": {
+      "Default": "default",
+      "Description": "The EC2 Key Pair to allow SSH access to the instances",
+      "Type": "String"
+    },
+    "Role": {
+      "Default": "<%= @role %>",
+      "Description": "redis, psql, app, etc",
+      "Type": "String"
+    },
+    "StackNumber": {
+      "Description": "s1, s2, s3, etc",
+      "Type": "String"
+    },
+    "WebServerPort": {
+      "Default": "<%= @port %>",
+      "Description": "The TCP port for the Web Server",
+      "Type": "Number"
+    }
+  },
+  "Resources": {
+    "CPUAlarmHigh": {
+      "Properties": {
+        "AlarmActions": [
+          {
+            "Ref": "WebServerScaleUpPolicy"
+          }
+        ],
+        "AlarmDescription": "Scale-up if CPU > <%= @high_threshold %>% for <%= @high_mins %> minutes",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "Dimensions": [
+          {
+            "Name": "AutoScalingGroupName",
+            "Value": {
+              "Ref": "WebServerGroup"
+            }
+          }
+        ],
+        "EvaluationPeriods": "<%= @high_periods %>",
+        "MetricName": "CPUUtilization",
+        "Namespace": "AWS/EC2",
+        "Period": "60",
+        "Statistic": "Average",
+        "Threshold": "<%= @high_threshold %>"
+      },
+      "Type": "AWS::CloudWatch::Alarm"
+    },
+    "CPUAlarmLow": {
+      "Properties": {
+        "AlarmActions": [
+          {
+            "Ref": "WebServerScaleDownPolicy"
+          }
+        ],
+        "AlarmDescription": "Scale-down if CPU < <%= @low_threshold %>% for 10 minutes",
+        "ComparisonOperator": "LessThanThreshold",
+        "Dimensions": [
+          {
+            "Name": "AutoScalingGroupName",
+            "Value": {
+              "Ref": "WebServerGroup"
+            }
+          }
+        ],
+        "EvaluationPeriods": "<%= @low_periods %>",
+        "MetricName": "CPUUtilization",
+        "Namespace": "AWS/EC2",
+        "Period": "60",
+        "Statistic": "Average",
+        "Threshold": "<%= @low_threshold %>"
+      },
+      "Type": "AWS::CloudWatch::Alarm"
+    },
+    <%= partial("host_record", domain: "mydomain.com") %>
+    "LaunchConfig": {
+      "Properties": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/sdb",
+            "VirtualName": "ephemeral0"
+          }
+        ],
+        "ImageId": {
+          "Fn::FindInMap": [
+            "AWSRegionArch2AMI",
+            {
+              "Ref": "AWS::Region"
+            },
+            {
+              "Fn::FindInMap": [
+                "AWSInstanceType2Arch",
+                {
+                  "Ref": "InstanceType"
+                },
+                "Arch"
+              ]
+            }
+          ]
+        },
+        "InstanceType": {
+          "Ref": "InstanceType"
+        },
+        "KeyName": {
+          "Ref": "KeyName"
+        },
+        "SecurityGroups": [
+          "global",
+          {
+            "Fn::Join": [
+              "-",
+              [
+                {
+                  "Ref": "Environment"
+                },
+                {
+                  "Ref": "Application"
+                }
+              ]
+            ]
+          },
+          {
+            "Ref": "ServiceSecurityGroup"
+          }
+        ],
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "",
+              [
+                <% script = @user_data_script || 'app.sh' %>
+                <%= user_data(script) %>
+              ]
+            ]
+          }
+        }
+      },
+      "Type": "AWS::AutoScaling::LaunchConfiguration"
+    },
+    "ServiceSecurityGroup": {
+      "Properties": {
+        "GroupDescription": "Enable SSH access and HTTP from the load balancer only",
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "FromPort": "22",
+            "IpProtocol": "tcp",
+            "ToPort": "22"
+          },
+          {
+            "FromPort": {
+              "Ref": "WebServerPort"
+            },
+            "IpProtocol": "tcp",
+            "SourceSecurityGroupName": {
+              "Fn::GetAtt": [
+                "elb",
+                "SourceSecurityGroup.GroupName"
+              ]
+            },
+            "SourceSecurityGroupOwnerId": {
+              "Fn::GetAtt": [
+                "elb",
+                "SourceSecurityGroup.OwnerAlias"
+              ]
+            },
+            "ToPort": {
+              "Ref": "WebServerPort"
+            }
+          }
+        ]
+      },
+      "Type": "AWS::EC2::SecurityGroup"
+    },
+    "WebServerGroup": {
+      "Properties": {
+        "AvailabilityZones": [
+          "us-east-1a",
+          "us-east-1d",
+          "us-east-1e"
+        ],
+        "HealthCheckGracePeriod": "300",
+        "HealthCheckType": "ELB",
+        "LaunchConfigurationName": {
+          "Ref": "LaunchConfig"
+        },
+        "LoadBalancerNames": [
+          {
+            "Ref": "elb"
+          }
+        ],
+        "MaxSize": "<%= @max_size %>",
+        "MinSize": "<%= @min_size %>",
+        "NotificationConfiguration": {
+          "NotificationTypes": [
+            "autoscaling:EC2_INSTANCE_LAUNCH",
+            "autoscaling:EC2_INSTANCE_LAUNCH_ERROR",
+            "autoscaling:EC2_INSTANCE_TERMINATE",
+            "autoscaling:EC2_INSTANCE_TERMINATE_ERROR"
+          ],
+          "TopicARN": [
+            "arn:aws:sns:us-east-1:867690557112:ops"
+          ]
+        }
+      },
+      "Type": "AWS::AutoScaling::AutoScalingGroup"
+    },
+    "WebServerScaleDownPolicy": {
+      "Properties": {
+        "AdjustmentType": "ChangeInCapacity",
+        "AutoScalingGroupName": {
+          "Ref": "WebServerGroup"
+        },
+        "Cooldown": "120",
+        "ScalingAdjustment": "<%= @down_adjustment %>"
+      },
+      "Type": "AWS::AutoScaling::ScalingPolicy"
+    },
+    "WebServerScaleUpPolicy": {
+      "Properties": {
+        "AdjustmentType": "ChangeInCapacity",
+        "AutoScalingGroupName": {
+          "Ref": "WebServerGroup"
+        },
+        "Cooldown": "120",
+        "ScalingAdjustment": "<%= @up_adjustment %>"
+      },
+      "Type": "AWS::AutoScaling::ScalingPolicy"
+    },
+    "elb": {
+      "Properties": {
+        "AvailabilityZones": [
+          "us-east-1a",
+          "us-east-1d",
+          "us-east-1e"
+        ],
+        "HealthCheck": {
+          "HealthyThreshold": "3",
+          "Interval": "6",
+          "Target": {
+            "Fn::Join": [
+              "",
+              [
+                "HTTP:",
+                {
+                  "Ref": "WebServerPort"
+                },
+                "/up/elb"
+              ]
+            ]
+          },
+          "Timeout": "5",
+          "UnhealthyThreshold": "5"
+        },
+        "Listeners": [
+          {
+            "InstancePort": {
+              "Ref": "WebServerPort"
+            },
+            "LoadBalancerPort": "80",
+            "Protocol": "HTTP"
+          },
+          {
+            "InstancePort": {
+              "Ref": "WebServerPort"
+            },
+            "LoadBalancerPort": "443",
+            "PolicyNames": [
+
+            ],
+            "Protocol": "HTTPS",
+            "SSLCertificateId": "<%= @ssl_cert %>"
+          }
+        ]
+      },
+      "Type": "AWS::ElasticLoadBalancing::LoadBalancer"
+    }
+  }
+}

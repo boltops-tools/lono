@@ -1,0 +1,13 @@
+aws_profile_lono_env_map:
+  default: prod
+  # More examples:
+  # aws_profile1: prod
+  # aws_profile2: stag
+  # aws_profile3: dev
+s3:
+  path:
+    default:  # default is nil
+    # You can specify different buckets for different LONO_ENV.  Examples:
+    # prod: s3://mybucket/templates/storage/path
+    # stag: s3://mybucket/templates/storage/path
+randomize_stack_name: false

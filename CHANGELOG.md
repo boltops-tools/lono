@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [3.0.0]
+- Major feature changes
+- Lono structural changes
+- Layering Support
+- Shared Variable Support
+- Nested Stacks Support
+- Format and Extension Detection
+- Custom Helper Support
+- Source Name Convention Support
+- Settings File Support
+
 ## [2.1.0]
 - improve instance_eval error when lono.rb errors, print out line of code and context
 

@@ -1,5 +1,5 @@
 function onlyShow(className) {
-    $("ul.build-scratch").hide();
+    $("ul.build-tutorial").hide();
     $("ul.build-new").hide();
     $("ul.build-existing").hide();
     if (className) {

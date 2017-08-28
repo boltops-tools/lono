@@ -21,8 +21,13 @@ class Lono::Cfn < Lono::Command
   class_option :template, desc: "override convention and specify the template file to use"
   class_option :param, desc: "override convention and specify the param file to use"
   class_option :lono, type: :boolean, desc: "invoke lono to generate CloudFormation templates", default: true
+  class_option :s3_upload, type: :boolean, desc: "uploads templates to s3 if s3.path detected", default: true
+  class_option :capabilities, type: :array, desc: "iam capabilities. Ex: CAPABILITY_IAM, CAPABILITY_NAMED_IAM"
+  class_option :iam, type: :boolean, desc: "Shortcut for common IAM capabilities: CAPABILITY_IAM, CAPABILITY_NAMED_IAM"
+  class_option :rollback, type: :boolean, desc: "rollback", default: true
 
   desc "create STACK", "create a CloudFormation stack"
+  option :randomize_stack_name, type: :boolean, desc: "tack on random string at the end of the stack name", default: nil
   long_desc Help.create
   def create(name)
     Create.new(name, options).run

@@ -27,6 +27,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "colorize"
   gem.add_dependency "hashie"
   gem.add_dependency "aws-sdk"
+  gem.add_dependency "activesupport"
   # gem.add_dependency "plissken" # dependency for vendor/lono-params
   # using the vendor fork version: https://github.com/tongueroo/plissken
   # until https://github.com/futurechimp/plissken/pull/6 gets merged

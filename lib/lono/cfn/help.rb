@@ -12,17 +12,17 @@ The above command will generate and use the template in output/my-stack.json and
 
 Here are examples of overriding the template and params name conventions.
 
-$ lono cfn create my-stack --template different-name1
+$ lono cfn create my-stack --template different1
 
-The template that will be use is output/different-name1.json and the parameters will use params/different-name1.json.
+The template used is output/different1.json and the parameters used is output/params/prod/different1.json.
 
-$ lono cfn create my-stack --params different-name2
+$ lono cfn create my-stack --params different2
 
-The template that will be use is output/different-name2.json and the parameters will use params/different-name2.json.
+The template used is output/my-stack.json and the parameters used is output/params/prod/different2.json.
 
-$ lono cfn create my-stack --template different-name3 --params different-name4
+$ lono cfn create my-stack --template different3 --params different4
 
-The template that will be use is output/different-name3.json and the parameters will use params/different-name4.json.
+The template used is output/different3.json and the parameters used is output/params/prod/different4.json.
 
 EOL
     end
@@ -39,17 +39,17 @@ The above command will generate and use the template in output/my-stack.json and
 
 Here are examples of overriding the template and params name conventions.
 
-$ lono cfn update my-stack --template different-name1
+$ lono cfn update my-stack --template different1
 
-The template that will be use is output/different-name1.json and the parameters will use params/different-name1.json.
+The template used is output/different1.json and the parameters used is output/params/prod/different1.json.
 
-$ lono cfn update my-stack --params different-name2
+$ lono cfn update my-stack --params different2
 
-The template that will be use is output/different-name2.json and the parameters will use params/different-name2.json.
+The template used is output/my-stack.json and the parameters used is output/params/prod/different2.json.
 
-$ lono cfn update my-stack --template different-name3 --params different-name4
+$ lono cfn update my-stack --template different3 --params different4
 
-The template that will be use is output/different-name3.json and the parameters will use params/different-name4.json.
+The template used is output/different3.json and the parameters used is output/params/prod/different4.json.
 
 EOL
     end
