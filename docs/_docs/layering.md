@@ -47,7 +47,7 @@ template "example" do
 end
 ```
 
-Essentially with overlaying, when `lono generate` is called it will first evaluate all the template definitions in `config/templates/base` folder and then evaluate all the template definitions in the specific `LONO_ENV` folder.  This overlaying results in lono generating  different `output/templates.yml` with different template source views based on what `LONO_ENV` is set to. For example:
+Essentially with layering, when `lono generate` is called it will first evaluate all the template definitions in `config/templates/base` folder and then evaluate all the template definitions in the specific `LONO_ENV` folder.  This layering results in lono generating  different `output/templates.yml` with different template source views based on what `LONO_ENV` is set to. For example:
 
 ```sh
 LONO_ENV=prod lono generate # output/example.yml uses templates/example-prod.yml
