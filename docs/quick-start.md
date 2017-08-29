@@ -5,7 +5,7 @@ title: Quick Start
 In a hurry? No problem!  Here's a quick start to using lono that takes only a few minutes.  The commands below launches a CloudFormation stack.
 
 {% highlight bash %}
-brew cask install boltopslabs/software/bolts
+gem install lono
 lono new infra
 cd infra
 lono cfn create example
