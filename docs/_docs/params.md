@@ -28,6 +28,37 @@ This results in:
 
 These files can be used to launch the CloudFormation stack with the `aws cloudformation` CLI tool manually if you like. Though the `lono cfn` lifecycle commands handle this automatically for you. For example, running `lono cfn create [STACK_NAME]` will automatically generate the param files and use it when launching the stack.
 
+### Shared Variables Substitution
+
+Shared variables substitution is supported in params file.  Here's an example:
+
+`config/variables/base/variables.rb`:
+
+```sh
+@ami = "ami-12345"
+```
+
+`params/base/mystack.txt`:
+
+```sh
+Ami=<%= @ami %>
+```
+
+Will produce:
+
+`output/params/prod/mystack.json`:
+
+```json
+[
+  {
+    "ParameterKey": "Ami",
+    "ParameterValue": "ami-12345"
+  }
+]
+```
+
+### Layering Support
+
 Lono param files also support layering which is covered in [Layering Support]({% link _docs/layering.md %}).
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/config-variables.md %}">Back</a>
