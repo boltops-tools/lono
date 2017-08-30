@@ -22,7 +22,7 @@ You configured your lono templates in the `config/templates` folder. The starter
             └── stacks.rb
 ```
 
-Let's say these `stack.rb` files contain the following template definitions.
+Let's say these `stacks.rb` files contain the following template definitions.
 
 `config/templates/base/stacks.rb`:
 
