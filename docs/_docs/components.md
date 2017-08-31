@@ -8,6 +8,7 @@ Lono has a few main conceptual components:
 2. Shared Variables
 3. Template Views
 4. Param Files
+5. Helpers
 
 ### Template Configurations
 
@@ -30,6 +31,10 @@ Template views are ERB templates that are put together to build the CloudFormati
 ### Param Files
 
 Param files provide a simple way of building parameters for CloudFormation templates. The param files use a simple `key=value` format like env files. The params are defined in the `params` folder.  More information on param files is available on the [Params docs]({% link _docs/params.md %}).
+
+### Helpers
+
+Helpers are methods that help with the template view procesing. Lono comes with several [built-in helper methods]({% link _docs/template-helpers.md %}).  Lono also supports user-defined custom helper methods. With custom helper methods you can define you own helpers to help with the template view processing. More information on custom helpers is available in the [Custom Helpers docs]({% link _docs/custom-helpers.md %}).
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/docs-start.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/directory-structure.md %}">Next Step</a>
