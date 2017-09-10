@@ -59,9 +59,6 @@ class Lono::Template::Upload
 
     local_checksum = Digest::MD5.hexdigest(IO.read(path))
     remote_checksum = remote_checksum(path)
-    puts "path: #{path}"
-    puts "local_checksum #{local_checksum.inspect}"
-    puts "remote_checksum #{remote_checksum.inspect}"
     if local_checksum == remote_checksum
       say("Not modified: #{pretty_path} to #{s3_full_path}".colorize(:yellow)) unless @options[:noop]
       return # do not upload unless the checksum has changed
