@@ -14,7 +14,7 @@ module Lono::Cfn::Util
     end
 
     unless sure =~ /^y/
-      puts "Exiting without #{action}"
+      puts "Whew! Exiting without running #{action}."
       exit 0
     end
   end
