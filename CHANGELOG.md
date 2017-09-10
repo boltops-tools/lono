@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [3.0.1]
+- update aws-sdk to version 3
+
 ## [3.0.0]
 - Major feature changes
 - Lono structural changes
