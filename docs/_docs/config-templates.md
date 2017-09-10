@@ -61,9 +61,9 @@ Note that some of the source code is truncated to keep the explanation concise. 
 
 The variables to use are: `app`, `instance_type` and `elb`.  These variables will be available to the `source/example.yml` template.
 
-Lastly, the output name specified is `example-stack`.  This tells lono to generate the output template to `output/example.yml`.  The `.yml` extension is inferred automatically.
+Lastly, the output name specified is `example-stack`.  This tells lono to generate the output template to `output/example-stack.yml`.  The `.yml` extension is inferred automatically.
 
-When `lono generate` is ran, lono uses this information to combine the variables in `config/templates/base/stacks.rb` and files in `templates` to generate templates in the `output` folder.
+When `lono generate` runs, lono uses the information in `config/templates/base/stacks.rb` and files in `templates` to generate templates in the `output` folder.
 
 Template configurations are also layered by lono which is covered in [Layering Support]({% link _docs/layering.md %}).
 
