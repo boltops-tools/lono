@@ -13,7 +13,7 @@ class Lono::Cfn::Create < Lono::Cfn::Base
     end
 
     if stack_exists?(@stack_name)
-      puts "Cannot create '#{@stack_name}' stack because it already exists."
+      puts "Cannot create '#{@stack_name}' stack because it already exists.".colorize(:red)
       return
     end
 
