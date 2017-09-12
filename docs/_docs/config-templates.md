@@ -16,6 +16,7 @@ template "[OUTPUT NAME]" do
   variables(
     [HASH_MAP]
   )
+end
 ```
 
 Template configurations are defined in the `config/templates` folder of your project.

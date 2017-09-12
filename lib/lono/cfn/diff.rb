@@ -43,6 +43,6 @@ class Lono::Cfn::Diff < Lono::Cfn::Base
   end
 
   def existing_template_path
-    "/tmp/existing_cfn_template.json"
+    "/tmp/existing_cfn_template.yml"
   end
 end
