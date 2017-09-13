@@ -11,6 +11,7 @@ title: Articles
 * [Easily Manage CloudFormation Templates with lono cfn](https://blog.boltops.com/2017/04/13/easily-manage-cloudformation-templates-with-lono-cfn)
 * [AWS CloudFormation dry-run with lono cfn preview](https://blog.boltops.com/2017/04/23/aws-cloudformation-dry-run-with-lono-cfn-preview)
 * [Lono Improvements v2.1.0](https://blog.boltops.com/2017/05/23/lono-improvements-v2-1-0)
+* [Lono CloudFormation Framework Version 3 Release](https://blog.boltops.com/2017/08/28/lono-cloudformation-framework-version-3-release)
 
 ### Introductory Series on CloudFormation
 
