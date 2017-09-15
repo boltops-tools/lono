@@ -34,6 +34,8 @@ class Lono::Template::Upload
   # stacks being changed even though they should not be reported.  Leaving this s3 checksum
   # in for now.
   def load_checksums!
+    return if @options[:noop]
+
     prefix = "#{s3_path}/#{LONO_ENV}" # s3://s3-bucket-and-path-from-settings/prod
     resp = s3.list_objects(bucket: s3_bucket, prefix: prefix)
     resp.contents.each do |object|

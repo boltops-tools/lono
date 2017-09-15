@@ -7,3 +7,4 @@ pkg
 tmp
 output
 spec/project
+spec/fixtures/my_project/templates/aws-waf-security-automations.yml

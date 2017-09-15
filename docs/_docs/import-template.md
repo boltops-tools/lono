@@ -2,7 +2,7 @@
 title: Import Template
 ---
 
-Lono provides a `lono import` command to spare you from manually having to convert a standard CloudFormation template into a lono-ify CloudFormation template.  Usage:
+Lono provides a `lono import` command to spare you from manually having to convert a standard CloudFormation template into a lono-ified CloudFormation template.  Usage:
 
 ```sh
 lono import path/to/template

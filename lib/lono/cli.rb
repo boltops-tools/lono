@@ -19,7 +19,7 @@ module Lono
     option :format, type: :string, default: "yaml", desc: "format for the final template"
     option :project_root, default: ".", aliases: "-r", desc: "project root"
     def import(source)
-      Importer.new(options.merge(source: source)).run
+      Importer.new(source, options).run
     end
 
     desc "generate", "Generate both CloudFormation templates and parameters files"
