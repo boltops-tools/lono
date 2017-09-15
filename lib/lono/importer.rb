@@ -14,7 +14,7 @@ class Lono::Importer
   def run
     download_template
     add_template_definition
-    puts "Importing Raw CloudFormation template and lono-ifying it"
+    puts "Imported raw CloudFormation template and lono-fied it!"
   end
 
   def download_template
@@ -36,7 +36,6 @@ class Lono::Importer
   def add_template_definition
     path = "#{@project_root}/config/templates/base/stacks.rb"
     lines = File.exist?(path) ? IO.readlines(path) : []
-    puts lines
     new_template_definition = %Q|template "#{template_name}"|
     unless lines.detect { |l| l.include?(new_template_definition) }
       lines << ["\n", new_template_definition]
