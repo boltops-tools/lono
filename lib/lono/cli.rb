@@ -6,7 +6,7 @@ module Lono
   class CLI < Lono::Command
 
     desc "new [NAME]", "Generates lono starter project"
-    Help.new_long_desc
+    long_desc Help.new_long_desc
     option :force, type: :boolean, aliases: "-f", desc: "override existing starter files"
     option :quiet, type: :boolean, aliases: "-q", desc: "silence the output"
     option :format, type: :string, default: "yaml", desc: "starter project template format: json or yaml"
@@ -15,7 +15,7 @@ module Lono
     end
 
     desc "import [SOURCE]", "Imports raw CloudFormation template and lono-fies it"
-    Help.import
+    long_desc Help.import
     option :format, type: :string, default: "yaml", desc: "format for the final template"
     option :project_root, default: ".", aliases: "-r", desc: "project root"
     def import(source)
