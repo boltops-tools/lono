@@ -14,6 +14,14 @@ module Lono
       Lono::New.new(options.clone.merge(project_root: project_root)).run
     end
 
+    desc "import [SOURCE]", "Imports raw CloudFormation template and lono-fies it"
+    Help.import
+    option :format, type: :string, default: "yaml", desc: "format for the final template"
+    option :project_root, default: ".", aliases: "-r", desc: "project root"
+    def import(source)
+      Importer.new(options.merge(source: source)).run
+    end
+
     desc "generate", "Generate both CloudFormation templates and parameters files"
     Help.generate
     option :clean, type: :boolean, aliases: "-c", desc: "remove all output files before generating"
