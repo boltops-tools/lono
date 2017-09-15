@@ -9,6 +9,20 @@ $ lono new lono
 EOL
   end
 
+  def import
+<<-EOL
+Examples:
+
+$ lono import /path/to/file
+
+$ lono import http://url.com/path/to/template.json
+
+$ lono import http://url.com/path/to/template.yml
+
+Imports a raw CloudFormation template and lono-fies it.
+EOL
+  end
+
   def generate
 <<-EOL
 Examples:
@@ -19,7 +33,6 @@ $ lono g -c # shortcut
 
 Builds both CloudFormation template and parameter files based on lono project and writes them to the output folder on the filesystem.
 EOL
-
   end
 
   def template

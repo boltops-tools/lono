@@ -24,6 +24,7 @@ module Lono
   autoload :Param, 'lono/param'
   autoload :Clean, 'lono/clean'
   autoload :Settings, 'lono/settings'
+  autoload :Importer, 'lono/importer'
 end
 
 Lono::Env.setup!
