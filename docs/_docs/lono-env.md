@@ -50,5 +50,5 @@ AWS_PROFILE=whatever => LONO_ENV=dev
 Notice how `AWS_PROFILE=whatever` results in `LONO_ENV=dev`.  This is because the `default: dev` map is specially treated. If you set the `default` map, this becomes the default value when the profile map is not specified in the rest of `lono/settings.yml`.  More info on settings is available at [settings]({% link _docs/settings.md %}).
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/directory-structure.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/config-templates.md %}">Next Step</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/import-template.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
