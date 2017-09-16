@@ -13,8 +13,10 @@ class Lono::Importer
 
   def run
     download_template
-    add_template_definition
+    template_definition_path = add_template_definition
     puts "Imported raw CloudFormation template and lono-fied it!"
+    puts "Template definition added to #{template_definition_path}."
+    puts "Template downloaded to #{dest_path}."
   end
 
   def download_template
@@ -29,7 +31,6 @@ class Lono::Importer
     folder = File.dirname(dest_path)
     FileUtils.mkdir_p(folder) unless File.exist?(folder)
     IO.write(dest_path, result)
-    puts "Template downloaded to #{dest_path}."
   end
 
   # Add template definition to config/templates/base/stacks.rb.
@@ -42,7 +43,7 @@ class Lono::Importer
       result = lines.join('')
       IO.write(path, result)
     end
-    puts "Template definition added to #{path}."
+    path
   end
 
   def dest_path
@@ -50,7 +51,8 @@ class Lono::Importer
   end
 
   def template_name
-    File.basename(@source, ".*")
+    name = File.basename(@source, ".*")
+    @options[:casing] == "camelcase" ? name.camelize : name.underscore.dasherize
   end
 
 private
