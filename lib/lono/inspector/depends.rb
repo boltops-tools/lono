@@ -78,11 +78,14 @@ class Lono::Inspector::Depends
 
   def print_graph(node_list)
     digraph do
+      # graph_attribs << 'size="6,6"'
+      node_attribs << lightblue << filled
+
       node_list.each do |n|
         node(n.name)
-        # n.children.each do |child|
-        #   edge n.name, child.name
-        # end
+        n.children.each do |child|
+          edge n.name, child.name
+        end
       end
       # many ways to access/create edges and nodes
       # edge "a", "b"
@@ -96,7 +99,7 @@ class Lono::Inspector::Depends
       # green << node("b") << edge("b", "c")
       # blue  << node("c") << edge("c", "a")
       random = (0...8).map { (65 + rand(26)).chr }.join
-      path = "/tmp/simple_example-#{random}"
+      path = "/tmp/cloudformation-depends-on-#{random}"
       save path, "png"
       # TODO: check if open command exists
       system "open #{path}.png"
