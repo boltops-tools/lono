@@ -1,5 +1,6 @@
 require "byebug"
 require "yaml"
+require "graph"
 
 class Node
   attr_accessor :name, :children, :depends_on
@@ -44,6 +45,9 @@ class Lono::Inspector::Depends
     node_list.each do |node|
       print_tree(node)
     end
+
+    ####################
+    print_graph(node_list)
   end
 
   def print_tree(node, depth=0)
@@ -70,5 +74,32 @@ class Lono::Inspector::Depends
       kids << node
     end
     kids
+  end
+
+  def print_graph(node_list)
+    digraph do
+      node_list.each do |n|
+        node(n.name)
+        # n.children.each do |child|
+        #   edge n.name, child.name
+        # end
+      end
+      # many ways to access/create edges and nodes
+      # edge "a", "b"
+      # self["b"]["c"]
+      # node("c") >> "a"
+
+      # square   << node("a")
+      # triangle << node("b")
+
+      # red   << node("a") << edge("a", "b")
+      # green << node("b") << edge("b", "c")
+      # blue  << node("c") << edge("c", "a")
+      random = (0...8).map { (65 + rand(26)).chr }.join
+      path = "/tmp/simple_example-#{random}"
+      save path, "png"
+      # TODO: check if open command exists
+      system "open #{path}.png"
+    end
   end
 end
