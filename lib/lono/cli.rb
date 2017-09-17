@@ -19,6 +19,7 @@ module Lono
     option :format, type: :string, default: "yaml", desc: "format for the final template"
     option :project_root, default: ".", aliases: "-r", desc: "project root"
     option :casing, default: "underscore", desc: "camelcase or underscore the template name"
+    option :name, default: nil, desc: "final name of downloaded template without extension"
     def import(source)
       Importer.new(source, options).run
     end
@@ -56,5 +57,9 @@ module Lono
     desc "param ACTION", "param subcommand tasks"
     long_desc Help.param
     subcommand "param", Lono::Param
+
+    desc "inspect ACTION", "inspect subcommand tasks"
+    long_desc Help.inspector
+    subcommand "inspect", Inspector
   end
 end

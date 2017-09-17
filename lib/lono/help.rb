@@ -68,5 +68,15 @@ $ lono param generate
 EOL
   end
 
+  def inspector
+<<-EOL
+Examples:
+
+$ lono inspect params my-stack
+
+$ lono inspect depends my-stack
+EOL
+  end
+
   extend self
 end
