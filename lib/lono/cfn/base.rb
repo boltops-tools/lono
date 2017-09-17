@@ -198,7 +198,7 @@ class Lono::Cfn::Base
   # Strip the random string at end of the template name
   def derandomize(template_name)
     if randomize_stack_name?
-      template_name.sub(/-(\w{3})/,'') # strip the random part
+      template_name.sub(/-(\w{3})$/,'') # strip the random part at the end
     else
       template_name
     end
