@@ -22,5 +22,11 @@ lono inspect depends my-stack
 
 This above command generates a dependency chart.  The command uses the DependsOn attribute specified in each resource to figure this out.  It does not show implied dependencies that CloudFormaton automatically computes for us.
 
+The chart is generated with [Graphviz](http://www.graphviz.org/). To install:
+
+```sh
+brew install graphviz
+```
+
 <a id="prev" class="btn btn-basic" href="{% link articles.md %}">Back</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

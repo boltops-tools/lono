@@ -1,6 +1,6 @@
 class Lono::Inspector::Params < Lono::Inspector::Base
   def perform
-    puts "Parameters Summary:"
+    puts "Parameters Summary:".colorize(:green)
     return if @options[:noop]
 
     print_parameters("Required", required_parameters)
@@ -19,10 +19,10 @@ class Lono::Inspector::Params < Lono::Inspector::Base
   end
 
   def required_parameters
-    data["Parameters"].select { |logical_id, p| p["Default"] }
+    data["Parameters"].reject { |logical_id, p| p["Default"] }
   end
 
   def optional_parameters
-    data["Parameters"].reject { |logical_id, p| p["Default"] }
+    data["Parameters"].select { |logical_id, p| p["Default"] }
   end
 end
