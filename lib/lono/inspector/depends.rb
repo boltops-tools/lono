@@ -2,15 +2,6 @@ require "byebug"
 require "yaml"
 require "graph"
 
-class Node
-  attr_accessor :name, :children, :depends_on
-  def initialize(name)
-    @name = name
-    @children = []
-    @depends_on = []
-  end
-end
-
 class Lono::Inspector::Depends
   def initialize(stack_name, options)
     @stack_name = stack_name
@@ -21,8 +12,9 @@ class Lono::Inspector::Depends
 
   def run
     Lono::Template::DSL.new(@options.clone).run
-    # TODO: check if the stack exists and print friend error message
-    data = YAML.load(IO.read("#{@project_root}/output/#{@stack_name}.yml"))
+    template_path = "#{@project_root}/output/#{@stack_name}.yml"
+    check_template_exists(template_path)
+    data = YAML.load(IO.read(template_path))
 
     # First loop through top level nodes and build set depends_on property
     node_list = [] # top level node list
@@ -30,6 +22,7 @@ class Lono::Inspector::Depends
     resources.each do |logical_id, resource|
       node = Node.new(logical_id)
       node.depends_on = normalize_depends_on(resource)
+      node.resource_type = normalize_resource_type(resource)
       node_list << node
     end
 
@@ -41,20 +34,21 @@ class Lono::Inspector::Depends
     end
 
     # At this point we have a tree of nodes.
-    puts "CloudFormation Dependencies:"
-    node_list.each do |node|
-      print_tree(node)
+    if @options[:display] == "text"
+      puts "CloudFormation Dependencies:"
+      node_list.each { |node| print_tree(node) }
+    else
+      print_graph(node_list)
+      puts "CloudFormation Dependencies graph generated."
     end
-
-    ####################
-    print_graph(node_list)
   end
 
-  def print_tree(node, depth=0)
-    spacing = "  " * depth
-    puts "#{spacing}#{node.name}"
-    node.children.each do |node|
-      print_tree(node, depth+1)
+  # Check if the template exists and print friendly error message.  Exits if it
+  # does not exist.
+  def check_template_exists(template_path)
+    unless File.exist?(template_path)
+      puts "Unable to generate the tree. The template #{template_path} does not exist. Are you sure you use the right template name?  The template name does not require the extension.".colorize(:red)
+      exit 1
     end
   end
 
@@ -62,6 +56,11 @@ class Lono::Inspector::Depends
   def normalize_depends_on(resource)
     dependencies = resource["DependsOn"] || []
     [dependencies].flatten
+  end
+
+  def normalize_resource_type(resource)
+    type = resource["Type"]
+    type.sub("AWS::", "") # strip out AWS to make less verbose
   end
 
   # It is possible with bad CloudFormation templates that the dependency is not
@@ -76,33 +75,60 @@ class Lono::Inspector::Depends
     kids
   end
 
+  def print_tree(node, depth=0)
+    spacing = "  " * depth
+    puts "#{spacing}#{node.name}"
+    node.children.each do |node|
+      print_tree(node, depth+1)
+    end
+  end
+
   def print_graph(node_list)
+    check_graphviz_installed
     digraph do
       # graph_attribs << 'size="6,6"'
       node_attribs << lightblue << filled
 
       node_list.each do |n|
-        node(n.name)
+        node(n.graph_name)
         n.children.each do |child|
-          edge n.name, child.name
+          edge n.graph_name, child.graph_name
         end
       end
-      # many ways to access/create edges and nodes
-      # edge "a", "b"
-      # self["b"]["c"]
-      # node("c") >> "a"
 
-      # square   << node("a")
-      # triangle << node("b")
-
-      # red   << node("a") << edge("a", "b")
-      # green << node("b") << edge("b", "c")
-      # blue  << node("c") << edge("c", "a")
       random = (0...8).map { (65 + rand(26)).chr }.join
       path = "/tmp/cloudformation-depends-on-#{random}"
       save path, "png"
-      # TODO: check if open command exists
-      system "open #{path}.png"
+      # Check if open command exists and use it to open the image.
+      system "open #{path}.png" if system("type open > /dev/null")
+    end
+  end
+
+  # Check if Graphiz is installed and prints a user friendly message if it is not installed.
+  # Provide instructions if on macosx.
+  def check_graphviz_installed
+    installed = system("type dot > /dev/null") # dot is a command that is part of the graphviz package
+    unless installed
+      puts "It appears that the Graphviz is not installed.  Please install it to generate the graph."
+      if RUBY_PLATFORM =~ /darwin/
+        puts "You can install Graphviz with homebrew:"
+        puts "  brew install brew install graphviz"
+      end
+      exit 1
+    end
+  end
+
+  class Node
+    attr_accessor :name, :resource_type, :children, :depends_on
+    def initialize(name)
+      @name = name
+      @children = []
+      @depends_on = []
+    end
+
+    def graph_name
+      type = "(#{resource_type})" if resource_type
+      [name, type].compact.join("\n")
     end
   end
 end

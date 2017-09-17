@@ -19,6 +19,7 @@ class Lono::Inspector < Lono::Command
 
   desc "depends STACK", "Prints dependencies tree of CloudFormation template resources"
   long_desc Help.depends
+  option :display, type: :string, desc: "graph or text", default: "graph"
   def depends(name)
     Depends.new(name, options).run
   end
