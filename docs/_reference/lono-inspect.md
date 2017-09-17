@@ -12,7 +12,7 @@ lono inspect params my-stack
 
 The above command lists out the required and optional parameters in a CloudFormation template.
 
-### Dependency chart
+### Dependency Chart
 
 With more complex CloudFormation templates, the dependency can get more difficult to follow.  It is helpful to visualize the dependencies.
 
