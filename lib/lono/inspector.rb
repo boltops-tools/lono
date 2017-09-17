@@ -9,7 +9,6 @@ class Lono::Inspector < Lono::Command
   class_option :verbose, type: :boolean
   class_option :noop, type: :boolean
   class_option :project_root, desc: "Project folder.  Defaults to current directory", default: "."
-  class_option :region, desc: "AWS region"
 
   desc "params STACK", "Prints report of CloudFormation template parameters"
   option :type, type: :string, desc: "type can be: all, required, optional", default: "all"

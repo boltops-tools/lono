@@ -8,6 +8,9 @@ class Lono::Inspector::Depends < Lono::Inspector::Base
   end
 
   def perform
+    puts "Generating dependencies tree..."
+    return if @options[:noop]
+
     # First loop through top level nodes and build set depends_on property
     node_list = [] # top level node list
     resources = data["Resources"]

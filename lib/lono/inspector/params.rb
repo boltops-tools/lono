@@ -1,6 +1,8 @@
 class Lono::Inspector::Params < Lono::Inspector::Base
   def perform
     puts "Parameters Summary:"
+    return if @options[:noop]
+
     print_parameters("Required", required_parameters)
     print_parameters("Optional", optional_parameters)
   end
