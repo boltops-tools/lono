@@ -56,5 +56,9 @@ module Lono
     desc "param ACTION", "param subcommand tasks"
     long_desc Help.param
     subcommand "param", Lono::Param
+
+    desc "inspect ACTION", "inspect subcommand tasks"
+    long_desc Help.inspector
+    subcommand "inspect", Inspector
   end
 end
