@@ -2,6 +2,7 @@ require "thor"
 
 class Lono::Inspector < Lono::Command
   autoload :Help, 'lono/inspector/help'
+  autoload :Base, 'lono/inspector/base'
   autoload :Params, 'lono/inspector/params'
   autoload :Depends, 'lono/inspector/depends'
 

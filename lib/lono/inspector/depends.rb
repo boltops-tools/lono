@@ -1,21 +1,13 @@
-require "byebug"
 require "yaml"
 require "graph"
 
-class Lono::Inspector::Depends
+class Lono::Inspector::Depends < Lono::Inspector::Base
   def initialize(stack_name, options)
-    @stack_name = stack_name
-    @project_root = options[:project_root] || '.'
-    @options = options
+    super
     @nodes = [] # lookup map
   end
 
-  def run
-    Lono::Template::DSL.new(@options.clone).run
-    template_path = "#{@project_root}/output/#{@stack_name}.yml"
-    check_template_exists(template_path)
-    data = YAML.load(IO.read(template_path))
-
+  def perform
     # First loop through top level nodes and build set depends_on property
     node_list = [] # top level node list
     resources = data["Resources"]
@@ -40,15 +32,6 @@ class Lono::Inspector::Depends
     else
       print_graph(node_list)
       puts "CloudFormation Dependencies graph generated."
-    end
-  end
-
-  # Check if the template exists and print friendly error message.  Exits if it
-  # does not exist.
-  def check_template_exists(template_path)
-    unless File.exist?(template_path)
-      puts "Unable to generate the tree. The template #{template_path} does not exist. Are you sure you use the right template name?  The template name does not require the extension.".colorize(:red)
-      exit 1
     end
   end
 
