@@ -12,10 +12,12 @@ class Lono::Importer
   end
 
   def run
-    download_template
-    template_definition_path = add_template_definition
-    puts "Imported raw CloudFormation template and lono-fied it!"
-    puts "Template definition added to #{template_definition_path}."
+    unless options[:noop]
+      download_template
+      template_definition_path = add_template_definition
+      puts "Imported raw CloudFormation template and lono-fied it!"
+      puts "Template definition added to #{template_definition_path}."
+    end
     puts "Template downloaded to #{dest_path}."
   end
 
