@@ -18,7 +18,7 @@ class Lono::Inspector < Lono::Command
   end
 
   desc "summary STACK", "Prints summary of CloudFormation template"
-  long_desc Help.params
+  long_desc Help.summary
   def summary(name)
     Summary.new(name, options).run
   end

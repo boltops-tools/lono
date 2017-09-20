@@ -1,10 +1,10 @@
 class Lono::Inspector::Help
   class << self
-    def params
+    def summary
 <<-EOL
 Example:
 
-$ lono inspect params my-stack
+$ lono inspect summary my-stack
 
 EOL
     end

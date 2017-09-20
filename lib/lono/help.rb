@@ -72,9 +72,9 @@ EOL
 <<-EOL
 Examples:
 
-$ lono inspect params my-stack
-
 $ lono inspect depends my-stack
+
+$ lono inspect summary my-stack
 EOL
   end
 
