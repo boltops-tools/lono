@@ -11,9 +11,9 @@ describe Lono::Inspector do
       expect(out).to include("Generating dependencies tree")
     end
 
-    it "params" do
-      out = execute("bin/lono inspect params my-stack #{@args}")
-      expect(out).to include("Parameters Summary")
+    it "summary" do
+      out = execute("bin/lono inspect summary my-stack #{@args}")
+      expect(out).to include("Summary")
     end
   end
 end
