@@ -33,7 +33,7 @@ Resources:
   1 AWS::AutoScaling::AutoScalingGroup
 ```
 
-* Blog Post: [lono inspect summary Tutorial Introduction](https://blog.boltops.com/2017/09/18/lono-inspect-summary-tutorial-introduction)
+Blog Post also covers this: [lono inspect summary Tutorial Introduction](https://blog.boltops.com/2017/09/18/lono-inspect-summary-tutorial-introduction)
 
 ### Dependency Chart
 
@@ -54,7 +54,7 @@ The chart is generated with [Graphviz](http://www.graphviz.org/). To install:
 brew install graphviz
 ```
 
-* Blog Post: [lono inspect depends Tutorial Introduction](https://blog.boltops.com/2017/09/20/lono-inspect-depends-tutorial-introduction)
+Blog Post also covers this: [lono inspect depends Tutorial Introduction](https://blog.boltops.com/2017/09/20/lono-inspect-depends-tutorial-introduction)
 
 <a id="prev" class="btn btn-basic" href="{% link articles.md %}">Back</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
