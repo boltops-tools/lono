@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [3.3.0]
+- add lono inspect summary
+- remove lono inspect params
+
 ## [3.2.1]
 - fix lono inspect params
 
