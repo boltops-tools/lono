@@ -1,4 +1,4 @@
-template "blog-web-prod" do
+template "blog-web" do
   app,role,env = name.split('-')
   source "web"
   variables(

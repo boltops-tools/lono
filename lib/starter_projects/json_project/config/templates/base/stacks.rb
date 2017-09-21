@@ -1,4 +1,4 @@
-template "api-web-prod" do
+template "api-web" do
   source "web"
   variables(
     ami: "ami-123",
@@ -16,7 +16,7 @@ template "api-web-prod" do
   )
 end
 
-template "api-worker-prod" do
+template "api-worker" do
   source "web"
   variables(
     ami: "ami-123",
@@ -35,7 +35,7 @@ template "api-worker-prod" do
   )
 end
 
-template "api-redis-prod" do
+template "api-redis" do
   source "db"
   variables(
     ami: "ami-456",

@@ -1,6 +1,6 @@
 template "example"
 
-template "api-web-prod" do
+template "api-web" do
   source "web"
   variables(
     instance_type: "t2.small",
@@ -17,7 +17,7 @@ template "api-web-prod" do
   )
 end
 
-template "api-worker-prod" do
+template "api-worker" do
   source "web"
   variables(
     instance_type: "t2.small",
@@ -35,7 +35,7 @@ template "api-worker-prod" do
   )
 end
 
-template "api-redis-prod" do
+template "api-redis" do
   source "db"
   variables(
     instance_type: "t2.small",
