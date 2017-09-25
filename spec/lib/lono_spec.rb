@@ -5,6 +5,9 @@ describe Lono do
     before(:each) do
       @args = "--project-root spec/fixtures/my_project"
     end
+    after(:each) do
+      FileUtils.rm_rf("spec/fixtures/my_project/params/base")
+    end
 
     it "generate should build templates" do
       out = execute("./bin/lono generate #{@args}")

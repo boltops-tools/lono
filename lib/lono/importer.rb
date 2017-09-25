@@ -15,10 +15,12 @@ class Lono::Importer
     unless options[:noop]
       download_template
       template_definition_path = add_template_definition
+      create_params
       puts "Imported raw CloudFormation template and lono-fied it!"
       puts "Template definition added to #{template_definition_path}."
+      puts "Params file created to #{params_path}."
     end
-    puts "Template downloaded to #{dest_path}."
+    puts "Template downloaded to #{template_path}." # like having this message at the end
   end
 
   def download_template
@@ -30,9 +32,9 @@ class Lono::Importer
                 JSON.pretty_generate(JSON.load(template))
               end
 
-    folder = File.dirname(dest_path)
+    folder = File.dirname(template_path)
     FileUtils.mkdir_p(folder) unless File.exist?(folder)
-    IO.write(dest_path, result)
+    IO.write(template_path, result)
   end
 
   # Add template definition to config/templates/base/stacks.rb.
@@ -48,7 +50,35 @@ class Lono::Importer
     path
   end
 
-  def dest_path
+  # Creates starter params/base/[stack-name].txt file
+  def create_params
+    template = if @format == 'yml'
+                YAML.load_file(template_path)
+              else
+                JSON.load(IO.read(template_path))
+              end
+
+    result = []
+    required_parameters.each do |name, attributes|
+      result << "#{name}="
+    end
+    optional_parameters.each do |name, attributes|
+      key = "#{name}=".ljust(20, ' ')
+      result << "##{key} # optional"
+    end
+    content = result.join("\n") + "\n"
+
+    folder = File.dirname(params_path)
+    FileUtils.mkdir_p(folder) unless File.exist?(folder)
+    IO.write(params_path, content) unless File.exist?(params_path)
+  end
+
+  def params_path
+    "#{@project_root}/params/base/#{template_name}.txt"
+  end
+
+
+  def template_path
     "#{@project_root}/templates/#{template_name}.#{@format}"
   end
 
@@ -60,6 +90,20 @@ class Lono::Importer
   end
 
 private
+  def required_parameters
+    template_data["Parameters"].reject { |logical_id, p| p["Default"] }
+  end
+
+  def optional_parameters
+    template_data["Parameters"].select { |logical_id, p| p["Default"] }
+  end
+
+  def template_data
+    return @template_data if @template_data
+    template_path = "#{@project_root}/templates/#{template_name}.#{@format}"
+    @template_data = YAML.load(IO.read(template_path))
+  end
+
   def normalize_format(format)
     format == 'yaml' ? 'yml' : format
   end
