@@ -11,6 +11,7 @@ class Lono::Cfn < Lono::Command
   autoload :Delete, 'lono/cfn/delete'
   autoload :Preview, 'lono/cfn/preview'
   autoload :Diff, 'lono/cfn/diff'
+  autoload :Download, 'lono/cfn/download'
 
   class_option :verbose, type: :boolean
   class_option :noop, type: :boolean
@@ -63,5 +64,12 @@ class Lono::Cfn < Lono::Command
   long_desc Help.diff
   def diff(name)
     Diff.new(name, options).run
+  end
+
+  desc "download STACK", "download CloudFormation template from existing stack"
+  long_desc Help.download
+  option :name, desc: "Name you want to save the template as. Default: existing stack name."
+  def download(stack_name)
+    Download.new(stack_name, options).run
   end
 end

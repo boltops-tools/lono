@@ -89,5 +89,15 @@ Examples:
 $ lono cfn diff my-stack
 EOL
     end
+
+    def download
+<<-EOL
+Download CloudFormation template from existing template on AWS.
+
+Examples:
+
+$ lono cfn download my-stack
+EOL
+    end
   end
 end

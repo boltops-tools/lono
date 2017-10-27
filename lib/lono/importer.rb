@@ -91,11 +91,15 @@ class Lono::Importer
 
 private
   def required_parameters
-    template_data["Parameters"].reject { |logical_id, p| p["Default"] }
+    parameters.reject { |logical_id, p| p["Default"] }
   end
 
   def optional_parameters
-    template_data["Parameters"].select { |logical_id, p| p["Default"] }
+    parameters.select { |logical_id, p| p["Default"] }
+  end
+
+  def parameters
+    template_data["Parameters"] || []
   end
 
   def template_data

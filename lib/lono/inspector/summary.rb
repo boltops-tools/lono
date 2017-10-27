@@ -27,11 +27,15 @@ class Lono::Inspector::Summary < Lono::Inspector::Base
   end
 
   def required_parameters
-    data["Parameters"].reject { |logical_id, p| p["Default"] }
+    parameters.reject { |logical_id, p| p["Default"] }
   end
 
   def optional_parameters
-    data["Parameters"].select { |logical_id, p| p["Default"] }
+    parameters.select { |logical_id, p| p["Default"] }
+  end
+
+  def parameters
+    data["Parameters"] || []
   end
 
   def resource_types

@@ -30,6 +30,11 @@ describe Lono::Cfn do
       out = execute("bin/lono cfn diff my-stack #{@args}")
       expect(out).to include("diff")
     end
+
+    it "download stack" do
+      out = execute("bin/lono cfn download my-stack #{@args}")
+      expect(out).to include("download")
+    end
   end
 end
 
