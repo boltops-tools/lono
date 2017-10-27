@@ -4,10 +4,10 @@ class Lono::Cfn::Download < Lono::Cfn::Base
   def run
     puts "Download existing template to: #{download_path}"
     return if @options[:noop]
-    download_existing_cfn_template
+    download_template
   end
 
-  def download_existing_cfn_template
+  def download_template
     resp = cfn.get_template(
       stack_name: @stack_name,
       template_stage: "Original"
