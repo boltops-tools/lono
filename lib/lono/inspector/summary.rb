@@ -4,11 +4,19 @@ class Lono::Inspector::Summary < Lono::Inspector::Base
     return if @options[:noop]
 
     puts "Parameters:"
-    print_parameters("Required", required_parameters)
-    print_parameters("Optional", optional_parameters)
+    print_parameters_summary
 
     puts "Resources:"
     print_resource_types
+  end
+
+  def print_parameters_summary
+    if parameters.empty?
+      puts "  There are no parameters"
+    else
+      print_parameters("Required", required_parameters)
+      print_parameters("Optional", optional_parameters)
+    end
   end
 
   def print_parameters(label, parameters)
@@ -52,5 +60,6 @@ class Lono::Inspector::Summary < Lono::Inspector::Base
       type, count = a
       printf "%3s %s\n", count, type
     end
+    printf "%3s %s\n", resource_types.size, "Total"
   end
 end
