@@ -32,7 +32,7 @@ These blog posts also cover lono:
 It only takes a couple of commands to start using lono.
 
 ```sh
-brew cask install boltopslabs/software/bolts
+gem install lono
 lono new infra
 cd infra
 lono generate # not needed but showing for explanation
