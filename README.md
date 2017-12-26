@@ -5,7 +5,6 @@
 [![Code Climate][3]][4]
 [![Dependency Status](https://gemnasium.com/tongueroo/lono.png)](https://gemnasium.com/tongueroo/lono)
 [![Coverage Status](https://coveralls.io/repos/tongueroo/lono/badge.png)](https://coveralls.io/r/tongueroo/lono)
-[![ReadmeCI](http://www.readmeci.com/images/readmeci-badge.svg)](http://www.readmeci.com/tongueroo/lono)
 [![Join the chat at https://gitter.im/tongueroo/lono](https://badges.gitter.im/tongueroo/lono.svg)](https://gitter.im/tongueroo/lono?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Support](https://img.shields.io/badge/get-support-blue.svg)](https://boltops.com?utm_source=badge&utm_medium=badge&utm_campaign=lono)
 
