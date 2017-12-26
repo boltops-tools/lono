@@ -1,4 +1,4 @@
-require "aws-sdk"
+require "aws-sdk-s3"
 
 module Lono::Template::AwsServices
   def s3

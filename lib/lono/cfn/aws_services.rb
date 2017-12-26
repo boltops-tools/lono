@@ -1,4 +1,4 @@
-require "aws-sdk"
+require "aws-sdk-cloudformation"
 
 module Lono::Cfn::AwsServices
   def cfn

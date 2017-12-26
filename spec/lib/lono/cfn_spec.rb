@@ -33,7 +33,7 @@ describe Lono::Cfn do
 
     it "download stack" do
       out = execute("bin/lono cfn download my-stack #{@args}")
-      expect(out).to include("download")
+      expect(out).to include("Download")
     end
   end
 end
