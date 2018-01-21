@@ -22,6 +22,9 @@ s3:
     # More examples on how to specify different buckets for different LONO_ENV
     # prod: mybucket/path
     # stag: another-bucket/storage/path
+    # Can also use the AWS_PROFILE as the mapping
+    # aws_profile1: mybucket/path
+    # aws_profile2: another-bucket/storage/path
 randomize_stack_name: false
 ```
 

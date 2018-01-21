@@ -1,4 +1,6 @@
 class Lono::Param::Generator
+  include Lono::CurrentRegion
+
   def self.generate_all(options)
     puts "Generating params files"
     project_root = options[:project_root] || '.'
@@ -208,5 +210,4 @@ class Lono::Param::Generator
       instance_eval(IO.read(path))
     end
   end
-
 end

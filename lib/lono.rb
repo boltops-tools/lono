@@ -26,6 +26,7 @@ module Lono
   autoload :Settings, 'lono/settings'
   autoload :Importer, 'lono/importer'
   autoload :Inspector, 'lono/inspector'
+  autoload :CurrentRegion, 'lono/current_region'
 end
 
 Lono::Env.setup!

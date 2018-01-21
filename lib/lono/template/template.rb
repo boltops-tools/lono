@@ -4,6 +4,7 @@ require 'base64'
 
 class Lono::Template::Template
   include Lono::Template::Helpers
+  include Lono::CurrentRegion
   include ERB::Util
 
   def initialize(name, block=nil, options={})

@@ -28,8 +28,9 @@ class Lono::Settings
 
   def s3_path
     s3 = data['s3']
-    # s3['default']['path'] - key will always exist because of default lono/settings.yml
-    #   defauult value is nil though
-    s3['path'][LONO_ENV] || s3['path']['default']
+    s3_path = s3['path']
+    # s3_path['default'] - key will always exist because of default lono/settings.yml
+    #   default value is nil though
+    s3_path[ENV['AWS_PROFILE']] || s3_path[LONO_ENV] || s3_path['default']
   end
 end
