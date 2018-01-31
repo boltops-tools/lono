@@ -5,7 +5,7 @@ class Lono::Settings
 
   # The options from the files get merged with the following precedence:
   #
-  # current folder - The current folder’s lono/settings.yml values take the highest precedence.
+  # current folder - The current folder’s config/settings.yml values take the highest precedence.
   # user - The user’s ~/.lono/settings.yml values take the second highest precedence.
   # default - The default settings bundled with the tool takes the lowest precedence.
   #

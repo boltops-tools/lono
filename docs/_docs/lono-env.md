@@ -10,7 +10,7 @@ The `LONO_ENV` can be set easily in several ways:
 
 1. At the CLI command invocation - This takes the highest precedence.
 2. Exported as an environment variable to your shell - This takes the second highest precedence.
-3. As a `aws_profile_lono_env_map` value in your `lono/settings.yml` file - This takes the lowest precedence.
+3. As a `aws_profile_lono_env_map` value in your lono `settings.yml` file - This takes the lowest precedence.
 
 ### At the CLI Command
 
@@ -27,9 +27,9 @@ lono generate
 
 Most people will set `LONO_ENV` in their `~/.profile`.
 
-### In lono/settings.yml
+### In lono settings.yml
 
-The most interesting way to set `LONO_ENV` is with the `aws_profile_lono_env_map` in `lono/settings.yml`.  Let's say you have a `~/.lono/settings.yml` with the following:
+The most interesting way to set `LONO_ENV` is with the `aws_profile_lono_env_map` in `settings.yml`.  Let's say you have a `~/.lono/settings.yml` with the following:
 
 ```yaml
 aws_profile_lono_env_map:

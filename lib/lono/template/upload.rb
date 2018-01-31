@@ -119,8 +119,8 @@ class Lono::Template::Upload
     if settings.s3_path
       @s3_full_path = settings.s3_path
     else
-      say "Unable to upload templates to s3 because you have not configured the s3.path option in .lono/settings.yml.".colorize(:red)
-      say "Please configure .lono/settings.yml with s3.path.  Refer to http://lono.cloud/docs/settings/ for more help.".colorize(:red)
+      say "Unable to upload templates to s3 because you have not configured the s3.path option in lono settings.yml.".colorize(:red)
+      say "Please configure  settings.yml with s3.path.  Refer to http://lono.cloud/docs/settings/ for more help.".colorize(:red)
       exit 1
     end
   end

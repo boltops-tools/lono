@@ -2,9 +2,9 @@
 title: Settings
 ---
 
-Lono's behavior can be tailored using a `lono/settings.yml` file. This file should be created at `~/.lono/settings.yml` or `lono/settings.yml` within the project.  The options from the files get merged with the following precedence:
+Lono's behavior can be tailored using a `settings.yml` file. This file should be created at `~/.lono/settings.yml` or `config/settings.yml` within the project.  The options from the files get merged with the following precedence:
 
-1. current folder - The current folder's `lono/settings.yml` values take the highest precedence.
+1. current folder - The current folder's `config/settings.yml` values take the highest precedence.
 2. user - The user's `~/.lono/settings.yml` values take the second highest precedence.
 3. default - The [default settings](https://github.com/tongueroo/lono/blob/master/lib/lono/default/settings.yml) bundled with the tool takes the lowest precedence.
 
