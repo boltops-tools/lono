@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [3.4.0]
+- fix lono project config settings
+- upgrade to circleci 2.0
+- add current_region helper
+- update install notes
+
 ## [3.3.4]
 - require specific aws-sdk s3 and cloudformation dependencies to reduce size
 
