@@ -69,7 +69,6 @@ class Lono::Template::Template
       require path
       self.class.send :include, module_name.constantize
     end
-
   end
 
   def source(path)

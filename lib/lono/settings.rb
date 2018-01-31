@@ -13,7 +13,7 @@ class Lono::Settings
   def data
     return @settings_yaml if @settings_yaml
 
-    project_file = "#{@project_root}/.lono/settings.yml"
+    project_file = "#{@project_root}/config/settings.yml"
     project = File.exist?(project_file) ? YAML.load_file(project_file) : {}
 
     user_file = "#{ENV['HOME']}/.lono/settings.yml"
@@ -25,7 +25,20 @@ class Lono::Settings
     @settings_yaml = default.merge(user.merge(project))
   end
 
-
+  # Examples:
+  #
+  # Using the LONO_ENV
+  # s3:
+  #   path:
+  #     production: s3://infrastructure-prod/cloudformation
+  #     staging: s3://infrastructure-dev/cloudformation
+  #
+  # Using the AWS_PROFILE
+  # s3:
+  #   path:
+  #     my-prod-profile: s3://infrastructure-prod/cloudformation
+  #     my-stag-profile: s3://infrastructure-dev/cloudformation
+  #
   def s3_path
     s3 = data['s3']
     s3_path = s3['path']
