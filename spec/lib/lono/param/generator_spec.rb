@@ -2,11 +2,14 @@ require_relative "../../../spec_helper"
 
 describe Lono::Param::Generator do
   def generate(project_root)
+    @saved_root = ENV['LONO_ROOT']
+    ENV['LONO_ROOT'] = project_root
     param = Lono::Param::Generator.new("network",
-      project_root: project_root,
       mute: true
     )
     json = param.generate
+    ENV['LONO_ROOT'] = @saved_root
+
     data = JSON.load(json)
     param_value = data.first["ParameterValue"]
   end
