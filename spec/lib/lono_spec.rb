@@ -14,10 +14,14 @@ describe Lono do
       expect(out).to match /Generating both CloudFormation template and parameter/
     end
 
-    # it "import should download template" do
-    #   out = execute("#{@env} bin/lono import spec/fixtures/raw_templates/aws-waf-security-automations.template #{@args}")
-    #   expect(out).to match /Imported raw CloudFormation template/
-    # end
+    it "import should download template" do
+      path = "spec/fixtures/my_project/config/templates/base/stacks.rb"
+      backup = "spec/fixtures/my_project/config/templates/base/stacks.rb.bak"
+      FileUtils.cp(path, backup)
+      out = execute("#{@env} bin/lono import spec/fixtures/raw_templates/aws-waf-security-automations.template #{@args}")
+      expect(out).to match /Imported raw CloudFormation template/
+      FileUtils.mv(backup, path)
+    end
   end
 end
 
