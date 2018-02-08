@@ -1,7 +1,7 @@
 ENV['TEST'] = '1'
 # Ensures aws api never called. Fixture home folder does not contain ~/.aws/credentails
 ENV['HOME'] = "spec/fixtures/home"
-ENV['LONO_ROOT'] = "tmp/lono_project"
+ENV['LONO_ROOT'] = "spec/fixtures/my_project" # this gets kept
 
 require "pp"
 require "byebug"

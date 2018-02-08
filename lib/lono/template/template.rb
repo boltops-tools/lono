@@ -15,13 +15,12 @@ class Lono::Template::Template
     @_options = options
     @_detected_format = options[:detected_format]
     @_block = block
-    @_project_root = options[:project_root] || '.'
-    @_config_path = "#{@_project_root}/config"
+    @_config_path = "#{Lono.root}/config"
     @_source = default_source(name)
   end
 
   def default_source(name)
-    "#{@_project_root}/templates/#{name}.#{@_detected_format}" # defaults to name, source method overrides
+    "#{Lono.root}/templates/#{name}.#{@_detected_format}" # defaults to name, source method overrides
   end
 
   def build
@@ -62,7 +61,7 @@ class Lono::Template::Template
 
   # Load custom helper methods from the user's infra repo
   def load_custom_helpers
-    Dir.glob("#{@_project_root}/helpers/**/*_helper.rb").each do |path|
+    Dir.glob("#{Lono.root}/helpers/**/*_helper.rb").each do |path|
       filename = path.sub(%r{.*/},'').sub('.rb','')
       module_name = filename.classify
 
@@ -72,7 +71,7 @@ class Lono::Template::Template
   end
 
   def source(path)
-    @_source = path[0..0] == '/' ? path : "#{@_project_root}/templates/#{path}"
+    @_source = path[0..0] == '/' ? path : "#{Lono.root}/templates/#{path}"
     @_source += ".#{@_detected_format}"
   end
 

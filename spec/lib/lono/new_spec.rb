@@ -11,6 +11,7 @@ describe Lono::New do
         force: true,
         quiet: true,
         format: 'json',
+        project_root: ENV['TMP_LONO_ROOT'],
       )
       new_project.run
     end
