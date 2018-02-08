@@ -148,12 +148,7 @@ class Lono::Template::DSL
       # This file was generated with lono. Do not edit directly, the changes will be lost.
       # More info: http://lono.cloud
     EOS
-    "#{comment}#{remove_blank_lines(text)}"
-  end
-
-  # ERB templates leaves blank lines around, remove those lines
-  def remove_blank_lines(text)
-    text.split("\n").reject { |l| l.strip == '' }.join("\n") + "\n"
+    "#{comment}#{text}"
   end
 
   def ensure_parent_dir(path)
