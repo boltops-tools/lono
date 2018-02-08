@@ -2,10 +2,11 @@ require "spec_helper"
 
 describe Lono::Template::DSL do
   before(:each) do
-    ENV['TMP_LONO_ROOT'] = "tmp/lono_project" # this gets generated
-    ENV['LONO_ROOT'] = "tmp/lono_project" # this gets kept
+    @saved_root = ENV['LONO_ROOT']
+    ENV['LONO_ROOT'] = ENV['TMP_LONO_ROOT']
   end
   after(:each) do
+    ENV['LONO_ROOT'] = @saved_root
     FileUtils.rm_rf(ENV['TMP_LONO_ROOT']) unless ENV['KEEP_TMP_PROJECT']
   end
 
@@ -86,7 +87,6 @@ describe Lono::Template::DSL do
     end
 
     it "should make trailing options pass to the partial helper available as instance variables" do
-      puts "Lono.root #{Lono.root}"
       raw = IO.read("#{Lono.root}/output/api-web.json")
       json = JSON.load(raw)
       expect(json['Resources']['HostRecord']['Properties']['Comment']).to eq 'DNS name for mydomain.com'

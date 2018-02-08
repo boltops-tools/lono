@@ -6,8 +6,8 @@ describe Lono::New do
     ENV['LONO_ROOT'] = ENV['TMP_LONO_ROOT']
   end
   after(:each) do
-    FileUtils.rm_rf(ENV['TMP_LONO_ROOT']) unless ENV['KEEP_TMP_PROJECT']
     ENV['LONO_ROOT'] = @saved_root
+    FileUtils.rm_rf(ENV['TMP_LONO_ROOT']) unless ENV['KEEP_TMP_PROJECT']
   end
 
   context "json starter project" do

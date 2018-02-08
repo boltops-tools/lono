@@ -14,8 +14,8 @@ $root = File.expand_path('../../', __FILE__)
 
 require "#{$root}/lib/lono"
 
-require 'coveralls'
-Coveralls.wear!
+# require 'coveralls'
+# Coveralls.wear!
 
 module Helpers
   def execute(cmd)

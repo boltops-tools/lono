@@ -3,14 +3,11 @@ require "spec_helper"
 describe Lono do
   before(:each) do
     lono_bin = File.expand_path("../../../../bin/lono", __FILE__)
-    dir = File.dirname(Lono.root)
-    name = File.basename(Lono.root)
-    FileUtils.mkdir(dir) unless File.exist?(dir)
-    execute("cd #{dir} && #{lono_bin} new #{name} -f -q --format json")
+    execute("cd tmp && #{lono_bin} new foo -f -q --format json")
   end
 
   after(:each) do
-    FileUtils.rm_rf(Lono.root) unless ENV['KEEP_TMP_PROJECT']
+    FileUtils.rm_rf("foo") unless ENV['KEEP_TMP_PROJECT']
   end
 
   describe "bashify" do
