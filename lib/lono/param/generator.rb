@@ -5,7 +5,7 @@ class Lono::Param::Generator
     puts "Generating params files"
     project_root = options[:project_root] || '.'
 
-    params = param_names(project_root, "base") + param_names(project_root, LONO_ENV)
+    params = param_names(project_root, "base") + param_names(project_root, Lono.env)
     params.uniq.each do |name|
       param = Lono::Param::Generator.new(name, options)
       param.generate
@@ -26,11 +26,11 @@ class Lono::Param::Generator
   end
 
   def initialize(name, options)
-    @_name = "#{LONO_ENV}/#{name}"
+    @_name = "#{Lono.env}/#{name}"
     @_options = options
     @_project_root = options[:project_root] || '.'
     @_env_path = options[:path] || "#{@_project_root}/params/#{@_name}.txt"
-    @_base_path = @_env_path.sub("/#{LONO_ENV}/", "/base/")
+    @_base_path = @_env_path.sub("/#{Lono.env}/", "/base/")
   end
 
   def generate
@@ -44,7 +44,7 @@ class Lono::Param::Generator
       write_output(json)
       # Example: @_name = stag/ecs/private
       #          pretty_name = ecs/private
-      pretty_name = @_name.sub("#{LONO_ENV}/", '')
+      pretty_name = @_name.sub("#{Lono.env}/", '')
       puts "Params file generated for #{pretty_name} at #{output_path}" unless @_options[:mute]
     else
       puts "#{@_base_path} or #{@_env_path} could not be found?  Are you sure it exist?"
@@ -191,7 +191,7 @@ class Lono::Param::Generator
 
   def load_variables
     load_variables_folder("base")
-    load_variables_folder(LONO_ENV)
+    load_variables_folder(Lono.env)
   end
 
   # Load the variables defined in config/variables/* to make available the params/*.txt files

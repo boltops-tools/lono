@@ -36,7 +36,7 @@ class Lono::Template::Upload
   def load_checksums!
     return if @options[:noop]
 
-    prefix = "#{s3_path}/#{LONO_ENV}" # s3://s3-bucket-and-path-from-settings/prod
+    prefix = "#{s3_path}/#{Lono.env}" # s3://s3-bucket-and-path-from-settings/prod
     resp = s3.list_objects(bucket: s3_bucket, prefix: prefix)
     resp.contents.each do |object|
       # key does not include the bucket name
@@ -56,7 +56,7 @@ class Lono::Template::Upload
 
   def upload(path)
     pretty_path = path.sub(/^\.\//, '')
-    key = "#{s3_path}/#{LONO_ENV}/#{pretty_path.sub(/^output\//,'')}"
+    key = "#{s3_path}/#{Lono.env}/#{pretty_path.sub(/^output\//,'')}"
     s3_full_path = "s3://#{s3_bucket}/#{key}"
 
     local_checksum = Digest::MD5.hexdigest(IO.read(path))
@@ -89,14 +89,14 @@ class Lono::Template::Upload
     # first convert the local path to the path format that is stored in @checksums keys
     # ./output/docker.yml => cloudformation-templates/stag/docker.yml
     pretty_path = path.sub(/^\.\//, '')
-    key = "#{s3_path}/#{LONO_ENV}/#{pretty_path.sub(/^output\//,'')}"
+    key = "#{s3_path}/#{Lono.env}/#{pretty_path.sub(/^output\//,'')}"
     @checksums[key]
   end
 
   # https://s3.amazonaws.com/mybucket/cloudformation-templates/prod/parent.yml
   def s3_https_url(template_path)
     ensure_s3_setup!
-    "https://s3.amazonaws.com/#{s3_bucket}/#{s3_path}/#{LONO_ENV}/#{template_path}"
+    "https://s3.amazonaws.com/#{s3_bucket}/#{s3_path}/#{Lono.env}/#{template_path}"
   end
 
   # Example:

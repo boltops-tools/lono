@@ -17,7 +17,7 @@ module Lono::Template::Helpers
   end
 
   def template_params(param_name)
-    param_path = "params/#{LONO_ENV}/#{param_name}.txt"
+    param_path = "params/#{Lono.env}/#{param_name}.txt"
     generator_options = {
       project_root: @_project_root,
       path: param_path,

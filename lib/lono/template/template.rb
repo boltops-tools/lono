@@ -34,7 +34,7 @@ class Lono::Template::Template
 
   def load_variables
     load_variables_folder("base")
-    load_variables_folder(LONO_ENV)
+    load_variables_folder(Lono.env)
   end
 
   # Load the variables defined in config/variables/* to make available in the

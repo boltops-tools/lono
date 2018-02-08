@@ -16,12 +16,12 @@ class Lono::Template::DSL
   end
 
   # Instance eval's all the files within each folder under
-  #   config/lono/base and config/lono/[LONO_ENV]
-  # Base gets base first and then the LONO_ENV configs get evaluate second.
+  #   config/lono/base and config/lono/[Lono.env]
+  # Base gets base first and then the Lono.env configs get evaluate second.
   # This means the env specific configs override the base configs.
   def evaluate_templates
     evaluate_folder("base")
-    evaluate_folder(LONO_ENV)
+    evaluate_folder(Lono.env)
     @detected_format = detect_format
   end
 
