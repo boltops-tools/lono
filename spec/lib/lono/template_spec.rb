@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Lono do
   before(:each) do
-    lono_bin = "bin/lono"
+    lono_bin = File.expand_path("../../../../bin/lono", __FILE__)
     dir = File.dirname(Lono.root)
     name = File.basename(Lono.root)
     FileUtils.mkdir(dir) unless File.exist?(dir)
