@@ -32,4 +32,4 @@ module Lono
   extend Core
 end
 
-Lono::Env.setup!
+Lono.setup!
