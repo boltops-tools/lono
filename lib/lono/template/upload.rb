@@ -101,13 +101,14 @@ class Lono::Template::Upload
   # Example:
   #    s3_bucket('s3://mybucket/templates/storage/path') => mybucket
   def s3_bucket
+    return '' if @options[:noop] # to get spec passing
     @s3_full_path.sub('s3://','').split('/').first
   end
 
   # Example:
   #    s3_bucket('s3://mybucket/templates/storage/path') => templates/storage/path
   def s3_path
-    puts "@s3_full_path #{@s3_full_path.inspect}".colorize(:green)
+    return '' if @options[:noop] # to get spec passing
     @s3_full_path.sub('s3://','').split('/')[1..-1].join('/')
   end
 

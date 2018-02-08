@@ -3,16 +3,14 @@ require_relative "../spec_helper"
 describe Lono do
   describe "lono" do
     before(:each) do
-      ENV['DEBUG'] = '1'
       @env = "LONO_ROOT=#{ENV['LONO_ROOT']}"
-      @args = ""
     end
     after(:each) do
       FileUtils.rm_rf("spec/fixtures/my_project/params/base")
     end
 
     it "generate should build templates" do
-      out = execute("cd tmp && ../bin/lono generate #{@args}")
+      out = execute("#{@env} bin/lono generate")
       expect(out).to match /Generating both CloudFormation template and parameter/
     end
 
