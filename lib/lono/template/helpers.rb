@@ -4,7 +4,7 @@ module Lono::Template::Helpers
     template_path = "#{template_name}.#{format}"
 
     # must have settings.s3_path for this to owrk
-    settings = Lono::Settings.new(@project_root)
+    settings = Lono::Settings.new
     if settings.s3_path
       # high jacking Upload for useful s3_https_url method
       upload = Lono::Template::Upload.new(@_options)

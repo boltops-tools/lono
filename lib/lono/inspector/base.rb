@@ -2,7 +2,6 @@ class Lono::Inspector::Base
   def initialize(stack_name, options)
     @stack_name = stack_name
     @options = options
-    @project_root = options[:project_root] || '.'
   end
 
   def generate_templates
@@ -16,7 +15,7 @@ class Lono::Inspector::Base
 
   def data
     return @data if @data
-    template_path = "#{@project_root}/output/#{@stack_name}.yml"
+    template_path = "#{Lono.root}/output/#{@stack_name}.yml"
     check_template_exists(template_path)
     @data = YAML.load(IO.read(template_path))
   end

@@ -15,7 +15,6 @@ class Lono::Cfn < Lono::Command
 
   class_option :verbose, type: :boolean
   class_option :noop, type: :boolean
-  class_option :project_root, desc: "Project folder.  Defaults to current directory", default: "."
   class_option :region, desc: "AWS region"
 
   # common to create and update

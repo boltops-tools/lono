@@ -8,7 +8,6 @@ class Lono::Importer
     @source = source
     @options = options
     @format = normalize_format(@options[:format])
-    @project_root = options[:project_root] || '.'
   end
 
   def run
@@ -39,7 +38,7 @@ class Lono::Importer
 
   # Add template definition to config/templates/base/stacks.rb.
   def add_template_definition
-    path = "#{@project_root}/config/templates/base/stacks.rb"
+    path = "#{Lono.root}/config/templates/base/stacks.rb"
     lines = File.exist?(path) ? IO.readlines(path) : []
     new_template_definition = %Q|template "#{template_name}"|
     unless lines.detect { |l| l.include?(new_template_definition) }
@@ -74,12 +73,12 @@ class Lono::Importer
   end
 
   def params_path
-    "#{@project_root}/params/base/#{template_name}.txt"
+    "#{Lono.root}/params/base/#{template_name}.txt"
   end
 
 
   def template_path
-    "#{@project_root}/templates/#{template_name}.#{@format}"
+    "#{Lono.root}/templates/#{template_name}.#{@format}"
   end
 
   def template_name
@@ -104,7 +103,7 @@ private
 
   def template_data
     return @template_data if @template_data
-    template_path = "#{@project_root}/templates/#{template_name}.#{@format}"
+    template_path = "#{Lono.root}/templates/#{template_name}.#{@format}"
     @template_data = YAML.load(IO.read(template_path))
   end
 

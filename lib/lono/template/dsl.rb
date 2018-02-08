@@ -1,9 +1,8 @@
 class Lono::Template::DSL
   def initialize(options={})
     @options = options
-    @project_root = @options[:project_root] || '.'
-    @config_path = "#{@project_root}/config"
-    Lono::ProjectChecker.check(@project_root)
+    @config_path = "#{Lono.root}/config"
+    Lono::ProjectChecker.check
     @templates = []
     @results = {}
     @detected_format = nil
@@ -70,7 +69,7 @@ class Lono::Template::DSL
   # templates files.
   # All the templates must be of the same format, either all json or all yaml.
   def detect_format
-    extensions = Dir.glob("#{@project_root}/templates/**/*").map do |path|
+    extensions = Dir.glob("#{Lono.root}/templates/**/*").map do |path|
       File.extname(path).sub(/^\./,'')
     end.reject(&:empty?).uniq
     extensions.include?('yml') ? 'yml' : 'json' # defaults to yml - falls back to json
@@ -88,7 +87,7 @@ class Lono::Template::DSL
   end
 
   def write_output
-    output_path = "#{@project_root}/output"
+    output_path = "#{Lono.root}/output"
     FileUtils.rm_rf(output_path) if @options[:clean]
     FileUtils.mkdir(output_path) unless File.exist?(output_path)
     puts "Generating CloudFormation templates:" unless @options[:quiet]

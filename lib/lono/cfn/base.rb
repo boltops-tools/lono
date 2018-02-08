@@ -9,8 +9,7 @@ class Lono::Cfn::Base
     @randomize_stack_name = options[:randomize_stack_name]
     @stack_name = randomize(stack_name)
     @options = options
-    @project_root = options[:project_root] || '.'
-    Lono::ProjectChecker.check(@project_root) unless options[:lono] # already ran checker in lono generate
+    Lono::ProjectChecker.check unless options[:lono] # already ran checker in lono generate
 
     @template_name = options[:template] || derandomize(@stack_name)
     @param_name = options[:param] || @template_name
@@ -61,26 +60,19 @@ class Lono::Cfn::Base
   end
 
   def generate_templates
-    Lono::Template::DSL.new(
-      project_root: @project_root,
-      pretty: true
-    ).run
+    Lono::Template::DSL.new(pretty: true).run
   end
 
   def upload_templates
     # only upload templates if s3.path configured in settings
-    settings = Lono::Settings.new(@project_root)
+    settings = Lono::Settings.new
     return unless settings.s3_path
 
-    Lono::Template::Upload.new(
-      project_root: @project_root,
-      pretty: true
-    ).run
+    Lono::Template::Upload.new(pretty: true).run
   end
 
   def generate_params(options={})
     generator_options = {
-      project_root: @project_root,
       path: @param_path,
       allow_no_file: true
     }.merge(options)
@@ -111,7 +103,7 @@ class Lono::Cfn::Base
     #   @param_path = params/prod/ecs.txt
     #              => output/params/prod/ecs.json
     output_param_path = @param_path.sub(/\.txt/, '.json')
-    output_param_path = "#{@project_root}/output/#{output_param_path}"
+    output_param_path = "#{Lono.root}/output/#{output_param_path}"
     if @options[:param] && !File.exist?(output_param_path)
       warns << "Parameters file missing: could not find #{output_param_path}"
     end
@@ -136,9 +128,9 @@ class Lono::Cfn::Base
     path = case type
     when :template
       format = detect_format
-      "#{@project_root}/output/#{name}.#{format}"
+      "#{Lono.root}/output/#{name}.#{format}"
     when :param
-      "#{@project_root}/params/#{Lono.env}/#{name}.txt"
+      "#{Lono.root}/params/#{Lono.env}/#{name}.txt"
     else
       raise "hell: dont come here"
     end
@@ -147,7 +139,7 @@ class Lono::Cfn::Base
 
   # Returns String with value of "yml" or "json".
   def detect_format
-    formats = Dir.glob("#{@project_root}/templates/**/*").
+    formats = Dir.glob("#{Lono.root}/templates/**/*").
                 map { |path| path.sub(/\.erb$/, '') }.
                 map { |path| File.extname(path) }.
                 reject { |s| s.empty? }. # reject ""
@@ -210,7 +202,7 @@ class Lono::Cfn::Base
     end
 
     # otherwise use the settings preference
-    settings = Lono::Settings.new(@project_root)
+    settings = Lono::Settings.new
     settings.data['randomize_stack_name']
   end
 

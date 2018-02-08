@@ -2,7 +2,6 @@ class Lono::New
   attr_reader :options
   def initialize(options)
     @options = options
-    @project_root = options[:project_root] || '.'
     @format = options[:format] || 'json'
   end
 
@@ -15,7 +14,7 @@ class Lono::New
       # starter_projects/yaml_project/ ->
       regexp = Regexp.new(".*starter_projects/#{@format}_project/")
       dest = src.gsub(regexp,'')
-      dest = "#{@project_root}/#{dest}"
+      dest = "#{Lono.root}/#{dest}"
 
       if File.exist?(dest) and !options[:force]
         puts "already exists: #{dest}" unless options[:quiet]

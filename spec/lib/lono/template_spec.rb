@@ -1,17 +1,16 @@
-require_relative "../../spec_helper"
+require "spec_helper"
 
 describe Lono do
   before(:each) do
-    lono_bin = File.expand_path("../../../../bin/lono", __FILE__)
-    @project_root = File.expand_path("../../../../tmp/lono_project", __FILE__)
-    dir = File.dirname(@project_root)
-    name = File.basename(@project_root)
+    lono_bin = "bin/lono"
+    dir = File.dirname(Lono.root)
+    name = File.basename(Lono.root)
     FileUtils.mkdir(dir) unless File.exist?(dir)
     execute("cd #{dir} && #{lono_bin} new #{name} -f -q --format json")
   end
 
   after(:each) do
-    FileUtils.rm_rf(@project_root) unless ENV['KEEP_TMP_PROJECT']
+    FileUtils.rm_rf(Lono.root) unless ENV['KEEP_TMP_PROJECT']
   end
 
   describe "bashify" do
@@ -24,12 +23,12 @@ describe Lono do
 
   describe "cli specs" do
     it "should generate templates" do
-      out = execute("./bin/lono template generate -c --project-root #{@project_root}")
+      out = execute("./bin/lono template generate -c --project-root #{Lono.root}")
       expect(out).to match /Generating CloudFormation templates/
     end
 
     it "should generate templates" do
-      out = execute("./bin/lono template upload --project-root #{@project_root} --noop")
+      out = execute("./bin/lono template upload --project-root #{Lono.root} --noop")
       expect(out).to match /Templates uploaded to s3/
     end
   end

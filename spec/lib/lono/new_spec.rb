@@ -1,11 +1,8 @@
-require_relative "../../spec_helper"
+require "spec_helper"
 
 describe Lono::New do
-  before(:each) do
-    @project_root = File.expand_path("../../../../tmp/lono_project", __FILE__)
-  end
   after(:each) do
-    FileUtils.rm_rf(@project_root) unless ENV['KEEP_TMP_PROJECT']
+    FileUtils.rm_rf(Lono.root) unless ENV['KEEP_TMP_PROJECT']
   end
 
   context "json starter project" do
@@ -14,18 +11,16 @@ describe Lono::New do
         force: true,
         quiet: true,
         format: 'json',
-        project_root: @project_root
       )
       new_project.run
     end
 
     it "should be able to lono generate" do
       dsl = Lono::Template::DSL.new(
-        project_root: @project_root,
         quiet: true
       )
       dsl.run
-      generated = File.exist?("#{@project_root}/output/blog-web.json")
+      generated = File.exist?("#{Lono.root}/output/blog-web.json")
       expect(generated).to be true
     end
   end
@@ -36,18 +31,16 @@ describe Lono::New do
         force: true,
         quiet: true,
         format: 'yaml',
-        project_root: @project_root
       )
       new_project.run
     end
 
     it "should be able to lono generate" do
       dsl = Lono::Template::DSL.new(
-        project_root: @project_root,
         quiet: true
       )
       dsl.run
-      generated = File.exist?("#{@project_root}/output/blog-web.yml")
+      generated = File.exist?("#{Lono.root}/output/blog-web.yml")
       expect(generated).to be true
     end
   end

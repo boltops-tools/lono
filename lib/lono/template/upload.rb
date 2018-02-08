@@ -8,7 +8,6 @@ class Lono::Template::Upload
 
   def initialize(options={})
     @options = options
-    @project_root = options[:project_root] || '.'
     @checksums = {}
   end
 
@@ -16,7 +15,7 @@ class Lono::Template::Upload
     ensure_s3_setup!
     load_checksums!
 
-    paths = Dir.glob("#{@project_root}/output/**/*")
+    paths = Dir.glob("#{Lono.root}/output/**/*")
     paths.reject { |p| p =~ %r{output/params} }.
           select { |p| File.file?(p) }.each do |path|
       upload(path)
@@ -115,7 +114,7 @@ class Lono::Template::Upload
   def ensure_s3_setup!
     return if @options[:noop]
 
-    settings = Lono::Settings.new(@project_root)
+    settings = Lono::Settings.new
     if settings.s3_path
       @s3_full_path = settings.s3_path
     else

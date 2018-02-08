@@ -5,7 +5,6 @@ class Lono::Cfn::Delete
   def initialize(stack_name, options={})
     @stack_name = stack_name
     @options = options
-    @project_root = options[:project_root] || '.'
   end
 
   def run

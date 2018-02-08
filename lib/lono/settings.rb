@@ -1,8 +1,4 @@
 class Lono::Settings
-  def initialize(project_root=nil)
-    @project_root = project_root || '.'
-  end
-
   # The options from the files get merged with the following precedence:
   #
   # current folder - The current folder’s config/settings.yml values take the highest precedence.
@@ -13,7 +9,7 @@ class Lono::Settings
   def data
     return @settings_yaml if @settings_yaml
 
-    project_file = "#{@project_root}/config/settings.yml"
+    project_file = "#{Lono.root}/config/settings.yml"
     project = File.exist?(project_file) ? YAML.load_file(project_file) : {}
 
     user_file = "#{ENV['HOME']}/.lono/settings.yml"
