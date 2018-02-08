@@ -1,8 +1,13 @@
 require "spec_helper"
 
 describe Lono::New do
+  before(:each) do
+    @saved_root = ENV['LONO_ROOT']
+    ENV['LONO_ROOT'] = ENV['TMP_LONO_ROOT']
+  end
   after(:each) do
-    FileUtils.rm_rf(Lono.root) unless ENV['KEEP_TMP_PROJECT']
+    FileUtils.rm_rf(ENV['TMP_LONO_ROOT']) unless ENV['KEEP_TMP_PROJECT']
+    ENV['LONO_ROOT'] = @saved_root
   end
 
   context "json starter project" do

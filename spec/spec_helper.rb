@@ -2,6 +2,7 @@ ENV['TEST'] = '1'
 # Ensures aws api never called. Fixture home folder does not contain ~/.aws/credentails
 ENV['HOME'] = "spec/fixtures/home"
 ENV['LONO_ROOT'] = "spec/fixtures/my_project" # this gets kept
+ENV['TMP_LONO_ROOT'] = "./tmp/lono_project" # need the period for the load_custom_helpers require , unsure if I should adjust the LOAD_PATH
 
 require "pp"
 require "byebug"
