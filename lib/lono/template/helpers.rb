@@ -19,7 +19,6 @@ module Lono::Template::Helpers
   def template_params(param_name)
     param_path = "params/#{Lono.env}/#{param_name}.txt"
     generator_options = {
-      project_root: @_project_root,
       path: param_path,
       allow_no_file: true
     }.merge(@_options)
@@ -29,7 +28,7 @@ module Lono::Template::Helpers
   end
 
   def user_data(path, vars={})
-    path = "#{@_project_root}/templates/user_data/#{path}"
+    path = "#{Lono.root}/templates/user_data/#{path}"
     template = IO.read(path)
     variables(vars)
     result = erb_result(path, template)
@@ -112,7 +111,7 @@ module Lono::Template::Helpers
 
 private
   def partial_path_for(path)
-    "#{@_project_root}/templates/partial/#{path}"
+    "#{Lono.root}/templates/partial/#{path}"
   end
 
   def auto_add_format(path)

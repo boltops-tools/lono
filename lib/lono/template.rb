@@ -16,14 +16,12 @@ class Lono::Template < Lono::Command
   desc "generate", "Generate the CloudFormation templates"
   Help.generate
   option :clean, type: :boolean, aliases: "-c", desc: "remove all output files before generating"
-  option :project_root, default: ".", aliases: "-r", desc: "project root"
   option :pretty, type: :boolean, default: true, desc: "json pretty the output.  only applies with json format"
   def generate
     DSL.new(options.clone).run
   end
 
   desc "upload", "Uploads templates to configured s3 folder"
-  option :project_root, default: ".", aliases: "-r", desc: "project root"
   def upload
     Upload.new(options.clone).run
   end

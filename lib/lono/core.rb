@@ -11,8 +11,8 @@ module Lono
       Pathname.new(path)
     end
 
-    def setup!(project_root='.')
-      settings = Lono::Settings.new(project_root).data
+    def setup!
+      settings = Lono::Settings.new.data
       map = settings['aws_profile_lono_env_map']
 
       lono_env = map[ENV['AWS_PROFILE']] || map['default'] || 'prod' # defaults to prod

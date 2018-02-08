@@ -2,7 +2,7 @@ require_relative "../../spec_helper"
 
 describe Lono::Param do
   before(:all) do
-    @args = "--project-root spec/fixtures/my_project"
+    @args = ""
   end
 
   describe "lono param" do

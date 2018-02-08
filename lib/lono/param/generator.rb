@@ -3,9 +3,8 @@ class Lono::Param::Generator
 
   def self.generate_all(options)
     puts "Generating params files"
-    project_root = options[:project_root] || '.'
 
-    params = param_names(project_root, "base") + param_names(project_root, Lono.env)
+    params = param_names("base") + param_names(Lono.env)
     params.uniq.each do |name|
       param = Lono::Param::Generator.new(name, options)
       param.generate
@@ -18,8 +17,8 @@ class Lono::Param::Generator
   #   params/base/a.txt params/base/b.txt params/base/c.txt
   # Returns:
   #   param_names("base") => ["a", "b", "c"]
-  def self.param_names(project_root, folder)
-    base_folder = "#{project_root}/params/#{folder}" # Example: "./params/base"
+  def self.param_names(folder)
+    base_folder = "#{Lono.root}/params/#{folder}" # Example: "./params/base"
     Dir.glob("#{base_folder}/**/*.txt").map do |path|
       path.sub("#{base_folder}/", '').sub('.txt','')
     end
@@ -28,8 +27,7 @@ class Lono::Param::Generator
   def initialize(name, options)
     @_name = "#{Lono.env}/#{name}"
     @_options = options
-    @_project_root = options[:project_root] || '.'
-    @_env_path = options[:path] || "#{@_project_root}/params/#{@_name}.txt"
+    @_env_path = options[:path] || "#{Lono.root}/params/#{@_name}.txt"
     @_base_path = @_env_path.sub("/#{Lono.env}/", "/base/")
   end
 
@@ -179,7 +177,7 @@ class Lono::Param::Generator
   end
 
   def output_path
-    "#{@_project_root}/output/params/#{@_name}.json".sub(/\.\//,'')
+    "#{Lono.root}/output/params/#{@_name}.json".sub(/\.\//,'')
   end
 
   def write_output(json)
@@ -205,7 +203,7 @@ class Lono::Param::Generator
   #     AmiId=<%= @ami %>
   #
   def load_variables_folder(folder)
-    paths = Dir.glob("#{@_project_root}/config/variables/#{folder}/**/*")
+    paths = Dir.glob("#{Lono.root}/config/variables/#{folder}/**/*")
     paths.select{ |e| File.file? e }.each do |path|
       instance_eval(IO.read(path))
     end

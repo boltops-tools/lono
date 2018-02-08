@@ -17,7 +17,6 @@ module Lono
     desc "import [SOURCE]", "Imports raw CloudFormation template and lono-fies it"
     long_desc Help.import
     option :format, type: :string, default: "yaml", desc: "format for the final template"
-    option :project_root, default: ".", aliases: "-r", desc: "project root"
     option :casing, default: "underscore", desc: "camelcase or underscore the template name"
     option :name, default: nil, desc: "final name of downloaded template without extension"
     def import(source)
@@ -27,7 +26,6 @@ module Lono
     desc "generate", "Generate both CloudFormation templates and parameters files"
     Help.generate
     option :clean, type: :boolean, aliases: "-c", desc: "remove all output files before generating"
-    option :project_root, default: ".", aliases: "-r", desc: "project root"
     option :quiet, type: :boolean, aliases: "-q", desc: "silence the output"
     option :pretty, type: :boolean, default: true, desc: "json pretty the output.  only applies with json format"
     def generate

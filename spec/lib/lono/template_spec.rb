@@ -23,12 +23,12 @@ describe Lono do
 
   describe "cli specs" do
     it "should generate templates" do
-      out = execute("./bin/lono template generate -c --project-root #{Lono.root}")
+      out = execute("./bin/lono template generate -c")
       expect(out).to match /Generating CloudFormation templates/
     end
 
     it "should generate templates" do
-      out = execute("./bin/lono template upload --project-root #{Lono.root} --noop")
+      out = execute("./bin/lono template upload --noop")
       expect(out).to match /Templates uploaded to s3/
     end
   end

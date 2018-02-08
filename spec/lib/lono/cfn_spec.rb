@@ -1,8 +1,8 @@
-require_relative "../../spec_helper"
+require "spec_helper"
 
 describe Lono::Cfn do
   before(:all) do
-    @args = "--noop --project-root spec/fixtures/my_project"
+    @args = "--noop"
   end
 
   describe "lono cfn" do

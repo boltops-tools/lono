@@ -7,7 +7,6 @@ class Lono::Param < Lono::Command
   class_option :verbose, type: :boolean
   class_option :noop, type: :boolean
   class_option :mute, type: :boolean
-  class_option :project_root, desc: "project root to use", default: '.'
 
   desc "generate", "generate all parameter files to json format"
   long_desc Help.generate

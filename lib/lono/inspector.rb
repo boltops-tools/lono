@@ -8,7 +8,6 @@ class Lono::Inspector < Lono::Command
 
   class_option :verbose, type: :boolean
   class_option :noop, type: :boolean
-  class_option :project_root, desc: "Project folder.  Defaults to current directory", default: "."
 
   desc "depends STACK", "Prints dependencies tree of CloudFormation template resources"
   long_desc Help.depends
