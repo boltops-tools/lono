@@ -27,6 +27,7 @@ module Lono::Template::Helpers
     generator.params    # Returns Array in underscore keys format
   end
 
+  # Really only useful if using json format
   def user_data(path, vars={})
     path = "#{Lono.root}/templates/user_data/#{path}"
     template = IO.read(path)
@@ -91,15 +92,7 @@ module Lono::Template::Helpers
     variables(vars)
     result = erb_result(path, template)
     result = indent(result, options[:indent]) if options[:indent]
-    if options[:indent]
-      # Add empty line at beginning because empty lines gets stripped during
-      # processing anyway. This allows the user to call partial without having
-      # to put the partial call at very beginning of the line.
-      # This only should happen if user is using indent option.
-      ["\n", result].join("\n")
-    else
-      result
-    end
+    result
   end
 
   # add indentation
