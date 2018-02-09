@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [3.5.0]
+- Using Lono.root instead of scattered project_root parameters
+- prefer use of Lono.env over LONO_ENV internally
+- do not remove blank lines from the generated template, it makes user-data scripts harder to read
+- remove adding of extra line to partials, causing issues with user data partials
+
 ## [3.4.1]
 - docs for lono settings
 
