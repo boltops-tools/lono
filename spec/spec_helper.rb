@@ -26,8 +26,15 @@ module Helper
   def show_command?
     ENV['DEBUG'] || ENV['SHOW_COMMAND']
   end
+
+  def ensure_tmp_exists
+    FileUtils.mkdir_p("tmp")
+  end
 end
 
 RSpec.configure do |c|
   c.include Helper
+  c.before(:all) do
+    ensure_tmp_exists
+  end
 end

@@ -1,4 +1,11 @@
 describe Lono::CLI do
+  it "new generate new project" do
+    out = execute("cd tmp && ../exe/lono new test_project --no-bundle")
+    exist = File.exist?("tmp/test_project/config/settings.yml")
+    expect(exist).to be true
+    FileUtils.rm_rf("tmp/test_project")
+  end
+
   it "generate should build templates" do
     out = execute("exe/lono generate")
     expect(out).to match /Generating both CloudFormation template and parameter/

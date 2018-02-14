@@ -12,6 +12,7 @@ module Lono
     def self.cli_options
       [
         [:force, type: :boolean, desc: "Bypass overwrite are you sure prompt for existing files."],
+        [:bundle, type: :boolean, default: true, desc: "Runs bundle install on the project"],
         [:git, type: :boolean, default: true, desc: "Git initialize the project"],
       ]
     end
@@ -32,6 +33,8 @@ module Lono
     end
 
     def bundle_install
+      return unless options[:bundle]
+
       Bundler.with_clean_env do
         system("BUNDLE_IGNORE_CONFIG=1 bundle install")
       end
