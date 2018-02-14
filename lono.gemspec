@@ -4,7 +4,6 @@ require_relative "lib/lono/version"
 Gem::Specification.new do |gem|
   gem.authors       = ["Tung Nguyen"]
   gem.email         = ["tongueroo@gmail.com"]
-  gem.description   = %q{Lono is a CloudFormation Template ruby generator.  Lono generates CloudFormation templates based on ERB templates.}
   gem.summary       = %q{Lono is a CloudFormation Template ruby generator.  Lono generates CloudFormation templates based on ERB templates.}
   gem.homepage      = "http://github.com/tongueroo/lono"
 

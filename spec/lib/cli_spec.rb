@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Lono::CLI do
   before(:all) do
     @args = "--from Tung"

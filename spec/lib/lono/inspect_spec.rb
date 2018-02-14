@@ -1,5 +1,3 @@
-require_relative "../../spec_helper"
-
 describe Lono::Inspector do
   before(:all) do
     @args = "--noop"

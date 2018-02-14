@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Lono::Cfn do
   before(:all) do
     @env = "LONO_ROOT=#{ENV['LONO_ROOT']}"

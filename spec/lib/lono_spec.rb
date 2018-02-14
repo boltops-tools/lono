@@ -1,5 +1,3 @@
-require_relative "../spec_helper"
-
 describe Lono do
   describe "lono" do
     before(:each) do

@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Lono::Template::DSL do
   before(:each) do
     @saved_root = ENV['LONO_ROOT']

@@ -1,5 +1,3 @@
-require_relative "../../../spec_helper"
-
 describe Lono::Param::Generator do
   def generate(project_root)
     @saved_root = ENV['LONO_ROOT']

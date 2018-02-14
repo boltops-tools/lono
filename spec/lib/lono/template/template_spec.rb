@@ -1,5 +1,3 @@
-require_relative "../../../spec_helper"
-
 describe Lono::Template do
   let(:template) do
     block = Proc.new {}

@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Lono do
   before(:each) do
     @env = "LONO_ROOT=tmp/foo"
