@@ -19,6 +19,7 @@ module Lono
   autoload :Command, 'lono/command'
   autoload :CLI, 'lono/cli'
   autoload :New, 'lono/new'
+  autoload :Sequence, 'lono/sequence'
   autoload :Template, 'lono/template'
   autoload :Cfn, 'lono/cfn'
   autoload :Param, 'lono/param'

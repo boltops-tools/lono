@@ -6,7 +6,6 @@ require 'bundler'
 
 class Lono::Sequence < Thor::Group
   include Thor::Actions
-  include Lono::New::Helper
 
   def self.source_root
     File.expand_path("../../template", __FILE__)

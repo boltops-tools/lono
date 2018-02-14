@@ -1,5 +1,8 @@
 module Lono
   class New < Sequence
+    autoload :Helper, 'lono/new/helper'
+    include Helper
+
     argument :project_name
 
     # Ugly, but when the class_option is only defined in the Thor::Group class
@@ -8,7 +11,6 @@ module Lono
     # Also options from the cli can be pass through to here
     def self.cli_options
       [
-        [:repo, desc: "GitHub repo to use. Format: user/repo"],
         [:force, type: :boolean, desc: "Bypass overwrite are you sure prompt for existing files."],
         [:git, type: :boolean, default: true, desc: "Git initialize the project"],
       ]
@@ -26,7 +28,6 @@ module Lono
     end
 
     def make_executable
-      chmod("bin", 0755 & ~File.umask, verbose: false) if File.exist?("bin")
       chmod("exe", 0755 & ~File.umask, verbose: false) if File.exist?("exe")
     end
 
@@ -49,25 +50,20 @@ module Lono
     def user_message
       puts <<-EOL
 #{"="*64}
-Congrats 🎉 You have successfully created a CLI project.
+Congrats 🎉 You have successfully created a lono project.
 
-Test the CLI:
+To launch an example CloudFormation stack:
 
   cd #{project_name}
-  exe/#{project_name} hello       # top-level commands
-  exe/#{project_name} sub:goodbye # sub commands
-  bundle exec rspec
+  lono cfn create example
 
-To publish your CLI as a gem:
+To generate the CloudFormation template:
 
-  1. edit the #{project_name}.gemspec
-  2. edit lib/#{project_name}/version.rb
-  3. update the CHANGELOG.md
+  lono generate
 
-And run:
+The templates will be generated to the output folder.
 
-  rake release
-
+More info: http://lono.cloud/
 EOL
     end
   end

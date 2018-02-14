@@ -1,14 +1,11 @@
 module Lono
   class CLI < Command
 
-    desc "new NAME", "Generates lono starter project"
     long_desc Help.text(:new)
-    option :force, type: :boolean, desc: "override existing starter files"
-    option :quiet, type: :boolean, desc: "silence the output"
-    option :format, type: :string, default: "yaml", desc: "starter project template format: json or yaml"
-    def new(project_root)
-      New.new(options.clone.merge(project_root: project_root)).run
+    New.cli_options.each do |args|
+      option *args
     end
+    register(New, "new", "new NAME", "generates new CLI project")
 
     desc "import SOURCE", "Imports raw CloudFormation template and lono-fies it"
     long_desc Help.text(:import)
