@@ -16,8 +16,7 @@ describe Lono::CLI do
     end
   end
 
-  # This spec ensure that the example starter project is always able to run
-  # lono generate and successfully produce the output/templates.
+  # Ensure the example starter project is always able to produce output/templates.
   context "project generated from lono new command" do
     before(:all) do
       # hack to so we don't have to change LONO_ROOT
