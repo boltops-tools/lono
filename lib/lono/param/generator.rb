@@ -18,7 +18,7 @@ class Lono::Param::Generator
   # Returns:
   #   param_names("base") => ["a", "b", "c"]
   def self.param_names(folder)
-    base_folder = "#{Lono.root}/params/#{folder}" # Example: "./params/base"
+    base_folder = "#{Lono.root}/config/params/#{folder}" # Example: "./params/base"
     Dir.glob("#{base_folder}/**/*.txt").map do |path|
       path.sub("#{base_folder}/", '').sub('.txt','')
     end
@@ -27,7 +27,7 @@ class Lono::Param::Generator
   def initialize(name, options)
     @_name = "#{Lono.env}/#{name}"
     @_options = options
-    @_env_path = options[:path] || "#{Lono.root}/params/#{@_name}.txt"
+    @_env_path = options[:path] || "#{Lono.root}/config/params/#{@_name}.txt"
     @_base_path = @_env_path.sub("/#{Lono.env}/", "/base/")
   end
 

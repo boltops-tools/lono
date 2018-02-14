@@ -130,7 +130,7 @@ class Lono::Cfn::Base
       format = detect_format
       "#{Lono.root}/output/#{name}.#{format}"
     when :param
-      "#{Lono.root}/params/#{Lono.env}/#{name}.txt"
+      "#{Lono.root}/config/params/#{Lono.env}/#{name}.txt"
     else
       raise "hell: dont come here"
     end
