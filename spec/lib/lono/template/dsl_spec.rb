@@ -1,58 +1,29 @@
 describe Lono::Template::DSL do
-  before(:each) do
-    @saved_root = ENV['LONO_ROOT']
-    ENV['LONO_ROOT'] = ENV['TMP_LONO_ROOT']
-  end
-  after(:each) do
-    ENV['LONO_ROOT'] = @saved_root
-    FileUtils.rm_rf(ENV['TMP_LONO_ROOT']) unless ENV['KEEP_TMP_PROJECT']
-  end
-
-  context "yaml starter project" do
-    before(:each) do
-      new_project = Lono::New.new(
-        force: true,
-        quiet: true,
-        format: 'yaml',
-        project_root: ENV['TMP_LONO_ROOT'],
-      )
-      new_project.run
-    end
-
-    it "yaml" do
+  context "tmp/lono_project" do
+    it "#evaluate_templates" do
       dsl = Lono::Template::DSL.new(
         quiet: true
       )
-      dsl.evaluate_templates # run the dependent instance_eval and load_subfoler so @templates is assigned
+      dsl.evaluate_templates
+      templates = dsl.instance_variable_get(:@templates)
+      template_names = templates.map { |h| h[:name] }
+      expect(template_names).to include("example")
     end
   end
 
-  context "json starter project" do
+  context "lono generate" do
     before(:each) do
-      new_project = Lono::New.new(
-        force: true,
-        quiet: true,
-        format: 'json',
-        project_root: ENV['TMP_LONO_ROOT'],
-      )
-      new_project.run
-
-      dsl = Lono::Template::DSL.new(
-        quiet: true
-      )
+      dsl = Lono::Template::DSL.new(quiet: true)
       dsl.run
     end
 
     it "should generate cloudformation template" do
-      raw = IO.read("#{Lono.root}/output/templates/api-web.json")
-      json = JSON.load(raw)
-      expect(json['Description']).to eq "Api Stack"
-      expect(json['Mappings']['AWSRegionArch2AMI']['us-east-1']['64']).to eq 'ami-123'
+      template = YAML.load_file("#{Lono.root}/output/templates/example.yml")
+      expect(template['Description']).to include "AWS CloudFormation Sample Template"
     end
 
     it "should make trailing options pass to the partial helper available as instance variables" do
-      raw = IO.read("#{Lono.root}/output/templates/api-web.json")
-      json = JSON.load(raw)
+      template = YAML.load_file("#{Lono.root}/output/templates/example.yml")
       expect(json['Resources']['HostRecord']['Properties']['Comment']).to eq 'DNS name for mydomain.com'
     end
 

@@ -70,7 +70,6 @@ class Lono::Template::Template
       # Example: LONO_ROOT=tmp/lono_project
       first_char = path[0..0]
       path = "./#{path}" unless %w[. /].include?(first_char)
-      puts "path #{path}".colorize(:red)
       require path
       self.class.send :include, module_name.constantize
     end
