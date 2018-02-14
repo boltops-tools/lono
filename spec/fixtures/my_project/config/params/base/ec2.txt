@@ -1,0 +1,3 @@
+KeyName=
+#InstanceType=        # optional
+#SSHLocation=         # optional

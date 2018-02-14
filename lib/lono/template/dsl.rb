@@ -43,10 +43,8 @@ class Lono::Template::DSL
   end
 
   def evaluate_folder(folder)
-    puts "evaluate_folder folder #{folder.inspect}"
     paths = Dir.glob("#{Lono.root}/app/stacks/#{folder}/**/*")
     paths.select{ |e| File.file?(e) }.each do |path|
-      puts "evaluate_folder path #{path.inspect}"
       evaluate_template_path(path)
     end
   end
