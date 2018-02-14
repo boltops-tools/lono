@@ -23,13 +23,18 @@ class Lono::Cfn::Create < Lono::Cfn::Base
     end
 
     template_body = IO.read(@template_path)
-    cfn.create_stack(
+    params = {
       stack_name: @stack_name,
       template_body: template_body,
       parameters: params,
       capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
       disable_rollback: !@options[:rollback],
-    )
+    }
+    test_params = params.clone
+    test_params[:template_body] = "..."
+    puts "test_params: "
+    pp test_params
+    cfn.create_stack(params)
     puts message unless @options[:mute]
   end
 

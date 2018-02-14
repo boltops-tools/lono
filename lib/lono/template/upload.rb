@@ -15,9 +15,8 @@ class Lono::Template::Upload
     ensure_s3_setup!
     load_checksums!
 
-    paths = Dir.glob("#{Lono.root}/output/**/*")
-    paths.reject { |p| p =~ %r{output/params} }.
-          select { |p| File.file?(p) }.each do |path|
+    paths = Dir.glob("#{Lono.root}/output/templates/**/*")
+    paths.select { |p| File.file?(p) }.each do |path|
       upload(path)
     end
     say "Templates uploaded to s3."
@@ -55,7 +54,7 @@ class Lono::Template::Upload
 
   def upload(path)
     pretty_path = path.sub(/^\.\//, '')
-    key = "#{s3_path}/#{Lono.env}/#{pretty_path.sub(/^output\//,'')}"
+    key = "#{s3_path}/#{Lono.env}/#{pretty_path.sub(%r{output/templates/},'')}"
     s3_full_path = "s3://#{s3_bucket}/#{key}"
 
     local_checksum = Digest::MD5.hexdigest(IO.read(path))
@@ -88,7 +87,7 @@ class Lono::Template::Upload
     # first convert the local path to the path format that is stored in @checksums keys
     # ./output/docker.yml => cloudformation-templates/stag/docker.yml
     pretty_path = path.sub(/^\.\//, '')
-    key = "#{s3_path}/#{Lono.env}/#{pretty_path.sub(/^output\//,'')}"
+    key = "#{s3_path}/#{Lono.env}/#{pretty_path.sub(%r{output/templates/},'')}"
     @checksums[key]
   end
 

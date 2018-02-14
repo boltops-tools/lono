@@ -71,7 +71,7 @@ class Lono::Template::DSL
   end
 
   def write_output
-    output_path = "#{Lono.root}/output/app/templates"
+    output_path = "#{Lono.root}/output/templates"
     FileUtils.rm_rf(output_path) if @options[:clean]
     FileUtils.mkdir_p(output_path)
     puts "Generating CloudFormation templates:" unless @options[:quiet]

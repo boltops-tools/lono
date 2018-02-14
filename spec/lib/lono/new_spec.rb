@@ -24,7 +24,7 @@ describe Lono::New do
         quiet: true
       )
       dsl.run
-      generated = File.exist?("#{Lono.root}/output/blog-web.json")
+      generated = File.exist?("#{Lono.root}/output/templates/blog-web.json")
       expect(generated).to be true
     end
   end
@@ -45,7 +45,7 @@ describe Lono::New do
         quiet: true
       )
       dsl.run
-      generated = File.exist?("#{Lono.root}/output/blog-web.yml")
+      generated = File.exist?("#{Lono.root}/output/templates/blog-web.yml")
       expect(generated).to be true
     end
   end

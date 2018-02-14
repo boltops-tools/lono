@@ -97,7 +97,7 @@ class Lono::Cfn::Base
   def check_files
     errors, warns = [], []
     unless File.exist?(@template_path)
-      warns << "Template file missing: could not find #{@template_path}"
+      errors << "Template file missing: could not find #{@template_path}"
     end
     # Examples:
     #   @param_path = params/prod/ecs.txt
@@ -127,34 +127,13 @@ class Lono::Cfn::Base
   def convention_path(name, type)
     path = case type
     when :template
-      format = detect_format
-      "#{Lono.root}/output/#{name}.#{format}"
+      "#{Lono.root}/output/templates/#{name}.yml"
     when :param
       "#{Lono.root}/config/params/#{Lono.env}/#{name}.txt"
     else
       raise "hell: dont come here"
     end
     path.sub(/^\.\//, '')
-  end
-
-  # Returns String with value of "yml" or "json".
-  def detect_format
-    formats = Dir.glob("#{Lono.root}/app/templates/**/*").
-                map { |path| path.sub(/\.erb$/, '') }.
-                map { |path| File.extname(path) }.
-                reject { |s| s.empty? }. # reject ""
-                select { |s| s.include?("yml") || s.include?("json") }.
-                uniq
-    if formats.size > 1
-      puts "ERROR: Detected multiple formats: #{formats.join(", ")}".colorize(:red)
-      puts "All the output files must use the same format.  Either all json or all yml."
-      exit 1
-    elsif formats.size == 1
-      formats.first.sub(/^\./,'')
-    else
-      puts "WARN: Did not detect any template formats. Defaulting to yml.  Please check the config and templates folders.".colorize(:yellow)
-      "yml" # default format
-    end
   end
 
   # All CloudFormation states listed here:
