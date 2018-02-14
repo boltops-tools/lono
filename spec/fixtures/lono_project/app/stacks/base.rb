@@ -8,5 +8,3 @@ template "example" # simple single ec2 instance
 #     root_volume_size: "8"
 #   )
 # end
-
-template "ec2"

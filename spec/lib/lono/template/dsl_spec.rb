@@ -22,32 +22,30 @@ describe Lono::Template::DSL do
       expect(template['Description']).to include "AWS CloudFormation Sample Template"
     end
 
-    it "should make trailing options pass to the partial helper available as instance variables" do
+    it "partial variables" do
       template = YAML.load_file("#{Lono.root}/output/templates/example.yml")
-      expect(json['Resources']['HostRecord']['Properties']['Comment']).to eq 'DNS name for mydomain.com'
+      desc = template['Resources']['InstanceSecurityGroup']['Properties']['GroupDescription']
+      expect(desc).to eq 'Enable SSH access via port 22'
     end
 
-    it "should generate user data with variables" do
-      raw = IO.read("#{Lono.root}/output/templates/api-redis.json")
-      json = JSON.load(raw)
-      expect(json['Description']).to eq "Api redis"
-      user_data = json['Resources']['server']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
+    it "partials have access to variables" do
+      raw = YAML.load_file("#{Lono.root}/output/templates/example.yml")
+      expect(template['Description']).to eq "Api redis"
+      user_data = template['Resources']['server']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
       expect(user_data).to include("VARTEST=foo\n")
     end
 
     it "should include multiple user_data scripts" do
-      raw = IO.read("#{Lono.root}/output/templates/api-redis.json")
-      json = JSON.load(raw)
-      expect(json['Description']).to eq "Api redis"
-      user_data = json['Resources']['server']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
+      raw = YAML.load_file("#{Lono.root}/output/templates/api-redis.json")
+      expect(template['Description']).to eq "Api redis"
+      user_data = template['Resources']['server']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
       expect(user_data).to include("DB2=test\n")
     end
 
     it "should generate db template" do
-      raw = IO.read("#{Lono.root}/output/templates/api-redis.json")
-      json = JSON.load(raw)
-      expect(json['Description']).to eq "Api redis"
-      user_data = json['Resources']['server']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
+      raw = YAML.load_file("#{Lono.root}/output/templates/api-redis.json")
+      expect(template['Description']).to eq "Api redis"
+      user_data = template['Resources']['server']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
       expect(user_data).to include({"Ref" => "AWS::StackName"})
       expect(user_data).to include({"Ref" => "WaitHandle"})
       expect(user_data).to include({
@@ -95,9 +93,8 @@ describe Lono::Template::DSL do
     end
 
     it "should not transform user_data ruby scripts" do
-      raw = IO.read("#{Lono.root}/output/templates/api-worker.json")
-      json = JSON.load(raw)
-      user_data = json['Resources']['LaunchConfig']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
+      raw = YAML.load_file("#{Lono.root}/output/templates/api-worker.json")
+      user_data = template['Resources']['LaunchConfig']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
       expect(user_data).to include(%Q|ec2.tags.create(ec2.instances[my_instance_id], "Name", {value: Facter.hostname})\n|)
       expect(user_data).to include(%Q{find_all{ |record_set| record_set[:name] == record_name }\n})
     end
@@ -108,10 +105,9 @@ describe Lono::Template::DSL do
     end
 
     it "task should generate CloudFormation templates" do
-      raw = IO.read("#{Lono.root}/output/templates/api-web.json")
-      json = JSON.load(raw)
-      expect(json['Description']).to eq "Api Stack"
-      expect(json['Mappings']['AWSRegionArch2AMI']['us-east-1']['64']).to eq 'ami-123'
+      raw = YAML.load_file("#{Lono.root}/output/templates/api-web.json")
+      expect(template['Description']).to eq "Api Stack"
+      expect(template['Mappings']['AWSRegionArch2AMI']['us-east-1']['64']).to eq 'ami-123'
     end
   end
 

@@ -383,16 +383,7 @@ Resources:
           - AWSInstanceType2Arch
           - Ref: InstanceType
           - Arch
-  InstanceSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: Enable SSH access via port 22
-      SecurityGroupIngress:
-      - IpProtocol: tcp
-        FromPort: '22'
-        ToPort: '22'
-        CidrIp:
-          Ref: SSHLocation
+<%= partial("security_group", desc: "Enable SSH access via port 22", port: "22") %>
 <% if @route53 %>
   DnsRecord:
     Type: AWS::Route53::RecordSet
