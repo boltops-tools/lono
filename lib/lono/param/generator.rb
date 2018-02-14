@@ -177,7 +177,8 @@ class Lono::Param::Generator
   end
 
   def output_path
-    "#{Lono.root}/output/params/#{@_name}.json".sub(/\.\//,'')
+    name = @_name.sub("#{Lono.env}/", "") # remove the Lono.env from the output path
+    "#{Lono.root}/output/params/#{name}.json".sub(/\.\//,'')
   end
 
   def write_output(json)
