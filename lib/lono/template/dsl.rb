@@ -12,13 +12,19 @@ class Lono::Template::DSL
     write_output
   end
 
-  # Instance eval's all the files within each folder under
-  #   config/lono/base and config/lono/[Lono.env]
-  # Base gets base first and then the Lono.env configs get evaluate second.
-  # This means the env specific configs override the base configs.
+  # Instance eval's the template declarations in app/stacks in this order:
+  #
+  #   app/stacks/base.rb
+  #   app/stacks/base - all files in folder
+  #   app/stacks/[Lono.env].rb
+  #   app/stacks/[Lono.env] - all files in folder
+  #
+  # So Lono.env specific template declarations override base template declarations.
   def evaluate_templates
     evaluate_template("base")
+    evaluate_folder("base")
     evaluate_template(Lono.env)
+    evaluate_folder(Lono.env)
   end
 
   def evaluate_template(name)
@@ -33,6 +39,15 @@ class Lono::Template::DSL
       template_evaluation_error(e)
       puts "\nFull error:"
       raise
+    end
+  end
+
+  def evaluate_folder(folder)
+    puts "evaluate_folder folder #{folder.inspect}"
+    paths = Dir.glob("#{Lono.root}/app/stacks/#{folder}/**/*")
+    paths.select{ |e| File.file?(e) }.each do |path|
+      puts "evaluate_folder path #{path.inspect}"
+      evaluate_template_path(path)
     end
   end
 
