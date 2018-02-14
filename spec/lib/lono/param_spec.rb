@@ -7,7 +7,7 @@ describe Lono::Param do
 
   describe "lono param" do
     it "generate" do
-      out = execute("bin/lono param generate #{@args}")
+      out = execute("exe/lono param generate #{@args}")
       expect(out).to include("Generating")
     end
   end
