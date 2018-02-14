@@ -6,9 +6,9 @@ ENV['TMP_LONO_ROOT'] = "./tmp/lono_project" # need the period for the load_custo
 
 require "pp"
 require "byebug"
-require "bundler"
 
-Bundler.require(:development)
+# require "bundler"
+# Bundler.require(:development)
 
 root = File.expand_path("../", File.dirname(__FILE__))
 require "#{root}/lib/lono"
