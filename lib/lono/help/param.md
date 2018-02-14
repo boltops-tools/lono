@@ -1,0 +1,3 @@
+Examples:
+
+  lono param generate
