@@ -35,11 +35,10 @@ module Helper
     FileUtils.rm_rf("tmp/lono_project")
   end
 
-  # Creates tmp/lono_project using thew new generator.
-  # This is the main project we'll use for testing.
-  def generate_lono_project
-    execute("exe/lono new lono_project --no-bundle")
-    # create_test_settings
+  # Copies spec/fixtures/lono_project to tmp/lono_project,
+  # Main fixture we'll use because it's faster
+  def copy_lono_project
+    FileUtils.cp_r("spec/fixtures/lono_project", "tmp/lono_project")
   end
 
   def destroy_lono_project
@@ -51,7 +50,7 @@ RSpec.configure do |c|
   c.include Helper
   c.before(:all) do
     ensure_tmp_exists
-    generate_lono_project
+    copy_lono_project
   end
   c.after(:all) do
     destroy_lono_project
