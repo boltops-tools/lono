@@ -27,17 +27,6 @@ describe Lono::Template::DSL do
     end
   end
 
-  context "multiple format starter project" do
-    # it "yaml" do
-    #   dsl = Lono::Template::DSL.new(
-    #     project_root: @project,
-    #     quiet: true
-    #   )
-    #   detected_format = dsl.detect_format
-    #   expect(detected_format).to eq 'yaml'
-    # end
-  end
-
   context "json starter project" do
     before(:each) do
       new_project = Lono::New.new(

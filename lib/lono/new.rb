@@ -22,10 +22,12 @@ module Lono
     end
 
     def create_project
-      copy_project
-      destination_root = "#{Dir.pwd}/#{project_name}"
+      puts "Creating new project called #{project_name}."
+      directory ".", project_name
+
+      destination_root = "#{Lono.root}/#{project_name}"
       self.destination_root = destination_root
-      FileUtils.cd("#{Dir.pwd}/#{project_name}")
+      FileUtils.cd("#{Lono.root}/#{project_name}")
     end
 
     def make_executable

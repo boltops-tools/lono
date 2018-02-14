@@ -12,11 +12,6 @@ class Lono::Sequence < Thor::Group
   end
 
 private
-  def copy_project
-    puts "Creating new project called #{project_name}."
-    directory ".", project_name
-  end
-
   def git_installed?
     system("type git > /dev/null")
   end
