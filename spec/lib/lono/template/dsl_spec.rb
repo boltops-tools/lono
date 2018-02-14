@@ -22,17 +22,16 @@ describe Lono::Template::DSL do
       expect(template['Description']).to include "AWS CloudFormation Sample Template"
     end
 
-    it "partial variables" do
+    # <%= partial("security_group", desc: "whatever", port: 22)
+    it "partial local variables" do
       template = YAML.load_file("#{Lono.root}/output/templates/example.yml")
       desc = template['Resources']['InstanceSecurityGroup']['Properties']['GroupDescription']
       expect(desc).to eq 'Enable SSH access via port 22'
     end
 
     it "partials have access to variables" do
-      raw = YAML.load_file("#{Lono.root}/output/templates/example.yml")
-      expect(template['Description']).to eq "Api redis"
-      user_data = template['Resources']['server']['Properties']['UserData']['Fn::Base64']['Fn::Join'][1]
-      expect(user_data).to include("VARTEST=foo\n")
+      text = IO.read("#{Lono.root}/output/templates/example.yml")
+      expect(text).to include("override_test=2")
     end
 
     it "should include multiple user_data scripts" do
