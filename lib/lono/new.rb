@@ -21,13 +21,18 @@ module Lono
       class_option *args
     end
 
+    # for specs
+    def set_cwd
+      @cwd = ENV['TEST'] ? File.dirname(Lono.root) : Dir.pwd
+    end
+
     def create_project
       puts "Creating new project called #{project_name}."
-      directory ".", project_name
+      directory ".", "#{@cwd}/#{project_name}"
 
-      destination_root = "#{Lono.root}/#{project_name}"
+      destination_root = "#{@cwd}/#{project_name}"
       self.destination_root = destination_root
-      FileUtils.cd("#{Lono.root}/#{project_name}")
+      FileUtils.cd("#{@cwd}/#{project_name}")
     end
 
     def make_executable
