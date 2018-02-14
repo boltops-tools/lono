@@ -2,7 +2,7 @@ class Lono::Param::Generator
   include Lono::CurrentRegion
 
   def self.generate_all(options)
-    puts "Generating params files"
+    puts "Generating parameter files:"
 
     params = param_names("base") + param_names(Lono.env)
     params.uniq.each do |name|
@@ -43,7 +43,7 @@ class Lono::Param::Generator
       # Example: @_name = stag/ecs/private
       #          pretty_name = ecs/private
       pretty_name = @_name.sub("#{Lono.env}/", '')
-      puts "Params file generated for #{pretty_name} at #{output_path}" unless @_options[:mute]
+      puts "  #{output_path}" unless @_options[:mute]
     else
       puts "#{@_base_path} or #{@_env_path} could not be found?  Are you sure it exist?"
       exit 1

@@ -3,8 +3,10 @@ ENV['TEST'] = '1'
 ENV['HOME'] = "spec/fixtures/home"
 # We'll always re-generate a new lono project in tmp. It can be:
 #
-#   1. generated from `lono new`
-#   2. copied from spec/fixtures/lono_project
+#   1. copied from spec/fixtures/lono_project
+#   2. generated from `lono new`
+#
+# This is done because changing LONO_ROOT for specs was a mess.
 ENV['LONO_ROOT'] = "tmp/lono_project" # this gets kept
 
 require "pp"
