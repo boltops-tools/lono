@@ -19,7 +19,7 @@ describe Lono do
 
   describe "cli specs" do
     it "should generate templates" do
-      out = execute("#{@env} ./exe/lono template generate -c")
+      out = execute("#{@env} ./exe/lono template generate --clean")
       expect(out).to match /Generating CloudFormation templates/
     end
 

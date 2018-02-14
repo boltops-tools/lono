@@ -65,7 +65,7 @@ module Lono
     subcommand "param", Param
 
     desc "inspect SUBCOMMAND", "inspect subcommand tasks"
-    long_desc Help.text(:inspector)
+    long_desc Help.text(:inspect)
     subcommand "inspect", Inspector
   end
 end
