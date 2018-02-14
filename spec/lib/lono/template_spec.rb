@@ -2,7 +2,7 @@ describe Lono do
   before(:each) do
     @env = "LONO_ROOT=tmp/foo"
     lono_bin = File.expand_path("../../../../exe/lono", __FILE__)
-    execute("cd tmp && #{lono_bin} new foo -f -q --format json")
+    execute("cd tmp && #{lono_bin} new foo --force --quiet --format json")
   end
 
   after(:each) do
@@ -11,7 +11,7 @@ describe Lono do
 
   describe "bashify" do
     it "should convert cfn user_data to bash script" do
-      path = "#{$root}/spec/fixtures/cfn.json"
+      path = "spec/fixtures/cfn.json"
       out = execute("./exe/lono template bashify #{path}")
       expect(out).to match /bash -lexv/
     end
