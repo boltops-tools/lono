@@ -1,1 +1,1 @@
-# resources that only exist in the prod environment
+# resources that only exist in the production environment

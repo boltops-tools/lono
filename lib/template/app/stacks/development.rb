@@ -1,1 +1,1 @@
-# resources that only exist in the stag environment
+# resources that only exist in the development environment
