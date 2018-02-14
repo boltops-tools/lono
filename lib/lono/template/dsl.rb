@@ -28,7 +28,7 @@ class Lono::Template::DSL
   end
 
   def evaluate_template(name)
-    path = "#{Lono.root}/app/stacks/#{name}.rb"
+    path = "#{Lono.config.stacks_path}/#{name}.rb"
     evaluate_template_path(path)
   end
 
@@ -43,7 +43,7 @@ class Lono::Template::DSL
   end
 
   def evaluate_folder(folder)
-    paths = Dir.glob("#{Lono.root}/app/stacks/#{folder}/**/*")
+    paths = Dir.glob("#{Lono.config.stacks_path}/#{folder}/**/*")
     paths.select{ |e| File.file?(e) }.each do |path|
       evaluate_template_path(path)
     end
@@ -84,7 +84,7 @@ class Lono::Template::DSL
   end
 
   def write_output
-    output_path = "#{Lono.root}/output/templates"
+    output_path = "#{Lono.config.output_path}/templates"
     FileUtils.rm_rf(output_path) if @options[:clean]
     FileUtils.mkdir_p(output_path)
     puts "Generating CloudFormation templates:" unless @options[:quiet]

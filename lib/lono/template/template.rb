@@ -19,7 +19,7 @@ class Lono::Template::Template
   end
 
   def default_source(name)
-    "#{Lono.root}/app/templates/#{name}.yml" # defaults to name, source method overrides
+    "#{Lono.config.templates_path}/#{name}.yml" # defaults to name, source method overrides
   end
 
   def build
@@ -58,19 +58,26 @@ class Lono::Template::Template
     end
   end
 
-  # Load custom helper methods from the user's infra repo
+  # Load custom helper methods from project
   def load_custom_helpers
-    Dir.glob("#{Lono.root}/helpers/**/*_helper.rb").each do |path|
+    Dir.glob("#{Lono.config.helpers_path}/**/*_helper.rb").each do |path|
       filename = path.sub(%r{.*/},'').sub('.rb','')
       module_name = filename.classify
 
+      # Prepend a period so require works LONO_ROOT is set to a relative path
+      # without a period.
+      #
+      # Example: LONO_ROOT=tmp/lono_project
+      first_char = path[0..0]
+      path = "./#{path}" unless %w[. /].include?(first_char)
+      puts "path #{path}".colorize(:red)
       require path
       self.class.send :include, module_name.constantize
     end
   end
 
   def source(path)
-    @_source = path[0..0] == '/' ? path : "#{Lono.root}/app/templates/#{path}"
+    @_source = path[0..0] == '/' ? path : "#{Lono.config.templates_path}/#{path}"
     @_source += ".yml"
   end
 

@@ -1,7 +1,7 @@
 describe Lono::CLI do
   it "new generate new project" do
-    # using another name for the lono project in this case because we want to
-    # be able to call exe/lono new lono_project for all other methods
+    # using another name for the lono project because we call
+    # exe/lono new lono_project for all specs via the RSpec.config already
     out = execute("exe/lono new test_project --no-bundle")
     exist = File.exist?("tmp/test_project/config/settings.yml")
     expect(exist).to be true
@@ -14,16 +14,16 @@ describe Lono::CLI do
     expect(success).to be true
   end
 
-  # it "import should download template" do
-  #   # hack to get this spec working and not change the original base.rb
-  #   path = "spec/fixtures/lono_project/app/stacks/base.rb"
-  #   backup = "spec/fixtures/lono_project/app/stacks/base.rb.bak"
-  #   FileUtils.cp(path, backup)
+  it "import should download template" do
+    # hack to get this spec working and not change the original base.rb
+    path = "spec/fixtures/lono_project/app/stacks/base.rb"
+    backup = "spec/fixtures/lono_project/app/stacks/base.rb.bak"
+    FileUtils.cp(path, backup)
 
-  #   out = execute("exe/lono import spec/fixtures/raw_templates/aws-waf-security-automations.template")
-  #   expect(out).to match /Imported raw CloudFormation template/
+    out = execute("exe/lono import spec/fixtures/raw_templates/aws-waf-security-automations.template")
+    expect(out).to match /Imported raw CloudFormation template/
 
-  #   FileUtils.mv(backup, path)
-  # end
+    FileUtils.mv(backup, path)
+  end
 end
 

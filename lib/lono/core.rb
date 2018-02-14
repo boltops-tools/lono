@@ -2,6 +2,13 @@ require 'pathname'
 
 module Lono
   module Core
+    autoload :Config, 'lono/core/config'
+
+    @@config = nil
+    def config
+      @@config ||= Config.new
+    end
+
     def root
       path = ENV['LONO_ROOT'] || '.'
       Pathname.new(path)

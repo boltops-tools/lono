@@ -29,7 +29,7 @@ module Lono::Template::Helpers
 
   # Really only useful if using json format
   def user_data(path, vars={})
-    path = "#{Lono.root}/app/templates/user_data/#{path}"
+    path = "#{Lono.config.templates_path}/user_data/#{path}"
     template = IO.read(path)
     variables(vars)
     result = erb_result(path, template)
@@ -104,7 +104,7 @@ module Lono::Template::Helpers
 
 private
   def partial_path_for(path)
-    "#{Lono.root}/app/templates/partial/#{path}"
+    "#{Lono.config.partials_path}/#{path}"
   end
 
   def auto_add_format(path)

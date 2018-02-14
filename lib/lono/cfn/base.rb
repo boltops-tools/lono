@@ -103,7 +103,7 @@ class Lono::Cfn::Base
     #   @param_path = params/prod/ecs.txt
     #              => output/params/prod/ecs.json
     output_param_path = @param_path.sub(/\.txt/, '.json')
-    output_param_path = "#{Lono.root}/output/#{output_param_path}"
+    output_param_path = "#{Lono.config.output_path}/#{output_param_path}"
     if @options[:param] && !File.exist?(output_param_path)
       warns << "Parameters file missing: could not find #{output_param_path}"
     end
@@ -127,9 +127,11 @@ class Lono::Cfn::Base
   def convention_path(name, type)
     path = case type
     when :template
-      "#{Lono.root}/output/templates/#{name}.yml"
+      "#{Lono.config.output_path}/templates/#{name}.yml"
     when :param
-      "#{Lono.root}/config/params/#{Lono.env}/#{name}.txt"
+      # TODO: weird how this convention changes on the Lono.env because
+      # it still will merge base/name.txt
+      "#{Lono.config.params_path}/#{Lono.env}/#{name}.txt"
     else
       raise "hell: dont come here"
     end
