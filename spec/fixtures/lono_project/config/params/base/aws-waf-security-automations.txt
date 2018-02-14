@@ -1,0 +1,11 @@
+#SqlInjectionProtectionParam= # optional
+#CrossSiteScriptingProtectionParam= # optional
+#ActivateHttpFloodProtectionParam= # optional
+#ActivateScansProbesProtectionParam= # optional
+#ActivateReputationListsProtectionParam= # optional
+#ActivateBadBotProtectionParam= # optional
+#CloudFrontAccessLogBucket= # optional
+#SendAnonymousUsageData= # optional
+#RequestThreshold=    # optional
+#ErrorThreshold=      # optional
+#WAFBlockPeriod=      # optional
