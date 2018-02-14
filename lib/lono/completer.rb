@@ -68,7 +68,7 @@ Sometimes the commands are not simple thor commands but are subcommands or Thor:
 
 Auto-completion accounts for each of these type of commands.
 =end
-module Ufo
+module Lono
   class Completer
     autoload :Script, 'lono/completer/script'
 

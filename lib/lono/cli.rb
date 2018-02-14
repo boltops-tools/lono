@@ -35,6 +35,18 @@ module Lono
       Clean.new(options.clone).run
     end
 
+    desc "completion *PARAMS", "prints words for auto-completion"
+    long_desc Help.text("completion")
+    def completion(*params)
+      Completer.new(CLI, *params).run
+    end
+
+    desc "completion_script", "generates script that can be eval to setup auto-completion", hide: true
+    long_desc Help.text("completion_script")
+    def completion_script
+      Completer::Script.generate
+    end
+
     desc "version", "Prints version"
     def version
       puts VERSION

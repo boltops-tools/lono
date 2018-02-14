@@ -5,12 +5,12 @@ describe Lono::Inspector do
 
   describe "lono inspect" do
     it "depends" do
-      out = execute("bin/lono inspect depends my-stack #{@args}")
+      out = execute("exe/lono inspect depends my-stack #{@args}")
       expect(out).to include("Generating dependencies tree")
     end
 
     it "summary" do
-      out = execute("bin/lono inspect summary my-stack #{@args}")
+      out = execute("exe/lono inspect summary my-stack #{@args}")
       expect(out).to include("Summary")
     end
   end
