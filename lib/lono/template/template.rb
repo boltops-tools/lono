@@ -14,7 +14,6 @@ class Lono::Template::Template
     @_name = name
     @_options = options
     @_block = block
-    @_config_path = "#{Lono.root}/config"
     @_source = default_source(name)
   end
 
@@ -23,16 +22,16 @@ class Lono::Template::Template
   end
 
   def build
-    load_variables
+    load_all_variables
     load_custom_helpers
     instance_eval(&@_block) if @_block
     template = IO.read(@_source)
     erb_result(@_source, template)
   end
 
-  def load_variables
-    load_variables_folder("base")
-    load_variables_folder(Lono.env)
+  def load_all_variables
+    load_variables("base")
+    load_variables(Lono.env)
   end
 
   # Load the variables defined in config/variables/* to make available in the
@@ -40,22 +39,20 @@ class Lono::Template::Template
   #
   # Example:
   #
-  #   `config/variables/base/variables.rb`:
+  #   `config/variables/base.rb`:
   #     @foo = 123
   #
-  #   `config/templates/base/resources.rb`:
+  #   `app/stacks/base.rb`:
   #      template "mytemplate.yml" do
   #        source "mytemplate.yml.erb"
   #        variables(foo: @foo)
   #      end
   #
-  # NOTE: Only able to make instance variables avaialble with instance_eval
-  #   Wasnt able to make local variables available.
-  def load_variables_folder(folder)
-    paths = Dir.glob("#{@_config_path}/variables/#{folder}/**/*")
-    paths.select{ |e| File.file? e }.each do |path|
-      instance_eval(IO.read(path))
-    end
+  # NOTE: Only able to make instance variables avaialble with instance_eval,
+  #   wasnt able to make local variables available.
+  def load_variables(name)
+    path = "#{Lono.config.variables_path}/#{name}.rb"
+    instance_eval(IO.read(path))
   end
 
   # Load custom helper methods from project

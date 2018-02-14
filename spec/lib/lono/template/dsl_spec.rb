@@ -23,15 +23,15 @@ describe Lono::Template::DSL do
     end
 
     # <%= partial("security_group", desc: "whatever", port: 22)
-    it "partial local variables" do
+    it "partial local variables become instance variables in partial view" do
       template = YAML.load_file("#{Lono.root}/output/templates/example.yml")
       desc = template['Resources']['InstanceSecurityGroup']['Properties']['GroupDescription']
       expect(desc).to eq 'Enable SSH access via port 22'
     end
 
-    it "partials have access to variables" do
+    it "partials should have access to variables" do
       text = IO.read("#{Lono.root}/output/templates/example.yml")
-      expect(text).to include("override_test=2")
+      expect(text).to include("override_test=overridden-by-development")
     end
 
     it "should include multiple user_data scripts" do
