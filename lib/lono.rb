@@ -31,7 +31,6 @@ module Lono
   autoload :Completion, 'lono/completion'
   autoload :Completer, 'lono/completer'
   autoload :Core, 'lono/core'
+
   extend Core
 end
-
-Lono.setup!

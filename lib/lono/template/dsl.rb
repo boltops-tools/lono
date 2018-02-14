@@ -1,11 +1,9 @@
 class Lono::Template::DSL
   def initialize(options={})
     @options = options
-    @config_path = "#{Lono.root}/config"
     Lono::ProjectChecker.check
     @templates = []
     @results = {}
-    @detected_format = nil
   end
 
   def run(options={})
@@ -19,19 +17,16 @@ class Lono::Template::DSL
   # Base gets base first and then the Lono.env configs get evaluate second.
   # This means the env specific configs override the base configs.
   def evaluate_templates
-    evaluate_folder("base")
-    evaluate_folder(Lono.env)
-    @detected_format = detect_format
+    evaluate_template("base")
+    evaluate_template(Lono.env)
   end
 
-  def evaluate_folder(folder)
-    paths = Dir.glob("#{@config_path}/templates/#{folder}/**/*")
-    paths.select{ |e| File.file?(e) }.each do |path|
-      evaluate_template(path)
-    end
+  def evaluate_template(name)
+    path = "#{Lono.root}/app/stacks/#{name}.rb"
+    evaluate_template_path(path)
   end
 
-  def evaluate_template(path)
+  def evaluate_template_path(path)
     begin
       instance_eval(File.read(path), path)
     rescue Exception => e
@@ -65,85 +60,45 @@ class Lono::Template::DSL
     end
   end
 
-  # Detects the format of the templates.  Checks the extension of all the
-  # templates files.
-  # All the templates must be of the same format, either all json or all yaml.
-  def detect_format
-    extensions = Dir.glob("#{Lono.root}/templates/**/*").map do |path|
-      File.extname(path).sub(/^\./,'')
-    end.reject(&:empty?).uniq
-    extensions.include?('yml') ? 'yml' : 'json' # defaults to yml - falls back to json
-  end
-
   def template(name, &block)
     @templates << {name: name, block: block}
   end
 
   def build_templates
-    options = @options.merge(detected_format: @detected_format)
     @templates.each do |t|
-      @results[t[:name]] = Lono::Template::Template.new(t[:name], t[:block], options).build
+      @results[t[:name]] = Lono::Template::Template.new(t[:name], t[:block], @options).build
     end
   end
 
   def write_output
-    output_path = "#{Lono.root}/output"
+    output_path = "#{Lono.root}/output/app/templates"
     FileUtils.rm_rf(output_path) if @options[:clean]
-    FileUtils.mkdir(output_path) unless File.exist?(output_path)
+    FileUtils.mkdir_p(output_path)
     puts "Generating CloudFormation templates:" unless @options[:quiet]
     @results.each do |name,text|
       path = "#{output_path}/#{name}".sub(/^\.\//,'') # strip leading '.'
-      path += ".#{@detected_format}"
+      path += ".yml"
       puts "  #{path}" unless @options[:quiet]
       ensure_parent_dir(path)
       validate(text, path)
       File.open(path, 'w') do |f|
-        f.write(output_format(text))
+        f.write(commented(text))
       end
     end
   end
 
   def validate(text, path)
-    if @detected_format == "json"
-      validate_json(text, path)
-    else
-      validate_yaml(text, path)
-    end
-  end
-
-  def validate_yaml(yaml, path)
     begin
-      YAML.load(yaml)
+      YAML.load(text)
     rescue Psych::SyntaxError => e
       puts "Invalid yaml.  Output written to #{path} for debugging".colorize(:red)
       puts "ERROR: #{e.message}".colorize(:red)
-      File.open(path, 'w') {|f| f.write(yaml) }
+      File.open(path, 'w') {|f| f.write(text) }
       exit 1
     end
   end
 
-  def validate_json(json, path)
-    begin
-      JSON.parse(json)
-    rescue JSON::ParserError => e
-      puts "Invalid json.  Output written to #{path} for debugging".colorize(:red)
-      puts "ERROR: #{e.message}".colorize(:red)
-      File.open(path, 'w') {|f| f.write(json) }
-      exit 1
-    end
-  end
-
-  def output_format(text)
-    @options[:pretty] ? prettify(text) : text
-  end
-
-  # Input text is either yaml or json.
-  # Do not prettify yaml format because it removes the !Ref like CloudFormation notation
-  def prettify(text)
-    @detected_format == "json" ? JSON.pretty_generate(JSON.parse(text)) : yaml_format(text)
-  end
-
-  def yaml_format(text)
+  def commented(text)
     comment =<<~EOS
       # This file was generated with lono. Do not edit directly, the changes will be lost.
       # More info: http://lono.cloud

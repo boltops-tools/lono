@@ -13,14 +13,13 @@ class Lono::Template::Template
     # instance variables
     @_name = name
     @_options = options
-    @_detected_format = options[:detected_format]
     @_block = block
     @_config_path = "#{Lono.root}/config"
     @_source = default_source(name)
   end
 
   def default_source(name)
-    "#{Lono.root}/templates/#{name}.#{@_detected_format}" # defaults to name, source method overrides
+    "#{Lono.root}/app/templates/#{name}.yml" # defaults to name, source method overrides
   end
 
   def build
@@ -71,8 +70,8 @@ class Lono::Template::Template
   end
 
   def source(path)
-    @_source = path[0..0] == '/' ? path : "#{Lono.root}/templates/#{path}"
-    @_source += ".#{@_detected_format}"
+    @_source = path[0..0] == '/' ? path : "#{Lono.root}/app/templates/#{path}"
+    @_source += ".yml"
   end
 
   def variables(vars={})

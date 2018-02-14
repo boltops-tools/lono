@@ -139,7 +139,7 @@ class Lono::Cfn::Base
 
   # Returns String with value of "yml" or "json".
   def detect_format
-    formats = Dir.glob("#{Lono.root}/templates/**/*").
+    formats = Dir.glob("#{Lono.root}/app/templates/**/*").
                 map { |path| path.sub(/\.erb$/, '') }.
                 map { |path| File.extname(path) }.
                 reject { |s| s.empty? }. # reject ""

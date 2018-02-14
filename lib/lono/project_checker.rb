@@ -19,8 +19,8 @@ class Lono::ProjectChecker
   end
 
   def templates_folder_exist
-    unless File.exist?("#{Lono.root}/templates")
-      puts "The templates folder does not exist in this project.  Are you sure this is a lono project?"
+    unless File.exist?("#{Lono.root}/app/templates")
+      puts "The app/templates folder does not exist in this project.  Are you sure this is a lono project?"
       quit
     end
   end
@@ -30,8 +30,8 @@ class Lono::ProjectChecker
       puts "The config folder does not contain any lono template definitions."
       quit
     end
-    if Dir["#{Lono.root}/templates/**/*"].empty?
-      puts "The templates folder does not contain any lono template definitions."
+    if Dir["#{Lono.root}/app/templates/**/*"].empty?
+      puts "The app/templates folder does not contain any lono template definitions."
       quit
     end
   end

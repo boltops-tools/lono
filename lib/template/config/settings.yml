@@ -1,0 +1,31 @@
+# More info: http://lono.cloud/docs/settings/
+# The base config is specially treated. It gets included the other environments automatically.
+# Yaml also directly supports merging with & and <<* syntax but doing it automatically
+# for a cleaner syntax.
+base:
+  s3:
+    enabled: true
+    path:
+      default: # default is nil.
+      # More examples on how to specify different buckets for different LONO_ENV
+      # prod: mybucket/path
+      # stag: another-bucket/storage/path
+      # Can also use the AWS_PROFILE as the mapping
+      # aws_profile1: mybucket/path
+      # aws_profile2: another-bucket/storage/path
+  randomize_stack_name: false # tack on a 3 char random string at the end of the stack name
+    # for lono cfn create
+
+development:
+  # cluster: dev
+  # When you have AWS_PROFILE set to one of these values, ufo will switch to the desired
+  # environment. This prevents you from switching AWS_PROFILE, forgetting to
+  # also switch UFO_ENV, and accidentally deploying to production vs development.
+  # aws_profiles:
+  #   - dev_profile1
+  #   - dev_profile2
+
+production:
+  # cluster: prod
+  # aws_profiles:
+  #   - prod_profile
