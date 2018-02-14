@@ -12,6 +12,9 @@ describe Lono::CLI do
     out = execute("exe/lono generate")
     success = $?.exitstatus == 0
     expect(success).to be true
+
+    exist = File.exist?("#{Lono.root}/output/templates/example.yml")
+    expect(exist).to be true
   end
 
   it "import should download template" do

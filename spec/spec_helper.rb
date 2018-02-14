@@ -37,7 +37,7 @@ module Helper
 
   # Creates tmp/lono_project using thew new generator.
   # This is the main project we'll use for testing.
-  def create_lono_project
+  def generate_lono_project
     execute("exe/lono new lono_project --no-bundle")
     # create_test_settings
   end
@@ -51,7 +51,7 @@ RSpec.configure do |c|
   c.include Helper
   c.before(:all) do
     ensure_tmp_exists
-    create_lono_project
+    generate_lono_project
   end
   c.after(:all) do
     destroy_lono_project
