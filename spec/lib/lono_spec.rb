@@ -13,8 +13,8 @@ describe Lono do
     end
 
     it "import should download template" do
-      path = "spec/fixtures/my_project/config/templates/base/stacks.rb"
-      backup = "spec/fixtures/my_project/config/templates/base/stacks.rb.bak"
+      path = "spec/fixtures/my_project/app/stacks/base.rb"
+      backup = "spec/fixtures/my_project/app/stacks/base.rb.bak"
       FileUtils.cp(path, backup)
       out = execute("#{@env} exe/lono import spec/fixtures/raw_templates/aws-waf-security-automations.template #{@args}")
       expect(out).to match /Imported raw CloudFormation template/
