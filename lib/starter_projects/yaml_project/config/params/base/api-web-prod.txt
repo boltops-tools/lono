@@ -1,2 +1,0 @@
-InstanceType=t2.micro
-KeyName=default
