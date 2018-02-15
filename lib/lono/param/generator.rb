@@ -155,7 +155,7 @@ class Lono::Param::Generator
 
   def write_output(json)
     dir = File.dirname(output_path)
-    FileUtils.mkdir_p(dir) unless File.exist?(dir)
+    FileUtils.mkdir_p(dir)
     IO.write(output_path, json)
   end
 end

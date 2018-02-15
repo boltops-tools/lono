@@ -13,6 +13,7 @@ class Lono::Template::Template
   #     variables(test: 1)
   #   end
   #
+  attr_reader :name
   def initialize(name, block=nil, options={})
     # Taking care to name instance variables with _ in front because we load the
     # variables from config/variables and those instance variables can clobber these
@@ -31,7 +32,7 @@ class Lono::Template::Template
 
   def variables(vars={})
     vars.each do |var,value|
-      instance_variable_set("@#{var}", value)
+      context.instance_variable_set("@#{var}", value)
     end
   end
 

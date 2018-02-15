@@ -1,13 +1,13 @@
 # Encapsulates helper methods and instance variables to be rendered in the ERB
 # templates.
 class Lono::Template
-  class Context < RenderMePretty::Context
+  class Context
     include Lono::Template::Helper
 
     def initialize(options={})
       @options = options
       load_variables
-      load_project_custom_helpers
+      load_project_helpers
     end
 
     # Take a hash and makes them instance variables in the current scope.
@@ -31,7 +31,7 @@ class Lono::Template
     end
 
     # Load custom helper methods from project
-    def load_project_custom_helpers
+    def load_project_helpers
       Dir.glob("#{Lono.config.helpers_path}/**/*_helper.rb").each do |path|
         filename = path.sub(%r{.*/},'').sub('.rb','')
         module_name = filename.classify
