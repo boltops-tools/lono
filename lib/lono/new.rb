@@ -29,7 +29,7 @@ module Lono
     end
 
     def create_project
-      puts "Creating new project called #{project_name}."
+      puts "=> Creating new project called #{project_name}."
       directory ".", "#{@cwd}/#{project_name}"
 
       destination_root = "#{@cwd}/#{project_name}"
@@ -44,6 +44,7 @@ module Lono
     def bundle_install
       return unless options[:bundle]
 
+      puts "=> Installing dependencies with: bundle install"
       Bundler.with_clean_env do
         system("BUNDLE_IGNORE_CONFIG=1 bundle install")
       end
@@ -54,6 +55,7 @@ module Lono
       return unless git_installed?
       return if File.exist?(".git") # this is a clone repo
 
+      puts "=> Initialize git repo"
       run("git init")
       run("git add .")
       run("git commit -m 'first commit'")
