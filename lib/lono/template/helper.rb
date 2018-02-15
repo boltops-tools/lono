@@ -28,12 +28,6 @@ module Lono::Template::Helper
     generator.params    # Returns Array in underscore keys format
   end
 
-  def partial_exist?(path)
-    path = partial_path_for(path)
-    path = auto_add_format(path)
-    path && File.exist?(path)
-  end
-
   # The partial's path is a relative path given without the extension and
   #
   # Example:
@@ -53,10 +47,6 @@ module Lono::Template::Helper
     result + "\n"
   end
 
-  def render_path(path)
-    RenderMePretty.result(path, context: self)
-  end
-
   # add indentation
   def indent(text, indentation_amount)
     text.split("\n").map do |line|
@@ -64,7 +54,17 @@ module Lono::Template::Helper
     end.join("\n")
   end
 
+  def partial_exist?(path)
+    path = partial_path_for(path)
+    path = auto_add_format(path)
+    path && File.exist?(path)
+  end
+
 private
+  def render_path(path)
+    RenderMePretty.result(path, context: self)
+  end
+
   def partial_path_for(path)
     "#{Lono.config.partials_path}/#{path}"
   end
