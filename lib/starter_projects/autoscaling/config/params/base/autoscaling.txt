@@ -1,0 +1,6 @@
+VpcId=vpc-d79753ae
+Subnets=subnet-4ac50f66,subnet-622eee38,subnet-83cf49cb,subnet-29e75925,subnet-f45d02c8,subnet-3fb1875a
+OperatorEMail=email@domain.com
+KeyName=default
+#InstanceType=        # optional
+#SSHLocation=         # optional
