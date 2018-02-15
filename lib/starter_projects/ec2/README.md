@@ -9,7 +9,14 @@ TEMPLATE=ec2 lono new ec2
 cd ec2
 ```
 
-Edit `config/params/base/ec2.txt` with your desired parameters and then launch the stack:
+Edit `config/params/base/ec2.txt` with your desired parameters. Here are the current contents of ``config/params/base/ec2.txt`:
+
+```sh
+InstanceType=t2.micro
+KeyName=default
+```
+
+Then launch the stack:
 
 ```sh
 lono cfn create ec2

@@ -9,7 +9,19 @@ TEMPLATE=autoscaling lono new autoscaling
 cd autoscaling
 ```
 
-Edit `config/params/base/autoscaling.txt` with your desired parameters and then launch the stack:
+Edit `config/params/base/autoscaling.txt` with your desired parameters.  Here are the current contents of `config/params/base/autoscaling.txt`:
+
+```sh
+VpcId=
+Subnets=
+OperatorEMail=
+KeyName=
+#InstanceType=        # optional
+#SSHLocation=         # optional
+```
+
+
+Then launch the stack.
 
 ```sh
 lono cfn create autoscaling
