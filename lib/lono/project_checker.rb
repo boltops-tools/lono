@@ -26,10 +26,6 @@ class Lono::ProjectChecker
   end
 
   def empty_folders
-    if Dir["#{Lono.root}/config/**/*.rb"].empty?
-      puts "The config folder does not contain any lono template definitions."
-      quit
-    end
     if Dir["#{Lono.config.templates_path}/**/*"].empty?
       puts "The app/templates folder does not contain any lono template definitions."
       quit

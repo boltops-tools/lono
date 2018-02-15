@@ -33,10 +33,7 @@ class Lono::Cfn::Create < Lono::Cfn::Base
       disable_rollback: !@options[:rollback],
     }
 
-    shown_params = params.clone
-    shown_params[:template_body] = "...hidden due to size..."
-    puts "Parameters passed to AWS create stack command: "
-    puts YAML.dump(shown_params)
+    show_parameters(params)
     cfn.create_stack(params)
     puts message unless @options[:mute]
   end

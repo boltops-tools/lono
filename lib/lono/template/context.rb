@@ -65,6 +65,8 @@ class Lono::Template
     #   wasnt able to make local variables available.
     def load_variables_for(name)
       path = "#{Lono.config.variables_path}/#{name}.rb"
+      return unless File.exist?(path)
+
       instance_eval(IO.read(path))
     end
   end

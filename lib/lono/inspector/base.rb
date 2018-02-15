@@ -5,7 +5,7 @@ class Lono::Inspector::Base
   end
 
   def generate_templates
-    Lono::Template::DSL.new(@options.clone).run
+    Lono::Template::DSL.new(@options.clone.merge(quiet: true)).run
   end
 
   def run

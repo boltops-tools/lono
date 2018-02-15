@@ -15,11 +15,11 @@ class Lono::Importer
       download_template
       template_definition_path = add_template_definition
       create_params
-      puts "Imported raw CloudFormation template and lono-fied it!"
-      puts "Template definition added to #{template_definition_path}."
-      puts "Params file created to #{params_path}."
+      puts "Imported raw CloudFormation template and lono-fied it.".colorize(:green)
+      puts "Template definition added to #{pretty_path(template_definition_path)}"
+      puts "Params file created to #{pretty_path(params_path)}"
     end
-    puts "Template downloaded to #{template_path}." # like having this message at the end
+    puts "Template downloaded to #{pretty_path(template_path)}" # like having this message at the end
   end
 
   def download_template
@@ -109,5 +109,10 @@ private
 
   def normalize_format(format)
     format == 'yaml' ? 'yml' : format
+  end
+
+  # removes the ./ at the beginning if it's there in the path
+  def pretty_path(path)
+    path[0..1] == './' ? path[2..-1] : path
   end
 end

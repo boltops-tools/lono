@@ -12,8 +12,11 @@ module Lono
     option :format, type: :string, default: "yaml", desc: "format for the final template"
     option :casing, default: "underscore", desc: "camelcase or underscore the template name"
     option :name, default: nil, desc: "final name of downloaded template without extension"
+    option :summary, default: true, type: :boolean, desc: "provide template summary after import"
     def import(source)
-      Importer.new(source, options).run
+      importer = Importer.new(source, options)
+      importer.run
+      Lono::Inspector::Summary.new(importer.template_name, options).run
     end
 
     desc "generate", "Generate both CloudFormation templates and parameters files"

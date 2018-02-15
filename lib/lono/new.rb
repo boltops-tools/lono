@@ -58,27 +58,18 @@ module Lono
     end
 
     def user_message
-      path = File.expand_path("../starter_project/config/params/base/example.txt", File.dirname(__FILE__))
-      example_params_content = IO.readlines(path).map { |l| "  #{l}" }.join("")
-
       puts <<-EOL
 #{"="*64}
 Congrats 🎉 You have successfully created a lono project.
 
-The example template uses a keypair named default. Be sure that keypair exists.  Or you can adjust the KeyName parameter in config/params/base/example.txt. Here are contents of the file:
-
-#{example_params_content}
-To launch an example CloudFormation stack:
-
-  cd #{project_name}
-  lono cfn create example
-
 To generate the CloudFormation template:
 
+  cd #{project_name}
   lono generate
 
 The generated CloudFormation templates are in the output/templates folder.  The generated stack parameters are in the output/params folder.
 
+#{template_specific_message}
 More info: http://lono.cloud/
 EOL
     end
