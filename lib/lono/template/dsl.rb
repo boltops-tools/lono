@@ -33,6 +33,8 @@ class Lono::Template::DSL
   end
 
   def evaluate_template_path(path)
+    return unless File.exist?(path)
+
     begin
       instance_eval(File.read(path), path)
     rescue Exception => e
