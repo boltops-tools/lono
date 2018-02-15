@@ -10,10 +10,10 @@ class Lono::Template::Template
     # Taking care to name instance variables with _ in front because we load the
     # variables from config/variables and those instance variables can clobber these
     # instance variables
-    @_name = name
-    @_options = options
-    @_block = block
-    @_source = default_source(name)
+    @name = name
+    @block = block
+    @options = options
+    @source = default_source(name)
   end
 
   def default_source(name)
@@ -21,21 +21,21 @@ class Lono::Template::Template
   end
 
   def build
-    instance_eval(&@_block) if @_block
+    instance_eval(&@block) if @block
 
-    # template = Tilt::ERBTemplate.new(@_source)
+    # template = Tilt::ERBTemplate.new(@source)
     # template.render(context)
-    RenderMePretty.result(@_source, context: context)
+    RenderMePretty.result(@source, context: context)
   end
 
   # context for ERB rendering
   def context
-    @context ||= Lono::Template::Context.new(@_options)
+    @context ||= Lono::Template::Context.new(@options)
   end
 
   def source(path)
-    @_source = path[0..0] == '/' ? path : "#{Lono.config.templates_path}/#{path}"
-    @_source += ".yml"
+    @source = path[0..0] == '/' ? path : "#{Lono.config.templates_path}/#{path}"
+    @source += ".yml"
   end
 
   def variables(vars={})
@@ -81,9 +81,5 @@ class Lono::Template::Template
   # of CloudFormation.  So this can be used in it's place.
   def encode_base64(text)
     Base64.strict_encode64(text).strip
-  end
-
-  def name
-    @_name
   end
 end

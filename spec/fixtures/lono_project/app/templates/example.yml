@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'AWS CloudFormation Sample Template. A fixture for testing only.'
+Description: 'AWS CloudFormation Sample Template. A fixture for testing only. @_name: <%= @_name %>'
 Parameters:
   KeyName:
     Description: Name of an existing EC2 KeyPair for SSH.  <%= custom_helper %>
