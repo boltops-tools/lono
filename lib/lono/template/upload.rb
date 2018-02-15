@@ -4,7 +4,7 @@ require 'base64'
 require 'digest'
 
 class Lono::Template::Upload
-  include Lono::Template::AwsServices
+  include Lono::Template::AwsService
 
   def initialize(options={})
     @options = options

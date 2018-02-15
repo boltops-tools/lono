@@ -1,7 +1,7 @@
 require "lono"
 
 class Lono::Cfn::Base
-  include Lono::Cfn::AwsServices
+  include Lono::Cfn::AwsService
   include Lono::Cfn::Util
 
   attr_reader :randomize_stack_name

@@ -1,7 +1,7 @@
 require "thor"
 
 class Lono::Cfn < Lono::Command
-  autoload :AwsServices, 'lono/cfn/aws_services'
+  autoload :AwsService, 'lono/cfn/aws_service'
   autoload :Util, 'lono/cfn/util'
   autoload :CLI, 'lono/cfn/cli'
   autoload :Base, 'lono/cfn/base'

@@ -1,5 +1,5 @@
 class Lono::Cfn::Diff < Lono::Cfn::Base
-  include Lono::Cfn::AwsServices
+  include Lono::Cfn::AwsService
 
   def run
     unless stack_exists?(@stack_name)

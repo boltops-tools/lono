@@ -1,6 +1,6 @@
 require "aws-sdk-cloudformation"
 
-module Lono::Cfn::AwsServices
+module Lono::Cfn::AwsService
   def cfn
     @cfn ||= Aws::CloudFormation::Client.new
   end

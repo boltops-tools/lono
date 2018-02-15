@@ -1,6 +1,6 @@
 require "aws-sdk-s3"
 
-module Lono::Template::AwsServices
+module Lono::Template::AwsService
   def s3
     return @s3 if @s3
 

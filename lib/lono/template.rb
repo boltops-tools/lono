@@ -8,7 +8,7 @@ class Lono::Template < Lono::Command
   autoload :DSL, 'lono/template/dsl'
   autoload :Template, 'lono/template/template'
   autoload :Upload, 'lono/template/upload'
-  autoload :AwsServices, 'lono/template/aws_services'
+  autoload :AwsService, 'lono/template/aws_service'
 
   class_option :quiet, type: :boolean, desc: "silence the output"
   class_option :noop, type: :boolean, desc: "noop mode, do nothing destructive"
