@@ -45,7 +45,6 @@ class Lono::Template::Template
 
     # template = Tilt::ERBTemplate.new(@source_path)
     # template.render(context)
-    puts "@source_path #{@source_path.inspect}"
     RenderMePretty.result(@source_path, context: context)
   end
 

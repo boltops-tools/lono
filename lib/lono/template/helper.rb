@@ -1,5 +1,9 @@
 # This is included into Lono::Template::Context.
 # It has access to the original thor CLI options via @options.
+#
+# @options gets passed into:
+#
+#   Lono::Template::Context.new(@options)
 module Lono::Template::Helper
   def template_s3_path(template_name)
     template_path = "#{template_name}.yml"
@@ -8,7 +12,7 @@ module Lono::Template::Helper
     settings = Lono::Settings.new
     if settings.s3_path
       # high jacking Upload for useful s3_https_url method
-      upload = Lono::Template::Upload.new(@_options)
+      upload = Lono::Template::Upload.new(@options)
       upload.s3_https_url(template_path)
     else
       message = "template_s3_path helper called but s3.path not configured in settings.yml"
@@ -22,7 +26,7 @@ module Lono::Template::Helper
     generator_options = {
       path: param_path,
       allow_no_file: true
-    }.merge(@_options)
+    }.merge(@options)
     generator = Lono::Param::Generator.new(param_name, generator_options)
     # do not generate because lono cfn calling logic already generated it we only need the values
     generator.params    # Returns Array in underscore keys format
