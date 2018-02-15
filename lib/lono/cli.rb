@@ -45,6 +45,12 @@ module Lono
       Completer::Script.generate
     end
 
+    desc "upgrade4", "upgrade from version 3 to 4"
+    long_desc Help.text("upgrade3")
+    def upgrade4
+      Upgrade4.new(options).run
+    end
+
     desc "version", "Prints version"
     def version
       puts VERSION

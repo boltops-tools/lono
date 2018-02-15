@@ -35,6 +35,7 @@ module Lono
   autoload :Completion, 'lono/completion'
   autoload :Completer, 'lono/completer'
   autoload :Core, 'lono/core'
+  autoload :Upgrade4, 'lono/upgrade4'
 
   extend Core
 end
