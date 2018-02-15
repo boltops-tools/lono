@@ -52,6 +52,16 @@ The template was imported from [CloudFormation Auto Scaling Samples](https://doc
 
 A starter `config/params/base/autoscaling.txt` was generated with required parameters emptied and optional parameters commented out.  Inspect it to fill in the required parameters: `cat config/params/base/autoscaling.txt`.
 
+```
+$ cat config/params/base/autoscaling.txt
+VpcId=
+Subnets=
+OperatorEMail=
+KeyName=
+#InstanceType=        # optional
+#SSHLocation=         # optional
+```
+
 ### Filling in the Parameters
 
 You can use the following commands to grab the default VPC and a subnet, and set the values needed for the parameters:
