@@ -28,49 +28,6 @@ module Lono::Template::Helper
     generator.params    # Returns Array in underscore keys format
   end
 
-  # Really only useful if using json format
-  def user_data(path, vars={})
-    path = "#{Lono.config.templates_path}/user_data/#{path}"
-    template = IO.read(path)
-    variables(vars)
-    result = erb_result(path, template)
-    output = []
-    result.split("\n").each do |line|
-      output += transform(line)
-    end
-    json = output.to_json
-    json[0] = '' # remove first char: [
-    json.chop!   # remove last char:  ]
-  end
-
-  def ref(name)
-    %Q|{"Ref"=>"#{name}"}|
-  end
-
-  def find_in_map(*args)
-    %Q|{"Fn::FindInMap" => [ #{transform_array(args)} ]}|
-  end
-
-  def base64(value)
-    %Q|{"Fn::Base64"=>"#{value}"}|
-  end
-
-  def get_att(*args)
-    %Q|{"Fn::GetAtt" => [ #{transform_array(args)} ]}|
-  end
-
-  def get_azs(region="AWS::Region")
-    %Q|{"Fn::GetAZs"=>"#{region}"}|
-  end
-
-  def join(delimiter, values)
-    %Q|{"Fn::Join" => ["#{delimiter}", [ #{transform_array(values)} ]]}|
-  end
-
-  def select(index, list)
-    %Q|{"Fn::Select" => ["#{index}", [ #{transform_array(list)} ]]}|
-  end
-
   def partial_exist?(path)
     path = partial_path_for(path)
     path = auto_add_format(path)
@@ -90,10 +47,14 @@ module Lono::Template::Helper
     path = auto_add_format(path)
 
     instance_variables!(vars)
-    result = RenderMePretty.result(path, context: self)
+    result = render_path(path)
 
     result = indent(result, options[:indent]) if options[:indent]
     result + "\n"
+  end
+
+  def render_path(path)
+    RenderMePretty.result(path, context: self)
   end
 
   # add indentation

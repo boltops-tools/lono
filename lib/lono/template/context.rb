@@ -10,8 +10,8 @@ class Lono::Template
       load_project_custom_helpers
     end
 
-    # Take a hash and makes them instance variables in the current scope
-    # Use this in custom help methods to make variables accessible to ERB templates.
+    # Take a hash and makes them instance variables in the current scope.
+    # Use this in custom helper methods to make variables accessible to ERB templates.
     def instance_variables!(variables)
       variables.each do |key, value|
         instance_variable_set('@' + key.to_s, value)
