@@ -1,1 +1,0 @@
-InstanceType=m4.large

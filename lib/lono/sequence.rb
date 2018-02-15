@@ -8,7 +8,7 @@ class Lono::Sequence < Thor::Group
   include Thor::Actions
 
   def self.source_root
-    File.expand_path("../../template", __FILE__)
+    File.expand_path("../starter_project", File.dirname(__FILE__))
   end
 
 private

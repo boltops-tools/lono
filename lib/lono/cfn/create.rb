@@ -1,3 +1,5 @@
+require "yaml"
+
 class Lono::Cfn::Create < Lono::Cfn::Base
   # save_stack is the interface method
   def save_stack(params)
@@ -30,10 +32,11 @@ class Lono::Cfn::Create < Lono::Cfn::Base
       capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
       disable_rollback: !@options[:rollback],
     }
-    test_params = params.clone
-    test_params[:template_body] = "..."
-    puts "test_params: "
-    pp test_params
+
+    shown_params = params.clone
+    shown_params[:template_body] = "...hidden due to size..."
+    puts "Parameters passed to AWS create stack command: "
+    puts YAML.dump(shown_params)
     cfn.create_stack(params)
     puts message unless @options[:mute]
   end

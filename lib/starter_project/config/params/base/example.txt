@@ -1,2 +1,2 @@
 InstanceType=t2.micro
-KeyName=tutorial
+KeyName=default
