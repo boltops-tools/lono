@@ -1,7 +1,9 @@
 module Lono
   class New < Sequence
     autoload :Helper, 'lono/new/helper'
+    autoload :Message, 'lono/new/message'
     include Helper
+    include Message
 
     argument :project_name
 
@@ -57,21 +59,8 @@ module Lono
       run("git commit -m 'first commit'")
     end
 
-    def user_message
-      puts <<-EOL
-#{"="*64}
-Congrats 🎉 You have successfully created a lono project.
-
-To generate the CloudFormation template:
-
-  cd #{project_name}
-  lono generate
-
-The generated CloudFormation templates are in the output/templates folder.  The generated stack parameters are in the output/params folder.
-
-#{template_specific_message}
-More info: http://lono.cloud/
-EOL
+    def final_message
+      puts welcome_message
     end
   end
 end

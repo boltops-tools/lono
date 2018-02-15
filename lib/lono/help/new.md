@@ -1,7 +1,7 @@
 Examples:
 
-  lono new infra # defaults to single_server template
-  TEMPLATE=skeleton lono new infra
+  lono new infra # skeleton project with barebones structure
+  TEMPLATE=ec2 lono new infra # creates a single server
   TEMPLATE=autoscaling lono new infra
 
 For a list of the starter templates:
