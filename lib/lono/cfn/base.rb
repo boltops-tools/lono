@@ -65,7 +65,7 @@ class Lono::Cfn::Base
 
   def upload_templates
     # only upload templates if s3.path configured in settings
-    settings = Lono::Settings.new
+    settings = Lono::Setting.new
     return unless settings.s3_path
 
     Lono::Template::Upload.new(pretty: true).run
@@ -183,7 +183,7 @@ class Lono::Cfn::Base
     end
 
     # otherwise use the settings preference
-    settings = Lono::Settings.new
+    settings = Lono::Setting.new
     settings.data['randomize_stack_name']
   end
 

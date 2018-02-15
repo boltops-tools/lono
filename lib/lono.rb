@@ -29,7 +29,7 @@ module Lono
   autoload :Cfn, 'lono/cfn'
   autoload :Param, 'lono/param'
   autoload :Clean, 'lono/clean'
-  autoload :Settings, 'lono/settings'
+  autoload :Setting, 'lono/setting'
   autoload :Importer, 'lono/importer'
   autoload :Inspector, 'lono/inspector'
   autoload :Completion, 'lono/completion'

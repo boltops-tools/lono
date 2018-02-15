@@ -1,4 +1,4 @@
-class Lono::Settings
+class Lono::Setting
   # The options from the files get merged with the following precedence:
   #
   # current folder - The current folder’s config/settings.yml values take the highest precedence.

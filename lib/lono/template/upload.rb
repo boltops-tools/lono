@@ -115,7 +115,7 @@ class Lono::Template::Upload
   def ensure_s3_setup!
     return if @options[:noop]
 
-    settings = Lono::Settings.new
+    settings = Lono::Setting.new
     if settings.s3_path
       @s3_full_path = settings.s3_path
     else
