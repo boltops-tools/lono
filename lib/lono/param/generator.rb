@@ -1,6 +1,4 @@
 class Lono::Param::Generator
-  include Lono::CurrentRegion
-
   def self.generate_all(options)
     puts "Generating parameter files:"
 

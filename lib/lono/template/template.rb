@@ -3,7 +3,6 @@ require 'json'
 require 'base64'
 
 class Lono::Template::Template
-  include Lono::CurrentRegion
   include ERB::Util
 
   # Main template DSL methods are: source and variables

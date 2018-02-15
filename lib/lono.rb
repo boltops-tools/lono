@@ -32,7 +32,6 @@ module Lono
   autoload :Settings, 'lono/settings'
   autoload :Importer, 'lono/importer'
   autoload :Inspector, 'lono/inspector'
-  autoload :CurrentRegion, 'lono/current_region'
   autoload :Completion, 'lono/completion'
   autoload :Completer, 'lono/completer'
   autoload :Core, 'lono/core'
