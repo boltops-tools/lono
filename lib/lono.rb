@@ -10,6 +10,11 @@ require 'active_support/core_ext/string'
 $:.unshift(File.expand_path("../../vendor/plissken/lib", __FILE__))
 require "plissken"
 
+# vendor because pretty new gem and need to test it more
+$:.unshift(File.expand_path("../../vendor/render_me_pretty/lib", __FILE__))
+require "render_me_pretty"
+require "tilt" # render_me_pretty dependency
+
 $:.unshift(File.expand_path('../', __FILE__))
 module Lono
   autoload :VERSION, 'lono/version'

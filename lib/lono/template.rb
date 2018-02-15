@@ -2,7 +2,8 @@ require "thor"
 require_relative "command"
 
 class Lono::Template < Lono::Command
-  autoload :Helpers, 'lono/template/helpers'
+  autoload :Context, 'lono/template/context'
+  autoload :Helper, 'lono/template/helper'
   autoload :Bashify, 'lono/template/bashify'
   autoload :DSL, 'lono/template/dsl'
   autoload :Template, 'lono/template/template'

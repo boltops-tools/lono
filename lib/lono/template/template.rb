@@ -3,7 +3,6 @@ require 'json'
 require 'base64'
 
 class Lono::Template::Template
-  include Lono::Template::Helpers
   include Lono::CurrentRegion
   include ERB::Util
 
@@ -22,54 +21,16 @@ class Lono::Template::Template
   end
 
   def build
-    load_all_variables
-    load_custom_helpers
     instance_eval(&@_block) if @_block
-    template = IO.read(@_source)
-    erb_result(@_source, template)
+
+    # template = Tilt::ERBTemplate.new(@_source)
+    # template.render(context)
+    RenderMePretty.result(@_source, context: context)
   end
 
-  def load_all_variables
-    load_variables("base")
-    load_variables(Lono.env)
-  end
-
-  # Load the variables defined in config/variables/* to make available in the
-  # template blocks in config/templates/*.
-  #
-  # Example:
-  #
-  #   `config/variables/base.rb`:
-  #     @foo = 123
-  #
-  #   `app/stacks/base.rb`:
-  #      template "mytemplate.yml" do
-  #        source "mytemplate.yml.erb"
-  #        variables(foo: @foo)
-  #      end
-  #
-  # NOTE: Only able to make instance variables avaialble with instance_eval,
-  #   wasnt able to make local variables available.
-  def load_variables(name)
-    path = "#{Lono.config.variables_path}/#{name}.rb"
-    instance_eval(IO.read(path))
-  end
-
-  # Load custom helper methods from project
-  def load_custom_helpers
-    Dir.glob("#{Lono.config.helpers_path}/**/*_helper.rb").each do |path|
-      filename = path.sub(%r{.*/},'').sub('.rb','')
-      module_name = filename.classify
-
-      # Prepend a period so require works LONO_ROOT is set to a relative path
-      # without a period.
-      #
-      # Example: LONO_ROOT=tmp/lono_project
-      first_char = path[0..0]
-      path = "./#{path}" unless %w[. /].include?(first_char)
-      require path
-      self.class.send :include, module_name.constantize
-    end
+  # context for ERB rendering
+  def context
+    @context ||= Lono::Template::Context.new(@_options)
   end
 
   def source(path)

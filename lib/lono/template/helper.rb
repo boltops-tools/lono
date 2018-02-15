@@ -1,7 +1,6 @@
-module Lono::Template::Helpers
+module Lono::Template::Helper
   def template_s3_path(template_name)
-    format = @_detected_format.sub('yaml','yml')
-    template_path = "#{template_name}.#{format}"
+    template_path = "#{template_name}.yml"
 
     # must have settings.s3_path for this to owrk
     settings = Lono::Settings.new
@@ -88,11 +87,11 @@ module Lono::Template::Helpers
     path = partial_path_for(path)
     path = auto_add_format(path)
 
-    template = IO.read(path)
-    variables(vars)
-    result = erb_result(path, template)
+    instance_variables!(vars)
+    result = RenderMePretty.result(path, context: self)
+
     result = indent(result, options[:indent]) if options[:indent]
-    result
+    result + "\n"
   end
 
   # add indentation

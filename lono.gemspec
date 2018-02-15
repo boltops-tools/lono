@@ -33,6 +33,8 @@ Gem::Specification.new do |gem|
   # using the vendor fork version: https://github.com/tongueroo/plissken
   # until https://github.com/futurechimp/plissken/pull/6 gets merged
 
+  gem.add_dependency "tilt" # render_me_pretty submodule
+
   gem.add_development_dependency "byebug"
   gem.add_development_dependency "guard-bundler"
   gem.add_development_dependency "guard-rspec"

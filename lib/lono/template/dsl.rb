@@ -107,7 +107,7 @@ class Lono::Template::DSL
       puts "Invalid yaml.  Output written to #{path} for debugging".colorize(:red)
       puts "ERROR: #{e.message}".colorize(:red)
       File.open(path, 'w') {|f| f.write(text) }
-      exit 1
+      ENV['TEST'] ? raise : exit(1)
     end
   end
 

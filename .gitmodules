@@ -1,3 +1,6 @@
 [submodule "vendor/plissken"]
 	path = vendor/plissken
 	url = https://github.com/tongueroo/plissken.git
+[submodule "vendor/render_me_pretty"]
+	path = vendor/render_me_pretty
+	url = https://github.com/tongueroo/render_me_pretty
