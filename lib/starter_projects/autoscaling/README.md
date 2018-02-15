@@ -1,6 +1,12 @@
 # Autoscaling Lono Example
 
-This project was mainly generated to show an example Autoscaling template with lono.
+## Usage
+
+```
+lono cfn create autoscaling
+```
+
+## How This Example Was Built
 
 First generate a skeleton starter lono project.
 
@@ -8,23 +14,21 @@ First generate a skeleton starter lono project.
 TEMPLATE=skeleton lono new autoscaling
 ```
 
-Template was imported from [CloudFormation Auto Scaling Samples](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sample-templates-services-us-west-2.html#w2ab2c23c48c13b7)
-
-The `--name` option is used to rename the template `asg`.
+Then import a normal CloudFormatoin template into lono. The `--name` option is used to rename the template `autoscaling`.
 
 ```
-$ lono import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/AutoScalingMultiAZWithNotifications.template --name asg
+$ lono import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/AutoScalingMultiAZWithNotifications.template --name autoscaling
 Imported raw CloudFormation template and lono-fied it!
 Template definition added to ./app/stacks/base.rb.
-Params file created to ./config/params/base/asg.txt.
-Template downloaded to ./app/templates/asg.yml.
+Params file created to ./config/params/base/autoscaling.txt.
+Template downloaded to ./app/templates/autoscaling.yml.
 $
 ```
 
-After importing, use `lono inspect summary` to get a quick summary of the template.
+Template was imported from [CloudFormation Auto Scaling Samples](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sample-templates-services-us-west-2.html#w2ab2c23c48c13b7).  After importing, use `lono inspect summary` to get a quick summary of the template.
 
 ```sh
-$ lono inspect summary asg
+$ lono inspect summary autoscaling
 CloudFormation Template Summary:
 Parameters:
 Required:
@@ -49,4 +53,38 @@ Resources:
 $
 ```
 
-Fill out the required parameters in
+Fill out the required parameters in `config/params/base/autoscaling.txt`. You can these commands to grab the default VPC and a subnet from it:
+
+```
+VPC=$(aws ec2 describe-vpcs | jq -r '.Vpcs[] | select(.IsDefault == true) | .VpcId')
+SUBNETS=$(aws ec2 describe-subnets | jq -r '.Subnets[].SubnetId' | tr -s '\n' ',' | sed 's/,*$//g')
+```
+
+Now update the required parameters:
+
+```
+sed "s/VpcId=/VpcId=$VPC/; s/Subnets=/Subnets=$SUBNETS/; s/OperatorEMail=/OperatorEMail=email@domain.com/; s/KeyName=/KeyName=default/;" config/params/base/autoscaling.txt > config/params/base/autoscaling.txt.1
+mv config/params/base/autoscaling.txt{.1,}
+```
+
+Now launch the stack:
+
+```
+lono cfn create autoscaling
+```
+
+## Commands Summarized
+
+```sh
+TEMPLATE=skeleton lono new autoscaling
+cd autoscaling
+lono import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/AutoScalingMultiAZWithNotifications.template --name autoscaling
+lono inspect summary autoscaling
+cat config/params/base/autoscaling.txt
+VPC=$(aws ec2 describe-vpcs | jq -r '.Vpcs[] | select(.IsDefault == true) | .VpcId'
+vpc-d79753ae)
+SUBNET=$(aws ec2 describe-subnets | jq -r '.Subnets[].SubnetId' | sort --random-sort | head -1)
+sed "s/VpcId=/VpcId=$VPC/; s/Subnets=/Subnets=$SUBNET/; s/OperatorEMail=/OperatorEMail=email@domain.com/; s/KeyName=/KeyName=default/;" config/params/base/autoscaling.txt > config/params/base/autoscaling.txt.1
+mv config/params/base/autoscaling.txt{.1,}
+lono cfn create autoscaling --template autoscaling
+```
