@@ -1,3 +1,5 @@
+# This is included into Lono::Template::Context.
+# It has access to the original thor CLI options via @options.
 module Lono::Template::Helper
   def template_s3_path(template_name)
     template_path = "#{template_name}.yml"

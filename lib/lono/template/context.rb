@@ -7,10 +7,19 @@ class Lono::Template
     def initialize(options={})
       @options = options
       load_variables
-      load_custom_helpers
+      load_project_custom_helpers
     end
 
-    # Wariables in base.rb are overridden by their environment specific variables
+    # Take a hash and makes them instance variables in the current scope
+    # Use this in custom help methods to make variables accessible to ERB templates.
+    def instance_variables!(variables)
+      variables.each do |key, value|
+        instance_variable_set('@' + key.to_s, value)
+      end
+    end
+
+  private
+    # Variables in base.rb are overridden by their environment specific variables
     # file.  Example, for LONO_ENV=development:
     #
     #   config/variables/base.rb
@@ -22,7 +31,7 @@ class Lono::Template
     end
 
     # Load custom helper methods from project
-    def load_custom_helpers
+    def load_project_custom_helpers
       Dir.glob("#{Lono.config.helpers_path}/**/*_helper.rb").each do |path|
         filename = path.sub(%r{.*/},'').sub('.rb','')
         module_name = filename.classify
@@ -57,13 +66,6 @@ class Lono::Template
     def load_variables_for(name)
       path = "#{Lono.config.variables_path}/#{name}.rb"
       instance_eval(IO.read(path))
-    end
-
-    # Take a hash and makes them instance variables in the current scope
-    def instance_variables!(variables)
-      variables.each do |key, value|
-        instance_variable_set('@' + key.to_s, value)
-      end
     end
   end
 end

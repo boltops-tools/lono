@@ -16,6 +16,24 @@ class Lono::Template::Template
     @source = default_source(name)
   end
 
+  # Main template DSL methods.
+  #
+  #   template "example-2" do
+  #     source "example"
+  #     variables(test: 1)
+  #   end
+  def source(path)
+    @source = path[0..0] == '/' ? path : "#{Lono.config.templates_path}/#{path}"
+    @source += ".yml"
+  end
+
+  def variables(vars={})
+    vars.each do |var,value|
+      instance_variable_set("@#{var}", value)
+    end
+  end
+
+  # internal methods
   def default_source(name)
     "#{Lono.config.templates_path}/#{name}.yml" # defaults to name, source method overrides
   end
@@ -28,58 +46,9 @@ class Lono::Template::Template
     RenderMePretty.result(@source, context: context)
   end
 
-  # context for ERB rendering
+  # Context for ERB rendering.
+  # This is where we control what references get passed to the ERB rendering.
   def context
     @context ||= Lono::Template::Context.new(@options)
-  end
-
-  def source(path)
-    @source = path[0..0] == '/' ? path : "#{Lono.config.templates_path}/#{path}"
-    @source += ".yml"
-  end
-
-  def variables(vars={})
-    vars.each do |var,value|
-      instance_variable_set("@#{var}", value)
-    end
-  end
-
-  def erb_result(path, template)
-    begin
-      ERB.new(template, nil, "-").result(binding)
-    rescue Exception => e
-      puts e
-      puts e.backtrace if ENV['DEBUG']
-
-      # how to know where ERB stopped? - https://www.ruby-forum.com/topic/182051
-      # syntax errors have the (erb):xxx info in e.message
-      # undefined variables have (erb):xxx info in e.backtrac
-      error_info = e.message.split("\n").grep(/\(erb\)/)[0]
-      error_info ||= e.backtrace.grep(/\(erb\)/)[0]
-      raise unless error_info # unable to find the (erb):xxx: error line
-      line = error_info.split(':')[1].to_i
-      puts "Error evaluating ERB template on line #{line.to_s.colorize(:red)} of: #{path.sub(/^\.\//, '').colorize(:green)}"
-
-      template_lines = template.split("\n")
-      context = 5 # lines of context
-      top, bottom = [line-context-1, 0].max, line+context-1
-      spacing = template_lines.size.to_s.size
-      template_lines[top..bottom].each_with_index do |line_content, index|
-        line_number = top+index+1
-        if line_number == line
-          printf("%#{spacing}d %s\n".colorize(:red), line_number, line_content)
-        else
-          printf("%#{spacing}d %s\n", line_number, line_content)
-        end
-      end
-      exit 1 unless ENV['TEST']
-    end
-  end
-
-  # For simple just parameters files that can also be generated with lono, the CFN
-  # Fn::Base64 function is not available and as lono is not being used in the context
-  # of CloudFormation.  So this can be used in it's place.
-  def encode_base64(text)
-    Base64.strict_encode64(text).strip
   end
 end
