@@ -20,6 +20,21 @@ class Lono::Importer
       puts "Params file created to #{pretty_path(params_path)}"
     end
     puts "Template downloaded to #{pretty_path(template_path)}" # like having this message at the end
+
+    # at the end display some useful info for the user
+    return unless options[:summary]
+    run_inspect_summary
+    show_params_file
+  end
+
+  def run_inspect_summary
+    Lono::Inspector::Summary.new(template_name, @options).run
+  end
+
+  def show_params_file
+    path = "config/params/base/#{template_name}.txt"
+    puts "Here are contents of the params #{path} file:"
+    puts IO.read("#{Lono.root}/#{path}")
   end
 
   def download_template

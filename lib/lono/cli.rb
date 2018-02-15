@@ -14,9 +14,7 @@ module Lono
     option :name, required: true, default: nil, desc: "final name of downloaded template without extension"
     option :summary, default: true, type: :boolean, desc: "provide template summary after import"
     def import(source)
-      importer = Importer.new(source, options)
-      importer.run
-      Lono::Inspector::Summary.new(importer.template_name, options).run
+      Importer.new(source, options).run
     end
 
     desc "generate", "Generate both CloudFormation templates and parameters files"
