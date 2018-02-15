@@ -2,6 +2,6 @@
 # This time in the base folder
 
 # simple single ec2 instance
-template "base-folder-example" do
+template "subfolder/example" do
   source "example"
 end
