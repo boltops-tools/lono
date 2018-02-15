@@ -1,7 +1,7 @@
 require "yaml"
 require "graph"
 
-class Lono::Inspector::Depends < Lono::Inspector::Base
+class Lono::Inspector::Depend < Lono::Inspector::Base
   def initialize(stack_name, options)
     super
     @nodes = [] # lookup map
@@ -38,9 +38,9 @@ class Lono::Inspector::Depends < Lono::Inspector::Base
     end
   end
 
-  # normalized DependsOn attribute to an Array of Strings
+  # normalized DependOn attribute to an Array of Strings
   def normalize_depends_on(resource)
-    dependencies = resource["DependsOn"] || []
+    dependencies = resource["DependOn"] || []
     [dependencies].flatten
   end
 

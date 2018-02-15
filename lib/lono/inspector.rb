@@ -2,7 +2,7 @@ require "thor"
 
 class Lono::Inspector < Lono::Command
   autoload :Base, 'lono/inspector/base'
-  autoload :Depends, 'lono/inspector/depends'
+  autoload :Depend, 'lono/inspector/depend'
   autoload :Summary, 'lono/inspector/summary'
 
   class_option :verbose, type: :boolean
@@ -12,7 +12,7 @@ class Lono::Inspector < Lono::Command
   long_desc Lono::Help.text("inspect/depends")
   option :display, type: :string, desc: "graph or text", default: "graph"
   def depends(name)
-    Depends.new(name, options).run
+    Depend.new(name, options).run
   end
 
   desc "summary STACK", "Prints summary of CloudFormation template"
