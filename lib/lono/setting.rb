@@ -12,7 +12,7 @@ module Lono
       return @settings_yaml if @settings_yaml
 
       if @check_lono_project && !File.exist?(project_settings_path)
-        puts "ERROR: No settings file at #{project_settings_path}.  Are you sure you are in a project with lono setup?"
+        puts "ERROR: No settings file at #{project_settings_path}.  Are you sure you are in a project with lono setup?".colorize(:red)
         exit 1
       end
 

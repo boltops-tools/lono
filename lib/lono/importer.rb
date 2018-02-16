@@ -8,6 +8,7 @@ class Lono::Importer
     @source = source
     @options = options
     @format = normalize_format(@options[:format])
+    Lono::ProjectChecker.check
   end
 
   def run
