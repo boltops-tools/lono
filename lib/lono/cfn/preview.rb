@@ -24,6 +24,7 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
 
     template_body = IO.read(@template_path)
     begin
+      puts template_body
       cfn.create_change_set(
         change_set_name: change_set_name,
         stack_name: @stack_name,

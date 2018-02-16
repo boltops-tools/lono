@@ -113,15 +113,15 @@ module Lono
       new_structure = {}
 
       (data["aws_profile_lono_env_map"] || {}).each do |aws_profile, lono_env|
-        new_structure[lono_env] ||= {}
-        new_structure[lono_env]["aws_profiles"] ||= []
-        new_structure[lono_env]["aws_profiles"] << aws_profile
+        new_structure[env_map(lono_env)] ||= {}
+        new_structure[env_map(lono_env)]["aws_profiles"] ||= []
+        new_structure[env_map(lono_env)]["aws_profiles"] << aws_profile
       end
       data.delete("aws_profile_lono_env_map")
 
       (data["lono_env_cluster_map"] || {}).each do |lono_env, cluster|
-        new_structure[lono_env] ||= {}
-        new_structure[lono_env]["cluster"] = cluster
+        new_structure[env_map(lono_env)] ||= {}
+        new_structure[env_map(lono_env)]["cluster"] = cluster
       end
       data.delete("lono_env_cluster_map")
 
