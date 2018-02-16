@@ -103,6 +103,8 @@ module Lono
       end
       data.delete("lono_env_cluster_map")
 
+      data = update_s3_setting(data)
+
       new_structure["base"] = data
       text = YAML.dump(new_structure)
       IO.write(path, text)
@@ -110,6 +112,33 @@ module Lono
       if path.include?(ENV['HOME'])
         puts "NOTE: Your ~/.lono/settings.yml file was also upgraded to the new format. If you are using lono in other projects those will have to be upgraded also."
       end
+    end
+
+    # accounts for most cases
+    def update_s3_setting(data)
+      return data unless data["s3"] && data["s3"]["path"]
+
+      options = data["s3"]["path"]
+      if options.is_a?(String)
+        data.delete("s3")
+        data["s3_path"] = options
+        return data # return early if String
+      end
+
+      # Reach here: dealing with a Hash
+      if options.size == 1 and options["default"]
+        data["s3_path"] = options["default"]
+      end
+
+      if options.size > 1
+        data["s3_path"] = {}
+        options.each do |key, value|
+          data["s3_path"][key] = value
+        end
+      end
+
+      data.delete("s3")
+      data
     end
 
     # If config/settings.yml does not exist, use the default one.
