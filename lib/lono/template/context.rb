@@ -20,14 +20,14 @@ class Lono::Template
 
   private
     # Variables in base.rb are overridden by their environment specific variables
-    # file.  Example, for LONO_ENV=development:
+    # file.  Example, file LONO_ENV=development:
     #
     #   config/variables/base.rb
     #   config/variables/development.rb - will override any variables in base.rb
     #
     def load_variables
-      load_variables_for("base")
-      load_variables_for(Lono.env)
+      load_variables_file("base")
+      load_variables_file(Lono.env)
     end
 
     # Load custom helper methods from project
@@ -63,7 +63,7 @@ class Lono::Template
     #
     # NOTE: Only able to make instance variables avaialble with instance_eval,
     #   wasnt able to make local variables available.
-    def load_variables_for(name)
+    def load_variables_file(name)
       path = "#{Lono.config.variables_path}/#{name}.rb"
       return unless File.exist?(path)
 
