@@ -1,9 +1,5 @@
 module Lono::Script
   class Upload
-    def initialize(options={})
-      @options = options
-    end
-
     def run
       return if Dir["#{Lono.root}/app/scripts/*"].empty?
 

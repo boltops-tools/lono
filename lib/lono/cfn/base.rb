@@ -74,7 +74,7 @@ class Lono::Cfn::Base
   # only upload templates if s3_path configured in settings
   def upload_scripts
     return unless s3_path
-    Lono::Script::Upload.new(pretty: true).run
+    Lono::Script::Upload.new.run
   end
 
   def generate_params(options={})
