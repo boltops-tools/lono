@@ -7,9 +7,16 @@ class Lono::ProjectChecker
     end
 
     def check_lono_project
-      unless File.exist?("#{Lono.root}/config/settings.yml")
-        puts "ERROR: The config/settings.yml file does not exist in this project.  Are you sure this is a lono project?".colorize(:red)
-        quit 1
+      paths = %w[
+        config/settings.yml
+        app/definitions
+        app/templates
+      ]
+      paths.each do |path|
+        unless File.exist?("#{Lono.root}/#{path}")
+          puts "ERROR: The #{path} does not exist in this project.  Are you sure you are in lono project?".colorize(:red)
+          quit 1
+        end
       end
     end
 
