@@ -15,7 +15,7 @@ module Lono::Template::Helper
       upload = Lono::Template::Upload.new(@options)
       upload.s3_https_url(template_path)
     else
-      message = "template_s3_path helper called but s3.path not configured in settings.yml"
+      message = "template_s3_path helper called but s3_path not configured in settings.yml"
       puts "ERROR: #{message}".colorize(:red)
       exit 1
     end

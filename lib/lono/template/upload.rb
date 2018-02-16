@@ -9,7 +9,7 @@ class Lono::Template::Upload
   def initialize(options={})
     @options = options
     @checksums = {}
-    @prefix = "#{s3_folder}/templates/#{Lono.env}" # s3://s3-bucket-and-path-from-settings/prod
+    @prefix = "#{s3_folder}/#{Lono.env}/templates" # s3://s3-bucket/folder/developemnt/templates
   end
 
   def run

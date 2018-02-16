@@ -52,7 +52,10 @@ class Lono::Cfn::Base
   def generate_all
     if @options[:lono]
       generate_templates
-      upload_templates unless @options[:noop]
+      unless @options[:noop]
+        upload_templates
+        upload_scripts
+      end
     end
     params = generate_params(mute: @options[:mute_params])
     check_for_errors
@@ -63,12 +66,15 @@ class Lono::Cfn::Base
     Lono::Template::DSL.new(pretty: true).run
   end
 
+  # only upload templates if s3_path configured in settings
   def upload_templates
-    # only upload templates if s3.path configured in settings
-    settings = Lono::Setting.new
-    return unless settings.s3_path
+    Lono::Template::Upload.new(pretty: true).run if s3_path
+  end
 
-    Lono::Template::Upload.new(pretty: true).run
+  # only upload templates if s3_path configured in settings
+  def upload_scripts
+    return unless s3_path
+    Lono::Script::Upload.new(pretty: true).run
   end
 
   def generate_params(options={})
@@ -199,5 +205,10 @@ class Lono::Cfn::Base
     params[:template_body] = "Hidden due to size... View at: #{@template_path}"
     puts "Parameters passed to AWS api:"
     puts YAML.dump(params.deep_stringify_keys)
+  end
+
+  def s3_path
+    setting = Lono::Setting.new
+    setting.s3_path
   end
 end
