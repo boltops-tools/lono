@@ -13,6 +13,7 @@ module Lono
 
       upgrade_settings("config/settings.yml")
       upgrade_settings("#{ENV['HOME']}/.lono/settings.yml")
+      add_mandantory_settings
 
       FileUtils.mkdir_p("app")
       mv("helpers", "app/helpers")
@@ -109,6 +110,14 @@ module Lono
       if path.include?(ENV['HOME'])
         puts "NOTE: Your ~/.lono/settings.yml file was also upgraded to the new format. If you are using lono in other projects those will have to be upgraded also."
       end
+    end
+
+    # If config/settings.yml does not exist, use the default one.
+    def add_mandantory_settings
+      return if File.exists?("config/settings.yml")
+
+      default_settings = File.expand_path("default/settings.yml", File.dirname(__FILE__))
+      FileUtils.cp(default_settings, "config/settings.yml")
     end
 
     def mv(src, dest)
