@@ -1,6 +1,6 @@
 module Lono::Script
   class Upload
-    def initialize(options)
+    def initialize(options={})
       @options = options
     end
 

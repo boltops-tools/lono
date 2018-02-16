@@ -5,6 +5,11 @@
 #
 #   Lono::Template::Context.new(@options)
 module Lono::Template::Helper
+  def scripts_s3_folder
+    upload = Lono::Script::Upload.new
+    upload.s3_dest
+  end
+
   def template_s3_path(template_name)
     template_path = "#{template_name}.yml"
 
