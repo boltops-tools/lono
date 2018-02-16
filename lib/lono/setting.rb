@@ -25,7 +25,10 @@ module Lono
       default_file = File.expand_path("../default/settings.yml", __FILE__)
       default = YAML.load_file(default_file)
 
-      @data = default.deep_merge(user.deep_merge(project))[Lono.env]
+      byebug
+
+      all_envs = default.deep_merge(user.deep_merge(project))
+      @data = all_envs[Lono.env] || all_envs["base"] || {}
     end
 
     # Special helper method to support multiple formats for s3_path setting.
