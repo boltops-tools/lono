@@ -35,7 +35,7 @@ Then import a standard CloudFormation template into lono. The `--name` option is
 ```
 $ lono import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/EC2InstanceWithSecurityGroupSample.template --name ec2
 Imported raw CloudFormation template and lono-fied it.
-Template definition added to app/stacks/base.rb
+Template definition added to app/definitions/base.rb
 Params file created to config/params/base/ec2.txt
 Template downloaded to app/templates/ec2.yml
 CloudFormation Template Summary:

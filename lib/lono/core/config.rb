@@ -4,7 +4,7 @@ module Lono::Core
       helpers_path: "app/helpers",
       partials_path: "app/partials",
       scripts_path: "app/scripts",
-      stacks_path: "app/stacks",
+      definitions_path: "app/definitions",
       templates_path: "app/templates",
       params_path: "config/params",
       variables_path: "config/variables",

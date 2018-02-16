@@ -18,7 +18,7 @@ module Lono
       FileUtils.mkdir_p("app")
       mv("helpers", "app/helpers")
       mv("params", "config/params")
-      mv("config/templates", "app/stacks")
+      mv("config/templates", "app/definitions")
       mv("templates", "app/templates")
       mv("app/templates/partial", "app/partials")
       update_variables
@@ -29,7 +29,7 @@ module Lono
     end
 
     def update_stacks
-      update_structure("app/stacks")
+      update_structure("app/definitions")
     end
 
     def update_variables
@@ -42,9 +42,9 @@ module Lono
     #   config/variables/base/* -> config/variables/base.rb
     #   config/variables/development/* -> config/variables/development.rb
     #   config/variables/production/* -> config/variables/production.rb
-    #   app/stacks/base/* -> app/stacks/base.rb
-    #   app/stacks/development/* -> app/stacks/development.rb
-    #   app/stacks/production/* -> app/stacks/production.rb
+    #   app/definitions/base/* -> app/definitions/base.rb
+    #   app/definitions/development/* -> app/definitions/development.rb
+    #   app/definitions/production/* -> app/definitions/production.rb
     def update_structure(component_path)
       puts "Updating structure of #{component_path}"
       Dir.glob("#{component_path}/*").each do |path|
@@ -92,8 +92,8 @@ module Lono
     end
 
     def checks
-      if File.exist?(Lono.config.stacks_path)
-        puts "It looks like you already have a #{Lono.config.stacks_path} folder in your project. This is the new project structure so exiting without updating anything."
+      if File.exist?(Lono.config.definitions_path)
+        puts "It looks like you already have a #{Lono.config.definitions_path} folder in your project. This is the new project structure so exiting without updating anything."
         exit
       end
 

@@ -60,9 +60,9 @@ class Lono::Importer
     IO.write(template_path, result)
   end
 
-  # Add template definition to app/stacks/base.rb.
+  # Add template definition to app/definitions/base.rb.
   def add_template_definition
-    path = "#{Lono.config.stacks_path}/base.rb"
+    path = "#{Lono.config.definitions_path}/base.rb"
     lines = File.exist?(path) ? IO.readlines(path) : []
     new_template_definition = %Q|template "#{template_name}"|
     unless lines.detect { |l| l.include?(new_template_definition) }

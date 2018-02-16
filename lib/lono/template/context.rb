@@ -55,7 +55,7 @@ class Lono::Template
     #   `config/variables/base.rb`:
     #     @foo = 123
     #
-    #   `app/stacks/base.rb`:
+    #   `app/definitions/base.rb`:
     #      template "mytemplate.yml" do
     #        source "mytemplate.yml.erb"
     #        variables(foo: @foo)

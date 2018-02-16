@@ -13,12 +13,12 @@ class Lono::Template::DSL
     write_output
   end
 
-  # Instance eval's the template declarations in app/stacks in this order:
+  # Instance eval's the template declarations in app/definitions in this order:
   #
-  #   app/stacks/base.rb
-  #   app/stacks/base - all files in folder
-  #   app/stacks/[Lono.env].rb
-  #   app/stacks/[Lono.env] - all files in folder
+  #   app/definitions/base.rb
+  #   app/definitions/base - all files in folder
+  #   app/definitions/[Lono.env].rb
+  #   app/definitions/[Lono.env] - all files in folder
   #
   # So Lono.env specific template declarations override base template declarations.
   def evaluate_templates
@@ -29,7 +29,7 @@ class Lono::Template::DSL
   end
 
   def evaluate_template(name)
-    path = "#{Lono.config.stacks_path}/#{name}.rb"
+    path = "#{Lono.config.definitions_path}/#{name}.rb"
     evaluate_template_path(path)
   end
 
@@ -46,7 +46,7 @@ class Lono::Template::DSL
   end
 
   def evaluate_folder(folder)
-    paths = Dir.glob("#{Lono.config.stacks_path}/#{folder}/**/*")
+    paths = Dir.glob("#{Lono.config.definitions_path}/#{folder}/**/*")
     paths.select{ |e| File.file?(e) }.each do |path|
       evaluate_template_path(path)
     end
