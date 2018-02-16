@@ -11,7 +11,7 @@ describe Lono::CLI do
     end
 
     it "import should download template" do
-      out = execute("exe/lono import spec/fixtures/raw_templates/aws-waf-security-automations.template")
+      out = execute("exe/lono import spec/fixtures/raw_templates/aws-waf-security-automations.template --name waf")
       expect(out).to match /Imported raw CloudFormation template/
     end
   end
@@ -37,7 +37,7 @@ describe Lono::CLI do
       success = $?.exitstatus == 0
       expect(success).to be true
 
-      exist = File.exist?("#{Lono.root}/output/templates/example.yml")
+      exist = File.exist?("#{Lono.root}/config/settings.yml")
       expect(exist).to be true
     end
   end

@@ -48,8 +48,6 @@ module Lono
       Dir.glob("#{component_path}/*").each do |path|
         next unless File.directory?(path)
         folder = File.basename(path)
-        puts "path #{path.inspect}"
-        puts "folder #{folder.inspect}"
         update_structure_for(component_path, folder)
       end
 
