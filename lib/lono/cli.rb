@@ -9,7 +9,6 @@ module Lono
 
     desc "import SOURCE", "Imports raw CloudFormation template and lono-fies it"
     long_desc Help.text(:import)
-    option :format, type: :string, default: "yaml", desc: "format for the final template"
     option :casing, default: "underscore", desc: "camelcase or underscore the template name"
     option :name, required: true, default: nil, desc: "final name of downloaded template without extension"
     option :summary, default: true, type: :boolean, desc: "provide template summary after import"

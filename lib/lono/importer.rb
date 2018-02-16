@@ -37,13 +37,21 @@ class Lono::Importer
     puts IO.read("#{Lono.root}/#{path}")
   end
 
+  def json?(text)
+    JSON.load(text)
+    true # if reach here than it's just
+  rescue JSON::ParserError
+    false # not json
+  end
+
   def download_template
     template =  open(@source).read
 
-    result = if @format == 'yml'
+    result = if json?(template)
+                # abusing YAML.dump(YAML.load()) to convert json to yaml
                 YAML.dump(YAML.load(template))
               else
-                JSON.pretty_generate(JSON.load(template))
+                template # template is already in YAML format
               end
 
     folder = File.dirname(template_path)
@@ -66,11 +74,7 @@ class Lono::Importer
 
   # Creates starter params/base/[stack-name].txt file
   def create_params
-    template = if @format == 'yml'
-                YAML.load_file(template_path)
-              else
-                JSON.load(IO.read(template_path))
-              end
+    template = YAML.load_file(template_path)
 
     result = []
     required_parameters.each do |name, attributes|
