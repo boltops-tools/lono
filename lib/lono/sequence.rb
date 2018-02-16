@@ -1,4 +1,3 @@
-require "byebug" if ENV['USER'] == 'tung'
 require 'fileutils'
 require 'colorize'
 require 'active_support/core_ext/string'
