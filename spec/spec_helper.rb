@@ -34,7 +34,6 @@ module Helper
 
   def ensure_tmp_exists
     FileUtils.mkdir_p("tmp")
-    FileUtils.rm_rf("tmp/lono_project")
   end
 
   # Copies spec/fixtures/lono_project to tmp/lono_project,
@@ -47,7 +46,7 @@ module Helper
   def destroy_lono_project
     # Only use KEEP_TMP_PROJECT if you are testing exactly 1 spec for debugging
     # or it'll affect other tests.
-    FileUtils.rm_rf(Lono.root) unless ENV['KEEP_TMP_PROJECT']
+    FileUtils.rm_rf(Lono.root)
   end
 end
 
@@ -58,6 +57,6 @@ RSpec.configure do |c|
     copy_lono_project
   end
   c.after(:all) do
-    destroy_lono_project
+    destroy_lono_project unless ENV['KEEP_TMP_PROJECT']
   end
 end

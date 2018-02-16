@@ -7,7 +7,7 @@ class Lono::Importer
   def initialize(source, options)
     @source = source
     @options = options
-    @format = normalize_format(@options[:format])
+    @format = 'yml'
     Lono::ProjectChecker.check
   end
 
@@ -125,10 +125,6 @@ private
     return @template_data if @template_data
     template_path = "#{Lono.config.templates_path}/#{template_name}.#{@format}"
     @template_data = YAML.load(IO.read(template_path))
-  end
-
-  def normalize_format(format)
-    format == 'yaml' ? 'yml' : format
   end
 
   # removes the ./ at the beginning if it's there in the path
