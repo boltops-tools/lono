@@ -52,7 +52,7 @@ class Lono::Cfn::Base
   def generate_all
     if @options[:lono]
       generate_templates
-      upload_templates if @options[:s3_upload] and !@options[:noop]
+      upload_templates unless @options[:noop]
     end
     params = generate_params(mute: @options[:mute_params])
     check_for_errors
