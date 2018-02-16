@@ -13,7 +13,7 @@ base:
   #   default: mybucket/path
   #   aws_profile1: mybucket/path
   #   aws_profile2: another-bucket/storage/path
-  randomize_stack_name: false # tack on a 3 char random string at the end of the stack name for lono cfn create
+  # randomize_stack_name: true # tack on a 3 char random string at the end of the stack name for lono cfn create
 
 
 development:
