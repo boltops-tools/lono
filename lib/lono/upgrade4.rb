@@ -23,8 +23,9 @@ module Lono
       mv("app/templates/partial", "app/partials")
       update_variables
       update_stacks
+      update_params
 
-      puts "Upgrade complete."
+      puts "Upgrade to lono version 4 complete!"
     end
 
     def update_stacks
@@ -59,14 +60,35 @@ module Lono
       end
     end
 
-    # combines the files in the env_group subfolder into one file
-    def update_structure_for(component_path, env_group)
+    # combines the files in the lono_env subfolder into one file
+    def update_structure_for(component_path, lono_env)
       code = ""
-      Dir.glob("#{component_path}/#{env_group}/*.rb").each do |path|
+      Dir.glob("#{component_path}/#{lono_env}/*.rb").each do |path|
         code << IO.read(path)
         code << "\n"
       end
-      IO.write("#{component_path}/#{env_group}.rb", code)
+      IO.write("#{component_path}/#{env_map(lono_env)}.rb", code)
+    end
+
+    def update_params
+      Dir.glob("config/params/*").each do |path|
+        next unless File.directory?(path)
+        lono_env = File.basename(path)
+        mapped_env = env_map(lono_env)
+        if mapped_env != lono_env
+          mv("config/params/#{lono_env}", "config/params/#{mapped_env}")
+        end
+      end
+    end
+
+    # make to the longer full environment names
+    def env_map(lono_env)
+      map = {
+        "prod" => "production",
+        "stag" => "staging",
+        "dev" => "development",
+      }
+      map[lono_env] || lono_env
     end
 
     def checks
