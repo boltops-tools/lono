@@ -43,9 +43,12 @@ class Lono::Template::Template
   def build
     instance_eval(&@block) if @block
 
-    # template = Tilt::ERBTemplate.new(@source_path)
-    # template.render(context)
-    RenderMePretty.result(@source_path, context: context)
+    if File.exist?(@source_path)
+      RenderMePretty.result(@source_path, context: context)
+    else
+      puts "ERROR: #{@source_path} does not exist, but it was used as a template source.".colorize(:red)
+      exit 1
+    end
   end
 
   # Context for ERB rendering.

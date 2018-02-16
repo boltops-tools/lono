@@ -2,6 +2,7 @@ class Lono::Template::DSL
   def initialize(options={})
     @options = options
     Lono::ProjectChecker.check
+    Lono::ProjectChecker.empty_templates
     @templates = []
     @results = {}
   end
