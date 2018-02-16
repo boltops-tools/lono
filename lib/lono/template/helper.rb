@@ -16,15 +16,13 @@ module Lono::Template::Helper
       upload.s3_https_url(template_path)
     else
       message = "template_s3_path helper called but s3.path not configured in settings.yml"
-      puts "WARN: #{message}".colorize(:yellow)
-      message
+      puts "ERROR: #{message}".colorize(:red)
+      exit 1
     end
   end
 
   def template_params(param_name)
-    param_path = "params/#{Lono.env}/#{param_name}.txt"
     generator_options = {
-      path: param_path,
       allow_no_file: true
     }.merge(@options)
     generator = Lono::Param::Generator.new(param_name, generator_options)
