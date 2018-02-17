@@ -41,6 +41,12 @@ module Lono
       chmod("exe", 0755 & ~File.umask, verbose: false) if File.exist?("exe")
     end
 
+    def create_empty_directories
+      Lono::Core::Config::PATHS.keys.each do |meth|
+        empty_directory Lono.config.send(meth)
+      end
+    end
+
     def bundle_install
       return unless options[:bundle]
 
