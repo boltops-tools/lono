@@ -35,16 +35,26 @@ module Lono::Template::Helper
     generator.params    # Returns Array in underscore keys format
   end
 
-  # The partial's path is a relative path given without the extension and
+  # Adjust the partial path so that it will use app/user_data
+  def user_data(path,vars={}, options={})
+    options.merge!(user_data: true)
+    partial(path,vars, options)
+  end
+
+  # The partial's path is a relative path.
   #
   # Example:
-  # Given: file in templates/partial/iam/docker.yml
-  # The path should be: iam/docker
+  # Given file in app/partials/iam/docker.yml
+  #
+  #   <%= partial("iam/docker", {}, indent: 10) %>
+  #   <%= partial("iam/docker.yml", {}, indent: 10) %>
   #
   # If the user specifies the extension then use that instead of auto-adding
   # the detected format.
   def partial(path,vars={}, options={})
-    path = partial_path_for(path)
+    path = options[:user_data] ?
+              user_data_path_for(path) :
+              partial_path_for(path)
     path = auto_add_format(path)
 
     instance_variables!(vars)
@@ -72,6 +82,7 @@ module Lono::Template::Helper
     region ||= ENV['AWS_REGION']
     return region if region
 
+    default_region = 'us-east-1' # fallback if default not found in ~/.aws/config
     if ENV['AWS_PROFILE']
       path = "#{ENV['HOME']}/.aws/config"
       if File.exist?(path)
@@ -83,6 +94,7 @@ module Lono::Template::Helper
             next
           end
           if capture_default && line.match(/region = /)
+            # over default from above
             default_region = line.split(' = ').last.strip
             capture_default = false
           end
@@ -109,6 +121,10 @@ module Lono::Template::Helper
 private
   def render_path(path)
     RenderMePretty.result(path, context: self)
+  end
+
+  def user_data_path_for(path)
+    "#{Lono.config.user_data_path}/#{path}"
   end
 
   def partial_path_for(path)
