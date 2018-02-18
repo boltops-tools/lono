@@ -51,10 +51,11 @@ class Lono::Cfn::Base
 
   def generate_all
     if @options[:lono]
+      generate_scripts
       generate_templates
       unless @options[:noop]
-        upload_templates
         upload_scripts
+        upload_templates
       end
     end
     params = generate_params(mute: @options[:mute_params])
@@ -62,18 +63,22 @@ class Lono::Cfn::Base
     params
   end
 
+  def generate_scripts
+    Lono::Script::Build.new.run
+  end
+
   def generate_templates
     Lono::Template::DSL.new(pretty: true).run
   end
 
-  # only upload templates if s3_path configured in settings
+  # only upload templates if s3_folder configured in settings
   def upload_templates
-    Lono::Template::Upload.new(pretty: true).run if s3_path
+    Lono::Template::Upload.new(pretty: true).run if s3_folder
   end
 
-  # only upload templates if s3_path configured in settings
+  # only upload templates if s3_folder configured in settings
   def upload_scripts
-    return unless s3_path
+    return unless s3_folder
     Lono::Script::Upload.new.run
   end
 
@@ -207,8 +212,8 @@ class Lono::Cfn::Base
     puts YAML.dump(params.deep_stringify_keys)
   end
 
-  def s3_path
+  def s3_folder
     setting = Lono::Setting.new
-    setting.s3_path
+    setting.s3_folder
   end
 end

@@ -7,11 +7,11 @@ describe Lono::Param::Generator do
   context "simple string" do
     let(:data) do
       {
-        "s3_path" => "s3-bucket/simple/string/example"
+        "s3_folder" => "s3-bucket/simple/string/example"
       }
     end
     it "should return simple string value" do
-      value = setting.s3_path
+      value = setting.s3_folder
       expect(value).to eq "s3-bucket/simple/string/example"
     end
   end
@@ -19,7 +19,7 @@ describe Lono::Param::Generator do
   context "options hash" do
     let(:data) do
       {
-        "s3_path" => {
+        "s3_folder" => {
           "default" => "s3-bucket/default/path",
           "aws_profile1" => "s3-bucket/aws_profile1/path",
         }
@@ -28,7 +28,7 @@ describe Lono::Param::Generator do
     it "should return default value when AWS_PROFILE not set" do
       saved = ENV['AWS_PROFILE']
 
-      value = setting.s3_path
+      value = setting.s3_folder
       expect(value).to eq "s3-bucket/default/path"
 
       ENV['AWS_PROFILE'] = saved
@@ -38,7 +38,7 @@ describe Lono::Param::Generator do
       saved = ENV['AWS_PROFILE']
       ENV['AWS_PROFILE'] = "aws_profile1"
 
-      value = setting.s3_path
+      value = setting.s3_folder
       expect(value).to eq "s3-bucket/aws_profile1/path"
 
       ENV['AWS_PROFILE'] = saved

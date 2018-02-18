@@ -82,7 +82,7 @@ class Lono::Template::Upload
   # @checksums map has a key format: s3_folder/templates/development/docker.yml
   #
   # path = ./output/templates/docker.yml
-  # s3_path = s3://boltops-dev/s3_folder/templates/development/docker.yml
+  # s3_folder = s3://boltops-dev/s3_folder/templates/development/docker.yml
   def remote_checksum(path)
     # first convert the local path to the path format that is stored in @checksums keys
     # ./output/templates/docker.yml => s3_folder/templates/development/docker.yml
@@ -97,18 +97,18 @@ class Lono::Template::Upload
     "https://s3.amazonaws.com/#{s3_bucket}/#{@prefix}/#{template_path}"
   end
 
-  # Parse the s3_path setting and remove the folder portion to leave the
+  # Parse the s3_folder setting and remove the folder portion to leave the
   # "s3_bucket" portion
   # Example:
   #    s3_bucket('s3://mybucket/templates/storage/path')
   #    => mybucket
   def s3_bucket
     return nil if @options[:noop] # to get spec passing
-    return nil unless s3_path
-    s3_path.sub('s3://','').split('/').first
+    return nil unless s3_folder
+    s3_folder.sub('s3://','').split('/').first
   end
 
-  # Parse the s3_path setting and remove the bucket so we'll just get the
+  # Parse the s3_folder setting and remove the bucket so we'll just get the
   # "s3_folder" portion
   #
   # Example:
@@ -116,22 +116,22 @@ class Lono::Template::Upload
   #    => templates/storage/path
   def s3_folder
     return nil if @options[:noop] # to get spec passing
-    return nil unless s3_path
-    s3_path.sub('s3://','').split('/')[1..-1].join('/')
+    return nil unless s3_folder
+    s3_folder.sub('s3://','').split('/')[1..-1].join('/')
   end
 
-  def s3_path
+  def s3_folder
     settings = Lono::Setting.new
-    settings.s3_path
+    settings.s3_folder
   end
 
-  # nice warning if the s3 path not found
+  # nice warning if the s3_folder not found
   def ensure_s3_setup!
     return if @options[:noop]
-    return if s3_path
+    return if s3_folder
 
-    say "Unable to upload templates to s3 because you have not configured the s3_path option in lono settings.yml.".colorize(:red)
-    say "Please configure settings.yml with s3_path.  For more help: http://lono.cloud/docs/settings/".colorize(:red)
+    say "Unable to upload templates to s3 because you have not configured the s3_folder option in lono settings.yml.".colorize(:red)
+    say "Please configure settings.yml with s3_folder.  For more help: http://lono.cloud/docs/settings/".colorize(:red)
     exit 1
   end
 

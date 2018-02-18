@@ -22,7 +22,9 @@ module Lono
     option :quiet, type: :boolean, desc: "silence the output"
     option :pretty, type: :boolean, default: true, desc: "json pretty the output.  only applies with json format"
     def generate
-      puts "Generating both CloudFormation template and parameter files."
+      Script::Build.new(options.clone).run
+      exit
+      puts "Generating CloudFormation template, parameter files"
       Template::DSL.new(options.clone).run
       Param::Generator.generate_all(options.clone)
     end

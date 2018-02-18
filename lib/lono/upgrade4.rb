@@ -143,19 +143,19 @@ module Lono
       options = data["s3"]["path"]
       if options.is_a?(String)
         data.delete("s3")
-        data["s3_path"] = options
+        data["s3_folder"] = options
         return data # return early if String
       end
 
       # Reach here: dealing with a Hash
       if options.size == 1 and options["default"]
-        data["s3_path"] = options["default"]
+        data["s3_folder"] = options["default"]
       end
 
       if options.size > 1
-        data["s3_path"] = {}
+        data["s3_folder"] = {}
         options.each do |key, value|
-          data["s3_path"][key] = value
+          data["s3_folder"][key] = value
         end
       end
 

@@ -31,28 +31,28 @@ module Lono
       @@data = all_envs[Lono.env] || all_envs["base"] || {}
     end
 
-    # Special helper method to support multiple formats for s3_path setting.
+    # Special helper method to support multiple formats for s3_folder setting.
     # Format 1: Simple String
     #
     #   development:
-    #     s3_path: mybucket/path/to/folder
+    #     s3_folder: mybucket/path/to/folder
     #
     # Format 2: Hash
     #
     #   development:
-    #     s3_path:
+    #     s3_folder:
     #       default: mybucket/path/to/folder
     #       dev_profile1: mybucket/path/to/folder
     #       dev_profile1: another-bucket/storage/path
     #
-    def s3_path
-      s3_path = data['s3_path']
-      return s3_path if s3_path.nil? or s3_path.is_a?(String)
+    def s3_folder
+      s3_folder = data['s3_folder']
+      return s3_folder if s3_folder.nil? or s3_folder.is_a?(String)
 
-      # If reach here then the s3_path is a Hash
-      options = s3_path
+      # If reach here then the s3_folder is a Hash
+      options = s3_folder
       options["default"]
-      options[ENV['AWS_PROFILE']] || s3_path["default"]
+      options[ENV['AWS_PROFILE']] || s3_folder["default"]
     end
 
   private

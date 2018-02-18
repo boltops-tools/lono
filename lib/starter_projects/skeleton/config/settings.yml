@@ -3,13 +3,13 @@
 # Yaml also directly supports merging with & and <<* syntax but doing it automatically
 # for a cleaner syntax.
 base:
-  # If s3 path is set then the generated templates and app/scripts will automatically
+  # If s3_folder is set then the generated templates and app/scripts will automatically
   # be uploaded to s3.
-  # There are 2 formats for s3_path:
+  # There are 2 formats for s3_folder:
   # Format 1:
-  # s3_path: mybucket/path/to/folder # simple string
+  # s3_folder: mybucket/path/to/folder # simple string
   # Format 2:
-  # s3_path: # Hash options in order to support multiple AWS_PROFILEs
+  # s3_folder: # Hash options in order to support multiple AWS_PROFILEs
   #   default: mybucket/path
   #   aws_profile1: mybucket/path
   #   aws_profile2: another-bucket/storage/path

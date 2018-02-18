@@ -28,17 +28,17 @@ BASH_CODE
     upload.s3_dest
   end
 
-  def template_s3_path(template_name)
+  def template_s3_folder(template_name)
     template_path = "#{template_name}.yml"
 
-    # must have settings.s3_path for this to owrk
+    # must have settings.s3_folder for this to owrk
     settings = Lono::Setting.new
-    if settings.s3_path
+    if settings.s3_folder
       # high jacking Upload for useful s3_https_url method
       upload = Lono::Template::Upload.new(@options)
       upload.s3_https_url(template_path)
     else
-      message = "template_s3_path helper called but s3_path not configured in settings.yml"
+      message = "template_s3_folder helper called but s3_folder not configured in settings.yml"
       puts "ERROR: #{message}".colorize(:red)
       exit 1
     end
