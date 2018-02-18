@@ -5,7 +5,30 @@
 #
 #   Lono::Template::Context.new(@options)
 module Lono::Template::Helper
-  def scripts_s3_folder
+  # Bash code that is meant to included in user-data
+  def extract_s3_scripts(options={})
+    parameter_key = options[:parameter_key] || "S3ScriptsTarball"
+    dest = options[:dest] || "/opt"
+    user = options[:user] || "ec2-user"
+
+    <<-BASH_CODE
+# Download scripts from #{s3_scripts_tarball} and setup
+mkdir -p #{dest}
+aws s3 cp ${#{parameter_key}} #{dest}/
+cd #{dest}
+tar zxf #{dest}/scripts.tgz
+chmod -R +x #{dest}/scripts
+chown -R #{user}:#{user} #{dest}/scripts
+
+export PATH="/opt/scripts:$PATH"
+cat >>~/.bashrc << 'EOL'
+export PATH="/opt/scripts:$PATH"
+EOL
+
+BASH_CODE
+  end
+
+  def s3_scripts_tarball
     upload = Lono::Script::Upload.new
     upload.s3_dest
   end
