@@ -19,12 +19,6 @@ cd #{dest}
 tar zxf #{dest}/scripts.tgz
 chmod -R +x #{dest}/scripts
 chown -R #{user}:#{user} #{dest}/scripts
-
-export PATH="/opt/scripts:$PATH"
-cat >>~/.bashrc << 'EOL'
-export PATH="/opt/scripts:$PATH"
-EOL
-
 BASH_CODE
   end
 

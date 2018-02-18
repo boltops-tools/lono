@@ -159,7 +159,7 @@ class Lono::Cfn::Base
     return false if @options[:noop]
 
     unless status =~ /_COMPLETE$/
-      puts "Cannot create a change set for the stack because the #{@stack_name} is not in an updatable state.  Stack status: #{status}"
+      puts "Cannot create a change set for the stack because the #{@stack_name} is not in an updatable state.  Stack status: #{status}".colorize(:red)
       quit(1)
     end
   end

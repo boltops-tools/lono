@@ -28,6 +28,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "aws-sdk-cloudformation"
   gem.add_dependency "aws-sdk-s3"
   gem.add_dependency "activesupport"
+  gem.add_dependency "filesize"
   gem.add_dependency "graph" # lono inspect depends
   # gem.add_dependency "plissken" # dependency for vendor/lono-params
   # using the vendor fork version: https://github.com/tongueroo/plissken
