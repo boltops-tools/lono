@@ -3,6 +3,17 @@
 # Yaml also directly supports merging with & and <<* syntax but doing it automatically
 # for a cleaner syntax.
 base:
+  # The scripts settings adjust the extract_s3_scripts helper which produces bash
+  # code that extracts app/scripts into /opt/scripts. It is useful to add to the top
+  # of a user-data script like so:
+  #
+  #   <%%= extract_s3_scripts %>
+  #
+  # You can find the bash code in the extract_s3_scripts helper in:
+  # https://github.com/tongueroo/lono/blob/version-4/lib/lono/template/helper.rb
+  # scripts:
+  #   dest: "/opt"
+  #   user: "ec2-user"
   # If s3 path is set then the generated templates and app/scripts will automatically
   # be uploaded to s3.
   # There are 2 formats for s3_path:
