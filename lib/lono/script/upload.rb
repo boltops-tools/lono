@@ -1,25 +1,20 @@
 require "aws-sdk-s3"
 require "filesize"
+require "byebug" if ENV['USER'] == 'tung'
 
-module Lono::Script
+class Lono::Script
   class Upload < Base
     def run
+      Lono::ProjectChecker.check
       return unless scripts_built?
 
-      s3_dest = upload(tarball_path)
-      puts "Uploaded #{File.basename(s3_dest)} to s3: #{s3_dest}"
+      upload(tarball_path)
+      puts "Uploaded #{File.basename(s3_dest)} to s3}"
     end
 
     def upload(tarball_path)
-      # Example key: cloudformation/development/scripts/scripts-md5
-      key = "#{dest_folder}/#{File.basename(tarball_path)}"
-      obj = s3_resource.bucket(bucket_name).object(key)
-
-      puts "bucket_name #{bucket_name}"
-      puts "dest_folder #{dest_folder}"
-      puts "key #{key}"
-
       puts "Uploading scripts.tgz (#{filesize}) to #{s3_dest}"
+      obj = s3_resource.bucket(bucket_name).object(key)
       start_time = Time.now
       obj.upload_file(tarball_path)
       time_took = pretty_time(Time.now-start_time).colorize(:green)
@@ -30,8 +25,13 @@ module Lono::Script
       Filesize.from(File.size(tarball_path).to_s + " B").pretty
     end
 
-    def tarball_path
-      IO.read(@scripts_name_path).strip
+    def s3_dest
+      "s3://#{bucket_name}/#{key}"
+    end
+
+    def key
+      # Example key: cloudformation/development/scripts/scripts-md5
+      "#{dest_folder}/#{File.basename(tarball_path)}"
     end
 
     # Example:
@@ -41,16 +41,21 @@ module Lono::Script
       s3_folder.sub('s3://','').split('/').first
     end
 
-    # Removes s3:// and adds Lono.env. Example:
+    # Removes s3://bucket-name and adds Lono.env. Example:
     #   s3_folder: s3://infra-bucket/cloudformation
     #   bucket_name: cloudformation/development/scripts
     def dest_folder
-      folder = s3_folder.sub('s3://','')
+      folder = s3_folder.sub('s3://','').split('/')[1..-1].join('/')
       "#{folder}/#{Lono.env}/scripts"
     end
 
+    # Scripts are only built if the app/scripts folder is non empty
     def scripts_built?
-      File.exist?(@scripts_name_path) && tarball_path.empty?
+      File.exist?(SCRIPTS_INFO_PATH) && !tarball_path.empty?
+    end
+
+    def tarball_path
+      IO.read(SCRIPTS_INFO_PATH).strip
     end
 
     # s3_folder example:

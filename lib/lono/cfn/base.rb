@@ -51,7 +51,7 @@ class Lono::Cfn::Base
 
   def generate_all
     if @options[:lono]
-      generate_scripts
+      build_scripts
       generate_templates
       unless @options[:noop]
         upload_scripts
@@ -63,7 +63,7 @@ class Lono::Cfn::Base
     params
   end
 
-  def generate_scripts
+  def build_scripts
     Lono::Script::Build.new.run
   end
 

@@ -23,10 +23,9 @@ module Lono
     option :pretty, type: :boolean, default: true, desc: "json pretty the output.  only applies with json format"
     def generate
       Script::Build.new(options.clone).run
-      exit
-      puts "Generating CloudFormation template, parameter files"
-      Template::DSL.new(options.clone).run
-      Param::Generator.generate_all(options.clone)
+      # puts "Generating CloudFormation template, parameter files"
+      # Template::DSL.new(options.clone).run
+      # Param::Generator.generate_all(options.clone)
     end
 
     desc "clean", "Clean up generated files"
@@ -72,5 +71,9 @@ module Lono
     desc "inspect SUBCOMMAND", "inspect subcommand tasks"
     long_desc Help.text(:inspect)
     subcommand "inspect", Inspector
+
+    desc "script SUBCOMMAND", "script subcommand tasks"
+    long_desc Help.text(:script)
+    subcommand "script", Script
   end
 end

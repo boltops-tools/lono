@@ -1,7 +1,7 @@
 require "digest"
 require "fileutils"
 
-module Lono::Script
+class Lono::Script
   class Build < Base
     # Only avaialble after script has been built.
     def self.scripts_name
@@ -10,33 +10,36 @@ module Lono::Script
 
     def initialize(options)
       @options = options
-      @scripts_name_path = "#{Lono.config.output_path}/data/scripts_name.txt"
     end
 
     def run
+      Lono::ProjectChecker.check
       reset
       return if Dir["#{Lono.root}/app/scripts/*"].empty?
 
+      puts "Tarballing app/scripts folder to scripts.tgz"
       tarball_path = create_tarball
-      save_scripts_name(File.basename(tarball_path))
+      save_scripts_info(tarball_path)
+      puts "Tarball created at #{tarball_path}"
     end
 
     # Only avaialble after script has been built.
     def scripts_name
-      IO.read(@scripts_name_path).strip
+      IO.read(SCRIPTS_INFO_PATH).strip
     end
 
     def reset
-      FileUtils.rm_f(@scripts_name_path)
+      FileUtils.rm_f(SCRIPTS_INFO_PATH)
     end
 
     def create_tarball
-      puts "Tarballing app/scripts folder to scripts.tgz"
       # https://apple.stackexchange.com/questions/14980/why-are-dot-underscore-files-created-and-how-can-i-avoid-them
       sh "cd app && dot_clean ." if system("type dot_clean > /dev/null")
 
-      # first create a temporary app/scripts.tgz file
-      sh "cd app && tar czf scripts.tgz scripts"
+      # https://serverfault.com/questions/110208/different-md5sums-for-same-tar-contents
+      # Using tar czf directly results in a new m5sum each time because the gzip
+      # timestamp is included.  So using:  tar -c ... | gzip -n
+      sh "cd app && tar -c scripts | gzip -n > scripts.tgz" # temporary app/scripts.tgz file
 
       rename_with_md5!
     end
@@ -50,9 +53,9 @@ module Lono::Script
       md5_path
     end
 
-    def save_scripts_name(scripts_name)
-      FileUtils.mkdir_p(File.dirname(@scripts_name_path))
-      IO.write(@scripts_name_path, scripts_name)
+    def save_scripts_info(scripts_name)
+      FileUtils.mkdir_p(File.dirname(SCRIPTS_INFO_PATH))
+      IO.write(SCRIPTS_INFO_PATH, scripts_name)
     end
 
     # cache this because the file will get removed
