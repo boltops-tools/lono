@@ -13,17 +13,21 @@ module Lono::Template::Helper
     user = options[:user] || settings[:user] || "ec2-user"
 
     <<-BASH_CODE
-# Download #{File.basename(s3_scripts_tarball)} from s3, extract and setup
+# Download #{scripts_name} from s3, extract and setup
 mkdir -p #{dest}
-aws s3 cp #{s3_scripts_tarball} #{dest}/
+aws s3 cp #{scripts_s3_path} #{dest}/
 cd #{dest}
-tar zxf #{dest}/scripts.tgz
+tar zxf #{dest}/#{scripts_name}
 chmod -R +x #{dest}/scripts
 chown -R #{user}:#{user} #{dest}/scripts
 BASH_CODE
   end
 
-  def s3_scripts_tarball
+  def scripts_name
+    File.basename(scripts_s3_path)
+  end
+
+  def scripts_s3_path
     upload = Lono::Script::Upload.new
     upload.s3_dest
   end
