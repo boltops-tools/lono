@@ -24,8 +24,8 @@ module Lono
     def generate
       puts "Generating CloudFormation templates, parameters, and scripts"
       Script::Build.new(options).run
-      Template::DSL.new(options.clone).run
-      Param::Generator.generate_all(options.clone)
+      Template::DSL.new(options).run
+      Param::Generator.generate_all(options)
     end
 
     desc "summary STACK", "Prints summary of CloudFormation template"
@@ -43,7 +43,7 @@ module Lono
 
     desc "clean", "Clean up generated files"
     def clean
-      Clean.new(options.clone).run
+      Clean.new(options).run
     end
 
     desc "completion *PARAMS", "prints words for auto-completion"

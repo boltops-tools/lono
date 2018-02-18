@@ -8,14 +8,15 @@ class Lono::Script
       new.scripts_name
     end
 
-    def initialize(options)
-      @options = options
-    end
-
     def run
       Lono::ProjectChecker.check
       reset
-      return if Dir["#{Lono.root}/app/scripts/*"].empty?
+      if Dir["#{Lono.root}/app/scripts/*"].empty?
+        puts "No detected app/scripts"
+        return
+      else
+        puts "Detected app/scripts"
+      end
 
       puts "Tarballing app/scripts folder to scripts.tgz"
       tarball_path = create_tarball
