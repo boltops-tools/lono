@@ -24,11 +24,11 @@ class Lono::Importer
 
     # at the end display some useful info for the user
     return unless options[:summary]
-    run_inspect_summary
+    summarize
     show_params_file
   end
 
-  def run_inspect_summary
+  def summarize
     Lono::Inspector::Summary.new(template_name, @options).run
   end
 

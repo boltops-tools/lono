@@ -1,7 +1,7 @@
 require "yaml"
 require "graph"
 
-class Lono::Inspector::Depend < Lono::Inspector::Base
+class Lono::Inspector::Graph < Lono::Inspector::Base
   def initialize(stack_name, options)
     super
     @nodes = [] # lookup map

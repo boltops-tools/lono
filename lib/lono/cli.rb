@@ -22,10 +22,22 @@ module Lono
     option :quiet, type: :boolean, desc: "silence the output"
     option :pretty, type: :boolean, default: true, desc: "json pretty the output.  only applies with json format"
     def generate
-      Script::Build.new(options.clone).run
-      # puts "Generating CloudFormation template, parameter files"
-      # Template::DSL.new(options.clone).run
-      # Param::Generator.generate_all(options.clone)
+      puts "Generating CloudFormation template, parameter files"
+      Template::DSL.new(options.clone).run
+      Param::Generator.generate_all(options.clone)
+    end
+
+    desc "summary STACK", "Prints summary of CloudFormation template"
+    long_desc Help.text("summary")
+    def summary(name)
+      Lono::Inspector::Summary.new(name, options).run
+    end
+
+    desc "graph STACK", "Graphs dependencies tree of CloudFormation template resources"
+    long_desc Help.text("graph")
+    option :display, type: :string, desc: "graph or text", default: "graph"
+    def graph(name)
+      Lono::Inspector::Graph.new(name, options).run
     end
 
     desc "clean", "Clean up generated files"
@@ -67,10 +79,6 @@ module Lono
     desc "param SUBCOMMAND", "param subcommand tasks"
     long_desc Help.text(:param)
     subcommand "param", Param
-
-    desc "inspect SUBCOMMAND", "inspect subcommand tasks"
-    long_desc Help.text(:inspect)
-    subcommand "inspect", Inspector
 
     desc "script SUBCOMMAND", "script subcommand tasks"
     long_desc Help.text(:script)
