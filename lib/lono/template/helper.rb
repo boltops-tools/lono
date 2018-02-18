@@ -13,7 +13,7 @@ module Lono::Template::Helper
     user = options[:user] || settings[:user] || "ec2-user"
 
     <<-BASH_CODE
-# Download scripts from #{s3_scripts_tarball} and setup
+# Download #{File.basename(s3_scripts_tarball)} from s3, extract and setup
 mkdir -p #{dest}
 aws s3 cp #{s3_scripts_tarball} #{dest}/
 cd #{dest}
@@ -28,7 +28,7 @@ BASH_CODE
     upload.s3_dest
   end
 
-  def template_s3_folder(template_name)
+  def template_s3_path(template_name)
     template_path = "#{template_name}.yml"
 
     # must have settings.s3_folder for this to owrk
@@ -38,7 +38,7 @@ BASH_CODE
       upload = Lono::Template::Upload.new(@options)
       upload.s3_https_url(template_path)
     else
-      message = "template_s3_folder helper called but s3_folder not configured in settings.yml"
+      message = "template_s3_path helper called but s3_folder not configured in settings.yml"
       puts "ERROR: #{message}".colorize(:red)
       exit 1
     end

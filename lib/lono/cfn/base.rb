@@ -42,7 +42,7 @@ class Lono::Cfn::Base
     puts "  #{command_with_iam(capabilities)}"
 
     puts "Please confirm (y/n)"
-    confirm = $stdin.gets
+    $stdin.gets
   end
 
   def command_with_iam(capabilities)
