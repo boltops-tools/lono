@@ -15,7 +15,7 @@ module Lono::Template::Helper
     <<-BASH_CODE
 # Download scripts from #{s3_scripts_tarball} and setup
 mkdir -p #{dest}
-aws s3 cp ${#{s3_scripts_tarball}} #{dest}/
+aws s3 cp #{s3_scripts_tarball} #{dest}/
 cd #{dest}
 tar zxf #{dest}/scripts.tgz
 chmod -R +x #{dest}/scripts

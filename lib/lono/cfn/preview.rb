@@ -1,3 +1,5 @@
+require "byebug" if ENV['USER'] == 'tung'
+
 class Lono::Cfn::Preview < Lono::Cfn::Base
   # Override run from Base superclass, the run method is different enough with Preview
   def run
@@ -32,15 +34,25 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
         capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
       )
     rescue Aws::CloudFormation::Errors::ValidationError => e
-      if e.message =~ /^Parameters: /
-        puts "Error creating CloudFormation preview because invalid CloudFormation parameters. Full error message:".colorize(:red)
-        puts e.message
-        quit(1)
-      else
-        raise
-      end
+      handle_error(e)
     end
     true
+  end
+
+  # TODO: move preview handle_error into another class
+  # Example errors:
+  # "Template error: variable names in Fn::Sub syntax must contain only alphanumeric characters, underscores, periods, and colons"
+  def handle_error(e)
+    raise if ENV['FULL_BACKTRACE']
+
+    if e.message =~ /^Parameters: / || e.message =~ /^Template error: /
+      puts "Error creating CloudFormation preview because invalid CloudFormation parameters. Full error message:".colorize(:red)
+      puts e.message
+      puts "For full backtrace run command again with FULL_BACKTRACE=1"
+      quit(1)
+    else
+      raise
+    end
   end
 
   def display_change_set
