@@ -1,24 +1,26 @@
 ---
-title: Quick Start
+title: Import Existing CloudFormation Templates
 ---
 
 In a hurry? No problem!  Here's a quick start to using lono that takes only a few minutes.  The commands below launches a CloudFormation stack.
 
 {% highlight bash %}
 gem install lono
-TEMPLATE=ec2 lono new infra
+lono new infra
 cd infra
-# set KeyName in config/params/base/example.txt to an ssh key
+
+# Import a starter template
+lono import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/EC2InstanceWithSecurityGroupSample.template --name example
+
+# set the ssh KeyName in the config/params/base/example.txt to a key that exists in your AWS account.
+sed "s/KeyName=/KeyName=default/" config/params/base/example.txt > config/params/base/example.txt.1
+mv config/params/base/example.txt{.1,}
+
+# launch stack
 lono cfn create example
 {% endhighlight %}
 
-The last command did a few things:
-
-1. Generate templates and params files from `app/definitions' and `app/templates' to `output/templates`.
-2. Generate parameter files from `config/params` to `output/params`.
-3. Use the output files to launch a CloudFormation stack.
-
-The example launches an EC2 instance with a security group. Check out the newly launch stack in the AWS console:
+Check out the newly launch stack in the AWS console:
 
 <img src="/img/tutorial/stack-created.png" alt="Stack Created" class="doc-photo">
 
@@ -32,7 +34,7 @@ Lono provides `lono cfn` lifecycle management commands that allow you to launch 
 $ lono cfn create mystack
 ```
 
-The above command will generate files to `output/templates/mystack.json` and `output/params/prod/mystack.txt` and use them to create a CloudFormation stack. Here are some more examples of cfn commands::
+The above command will generate files to `output/mystack.json` and `output/params/prod/mystack.txt` and use them to create a CloudFormation stack. Here are some more examples of cfn commands::
 
 ```
 $ lono cfn create mystack-$(date +%Y%m%d%H%M%S) --template mystack --params mystack
