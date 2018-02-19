@@ -96,21 +96,49 @@ class Lono::Template::DSL
       path += ".yml"
       puts "  #{path}" unless @options[:quiet]
       ensure_parent_dir(path)
-      validate(text, path)
-      File.open(path, 'w') do |f|
-        f.write(commented(text))
-      end
+      text = commented(text)
+      IO.write(path, text) # write file first so validate method is simpler
+      validate(path)
     end
   end
 
-  def validate(text, path)
+  def validate(path)
+    text = IO.read(path)
     begin
       YAML.load(text)
     rescue Psych::SyntaxError => e
-      puts "Invalid yaml.  Output written to #{path} for debugging".colorize(:red)
-      puts "ERROR: #{e.message}".colorize(:red)
-      File.open(path, 'w') {|f| f.write(text) }
-      ENV['TEST'] ? raise : exit(1)
+      handle_yaml_syntax_error(e, path)
+    end
+  end
+
+  def handle_yaml_syntax_error(e, path)
+    io = StringIO.new
+    io.puts "Invalid yaml.  Output written to debugging: #{path}".colorize(:red)
+    io.puts "ERROR: #{e.message}".colorize(:red)
+
+    # Grab line info.  Example error:
+    #   ERROR: (<unknown>): could not find expected ':' while scanning a simple key at line 2 column 1
+    md = e.message.match(/at line (\d+) column (\d+)/)
+    line = md[1].to_i
+
+    lines = IO.read(path).split("\n")
+    context = 5 # lines of context
+    top, bottom = [line-context-1, 0].max, line+context-1
+    spacing = lines.size.to_s.size
+    lines[top..bottom].each_with_index do |line_content, index|
+      line_number = top+index+1
+      if line_number == line
+        io.printf("%#{spacing}d %s\n".colorize(:red), line_number, line_content)
+      else
+        io.printf("%#{spacing}d %s\n", line_number, line_content)
+      end
+    end
+
+    if ENV['TEST']
+      io.string
+    else
+      puts io.string
+      exit 1
     end
   end
 

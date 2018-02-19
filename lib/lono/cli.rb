@@ -20,7 +20,6 @@ module Lono
     long_desc Help.text(:generate)
     option :clean, type: :boolean, desc: "remove all output files before generating"
     option :quiet, type: :boolean, desc: "silence the output"
-    option :pretty, type: :boolean, default: true, desc: "json pretty the output.  only applies with json format"
     def generate
       puts "Generating CloudFormation templates, parameters, and scripts"
       Script::Build.new(options).run

@@ -16,7 +16,6 @@ class Lono::Template < Lono::Command
   desc "generate", "Generate the CloudFormation templates"
   long_desc Lono::Help.text("template/generate")
   option :clean, type: :boolean, desc: "remove all output files before generating"
-  option :pretty, type: :boolean, default: true, desc: "json pretty the output.  only applies with json format"
   def generate
     DSL.new(options.clone).run
   end

@@ -68,12 +68,12 @@ class Lono::Cfn::Base
   end
 
   def generate_templates
-    Lono::Template::DSL.new(pretty: true).run
+    Lono::Template::DSL.new.run
   end
 
   # only upload templates if s3_folder configured in settings
   def upload_templates
-    Lono::Template::Upload.new(pretty: true).run if s3_folder
+    Lono::Template::Upload.new.run if s3_folder
   end
 
   # only upload templates if s3_folder configured in settings

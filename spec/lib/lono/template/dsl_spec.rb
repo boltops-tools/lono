@@ -39,4 +39,21 @@ describe Lono::Template::DSL do
       expect(text).to include("custom_helper value")
     end
   end
+
+  context "yaml parse error" do
+    let(:dsl) do
+      Lono::Template::DSL.new(quiet: true)
+    end
+
+    it "show exact line of error code when yaml is invalid" do
+      IO.write("tmp/bad.yml", <<EOL)
+test: 1
+foo
+  test
+EOL
+      out = dsl.validate("tmp/bad.yml")
+      expect(out).to include("2 foo")
+    end
+
+  end
 end

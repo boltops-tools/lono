@@ -12,6 +12,13 @@ module Lono::Template::Helper
     to = options[:to] || settings[:to] || "/opt"
     user = options[:user] || settings[:user] || "ec2-user"
 
+    if Dir.glob("#{Lono.config.scripts_path}/*").empty?
+      puts "WARN: you are using the extract_scripts helper method but you do not have any app/scripts.".colorize(:yellow)
+      calling_line = caller[0].split(':')[0..1].join(':')
+      puts "Called from: #{calling_line}"
+      return ""
+    end
+
     <<-BASH_CODE
 # Download #{scripts_name} from s3, extract and setup
 mkdir -p #{to}
