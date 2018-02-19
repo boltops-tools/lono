@@ -6,20 +6,20 @@
 #   Lono::Template::Context.new(@options)
 module Lono::Template::Helper
   # Bash code that is meant to included in user-data
-  def extract_s3_scripts(options={})
+  def extract_scripts(options={})
     settings = Lono::Setting.new.data
     # defaults also here in case they are removed from settings
-    dest = options[:dest] || settings[:dest] || "/opt"
+    to = options[:to] || settings[:to] || "/opt"
     user = options[:user] || settings[:user] || "ec2-user"
 
     <<-BASH_CODE
 # Download #{scripts_name} from s3, extract and setup
-mkdir -p #{dest}
-aws s3 cp #{scripts_s3_path} #{dest}/
-cd #{dest}
-tar zxf #{dest}/#{scripts_name}
-chmod -R +x #{dest}/scripts
-chown -R #{user}:#{user} #{dest}/scripts
+mkdir -p #{to}
+aws s3 cp #{scripts_s3_path} #{to}/
+cd #{to}
+tar zxf #{to}/#{scripts_name}
+chmod -R a+x #{to}/scripts
+chown -R #{user}:#{user} #{to}/scripts
 BASH_CODE
   end
 
