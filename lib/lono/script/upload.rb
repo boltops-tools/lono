@@ -1,6 +1,5 @@
 require "aws-sdk-s3"
 require "filesize"
-require "byebug" if ENV['USER'] == 'tung'
 
 class Lono::Script
   class Upload < Base

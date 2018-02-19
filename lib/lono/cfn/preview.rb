@@ -1,5 +1,3 @@
-require "byebug" if ENV['USER'] == 'tung'
-
 class Lono::Cfn::Preview < Lono::Cfn::Base
   # Override run from Base superclass, the run method is different enough with Preview
   def run
