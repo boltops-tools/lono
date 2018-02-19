@@ -159,7 +159,7 @@ class Lono::Cfn::Base
     status = resp.stacks[0].stack_status
   end
 
-  def exist_unless_updatable(status)
+  def exit_unless_updatable!(status)
     return true if testing_update?
     return false if @options[:noop]
 

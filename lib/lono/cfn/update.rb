@@ -16,7 +16,7 @@ class Lono::Cfn::Update < Lono::Cfn::Base
       puts "Cannot update a stack because the #{@stack_name} does not exists."
       return
     end
-    exist_unless_updatable(stack_status(@stack_name))
+    exit_unless_updatable!(stack_status(@stack_name))
 
     error = nil
     diff.run if @options[:diff]

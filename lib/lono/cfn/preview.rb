@@ -22,7 +22,7 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
       puts "WARN: Cannot create a change set for the stack because the #{@stack_name} does not exists.".colorize(:yellow)
       return false
     end
-    exist_unless_updatable(stack_status(@stack_name))
+    exit_unless_updatable!(stack_status(@stack_name))
 
     template_body = IO.read(@template_path)
     params = {
