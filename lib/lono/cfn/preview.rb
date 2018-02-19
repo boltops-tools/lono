@@ -25,14 +25,16 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
     exist_unless_updatable(stack_status(@stack_name))
 
     template_body = IO.read(@template_path)
+    params = {
+      change_set_name: change_set_name,
+      stack_name: @stack_name,
+      template_body: template_body,
+      parameters: params,
+      capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
+    }
+    show_parameters(params, "cfn.create_change_set")
     begin
-      cfn.create_change_set(
-        change_set_name: change_set_name,
-        stack_name: @stack_name,
-        template_body: template_body,
-        parameters: params,
-        capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
-      )
+      cfn.create_change_set(params)
     rescue Aws::CloudFormation::Errors::ValidationError => e
       handle_error(e)
     end

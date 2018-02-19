@@ -9,7 +9,7 @@ class Lono::Template::Upload
   def initialize(options={})
     @options = options
     @checksums = {}
-    @prefix = "#{s3_folder}/#{Lono.env}/templates" # s3://s3-bucket/folder/developemnt/templates
+    @prefix = "#{folder_key}/#{Lono.env}/templates" # s3://s3-bucket/folder/developemnt/templates
   end
 
   def run
@@ -108,13 +108,12 @@ class Lono::Template::Upload
     s3_folder.sub('s3://','').split('/').first
   end
 
-  # Parse the s3_folder setting and remove the bucket so we'll just get the
-  # "s3_folder" portion
+  # The folder_key is the s3_folder setting with the s3 bucket.
   #
   # Example:
   #    s3_bucket('s3://mybucket/templates/storage/path')
   #    => templates/storage/path
-  def s3_folder
+  def folder_key
     return nil if @options[:noop] # to get spec passing
     return nil unless s3_folder
     s3_folder.sub('s3://','').split('/')[1..-1].join('/')
@@ -125,7 +124,7 @@ class Lono::Template::Upload
     settings.s3_folder
   end
 
-  # nice warning if the s3_folder not found
+  # nice warning if the s3 path not found
   def ensure_s3_setup!
     return if @options[:noop]
     return if s3_folder

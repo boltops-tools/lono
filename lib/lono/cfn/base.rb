@@ -205,10 +205,11 @@ class Lono::Cfn::Base
     end
   end
 
-  def show_parameters(params)
+  def show_parameters(params, meth=nil)
     params = params.clone
     params[:template_body] = "Hidden due to size... View at: #{@template_path}"
-    puts "Parameters passed to AWS api:"
+    to = meth || "AWS API"
+    puts "Parameters passed to #{to}:"
     puts YAML.dump(params.deep_stringify_keys)
   end
 

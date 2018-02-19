@@ -32,8 +32,7 @@ class Lono::Cfn::Create < Lono::Cfn::Base
       capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
       disable_rollback: !@options[:rollback],
     }
-
-    show_parameters(params)
+    show_parameters(params, "cfn.create_stack")
     cfn.create_stack(params)
     puts message unless @options[:mute]
   end
