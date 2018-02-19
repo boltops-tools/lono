@@ -41,7 +41,6 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
     true
   end
 
-  # TODO: move preview handle_error into another class
   # Example errors:
   # "Template error: variable names in Fn::Sub syntax must contain only alphanumeric characters, underscores, periods, and colons"
   def handle_error(e)

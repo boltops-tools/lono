@@ -128,7 +128,7 @@ class Lono::Cfn::Base
   # Type - :param or :template
   def get_source_path(path, type)
     if path.nil?
-      default_convention_path = convention_path(@stack_name, type)
+      convention_path(@stack_name, type) # default convention
     else
       # convention path based on the input from the user
       convention_path(path, type)
@@ -140,8 +140,6 @@ class Lono::Cfn::Base
     when :template
       "#{Lono.config.output_path}/templates/#{name}.yml"
     when :param
-      # TODO: weird how this convention changes on the Lono.env because
-      # it still will merge base/name.txt
       "#{Lono.config.params_path}/#{Lono.env}/#{name}.txt"
     else
       raise "hell: dont come here"
@@ -156,7 +154,7 @@ class Lono::Cfn::Base
     return false if @options[:noop]
 
     resp = cfn.describe_stacks(stack_name: stack_name)
-    status = resp.stacks[0].stack_status
+    resp.stacks[0].stack_status
   end
 
   def exit_unless_updatable!(status)
