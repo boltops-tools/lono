@@ -31,20 +31,23 @@ module Lono
     def create_project
       puts "=> Creating new project called #{project_name}."
       directory ".", "#{@cwd}/#{project_name}"
-
-      destination_root = "#{@cwd}/#{project_name}"
-      self.destination_root = destination_root
-      FileUtils.cd("#{@cwd}/#{project_name}")
-    end
-
-    def make_executable
-      chmod("exe", 0755 & ~File.umask, verbose: false) if File.exist?("exe")
     end
 
     def create_empty_directories
       Lono::Core::Config::PATHS.keys.each do |meth|
         empty_directory Lono.config.send(meth)
       end
+    end
+
+    # After this commands are executed with the newly created project
+    def set_destination_root
+      destination_root = "#{@cwd}/#{project_name}"
+      self.destination_root = destination_root
+      FileUtils.cd(self.destination_root)
+    end
+
+    def make_executable
+      chmod("exe", 0755 & ~File.umask, verbose: false) if File.exist?("exe")
     end
 
     def bundle_install

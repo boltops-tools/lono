@@ -4,7 +4,7 @@ describe Lono::CLI do
       # using another name for the lono project because we call
       # exe/lono new lono_project for all specs via the RSpec.config already
       # NOTE: LONO_ROOT modified in the spec_helper.rb
-      out = execute("exe/lono new test_project --no-bundle")
+      execute("exe/lono new test_project --no-bundle")
       exist = File.exist?("tmp/test_project/config/settings.yml")
       expect(exist).to be true
       FileUtils.rm_rf("tmp/test_project")
@@ -12,7 +12,7 @@ describe Lono::CLI do
 
     it "import should download template" do
       out = execute("exe/lono import spec/fixtures/raw_templates/aws-waf-security-automations.template --name waf")
-      expect(out).to match /Imported raw CloudFormation template/
+      expect(out).to match(/Imported raw CloudFormation template/)
     end
   end
 
@@ -32,8 +32,7 @@ describe Lono::CLI do
     it "generate should build templates" do
       # NOTE: LONO_ROOT modified in the spec_helper.rb
       execute("exe/lono new lono_project --no-bundle")
-
-      out = execute("exe/lono generate")
+      execute("exe/lono generate")
       success = $?.exitstatus == 0
       expect(success).to be true
 

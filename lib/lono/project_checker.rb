@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 module Lono
   # Checks to see command is running in a lono project.
   # If not, provide a friendly message and possibly exit.
@@ -16,7 +15,6 @@ module Lono
           app/templates
         ]
         paths.each do |path|
-          puts "full_path: #{Lono.root}/#{path}".colorize(:cyan)
           unless File.exist?("#{Lono.root}/#{path}")
             puts "ERROR: The #{path} does not exist in this project.  Are you sure you are in lono project?".colorize(:red)
             quit 1
