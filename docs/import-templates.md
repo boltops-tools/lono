@@ -15,11 +15,11 @@ $ lono new infra
 $ cd infra
 # Import a starter template
 $ lono import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/EC2InstanceWithSecurityGroupSample.template --name ec2
-Imported raw CloudFormation template and lono-fied it.
+=> Imported CloudFormation template and lono-fied it.
 Template definition added to app/definitions/base.rb
 Params file created to config/params/base/ec2.txt
 Template downloaded to app/templates/ec2.yml
-CloudFormation Template Summary:
+=> CloudFormation Template Summary:
 Parameters:
 Required:
   KeyName (AWS::EC2::KeyPair::KeyName)

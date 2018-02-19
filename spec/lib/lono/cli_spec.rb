@@ -12,7 +12,7 @@ describe Lono::CLI do
 
     it "import should download template" do
       out = execute("exe/lono import spec/fixtures/raw_templates/aws-waf-security-automations.template --name waf")
-      expect(out).to match(/Imported raw CloudFormation template/)
+      expect(out).to match(/=> Imported CloudFormation template/)
     end
   end
 

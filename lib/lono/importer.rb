@@ -16,7 +16,7 @@ class Lono::Importer
       download_template
       template_definition_path = add_template_definition
       create_params
-      puts "Imported raw CloudFormation template and lono-fied it.".colorize(:green)
+      puts "=> Imported CloudFormation template and lono-fied it.".colorize(:green)
       puts "Template definition added to #{pretty_path(template_definition_path)}"
       puts "Params file created to #{pretty_path(params_path)}"
     end

@@ -1,6 +1,6 @@
 class Lono::Inspector::Summary < Lono::Inspector::Base
   def perform
-    puts "CloudFormation Template Summary:".colorize(:green)
+    puts "=> CloudFormation Template Summary:".colorize(:green)
     return if @options[:noop]
 
     puts "Parameters:"

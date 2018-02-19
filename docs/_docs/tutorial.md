@@ -2,11 +2,14 @@
 title: Tutorial
 ---
 
-In the following sections, we'll walk through a tutorial where you will build a lono project the "hard" way from scratch. This will give you a chance to learn how lono works and experiment with the most commonly used lono commands. By the end, you will have successfully created and updated a CloudFormation stack with lono.
+In the following sections, we'll walk through a tutorial using an [Load-based Auto Scaling CloudFormation sample template](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sample-templates-services-us-west-2.html#w2ab2c23c48c13b7).
 
-Once we are done building a project from scratch you will then do it all again in a single command with `lono new` command.
+1. We'll import the template from the AWS Documentation Sample.
+2. Explore the lono project and familarize ourselves with some of the [directory structure]({% link _docs/directory-structure.md %}).
+3. Make some adjustments by adding removing the Load Balancer.
+4. Launch 2 versions of the stack.
 
-Finally, we'll show you how to take an existing CloudFormation template and add it to a lono project.
+This will give you a chance to learn how lono works and experiment with the lono commands. By the end, hopefully you'll have a good sense of how things work.
 
 Let's start!
 
