@@ -34,11 +34,11 @@ module Lono
       Lono::Inspector::Summary.new(name, options).run
     end
 
-    desc "graph STACK", "Graphs dependencies tree of CloudFormation template resources"
+    desc "xgraph STACK", "Graphs dependencies tree of CloudFormation template resources"
     long_desc Help.text("graph")
     option :display, type: :string, desc: "graph or text", default: "graph"
     option :noop, type: :boolean, desc: "noop mode"
-    def graph(name)
+    def xgraph(name)
       Lono::Inspector::Graph.new(name, options).run
     end
 

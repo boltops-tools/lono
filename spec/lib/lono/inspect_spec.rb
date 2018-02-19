@@ -1,6 +1,6 @@
 describe Lono::Inspector do
-  it "lono graph" do
-    out = execute("exe/lono graph example --noop")
+  it "lono xgraph" do
+    out = execute("exe/lono xgraph example --noop")
     expect(out).to include("Generating dependencies tree")
   end
 
@@ -9,4 +9,3 @@ describe Lono::Inspector do
     expect(out).to include("Summary")
   end
 end
-
