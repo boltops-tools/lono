@@ -37,6 +37,7 @@ module Lono
     desc "graph STACK", "Graphs dependencies tree of CloudFormation template resources"
     long_desc Help.text("graph")
     option :display, type: :string, desc: "graph or text", default: "graph"
+    option :noop, type: :boolean, desc: "noop mode"
     def graph(name)
       Lono::Inspector::Graph.new(name, options).run
     end

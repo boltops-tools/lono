@@ -1,18 +1,12 @@
 describe Lono::Inspector do
-  before(:all) do
-    @args = "--noop"
+  it "lono graph" do
+    out = execute("exe/lono graph example --noop")
+    expect(out).to include("Generating dependencies tree")
   end
 
-  describe "lono inspect" do
-    it "depends" do
-      out = execute("exe/lono inspect depends example #{@args}")
-      expect(out).to include("Generating dependencies tree")
-    end
-
-    it "summary" do
-      out = execute("exe/lono inspect summary example #{@args}")
-      expect(out).to include("Summary")
-    end
+  it "lono summary" do
+    out = execute("exe/lono summary example")
+    expect(out).to include("Summary")
   end
 end
 
