@@ -78,6 +78,7 @@ module Lono
       @command_class = command_class # CLI initiall
     end
 
+
     def run
       if subcommand?(@current_command)
         subcommand_class = @command_class.subcommand_classes[@current_command]
@@ -134,7 +135,7 @@ module Lono
 
     def params_completion
       offset = @params.size - 1
-      offset_params = command_params[offset..-1]
+      command_params[offset..-1]
       command_params[offset..-1].first
     end
 
