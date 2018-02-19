@@ -1,0 +1,3 @@
+# parameters in here override parameters/base/example.txt for LONO_ENV=development
+# Also, config/variables are available in params files
+InstanceType=<%= @instance_type %>

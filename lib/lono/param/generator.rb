@@ -1,8 +1,6 @@
 class Lono::Param::Generator
-  include Lono::CurrentRegion
-
   def self.generate_all(options)
-    puts "Generating params files"
+    puts "Generating parameter files:"
 
     params = param_names("base") + param_names(Lono.env)
     params.uniq.each do |name|
@@ -18,37 +16,46 @@ class Lono::Param::Generator
   # Returns:
   #   param_names("base") => ["a", "b", "c"]
   def self.param_names(folder)
-    base_folder = "#{Lono.root}/params/#{folder}" # Example: "./params/base"
+    base_folder = "#{Lono.config.params_path}/#{folder}" # Example: "./params/base"
     Dir.glob("#{base_folder}/**/*.txt").map do |path|
       path.sub("#{base_folder}/", '').sub('.txt','')
     end
   end
 
   def initialize(name, options)
-    @_name = "#{Lono.env}/#{name}"
-    @_options = options
-    @_env_path = options[:path] || "#{Lono.root}/params/#{@_name}.txt"
-    @_base_path = @_env_path.sub("/#{Lono.env}/", "/base/")
+    @name = "#{Lono.env}/#{name}"
+    @options = options
+    @env_path = options[:path] || "#{Lono.config.params_path}/#{@name}.txt"
+    @base_path = @env_path.sub("/#{Lono.env}/", "/base/")
   end
 
   def generate
     # useful option for lono cfn
-    return if @_options[:allow_no_file] && !source_exist?
+    return if @options[:allow_no_file] && !source_exist?
 
     if source_exist?
-      contents = overlay_sources
+      contents = process_erb
       data = convert_to_cfn_format(contents)
       json = JSON.pretty_generate(data)
       write_output(json)
-      # Example: @_name = stag/ecs/private
+      # Example: @name = stag/ecs/private
       #          pretty_name = ecs/private
-      pretty_name = @_name.sub("#{Lono.env}/", '')
-      puts "Params file generated for #{pretty_name} at #{output_path}" unless @_options[:mute]
+      pretty_name = @name.sub("#{Lono.env}/", '')
+      puts "  #{output_path}" unless @options[:mute]
     else
-      puts "#{@_base_path} or #{@_env_path} could not be found?  Are you sure it exist?"
+      puts "#{@base_path} or #{@env_path} could not be found?  Are you sure it exist?"
       exit 1
     end
     json
+  end
+
+  # useful for when calling CloudFormation via the aws-sdk gem
+  def params(casing = :underscore)
+    # useful option for lono cfn
+    return {} if @options[:allow_no_file] && !source_exist?
+
+    contents = process_erb
+    convert_to_cfn_format(contents, casing)
   end
 
   # Reads both the base source and env source and overlay the two
@@ -68,51 +75,23 @@ class Lono::Param::Generator
   #   params/prod/mystack.txt - env path
   #
   #   the prod/mystack.txt is used to produced a prod/mystack.txt
-  def overlay_sources
+  def process_erb
     contents = []
-    contents << process_erb(@_base_path)
-    contents << process_erb(@_env_path)
+    contents << render_erb(@base_path)
+    contents << render_erb(@env_path)
     contents.compact.join("\n")
   end
 
-  def process_erb(path)
+  def render_erb(path)
     if File.exist?(path)
-      template = IO.read(path)
-      erb_result(path, template)
+      RenderMePretty.result(path, context: context)
     end
   end
 
-  def erb_result(path, template)
-    load_variables
-    begin
-      ERB.new(template, nil, "-").result(binding)
-    rescue Exception => e
-      puts e
-      puts e.backtrace if ENV['DEBUG']
-
-      # how to know where ERB stopped? - https://www.ruby-forum.com/topic/182051
-      # syntax errors have the (erb):xxx info in e.message
-      # undefined variables have (erb):xxx info in e.backtrac
-      error_info = e.message.split("\n").grep(/\(erb\)/)[0]
-      error_info ||= e.backtrace.grep(/\(erb\)/)[0]
-      raise unless error_info # unable to find the (erb):xxx: error line
-      line = error_info.split(':')[1].to_i
-      puts "Error evaluating ERB template on line #{line.to_s.colorize(:red)} of: #{path.sub(/^\.\//, '').colorize(:green)}"
-
-      template_lines = template.split("\n")
-      context = 5 # lines of context
-      top, bottom = [line-context-1, 0].max, line+context-1
-      spacing = template_lines.size.to_s.size
-      template_lines[top..bottom].each_with_index do |line_content, index|
-        line_number = top+index+1
-        if line_number == line
-          printf("%#{spacing}d %s\n".colorize(:red), line_number, line_content)
-        else
-          printf("%#{spacing}d %s\n", line_number, line_content)
-        end
-      end
-      exit 1 unless ENV['TEST']
-    end
+  # Context for ERB rendering.
+  # This is where we control what references get passed to the ERB rendering.
+  def context
+    @context ||= Lono::Template::Context.new(@options)
   end
 
   # Checks both base and source path for existing of the param file.
@@ -120,16 +99,7 @@ class Lono::Param::Generator
   #   params/base/mystack.txt - base path
   #   params/prod/mystack.txt - source path
   def source_exist?
-    File.exist?(@_base_path) || File.exist?(@_env_path)
-  end
-
-  # useful for when calling CloudFormation via the aws-sdk gem
-  def params(casing = :underscore)
-    # useful option for lono cfn
-    return {} if @_options[:allow_no_file] && !source_exist?
-
-    contents = overlay_sources
-    convert_to_cfn_format(contents, casing)
+    File.exist?(@base_path) || File.exist?(@env_path)
   end
 
   def parse_contents(contents)
@@ -177,35 +147,13 @@ class Lono::Param::Generator
   end
 
   def output_path
-    "#{Lono.root}/output/params/#{@_name}.json".sub(/\.\//,'')
+    name = @name.sub("#{Lono.env}/", "") # remove the Lono.env from the output path
+    "#{Lono.config.output_path}/params/#{name}.json".sub(/\.\//,'')
   end
 
   def write_output(json)
     dir = File.dirname(output_path)
-    FileUtils.mkdir_p(dir) unless File.exist?(dir)
+    FileUtils.mkdir_p(dir)
     IO.write(output_path, json)
-  end
-
-
-  def load_variables
-    load_variables_folder("base")
-    load_variables_folder(Lono.env)
-  end
-
-  # Load the variables defined in config/variables/* to make available the params/*.txt files
-  #
-  # Example:
-  #
-  #   `config/variables/base/variables.rb`:
-  #      @ami = 123
-  #
-  #   `params/ecs/private.txt`:
-  #     AmiId=<%= @ami %>
-  #
-  def load_variables_folder(folder)
-    paths = Dir.glob("#{Lono.root}/config/variables/#{folder}/**/*")
-    paths.select{ |e| File.file? e }.each do |path|
-      instance_eval(IO.read(path))
-    end
   end
 end

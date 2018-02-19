@@ -5,7 +5,7 @@ class Lono::Inspector::Base
   end
 
   def generate_templates
-    Lono::Template::DSL.new(@options.clone).run
+    Lono::Template::DSL.new(@options.clone.merge(quiet: true)).run
   end
 
   def run
@@ -15,7 +15,7 @@ class Lono::Inspector::Base
 
   def data
     return @data if @data
-    template_path = "#{Lono.root}/output/#{@stack_name}.yml"
+    template_path = "#{Lono.config.output_path}/templates/#{@stack_name}.yml"
     check_template_exists(template_path)
     @data = YAML.load(IO.read(template_path))
   end

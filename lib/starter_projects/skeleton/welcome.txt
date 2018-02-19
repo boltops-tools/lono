@@ -1,0 +1,7 @@
+Add and edit templates to your project.  When you are ready to launch a CloudFormation stack run:
+
+  lono cfn create STACK_NAME
+
+You can also get started quickly by importing other CloudFormration templates into lono.  For example:
+
+  lono import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/EC2InstanceWithSecurityGroupSample.template --name ec2

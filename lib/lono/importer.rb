@@ -7,7 +7,8 @@ class Lono::Importer
   def initialize(source, options)
     @source = source
     @options = options
-    @format = normalize_format(@options[:format])
+    @format = 'yml'
+    Lono::ProjectChecker.check
   end
 
   def run
@@ -15,20 +16,43 @@ class Lono::Importer
       download_template
       template_definition_path = add_template_definition
       create_params
-      puts "Imported raw CloudFormation template and lono-fied it!"
-      puts "Template definition added to #{template_definition_path}."
-      puts "Params file created to #{params_path}."
+      puts "Imported raw CloudFormation template and lono-fied it.".colorize(:green)
+      puts "Template definition added to #{pretty_path(template_definition_path)}"
+      puts "Params file created to #{pretty_path(params_path)}"
     end
-    puts "Template downloaded to #{template_path}." # like having this message at the end
+    puts "Template downloaded to #{pretty_path(template_path)}" # like having this message at the end
+
+    # at the end display some useful info for the user
+    return unless options[:summary]
+    summarize
+    show_params_file
+  end
+
+  def summarize
+    Lono::Inspector::Summary.new(template_name, @options).run
+  end
+
+  def show_params_file
+    path = "config/params/base/#{template_name}.txt"
+    puts "Here are contents of the params #{path} file:"
+    puts IO.read("#{Lono.root}/#{path}")
+  end
+
+  def json?(text)
+    JSON.load(text)
+    true # if reach here than it's just
+  rescue JSON::ParserError
+    false # not json
   end
 
   def download_template
     template =  open(@source).read
 
-    result = if @format == 'yml'
+    result = if json?(template)
+                # abusing YAML.dump(YAML.load()) to convert json to yaml
                 YAML.dump(YAML.load(template))
               else
-                JSON.pretty_generate(JSON.load(template))
+                template # template is already in YAML format
               end
 
     folder = File.dirname(template_path)
@@ -36,9 +60,9 @@ class Lono::Importer
     IO.write(template_path, result)
   end
 
-  # Add template definition to config/templates/base/stacks.rb.
+  # Add template definition to app/definitions/base.rb.
   def add_template_definition
-    path = "#{Lono.root}/config/templates/base/stacks.rb"
+    path = "#{Lono.config.definitions_path}/base.rb"
     lines = File.exist?(path) ? IO.readlines(path) : []
     new_template_definition = %Q|template "#{template_name}"|
     unless lines.detect { |l| l.include?(new_template_definition) }
@@ -51,11 +75,7 @@ class Lono::Importer
 
   # Creates starter params/base/[stack-name].txt file
   def create_params
-    template = if @format == 'yml'
-                YAML.load_file(template_path)
-              else
-                JSON.load(IO.read(template_path))
-              end
+    template = YAML.load_file(template_path)
 
     result = []
     required_parameters.each do |name, attributes|
@@ -73,12 +93,12 @@ class Lono::Importer
   end
 
   def params_path
-    "#{Lono.root}/params/base/#{template_name}.txt"
+    "#{Lono.config.params_path}/base/#{template_name}.txt"
   end
 
 
   def template_path
-    "#{Lono.root}/templates/#{template_name}.#{@format}"
+    "#{Lono.config.templates_path}/#{template_name}.#{@format}"
   end
 
   def template_name
@@ -103,11 +123,12 @@ private
 
   def template_data
     return @template_data if @template_data
-    template_path = "#{Lono.root}/templates/#{template_name}.#{@format}"
+    template_path = "#{Lono.config.templates_path}/#{template_name}.#{@format}"
     @template_data = YAML.load(IO.read(template_path))
   end
 
-  def normalize_format(format)
-    format == 'yaml' ? 'yml' : format
+  # removes the ./ at the beginning if it's there in the path
+  def pretty_path(path)
+    path[0..1] == './' ? path[2..-1] : path
   end
 end

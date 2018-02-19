@@ -1,0 +1,6 @@
+VpcId=
+Subnets=
+OperatorEMail=
+KeyName=
+#InstanceType=        # optional
+#SSHLocation=         # optional

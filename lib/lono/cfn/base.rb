@@ -1,7 +1,7 @@
 require "lono"
 
 class Lono::Cfn::Base
-  include Lono::Cfn::AwsServices
+  include Lono::Cfn::AwsService
   include Lono::Cfn::Util
 
   attr_reader :randomize_stack_name
@@ -42,7 +42,7 @@ class Lono::Cfn::Base
     puts "  #{command_with_iam(capabilities)}"
 
     puts "Please confirm (y/n)"
-    confirm = $stdin.gets
+    $stdin.gets
   end
 
   def command_with_iam(capabilities)
@@ -51,24 +51,35 @@ class Lono::Cfn::Base
 
   def generate_all
     if @options[:lono]
+      build_scripts
       generate_templates
-      upload_templates if @options[:s3_upload] and !@options[:noop]
+      unless @options[:noop]
+        upload_scripts
+        upload_templates
+      end
     end
     params = generate_params(mute: @options[:mute_params])
     check_for_errors
     params
   end
 
-  def generate_templates
-    Lono::Template::DSL.new(pretty: true).run
+  def build_scripts
+    Lono::Script::Build.new.run
   end
 
-  def upload_templates
-    # only upload templates if s3.path configured in settings
-    settings = Lono::Settings.new
-    return unless settings.s3_path
+  def generate_templates
+    Lono::Template::DSL.new.run
+  end
 
-    Lono::Template::Upload.new(pretty: true).run
+  # only upload templates if s3_folder configured in settings
+  def upload_templates
+    Lono::Template::Upload.new.run if s3_folder
+  end
+
+  # only upload templates if s3_folder configured in settings
+  def upload_scripts
+    return unless s3_folder
+    Lono::Script::Upload.new.run
   end
 
   def generate_params(options={})
@@ -97,13 +108,13 @@ class Lono::Cfn::Base
   def check_files
     errors, warns = [], []
     unless File.exist?(@template_path)
-      warns << "Template file missing: could not find #{@template_path}"
+      errors << "Template file missing: could not find #{@template_path}"
     end
     # Examples:
     #   @param_path = params/prod/ecs.txt
     #              => output/params/prod/ecs.json
     output_param_path = @param_path.sub(/\.txt/, '.json')
-    output_param_path = "#{Lono.root}/output/#{output_param_path}"
+    output_param_path = "#{Lono.config.output_path}/#{output_param_path}"
     if @options[:param] && !File.exist?(output_param_path)
       warns << "Parameters file missing: could not find #{output_param_path}"
     end
@@ -117,7 +128,7 @@ class Lono::Cfn::Base
   # Type - :param or :template
   def get_source_path(path, type)
     if path.nil?
-      default_convention_path = convention_path(@stack_name, type)
+      convention_path(@stack_name, type) # default convention
     else
       # convention path based on the input from the user
       convention_path(path, type)
@@ -127,34 +138,13 @@ class Lono::Cfn::Base
   def convention_path(name, type)
     path = case type
     when :template
-      format = detect_format
-      "#{Lono.root}/output/#{name}.#{format}"
+      "#{Lono.config.output_path}/templates/#{name}.yml"
     when :param
-      "#{Lono.root}/params/#{Lono.env}/#{name}.txt"
+      "#{Lono.config.params_path}/#{Lono.env}/#{name}.txt"
     else
       raise "hell: dont come here"
     end
     path.sub(/^\.\//, '')
-  end
-
-  # Returns String with value of "yml" or "json".
-  def detect_format
-    formats = Dir.glob("#{Lono.root}/templates/**/*").
-                map { |path| path.sub(/\.erb$/, '') }.
-                map { |path| File.extname(path) }.
-                reject { |s| s.empty? }. # reject ""
-                select { |s| s.include?("yml") || s.include?("json") }.
-                uniq
-    if formats.size > 1
-      puts "ERROR: Detected multiple formats: #{formats.join(", ")}".colorize(:red)
-      puts "All the output files must use the same format.  Either all json or all yml."
-      exit 1
-    elsif formats.size == 1
-      formats.first.sub(/^\./,'')
-    else
-      puts "WARN: Did not detect any template formats. Defaulting to yml.  Please check the config and templates folders.".colorize(:yellow)
-      "yml" # default format
-    end
   end
 
   # All CloudFormation states listed here:
@@ -164,15 +154,15 @@ class Lono::Cfn::Base
     return false if @options[:noop]
 
     resp = cfn.describe_stacks(stack_name: stack_name)
-    status = resp.stacks[0].stack_status
+    resp.stacks[0].stack_status
   end
 
-  def exist_unless_updatable(status)
+  def exit_unless_updatable!(status)
     return true if testing_update?
     return false if @options[:noop]
 
     unless status =~ /_COMPLETE$/
-      puts "Cannot create a change set for the stack because the #{@stack_name} is not in an updatable state.  Stack status: #{status}"
+      puts "Cannot create a change set for the stack because the #{@stack_name} is not in an updatable state.  Stack status: #{status}".colorize(:red)
       quit(1)
     end
   end
@@ -202,7 +192,7 @@ class Lono::Cfn::Base
     end
 
     # otherwise use the settings preference
-    settings = Lono::Settings.new
+    settings = Lono::Setting.new
     settings.data['randomize_stack_name']
   end
 
@@ -211,5 +201,18 @@ class Lono::Cfn::Base
     if @options[:iam]
       ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
     end
+  end
+
+  def show_parameters(params, meth=nil)
+    params = params.clone
+    params[:template_body] = "Hidden due to size... View at: #{@template_path}"
+    to = meth || "AWS API"
+    puts "Parameters passed to #{to}:"
+    puts YAML.dump(params.deep_stringify_keys)
+  end
+
+  def s3_folder
+    setting = Lono::Setting.new
+    setting.s3_folder
   end
 end

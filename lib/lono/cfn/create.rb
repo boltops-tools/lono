@@ -1,3 +1,5 @@
+require "yaml"
+
 class Lono::Cfn::Create < Lono::Cfn::Base
   # save_stack is the interface method
   def save_stack(params)
@@ -23,13 +25,15 @@ class Lono::Cfn::Create < Lono::Cfn::Base
     end
 
     template_body = IO.read(@template_path)
-    cfn.create_stack(
+    params = {
       stack_name: @stack_name,
       template_body: template_body,
       parameters: params,
       capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
       disable_rollback: !@options[:rollback],
-    )
+    }
+    show_parameters(params, "cfn.create_stack")
+    cfn.create_stack(params)
     puts message unless @options[:mute]
   end
 

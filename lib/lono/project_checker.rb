@@ -1,46 +1,41 @@
-class Lono::ProjectChecker
-    # Checks to see command is running in a lono project.
-  # If not, provide a friendly message and exit.
-  def self.check
-    new.check
-  end
+# frozen_string_literal: true
+module Lono
+  # Checks to see command is running in a lono project.
+  # If not, provide a friendly message and possibly exit.
+  class ProjectChecker
+    class << self
+      def check
+        check_lono_project
+      end
 
-  def check
-    config_folder_exist
-    templates_folder_exist
-    empty_folders
-  end
+      def check_lono_project
+        paths = %w[
+          config/settings.yml
+          app/definitions
+          app/templates
+        ]
+        paths.each do |path|
+          unless File.exist?("#{Lono.root}/#{path}")
+            puts "ERROR: The #{path} does not exist in this project.  Are you sure you are in lono project?".colorize(:red)
+            quit 1
+          end
+        end
+      end
 
-  def config_folder_exist
-    unless File.exist?("#{Lono.root}/config")
-      puts "The config folder does not exist in this project.  Are you sure this is a lono project?"
-      quit
-    end
-  end
+      # Dont exit for this one. It's okay. But show a warning.
+      def empty_templates
+        if Dir["#{Lono.config.templates_path}/**/*"].empty?
+          puts "INFO: The app/templates folder does not contain any lono template definitions.".colorize(:yellow)
+        end
+      end
 
-  def templates_folder_exist
-    unless File.exist?("#{Lono.root}/templates")
-      puts "The templates folder does not exist in this project.  Are you sure this is a lono project?"
-      quit
-    end
-  end
-
-  def empty_folders
-    if Dir["#{Lono.root}/config/**/*.rb"].empty?
-      puts "The config folder does not contain any lono template definitions."
-      quit
-    end
-    if Dir["#{Lono.root}/templates/**/*"].empty?
-      puts "The templates folder does not contain any lono template definitions."
-      quit
-    end
-  end
-
-  def quit
-    if ENV['TEST'] == '1'
-      raise("Not in lono project")
-    else
-      exit 1
+      def quit(signal)
+        if ENV['TEST'] == '1'
+          signal == 0 || raise("Not in lono project")
+        else
+          exit(signal)
+        end
+      end
     end
   end
 end

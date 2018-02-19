@@ -1,5 +1,5 @@
 class Lono::Cfn::Delete
-  include Lono::Cfn::AwsServices
+  include Lono::Cfn::AwsService
   include Lono::Cfn::Util
 
   def initialize(stack_name, options={})

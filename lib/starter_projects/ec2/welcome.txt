@@ -1,0 +1,8 @@
+The example template uses a keypair named default. Be sure that keypair exists.  Or you can adjust the KeyName parameter in config/params/base/example.txt. Here are contents of the file:
+
+  InstanceType=t2.micro
+  KeyName=default
+
+To launch an example CloudFormation stack:
+
+  lono cfn create example

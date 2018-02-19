@@ -4,20 +4,20 @@ require 'base64'
 require 'digest'
 
 class Lono::Template::Upload
-  include Lono::Template::AwsServices
+  include Lono::Template::AwsService
 
   def initialize(options={})
     @options = options
     @checksums = {}
+    @prefix = "#{folder_key}/#{Lono.env}/templates" # s3://s3-bucket/folder/developemnt/templates
   end
 
   def run
     ensure_s3_setup!
     load_checksums!
 
-    paths = Dir.glob("#{Lono.root}/output/**/*")
-    paths.reject { |p| p =~ %r{output/params} }.
-          select { |p| File.file?(p) }.each do |path|
+    paths = Dir.glob("#{Lono.config.output_path}/templates/**/*")
+    paths.select { |p| File.file?(p) }.each do |path|
       upload(path)
     end
     say "Templates uploaded to s3."
@@ -35,12 +35,11 @@ class Lono::Template::Upload
   def load_checksums!
     return if @options[:noop]
 
-    prefix = "#{s3_path}/#{Lono.env}" # s3://s3-bucket-and-path-from-settings/prod
-    resp = s3.list_objects(bucket: s3_bucket, prefix: prefix)
+    resp = s3.list_objects(bucket: s3_bucket, prefix: @prefix)
     resp.contents.each do |object|
       # key does not include the bucket name
-      #    full path = s3://my-bucket/cloudformation-templates/prod/my-template.yml
-      #    key = cloudformation-templates/prod/my-template.yml
+      #    full path = s3://my-bucket/s3_folder/templates/production/my-template.yml
+      #    key = s3_folder/templates/production/my-template.yml
       # etag is the checksum as long as the file is not a multi-part file upload
       # it has extra double quotes wrapped around it.
       #    etag = "\"9cb437490cee2cc96101baf326e5ca81\""
@@ -55,7 +54,7 @@ class Lono::Template::Upload
 
   def upload(path)
     pretty_path = path.sub(/^\.\//, '')
-    key = "#{s3_path}/#{Lono.env}/#{pretty_path.sub(/^output\//,'')}"
+    key = "#{@prefix}/#{pretty_path.sub(%r{output/templates/},'')}"
     s3_full_path = "s3://#{s3_bucket}/#{key}"
 
     local_checksum = Digest::MD5.hexdigest(IO.read(path))
@@ -73,57 +72,66 @@ class Lono::Template::Upload
     ) unless @options[:noop]
 
     # Example output:
-    # Uploaded: output/docker.yml to s3://boltops-stag/cloudformation-templates/stag/docker.yml
-    # Uploaded: output/ecs/private.yml to s3://boltops-stag/cloudformation-templates/stag/ecs/private.yml
+    # Uploaded: output/templates/docker.yml to s3://boltops-dev/s3_folder/templates/development/docker.yml
+    # Uploaded: output/templates/ecs/private.yml to s3://boltops-dev/s3_folder/templates/development/ecs/private.yml
     message = "Uploaded: #{pretty_path} to #{s3_full_path}".colorize(:green)
     message = "NOOP: #{message}" if @options[:noop]
     say message
   end
 
-  # @checksums map has a key format: cloudformation-templates/stag/docker.yml
+  # @checksums map has a key format: s3_folder/templates/development/docker.yml
   #
-  # path = ./output/docker.yml
-  # s3_path = s3://boltops-stag/cloudformation-templates/stag/docker.yml
+  # path = ./output/templates/docker.yml
+  # s3_folder = s3://boltops-dev/s3_folder/templates/development/docker.yml
   def remote_checksum(path)
     # first convert the local path to the path format that is stored in @checksums keys
-    # ./output/docker.yml => cloudformation-templates/stag/docker.yml
+    # ./output/templates/docker.yml => s3_folder/templates/development/docker.yml
     pretty_path = path.sub(/^\.\//, '')
-    key = "#{s3_path}/#{Lono.env}/#{pretty_path.sub(/^output\//,'')}"
+    key = "#{@prefix}/#{pretty_path.sub(%r{output/templates/},'')}"
     @checksums[key]
   end
 
-  # https://s3.amazonaws.com/mybucket/cloudformation-templates/prod/parent.yml
+  # https://s3.amazonaws.com/mybucket/s3_folder/templates/production/parent.yml
   def s3_https_url(template_path)
     ensure_s3_setup!
-    "https://s3.amazonaws.com/#{s3_bucket}/#{s3_path}/#{Lono.env}/#{template_path}"
+    "https://s3.amazonaws.com/#{s3_bucket}/#{@prefix}/#{template_path}"
   end
 
+  # Parse the s3_folder setting and remove the folder portion to leave the
+  # "s3_bucket" portion
   # Example:
-  #    s3_bucket('s3://mybucket/templates/storage/path') => mybucket
+  #    s3_bucket('s3://mybucket/templates/storage/path')
+  #    => mybucket
   def s3_bucket
-    return '' if @options[:noop] # to get spec passing
-    @s3_full_path.sub('s3://','').split('/').first
+    return nil if @options[:noop] # to get spec passing
+    return nil unless s3_folder
+    s3_folder.sub('s3://','').split('/').first
   end
 
+  # The folder_key is the s3_folder setting with the s3 bucket.
+  #
   # Example:
-  #    s3_bucket('s3://mybucket/templates/storage/path') => templates/storage/path
-  def s3_path
-    return '' if @options[:noop] # to get spec passing
-    @s3_full_path.sub('s3://','').split('/')[1..-1].join('/')
+  #    s3_bucket('s3://mybucket/templates/storage/path')
+  #    => templates/storage/path
+  def folder_key
+    return nil if @options[:noop] # to get spec passing
+    return nil unless s3_folder
+    s3_folder.sub('s3://','').split('/')[1..-1].join('/')
+  end
+
+  def s3_folder
+    settings = Lono::Setting.new
+    settings.s3_folder
   end
 
   # nice warning if the s3 path not found
   def ensure_s3_setup!
     return if @options[:noop]
+    return if s3_folder
 
-    settings = Lono::Settings.new
-    if settings.s3_path
-      @s3_full_path = settings.s3_path
-    else
-      say "Unable to upload templates to s3 because you have not configured the s3.path option in lono settings.yml.".colorize(:red)
-      say "Please configure  settings.yml with s3.path.  Refer to http://lono.cloud/docs/settings/ for more help.".colorize(:red)
-      exit 1
-    end
+    say "Unable to upload templates to s3 because you have not configured the s3_folder option in lono settings.yml.".colorize(:red)
+    say "Please configure settings.yml with s3_folder.  For more help: http://lono.cloud/docs/settings/".colorize(:red)
+    exit 1
   end
 
   def say(message)

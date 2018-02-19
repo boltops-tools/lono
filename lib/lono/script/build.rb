@@ -1,0 +1,73 @@
+require "digest"
+require "fileutils"
+
+class Lono::Script
+  class Build < Base
+    # Only avaialble after script has been built.
+    def self.scripts_name
+      new.scripts_name
+    end
+
+    def run
+      Lono::ProjectChecker.check
+      reset
+      if Dir["#{Lono.root}/app/scripts/*"].empty?
+        puts "No detected app/scripts"
+        return
+      else
+        puts "Detected app/scripts"
+      end
+
+      puts "Tarballing app/scripts folder to scripts.tgz"
+      tarball_path = create_tarball
+      save_scripts_info(tarball_path)
+      puts "Tarball created at #{tarball_path}"
+    end
+
+    # Only avaialble after script has been built.
+    def scripts_name
+      IO.read(SCRIPTS_INFO_PATH).strip
+    end
+
+    def reset
+      FileUtils.rm_f(SCRIPTS_INFO_PATH)
+    end
+
+    def create_tarball
+      # https://apple.stackexchange.com/questions/14980/why-are-dot-underscore-files-created-and-how-can-i-avoid-them
+      sh "cd app && dot_clean ." if system("type dot_clean > /dev/null")
+
+      # https://serverfault.com/questions/110208/different-md5sums-for-same-tar-contents
+      # Using tar czf directly results in a new m5sum each time because the gzip
+      # timestamp is included.  So using:  tar -c ... | gzip -n
+      sh "cd app && tar -c scripts | gzip -n > scripts.tgz" # temporary app/scripts.tgz file
+
+      rename_with_md5!
+    end
+
+    # Apppend a md5 to file after it's been created and moves it to
+    # output/scripts/scripts-[MD5].tgz
+    def rename_with_md5!
+      md5_path = "output/scripts/scripts-#{md5sum}.tgz"
+      FileUtils.mkdir_p(File.dirname(md5_path))
+      FileUtils.mv("app/scripts.tgz", md5_path)
+      md5_path
+    end
+
+    def save_scripts_info(scripts_name)
+      FileUtils.mkdir_p(File.dirname(SCRIPTS_INFO_PATH))
+      IO.write(SCRIPTS_INFO_PATH, scripts_name)
+    end
+
+    # cache this because the file will get removed
+    def md5sum
+      @md5sum ||= Digest::MD5.file("app/scripts.tgz").to_s[0..7]
+    end
+
+    def sh(command)
+      puts "=> #{command}"
+      system command
+    end
+
+  end
+end

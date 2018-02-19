@@ -10,12 +10,12 @@
         "Parameters": ["SqlInjectionProtectionParam", "CrossSiteScriptingProtectionParam", "ActivateHttpFloodProtectionParam", "ActivateScansProbesProtectionParam", "ActivateReputationListsProtectionParam", "ActivateBadBotProtectionParam"]
       }, {
         "Label": {
-          "default": "Settings"
+          "default": "Setting"
         },
         "Parameters": ["CloudFrontAccessLogBucket"]
       }, {
         "Label": {
-          "default": "Advanced Settings"
+          "default": "Advanced Setting"
         },
         "Parameters": ["RequestThreshold", "ErrorThreshold", "WAFBlockPeriod"]
       }, {

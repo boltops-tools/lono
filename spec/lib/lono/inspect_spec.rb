@@ -1,20 +1,11 @@
-require_relative "../../spec_helper"
-
 describe Lono::Inspector do
-  before(:all) do
-    @args = "--noop"
+  it "lono xgraph" do
+    out = execute("exe/lono xgraph example --noop")
+    expect(out).to include("Generating dependencies tree")
   end
 
-  describe "lono inspect" do
-    it "depends" do
-      out = execute("exe/lono inspect depends my-stack #{@args}")
-      expect(out).to include("Generating dependencies tree")
-    end
-
-    it "summary" do
-      out = execute("exe/lono inspect summary my-stack #{@args}")
-      expect(out).to include("Summary")
-    end
+  it "lono summary" do
+    out = execute("exe/lono summary example")
+    expect(out).to include("Summary")
   end
 end
-

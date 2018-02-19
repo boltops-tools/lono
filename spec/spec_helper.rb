@@ -1,31 +1,62 @@
 ENV['TEST'] = '1'
 # Ensures aws api never called. Fixture home folder does not contain ~/.aws/credentails
 ENV['HOME'] = "spec/fixtures/home"
-ENV['LONO_ROOT'] = "spec/fixtures/my_project" # this gets kept
-ENV['TMP_LONO_ROOT'] = "./tmp/lono_project" # need the period for the load_custom_helpers require , unsure if I should adjust the LOAD_PATH
+# We'll always re-generate a new lono project in tmp. It can be:
+#
+#   1. copied from spec/fixtures/lono_project
+#   2. generated from `lono new`
+#
+# This is done because changing LONO_ROOT for specs was a mess.
+ENV['LONO_ROOT'] = "tmp/lono_project" # this gets kept
 
 require "pp"
 require "byebug"
-require "bundler"
 
-Bundler.require(:development)
+# require "bundler"
+# Bundler.require(:development)
 
-$root = File.expand_path('../../', __FILE__)
+root = File.expand_path("../", File.dirname(__FILE__))
+require "#{root}/lib/lono"
 
-require "#{$root}/lib/lono"
-
-# require 'coveralls'
-# Coveralls.wear!
-
-module Helpers
+module Helper
   def execute(cmd)
-    puts "Running: #{cmd}" if ENV['DEBUG']
+    puts "Running: #{cmd}" if show_command?
     out = `#{cmd}`
-    puts out if ENV['DEBUG']
+    puts out if show_command?
     out
+  end
+
+  # Added SHOW_COMMAND because DEBUG is also used by other libraries like
+  # bundler and it shows its internal debugging logging also.
+  def show_command?
+    ENV['DEBUG'] || ENV['SHOW_COMMAND']
+  end
+
+  def ensure_tmp_exists
+    FileUtils.mkdir_p("tmp")
+  end
+
+  # Copies spec/fixtures/lono_project to tmp/lono_project,
+  # Main fixture we'll use because it's faster
+  def copy_lono_project
+    destroy_lono_project # just in case KEEP_TMP_PROJECT is used
+    FileUtils.cp_r("spec/fixtures/lono_project", "tmp/lono_project")
+  end
+
+  def destroy_lono_project
+    # Only use KEEP_TMP_PROJECT if you are testing exactly 1 spec for debugging
+    # or it'll affect other tests.
+    FileUtils.rm_rf(Lono.root)
   end
 end
 
 RSpec.configure do |c|
-  c.include Helpers
+  c.include Helper
+  c.before(:all) do
+    ensure_tmp_exists
+    copy_lono_project
+  end
+  c.after(:all) do
+    destroy_lono_project unless ENV['KEEP_TMP_PROJECT']
+  end
 end

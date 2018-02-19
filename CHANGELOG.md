@@ -65,7 +65,7 @@ This project *tries* to adhere to [Semantic Versioning](http://semver.org/), eve
 - Format and Extension Detection
 - Custom Helper Support
 - Source Name Convention Support
-- Settings File Support
+- Setting File Support
 
 ## [2.1.0]
 - improve instance_eval error when lono.rb errors, print out line of code and context

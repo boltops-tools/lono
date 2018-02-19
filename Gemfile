@@ -1,6 +1,6 @@
 source "https://rubygems.org"
+
+# Specify your gem dependencies in lono.gemspec
 gemspec
 
-group :development do
-  gem 'coveralls', require: false
-end
+gem "codeclimate-test-reporter", group: :test, require: nil

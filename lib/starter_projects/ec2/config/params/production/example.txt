@@ -1,0 +1,2 @@
+# parameters in here override parameters/base/example.txt for LONO_ENV=production
+InstanceType=t2.large

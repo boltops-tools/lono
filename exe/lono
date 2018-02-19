@@ -6,5 +6,6 @@ Signal.trap("INT") {
   sleep 1
   exit
 }
+
 require_relative "../lib/lono"
 Lono::CLI.start

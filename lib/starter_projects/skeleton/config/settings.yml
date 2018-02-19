@@ -1,0 +1,42 @@
+# More info: http://lono.cloud/docs/settings/
+# The base config is specially treated. It gets included the other environments automatically.
+# Yaml also directly supports merging with & and <<* syntax but doing it automatically
+# for a cleaner syntax.
+base:
+  # The scripts settings adjust the extract_scripts helper which produces bash
+  # code that extracts app/scripts into /opt/scripts. It is useful to add to the top
+  # of a user-data script like so:
+  #
+  #   <%%= extract_scripts(to: "/opt") %>
+  #
+  # You can find the bash code in the extract_scripts helper in:
+  # https://github.com/tongueroo/lono/blob/version-4/lib/lono/template/helper.rb
+  # scripts:
+  #   to: "/opt"
+  #   user: "ec2-user"
+  # If s3_folder is set then the generated templates and app/scripts will automatically
+  # be uploaded to s3.
+  # There are 2 formats for s3_folder:
+  # Format 1:
+  # s3_folder: mybucket/path/to/folder # simple string
+  # Format 2:
+  # s3_folder: # Hash options in order to support multiple AWS_PROFILEs
+  #   default: mybucket/path
+  #   aws_profile1: mybucket/path
+  #   aws_profile2: another-bucket/storage/path
+  # randomize_stack_name: true # tack on a 3 char random string at the end of the stack name for lono cfn create
+
+
+development:
+  # cluster: dev
+  # When you have AWS_PROFILE set to one of these values, ufo will switch to the desired
+  # environment. This prevents you from switching AWS_PROFILE, forgetting to
+  # also switch UFO_ENV, and accidentally deploying to production vs development.
+  # aws_profiles:
+  #   - dev_profile1
+  #   - dev_profile2
+
+production:
+  # cluster: prod
+  # aws_profiles:
+  #   - prod_profile

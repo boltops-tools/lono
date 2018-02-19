@@ -16,7 +16,7 @@ class Lono::Cfn::Update < Lono::Cfn::Base
       puts "Cannot update a stack because the #{@stack_name} does not exists."
       return
     end
-    exist_unless_updatable(stack_status(@stack_name))
+    exit_unless_updatable!(stack_status(@stack_name))
 
     error = nil
     diff.run if @options[:diff]
@@ -34,14 +34,16 @@ class Lono::Cfn::Update < Lono::Cfn::Base
 
   def standard_update(params)
     template_body = IO.read(@template_path)
+    params = {
+      stack_name: @stack_name,
+      template_body: template_body,
+      parameters: params,
+      capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
+      disable_rollback: !@options[:rollback],
+    }
+    show_parameters(params, "cfn.update_stack")
     begin
-      cfn.update_stack(
-        stack_name: @stack_name,
-        template_body: template_body,
-        parameters: params,
-        capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
-        disable_rollback: !@options[:rollback],
-      )
+      cfn.update_stack(params)
     rescue Aws::CloudFormation::Errors::ValidationError => e
       puts "ERROR: #{e.message}".red
       error = true

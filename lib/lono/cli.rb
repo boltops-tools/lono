@@ -1,63 +1,88 @@
-require 'thor'
-require 'lono/command'
-
 module Lono
-  autoload :Help, 'lono/help'
-  class CLI < Lono::Command
+  class CLI < Command
 
-    desc "new [NAME]", "Generates lono starter project"
-    long_desc Help.new_long_desc
-    option :force, type: :boolean, aliases: "-f", desc: "override existing starter files"
-    option :quiet, type: :boolean, aliases: "-q", desc: "silence the output"
-    option :format, type: :string, default: "yaml", desc: "starter project template format: json or yaml"
-    def new(project_root)
-      Lono::New.new(options.clone.merge(project_root: project_root)).run
+    long_desc Help.text(:new)
+    New.cli_options.each do |args|
+      option *args
     end
+    register(New, "new", "new NAME", "generates new CLI project")
 
-    desc "import [SOURCE]", "Imports raw CloudFormation template and lono-fies it"
-    long_desc Help.import
-    option :format, type: :string, default: "yaml", desc: "format for the final template"
+    desc "import SOURCE", "Imports raw CloudFormation template and lono-fies it"
+    long_desc Help.text(:import)
     option :casing, default: "underscore", desc: "camelcase or underscore the template name"
-    option :name, default: nil, desc: "final name of downloaded template without extension"
+    option :name, required: true, default: nil, desc: "final name of downloaded template without extension"
+    option :summary, default: true, type: :boolean, desc: "provide template summary after import"
     def import(source)
       Importer.new(source, options).run
     end
 
     desc "generate", "Generate both CloudFormation templates and parameters files"
-    Help.generate
-    option :clean, type: :boolean, aliases: "-c", desc: "remove all output files before generating"
-    option :quiet, type: :boolean, aliases: "-q", desc: "silence the output"
-    option :pretty, type: :boolean, default: true, desc: "json pretty the output.  only applies with json format"
+    long_desc Help.text(:generate)
+    option :clean, type: :boolean, desc: "remove all output files before generating"
+    option :quiet, type: :boolean, desc: "silence the output"
     def generate
-      puts "Generating both CloudFormation template and parameter files."
-      Lono::Template::DSL.new(options.clone).run
-      Lono::Param::Generator.generate_all(options.clone)
+      puts "Generating CloudFormation templates, parameters, and scripts"
+      Script::Build.new(options).run
+      Template::DSL.new(options).run
+      Param::Generator.generate_all(options)
+    end
+
+    desc "summary STACK", "Prints summary of CloudFormation template"
+    long_desc Help.text("summary")
+    def summary(name)
+      Lono::Inspector::Summary.new(name, options).run
+    end
+
+    desc "xgraph STACK", "Graphs dependencies tree of CloudFormation template resources"
+    long_desc Help.text("graph")
+    option :display, type: :string, desc: "graph or text", default: "graph"
+    option :noop, type: :boolean, desc: "noop mode"
+    def xgraph(name)
+      Lono::Inspector::Graph.new(name, options).run
     end
 
     desc "clean", "Clean up generated files"
     def clean
-      Lono::Clean.new(options.clone).run
+      Clean.new(options).run
+    end
+
+    desc "completion *PARAMS", "prints words for auto-completion"
+    long_desc Help.text("completion")
+    def completion(*params)
+      Completer.new(CLI, *params).run
+    end
+
+    desc "completion_script", "generates script that can be eval to setup auto-completion", hide: true
+    long_desc Help.text("completion_script")
+    def completion_script
+      Completer::Script.generate
+    end
+
+    desc "upgrade4", "upgrade from version 3 to 4"
+    long_desc Help.text("upgrade3")
+    def upgrade4
+      Upgrade4.new(options).run
     end
 
     desc "version", "Prints version"
     def version
-      puts Lono::VERSION
+      puts VERSION
     end
 
-    desc "template ACTION", "template subcommand tasks"
-    long_desc Help.template
+    desc "template SUBCOMMAND", "template subcommand tasks"
+    long_desc Help.text(:template)
     subcommand "template", Template
 
-    desc "cfn ACTION", "cfn subcommand tasks"
-    long_desc Help.cfn
+    desc "cfn SUBCOMMAND", "cfn subcommand tasks"
+    long_desc Help.text(:cfn)
     subcommand "cfn", Cfn
 
-    desc "param ACTION", "param subcommand tasks"
-    long_desc Help.param
-    subcommand "param", Lono::Param
+    desc "param SUBCOMMAND", "param subcommand tasks"
+    long_desc Help.text(:param)
+    subcommand "param", Param
 
-    desc "inspect ACTION", "inspect subcommand tasks"
-    long_desc Help.inspector
-    subcommand "inspect", Inspector
+    desc "script SUBCOMMAND", "script subcommand tasks"
+    long_desc Help.text(:script)
+    subcommand "script", Script
   end
 end
