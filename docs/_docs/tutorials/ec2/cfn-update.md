@@ -36,7 +36,7 @@ By default, the update command will display a preview of the stack changes befor
 lono cfn update example --template instance_and_route53 --sure
 ```
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/tutorial-cfn-create.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/tutorial-cfn-preview.md %}">Next Step</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/cfn-create.md %}">Back</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/tutorials/ec2/cfn-preview.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
 

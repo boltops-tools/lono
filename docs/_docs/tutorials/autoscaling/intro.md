@@ -1,5 +1,5 @@
 ---
-title: Tutorial
+title: Tutorial AutoScaling
 ---
 
 In the following sections, we'll walk through a tutorial using an [Load-based Auto Scaling CloudFormation sample template](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sample-templates-services-us-west-2.html#w2ab2c23c48c13b7).

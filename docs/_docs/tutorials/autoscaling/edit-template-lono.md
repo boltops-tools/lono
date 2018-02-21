@@ -1,5 +1,5 @@
 ---
-title: "Tutorial: Edit Template"
+title: "Tutorial: Edit Template Lono"
 ---
 
 The imported AutoScaling template contains a Load Balancer and AutoScaling.  It is designed for web applications.  Let's say we still wanted AutoScaling but do not need the Load Balancer.  A common example of this use case is an AutoScaling worker or queue tier.  We can achieve this in several ways.
@@ -15,11 +15,11 @@ Lono introduces a Compile phase where it takes the `app/templates` files, uses E
 We'll show you 2 approaches so you can get a sense, learn, and decide when you want to use one approach over the other. The 2 approaches:
 
 1. Compiling Different Templates with Lono
-2. Using Standard CloudFormation Logical Constructs
+2. Using Native CloudFormation Logical Constructs
 
 ### Compiling Different Templates Approach
 
-Compiling different templates is pretty straightforward with lono templates.  The source code for these changes are in the lono-constructs branch of [lono-tutorial-autoscaling](https://github.com/tongueroo/lono-tutorial-autoscaling/blob/standard-constructs/app/templates/autoscaling.yml).  Let's take a look at the relevant [changes](https://github.com/tongueroo/lono-tutorial-autoscaling/compare/lono-constructs).
+Compiling different templates is pretty straightforward with lono templates.  The source code for these changes are in the lono-constructs branch of [lono-tutorial-autoscaling](https://github.com/tongueroo/lono-tutorial-autoscaling/blob/native-constructs/app/templates/autoscaling.yml).  Let's take a look at the relevant [changes](https://github.com/tongueroo/lono-tutorial-autoscaling/compare/lono-constructs).
 
 We changed the `app/definitions/base.rb`:
 
@@ -118,69 +118,9 @@ lono cfn create autoscaling-worker
 
 This is due to conventions that lono uses. If no param option is provided, then the convention is for the param file to default to the name of the template option. The conventions covered in detailed in [Conventions]({% link _docs/conventions.md %}).
 
-### Standard CloudFormation Logical Constructs Approach
+#### Clean Up
 
-Using standard CloudFormation logical constructs is a little bit different but just as valid of an approach. Sometimes it is preferable to compiling different templates; it just depends.  Here are the changes required to make the desired adjustments: [compare/standard-constructs](https://github.com/tongueroo/lono-tutorial-autoscaling/compare/standard-constructs).  Note, UserData and the UpdatePolicy were to removed for the sake of this guide and to focus on learning.
-
-The critical added element that drives the conditional logic is a parameter and 2 conditions.  The parameter is called `CreateLoadBalancer` and the conditions are called `HasLoadBalancer` and `NoLoadBalancer`. Here's the relevant snippet of code:
-
-
-```yaml
-Parameters
-...
-  CreateLoadBalancer:
-    Type: String
-    Description: 'Determines if a Load Balancer is created. Example: true or false'
-Conditions:
-  HasLoadBalancer: !Equals [ !Ref CreateLoadBalancer, "true" ]
-  NoLoadBalancer: !Equals [ !Ref CreateLoadBalancer, "false" ]
-```
-
-The rest of the template uses these 2 new conditions to determine whether or not to create a Load Balancer.  For Properties, the use of the conditions look something like this:
-
-Before:
-
-```yaml
-     Properties:
-       SecurityGroups:
-      - Ref: InstanceSecurityGroup
-```
-
-After:
-
-```yaml
-     Properties:
-       SecurityGroups:
-      - !If [HasLoadBalancer, !Ref WebInstanceSecurityGroup, !Ref WorkerInstanceSecurityGroup]
-```
-
-For template resources, we usually have to define 2 resources and then toggle between them with the conditions like so:
-
-Before:
-
-```yaml
-  InstanceSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-```
-
-After:
-
-```yaml
-  WebInstanceSecurityGroup:
-    Condition: HasLoadBalancer
-    Type: AWS::EC2::SecurityGroup
-    ...
-  WorkerInstanceSecurityGroup:
-    Condition: NoLoadBalancer
-    Type: AWS::EC2::SecurityGroup
-    ...
-```
-
-For the sake of this guide, feel free to grab `app/templates/autoscaling` from the [standard-constructs](https://github.com/tongueroo/lono-tutorial-autoscaling/blob/standard-constructs/app/templates/autoscaling.yml) branch and update the code.
-
-#### Launch Stack
-
-Let's do a little clean up and delete some of the stacks before launching the new stacks:
+Let's do a little clean up and delete some of the stacks before continuing with the `lono cfn delete` command:
 
 ```
 lono cfn delete autoscaling-web
@@ -188,20 +128,5 @@ lono cfn delete autoscaling-worker
 lono cfn delete autoscaling
 ```
 
-After they have completed deletion, we're ready to relaunch both stacks:
-
-```
-lono cfn create autoscaling-web --template autoscaling --param autoscaling-web
-lono cfn create autoscaling-worker --template autoscaling --param autoscaling-worker
-```
-
-In this case, we need to specify both `--template` and `--param` options since it breaks away from lono conventions.  We have successfully relaunched stacks!  This time with standard CloudFormation constructs.  Remember to delete the stacks.
-
-### Thoughts
-
-We have successfully edited existing CloudFormation templates and taken 2 approaches to adding conditional logic:
-
-1. Compiling Different Templates with Lono
-2. Using Standard CloudFormation Logical Constructs
-
-A major difference is when the conditional logic gets determined. When we use standard CloudFormation constructs, the logical decisions get made at **run-time**. When we use lono to produce multiple templates it happens at **compile time**.  Whether this is good or bad is really up to how you use it. Remember, "With great power comes great responsibility."
+#### Congrats
+Congraluations 🎉 You have successfully added conditional logic to CloudFormation templates that decides whether or not to create a Load Balancer.

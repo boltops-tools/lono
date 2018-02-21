@@ -68,7 +68,7 @@ The template that will be used is `output/different3.json` and the parameters wi
 
 In the next steps, you will learn about some useful commands lono provides to help you update the templates.
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/tutorial-params-build.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/tutorial-cfn-update.md %}">Next Step</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/params-build.md %}">Back</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/tutorials/ec2/cfn-update.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
 
