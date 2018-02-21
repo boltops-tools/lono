@@ -18,7 +18,7 @@ module Lono
 
     desc "generate", "Generate both CloudFormation templates and parameters files"
     long_desc Help.text(:generate)
-    option :clean, type: :boolean, desc: "remove all output files before generating"
+    option :clean, type: :boolean, default: true, desc: "remove all output files before generating"
     option :quiet, type: :boolean, desc: "silence the output"
     def generate
       puts "Generating CloudFormation templates, parameters, and scripts"

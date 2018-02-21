@@ -6,7 +6,7 @@ In the following sections, we'll walk through a tutorial using an [Load-based Au
 
 1. We'll import the template from the AWS Documentation Sample.
 2. Explore the lono project and familarize ourselves with some of the [directory structure]({% link _docs/directory-structure.md %}).
-3. Make some adjustments by adding removing the Load Balancer.
+3. Make some adjustments by adding and removing a Load Balancer.
 4. Launch 2 versions of the stack.
 
 This will give you a chance to learn how lono works and experiment with the lono commands. By the end, hopefully you'll have a good sense of how things work.

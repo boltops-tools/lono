@@ -22,7 +22,7 @@ The template configurations are defined in the `config/templates` folder.  The t
 
 ### Shared Variables
 
-Template shared variables are available to all template config blocks and template views.  The variables are defined in the `config/variables` folder.  The variable configuration component is covered in detailed at the [Shared Variables docs]({% link _docs/config-variables.md %}).
+Template shared variables are available to all template config blocks and template views.  The variables are defined in the `config/variables` folder.  The variable configuration component is covered in detailed at the [Shared Variables docs]({% link _docs/shared-variables.md %}).
 
 ### Template Views
 

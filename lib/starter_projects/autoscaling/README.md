@@ -71,6 +71,7 @@ OperatorEMail=
 KeyName=
 #InstanceType=        # optional
 #SSHLocation=         # optional
+$
 ```
 
 The template was imported from [CloudFormation Auto Scaling Samples](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sample-templates-services-us-west-2.html#w2ab2c23c48c13b7).

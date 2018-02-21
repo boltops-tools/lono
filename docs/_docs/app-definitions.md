@@ -113,5 +113,5 @@ template "example"
 You might think that you will always need to specify template variables in the code block but it is not always necessary depending on how you use shared variables which are covered next.
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/import-template.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/config-variables.md %}">Next Step</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/shared-variables.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

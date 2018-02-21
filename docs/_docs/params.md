@@ -61,6 +61,6 @@ Will produce:
 
 Lono param files also support layering which is covered in [Layering Support]({% link _docs/layering.md %}).
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/config-variables.md %}">Back</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/shared-variables.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/layering.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
