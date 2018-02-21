@@ -5,68 +5,74 @@ title: Create the Stack
 We are now ready to create the stack.  Let's launch it!
 
 ```sh
-lono cfn create example --template single_instance
+lono cfn create ec2
 ```
 
-You should see this similar output.
+You should see similar output.
 
 ```sh
-$ lono cfn create example --template single_instance
-Using template: output/single_instance.yml
-Using parameters: params/prod/single_instance.txt
+$ lono cfn create ec2
+Using template: output/templates/ec2.yml
+Using parameters: config/params/development/ec2.txt
+No detected app/scripts
 Generating CloudFormation templates:
-  output/single_instance.yml
-  output/instance_and_route53.yml
-Params file generated for example at output/params/prod/example.json
-Creating example stack.
+  output/templates/ec2.yml
+  output/params/ec2.json
+Parameters passed to cfn.create_stack:
+---
+stack_name: ec2
+template_body: 'Hidden due to size... View at: output/templates/ec2.yml'
+parameters:
+- parameter_key: KeyName
+  parameter_value: default
+capabilities:
+disable_rollback: false
+Creating ec2 stack.
 $
 ```
 
-In the previous steps, we ran `lono generate` manually to demonstrate how lono generates CloudFormation templates and parameter files.  Notice that `lono cfn create` also automatically generates calls `lono generate` and generates the template and parameter files for you!
-
 You can check on the status of the stack creation with the AWS Console.  It should look similar to this:
 
-<img src="/img/tutorial/stack-created.png" alt="Stack Created" class="doc-photo">
+<img src="/img/tutorials/ec2/stack-created.png" alt="Stack Created" class="doc-photo">
 
 Congratulations!  You have successfully created a CloudFormation stack with lono.
 
+### lono generate
+
+Let's take a closer look at the output of the `lono cfn create` command. Notice that it generated the template and parameter files from what was imported and wrote them to `output/templates` and `output/params`.  When working with templates, it is helpful to generate the templates and inspect them without launching a stack.  We can use the `lono generate` command to do that:
+
+```
+$ lono generate
+Generating CloudFormation templates, parameters, and scripts
+No detected app/scripts
+Generating CloudFormation templates:
+  output/templates/ec2.yml
+Generating parameter files:
+  output/params/ec2.json
+$
+```
+
+You can then inspect `output/templates/ec2.yml` as well as `output/params/ec2.json` to make sure everything looks good before running `lono cfn create`.
+
 ### lono cfn create
 
-Let's review the `lono cfn create` command in a little more detail.
-
-Long form:
+Let's review the `lono cfn create` command in a little bit more detail.  We the following command to launch the stack:
 
 ```
-$ lono cfn create mystack --template mystack --params --mystack
+lono cfn create ec2
 ```
 
-Short form:
+Let's say we wanted a different set of parameters, like using a different keypair. We could create another params file and adjust it there.
 
 ```
-$ lono cfn create mystack
+cp config/params/base/ec2.txt config/params/base/ec2-different.txt
+lono cfn create ec2 --template ec2 --param --ec2-different
 ```
 
-Both template and params conventions can be overridden.  Here are examples of overriding the template and params name conventions.
+Notice, that we needed to specific the `--template` and `--param` option in this case. We did not have to specifiy it before because lono uses a set of conventions. If no param option is provided, then the convention is for the param file to default to the name of the template option. The conventions covered in detailed in [Conventions]({% link _docs/conventions.md %}) and makes for shorter commands when files are named consistently.
 
-```
-$ lono cfn create mystack --template different1
-```
 
-The template that will be use is `output/different1.json` and the parameters will use `output/params/prod/different1.json`.
-
-```
-$ lono cfn create mystack --params different2
-```
-
-The template that will be use is `output/different2.json` and the parameters will use `output/params/prod/different2.json`.
-
-```
-$ lono cfn create mystack --template different3 --params different4
-```
-
-The template that will be used is `output/different3.json` and the parameters will use `output/params/prod/different4.json`.
-
-In the next steps, you will learn about some useful commands lono provides to help you update the templates.
+Next, we'll make some edits to the template and learn how to update the stack.
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/params-build.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/tutorials/ec2/cfn-update.md %}">Next Step</a>

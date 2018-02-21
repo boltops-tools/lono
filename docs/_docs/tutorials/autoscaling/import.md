@@ -83,7 +83,7 @@ KeyName=
 #SSHLocation=         # optional
 ```
 
-We can tell that we need to set the `VpcId`, `Subnets`, `OperatorEMail`, and `KeyName` to use the template parameters to use the template.
+We can tell that we need to set the `VpcId`, `Subnets`, `OperatorEMail`, and `KeyName` template parameters to use the template.
 
 ### Configure Parameter Values
 

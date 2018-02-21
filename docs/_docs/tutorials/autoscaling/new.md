@@ -1,28 +1,28 @@
 ---
-title: "Tutorial EC2: Starting with lono new ec2"
+title: "Tutorial: Starting with lono new autoscaling"
 ---
 
 The first command we'll walk through is the `lono new` command.  Here's the command with some output to focus on learning.
 
 ```
-$ lono new ec2
-=> Creating new project called ec2.
-      create  ec2
-      create  ec2/.gitignore
-      create  ec2/Gemfile
-      create  ec2/Guardfile
-      create  ec2/README.md
-      create  ec2/app/definitions/base.rb
-      create  ec2/config/settings.yml
-      create  ec2/welcome.txt
-      create  ec2/app/helpers
-      create  ec2/app/partials
-      create  ec2/app/scripts
-      create  ec2/app/templates
-      create  ec2/app/user_data
-      create  ec2/config/params
-      create  ec2/config/variables
-      create  ec2/output
+$ lono new autoscaling
+=> Creating new project called autoscaling.
+      create  autoscaling
+      create  autoscaling/.gitignore
+      create  autoscaling/Gemfile
+      create  autoscaling/Guardfile
+      create  autoscaling/README.md
+      create  autoscaling/app/definitions/base.rb
+      create  autoscaling/config/settings.yml
+      create  autoscaling/welcome.txt
+      create  autoscaling/app/helpers
+      create  autoscaling/app/partials
+      create  autoscaling/app/scripts
+      create  autoscaling/app/templates
+      create  autoscaling/app/user_data
+      create  autoscaling/config/params
+      create  autoscaling/config/variables
+      create  autoscaling/output
 => Installing dependencies with: bundle install
 => Initialize git repo
 ================================================================
@@ -30,7 +30,7 @@ Congrats 🎉 You have successfully created a lono project.
 
 Cd into your project and check things out:
 
-  cd ec2
+  cd autoscaling
 
 Add and edit templates to your project.  When you are ready to launch a CloudFormation stack run:
 
@@ -59,3 +59,4 @@ The new command does a few things:
 4. Displays a welcome message and provides some guidance on what to do next
 
 Let's focus on the project structure since this might be your first time looking at a lono.
+
