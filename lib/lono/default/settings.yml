@@ -13,7 +13,7 @@ base:
   # https://github.com/tongueroo/lono/blob/version-4/lib/lono/template/helper.rb
   # scripts:
   #   to: "/opt"
-  #   user: "ec2-user"
+  #   as: "ec2-user"
   # If s3_folder is set then the generated templates and app/scripts will automatically
   # be uploaded to s3.
   # There are 2 formats for s3_folder:
