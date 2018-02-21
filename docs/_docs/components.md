@@ -18,7 +18,7 @@ Template configurations are:
 2. what variables to make available for those templates
 3. where the output template files should be written to
 
-The template configurations are defined in the `config/templates` folder.  The template configuration component is covered in detailed at the [Template Configurations docs]({% link _docs/config-templates.md %}).
+The template configurations are defined in the `config/templates` folder.  The template configuration component is covered in detailed at the [Template Configurations docs]({% link _docs/app-definitions.md %}).
 
 ### Shared Variables
 
@@ -26,7 +26,7 @@ Template shared variables are available to all template config blocks and templa
 
 ### Template Views
 
-Template views are ERB templates that are put together to build the CloudFormation templates. The template views are defined in the `templates` folder.  Variable substitution and partial rendering are both supported and provide a powerful way to build templates.  The template view is covered more detail in the [Template Configurations docs]({% link _docs/config-templates.md %}).  Template view helpers are also covered in the [Template Helpers docs]({% link _docs/template-helpers.md %}).
+Template views are ERB templates that are put together to build the CloudFormation templates. The template views are defined in the `templates` folder.  Variable substitution and partial rendering are both supported and provide a powerful way to build templates.  The template view is covered more detail in the [Template Configurations docs]({% link _docs/app-definitions.md %}).  Template view helpers are also covered in the [Template Helpers docs]({% link _docs/template-helpers.md %}).
 
 ### Param Files
 

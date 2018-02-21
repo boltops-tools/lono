@@ -14,6 +14,6 @@ This will give you a chance to learn how lono works and experiment with the lono
 Let's start!
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/install.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/tutorial-build-from-scratch.md %}">Next Step</a>
+<a id="next" class="btn btn-primary" href="">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
 

@@ -45,5 +45,5 @@ Answer: I prefer filenames to be underscore. However, CloudFormation stack names
 This blog post [Introducing the lono import Command](https://blog.boltops.com/2017/09/15/introducing-the-lono-import-command) also covers `lono import`.
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/lono-env.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/config-templates.md %}">Next Step</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/app-definitions.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

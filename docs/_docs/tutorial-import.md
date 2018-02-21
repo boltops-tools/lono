@@ -1,5 +1,5 @@
 ---
-title: Tutorial: Import Template
+title: "Tutorial: Import Template"
 ---
 
 Lono provides a `lono import URL --name NAME` command that makes simple to grab a template and use it in a lono project.  Let's take a look at the [Load-based Auto Scaling CloudFormation sample template](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sample-templates-services-us-west-2.html#w2ab2c23c48c13b7).

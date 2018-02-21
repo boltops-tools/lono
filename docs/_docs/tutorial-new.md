@@ -1,8 +1,8 @@
 ---
-title: Tutorial: Starting with lono new
+title: "Tutorial: Starting with lono new"
 ---
 
-The first command we'll walk through is the `lono new` command.  Here's the command with some output filtered to focus on learning.
+The first command we'll walk through is the `lono new` command.  Here's the command with some output to focus on learning.
 
 ```
 $ lono new autoscaling
@@ -24,27 +24,7 @@ $ lono new autoscaling
       create  autoscaling/config/variables
       create  autoscaling/output
 => Installing dependencies with: bundle install
-Fetching gem metadata from https://rubygems.org/..
-Resolving dependencies...
-Using lono 3.5.0
-Bundle complete! 1 Gemfile dependency, 37 gems now installed.
-Use `bundle info [gemname]` to see where a bundled gem is installed.
 => Initialize git repo
-         run  git init from "."
-Initialized empty Git repository in /Users/tung/src/tongueroo/lono-examples/autoscaling/.git/
-         run  git add . from "."
-         run  git commit -m 'first commit' from "."
-[master (root-commit) bd28153] first commit
- 8 files changed, 215 insertions(+)
- create mode 100644 .gitignore
- create mode 100644 Gemfile
- create mode 100644 Gemfile.lock
- create mode 100644 Guardfile
- create mode 100644 README.md
- create mode 100644 app/definitions/base.rb
- create mode 100644 config/settings.yml
- create mode 100644 welcome.txt
-welcome_path "/Users/tung/src/tongueroo/lono/lib/starter_projects//welcome.txt"
 ================================================================
 Congrats 🎉 You have successfully created a lono project.
 
@@ -71,19 +51,12 @@ More info: http://lono.cloud/
 $
 ```
 
-You do not have to start with an empty folder as your lono project. Normally, you use `lono new project-name` to generate a new lono project with the proper structure.  Example:
+The new command does a few things:
 
-```
-$ lono new infra
-Setting up lono project
-creating: infra/config/templates/base/stacks.rb
-creating: infra/config/templates/prod/stacks.rb
-creating: infra/config/templates/stag/stacks.rb
-creating: infra/config/variables/base/variables.rb
-creating: infra/config/variables/prod/variables.rb
-creating: infra/config/variables/stag/variables.rb
-already exists: infra/Gemfile
-already exists: infra/Guardfile
-creating: infra/helpers/my_custom_helper.rb
-creating: infra/params/base/example.txt
-creating: infra/params/prod/example.txt
+1. Generates a starter lono project structure
+2. Installs the projects dependencies
+3. Initialized a git repository
+4. Displays a welcome message and provides some guidance on what to do next
+
+Let's focus on the project structure since this might be your first time looking at a lono.
+
