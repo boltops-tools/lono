@@ -5,7 +5,6 @@ class Lono::Script
   class Upload < Base
     def run
       Lono::ProjectChecker.check
-      check_s3_folder_setting
       return unless scripts_built?
 
       upload(tarball_path)
