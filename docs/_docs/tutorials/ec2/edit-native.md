@@ -6,7 +6,7 @@ title: "Tutorial EC2: Edit Template Natively"
 
 In the last section, we added conditional logical to create or not create an EIP using lono. In this section, we'll use native CloudFormation constructs. Hopefully, this gives you a sense of the differences between the 2 approaches.
 
-Using native CloudFormation logical constructs is a little bit different but is just as valid of an approach. Sometimes it is preferable over compiling different templates; it just depends.  Here are the changes required to make the desired adjustments: [compare/eip-native](https://github.com/tongueroo/lono-tutorial-ec2/compare/eip-native).
+Using native CloudFormation logical constructs is a little bit different but is just another valid approach. Sometimes it is preferable over compiling different templates; it just depends.  Here are the changes required to make the desired adjustments: [compare/eip-native](https://github.com/tongueroo/lono-tutorial-ec2/compare/eip-native).
 
 The critical added element that drives the conditional logic is a parameter and 2 conditions.  The parameter is called `CreateEIP` and the conditions are called `HasEIP` and `NoEIP`. Here's the relevant snippet of code:
 
@@ -38,9 +38,7 @@ The rest of the template uses these 2 new conditions to determine whether or not
         Ref: IPAddress
 ```
 
-Sometimes for template resources, we have to define 2 resources and then toggle between them with the conditions, but this the case of this simple template we do not have to use that technique.
-
-For the sake of this guide, feel free to grab `app/templates/ec2.yml` from the [eip-native](https://github.com/tongueroo/lono-tutorial-ec2/blob/eip-native/app/templates/ec2.yml) branch and update the code.
+In this case, the changes are pretty simple with this approach.  For the sake of this guide, feel free to grab `app/templates/ec2.yml` from the [eip-native](https://github.com/tongueroo/lono-tutorial-ec2/blob/eip-native/app/templates/ec2.yml) branch and update the code to create the stacks.
 
 #### Launch Stack
 
@@ -67,4 +65,4 @@ We have successfully edited existing CloudFormation templates and taken 2 approa
 1. Compiling Different Templates with Lono
 2. Using Native CloudFormation Logical Constructs
 
-A major difference is when the conditional logic gets determined. When we use standard CloudFormation constructs, the logical decisions get made at **run-time**. When we use lono to produce multiple templates it happens at **compile time**.  Whether this is good or bad is really up to how you use it. Remember, "With great power comes great responsibility."
+A major difference is when the conditional logic gets determined. When we use standard CloudFormation constructs, the logical decisions are made at **run-time**. When we use lono to produce multiple templates it happen at **compile time**.  Whether this is good or bad is really up to how you use it. Remember, "With great power comes great responsibility."

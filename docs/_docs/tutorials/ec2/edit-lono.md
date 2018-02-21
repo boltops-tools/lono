@@ -44,6 +44,8 @@ end
 
 We also modified the [ec2.yml code](https://github.com/tongueroo/lono-tutorial-ec2/blob/eip/app/templates/ec2.yml) and used ERB to add conditional logic to the template. We added `<% if @eip %>` checks to the sections of the template where we want to include EIP related components.  You can see the exact adjustments with the [compare view](https://github.com/tongueroo/lono-tutorial-ec2/compare/eip).
 
+### ERB vs CloudFormation Template
+
 We're are not limited to just if statements.  Since this is ERB, we can use loops, variables, expressions, etc.  Here is a good post covering ERB templates [An Introduction to ERB Templating](http://www.stuartellis.name/articles/erb/). Additionally, we have access to [built-in helpers]({% link _docs/builtin-helpers.md %}) and [shared variables]({% link _docs/shared-variables.md %}).  You can also define your own [custom helpers]({% link _docs/custom-helpers.md %}) if you need to.
 
 #### Lono Generate
