@@ -2,7 +2,7 @@
 title: "Tutorial: Edit Template"
 ---
 
-The current AutoScaling template contains a Load Balancer and AutoScaling.  It is designed for web applications.  Let's say we still wanted AutoScaling but do not need the Load Balancer.  An common example of this use case is an AutoScaling  worker or queue tier.  We can achieve this in several ways.
+The imported AutoScaling template contains a Load Balancer and AutoScaling.  It is designed for web applications.  Let's say we still wanted AutoScaling but do not need the Load Balancer.  A common example of this use case is an AutoScaling worker or queue tier.  We can achieve this in several ways.
 
 ### Lono Phases Review
 
@@ -19,9 +19,17 @@ We'll show you 2 approaches so you can get a sense, learn, and decide when you w
 
 ### Compiling Different Templates Approach
 
-This is pretty straightforward to do with lono templates.  The source code for these changes are in the lono-constructs branch of [lono-tutorial-autoscaling](https://github.com/tongueroo/lono-tutorial-autoscaling/blob/standard-constructs/app/templates/autoscaling.yml).  Let's take a look at the relevant [changes](https://github.com/tongueroo/lono-tutorial-autoscaling/compare/lono-constructs).
+Compiling different templates is pretty straightforward with lono templates.  The source code for these changes are in the lono-constructs branch of [lono-tutorial-autoscaling](https://github.com/tongueroo/lono-tutorial-autoscaling/blob/standard-constructs/app/templates/autoscaling.yml).  Let's take a look at the relevant [changes](https://github.com/tongueroo/lono-tutorial-autoscaling/compare/lono-constructs).
 
-We changed the `app/definitions/base.rb` to:
+We changed the `app/definitions/base.rb`:
+
+Before:
+
+```ruby
+template "autoscaling" do
+```
+
+After:
 
 ```ruby
 template "autoscaling-web" do
@@ -38,7 +46,7 @@ Then we added `<% if @load_balancer %>` checks to the sections of the template w
 
 #### Lono Generate
 
-Then, it is helpful to generate the templates and verify that the generated templates `output/templates` are what we expect before launching.
+It is helpful to generate the templates and verify that the files in `output/templates` look like what we expect before launching.
 
 ```
 $ lono generate
@@ -56,8 +64,6 @@ You can also use `lono summary` to see that the resources are different. Here's 
 
 ```
 $ lono summary autoscaling-web
-=> CloudFormation Template Summary:
-...
 Resources:
   2 AWS::AutoScaling::ScalingPolicy
   2 AWS::CloudWatch::Alarm
@@ -70,8 +76,6 @@ Resources:
   1 AWS::AutoScaling::AutoScalingGroup
   9 Total
 $ lono summary autoscaling-worker
-=> CloudFormation Template Summary:
-...
 Resources:
   2 AWS::AutoScaling::ScalingPolicy
   2 AWS::CloudWatch::Alarm
@@ -83,7 +87,7 @@ Resources:
 $
 ```
 
-We can see that `autoscaling-web` has 9 resources and `autoscaling-worker` has 6 resources.
+We can see that `autoscaling-web` has 9 resources and `autoscaling-worker` has 6 resources.  That's what we should expect.
 
 #### Launch Stacks
 
@@ -94,7 +98,7 @@ lono cfn create autoscaling-web --param autoscaling
 lono cfn create autoscaling-worker --param autoscaling
 ```
 
-You should see a total of 3 stacks now. Something like this:
+You should see the new stacks now. It should look something like this:
 
 <img src="/img/tutorial/autoscaling-both-stacks.png" alt="Stack Created" class="doc-photo lono-flowchart">
 
@@ -116,9 +120,9 @@ This is due to conventions that lono uses. If no param option is provided, then 
 
 ### Standard CloudFormation Logical Constructs Approach
 
-Using standard CloudFormation logical constructs is a little bit different but just as valid of an appraoch. Sometimes it is preferable over compiling different templates; it just depends.  Here are the changes required to make the desired adjustments: [compare/standard-constructs](https://github.com/tongueroo/lono-tutorial-autoscaling/compare/standard-constructs).  Note, UserData and the UpdatePolicy was to removed for the sake of this guide and to focus on learning.
+Using standard CloudFormation logical constructs is a little bit different but just as valid of an approach. Sometimes it is preferable to compiling different templates; it just depends.  Here are the changes required to make the desired adjustments: [compare/standard-constructs](https://github.com/tongueroo/lono-tutorial-autoscaling/compare/standard-constructs).  Note, UserData and the UpdatePolicy were to removed for the sake of this guide and to focus on learning.
 
-The important added element that drives the conditional logic is a parameter and 2 conditions.  The parameter is called `CreateLoadBalancer` and the conditions are called `HasLoadBalancer` and `NoLoadBalancer`. Here's the relevant snippet of code:
+The critical added element that drives the conditional logic is a parameter and 2 conditions.  The parameter is called `CreateLoadBalancer` and the conditions are called `HasLoadBalancer` and `NoLoadBalancer`. Here's the relevant snippet of code:
 
 
 ```yaml
@@ -132,7 +136,7 @@ Conditions:
   NoLoadBalancer: !Equals [ !Ref CreateLoadBalancer, "false" ]
 ```
 
-The rest of the the template uses these 2 new conditions to determine whether or not to create a Load Balancer.  For Properties, the use of the conditions look something like this:
+The rest of the template uses these 2 new conditions to determine whether or not to create a Load Balancer.  For Properties, the use of the conditions look something like this:
 
 Before:
 
@@ -176,14 +180,22 @@ For the sake of this guide, feel free to grab `app/templates/autoscaling` from t
 
 #### Launch Stack
 
-Let's launch both stacks:
+Let's do a little clean up and delete some of the stacks before launching the new stacks:
+
+```
+lono cfn delete autoscaling-web
+lono cfn delete autoscaling-worker
+lono cfn delete autoscaling
+```
+
+After they have completed deletion, we're ready to relaunch both stacks:
 
 ```
 lono cfn create autoscaling-web --template autoscaling --param autoscaling-web
 lono cfn create autoscaling-worker --template autoscaling --param autoscaling-worker
 ```
 
-In this case we need to specify both `--template` and `--param` options since it breaks away from lono conventions.  We have successfully launched stacks again!  This time with standard CloudFormation constructs.
+In this case, we need to specify both `--template` and `--param` options since it breaks away from lono conventions.  We have successfully relaunched stacks!  This time with standard CloudFormation constructs.  Remember to delete the stacks.
 
 ### Thoughts
 
