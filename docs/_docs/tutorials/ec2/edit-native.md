@@ -1,10 +1,10 @@
 ---
-title: "Tutorial: Edit Template Native"
+title: "Tutorial EC2: Edit Template Natively"
 ---
 
 ### Native CloudFormation Logical Constructs Approach
 
-In the last section, we added conditional logical to create or not create a Load Balancer using lono variables. In this section, we'll use native CloudFormation constructs.  This hopefully gives you a sense of the differences in the 2 approaches.
+In the last section, we added conditional logical to create or not create an EIP using lono. In this section, we'll use native CloudFormation constructs. Hopefully, this gives you a sense of the differences between the 2 approaches.
 
 Using native CloudFormation logical constructs is a little bit different but just as valid of an approach. Sometimes it is preferable to compiling different templates; it just depends.  Here are the changes required to make the desired adjustments: [compare/native-constructs](https://github.com/tongueroo/lono-tutorial-autoscaling/compare/native-constructs).  Note, UserData and the UpdatePolicy were to removed for the sake of this guide and to focus on learning.
 
