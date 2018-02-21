@@ -42,11 +42,13 @@ template "eip" do
 end
 ```
 
-Then we added `<% if @eip %>` checks to the sections of the template where we want to include EIP related components.  The template is large so here is a link to the [ec2.yml code](https://github.com/tongueroo/lono-tutorial-ec2/blob/eip/app/templates/ec2.yml) and the [compare view](https://github.com/tongueroo/lono-tutorial-ec2/compare/eip) that adds this adjustment.
+We also modified the [ec2.yml code](https://github.com/tongueroo/lono-tutorial-ec2/blob/eip/app/templates/ec2.yml) and used ERB to add conditional logic to the template. We added `<% if @eip %>` checks to the sections of the template where we want to include EIP related components.  You can see the exact adjustments with the [compare view](https://github.com/tongueroo/lono-tutorial-ec2/compare/eip).
+
+We're are not limited to just if statements.  Since this is ERB, we can use loops, variables, expressions, etc.  Here is a good post covering ERB templates [An Introduction to ERB Templating](http://www.stuartellis.name/articles/erb/). Additionally, we have access to [built-in helpers]({% link _docs/builtin-helpers.md %}) and [shared variables]({% link _docs/shared-variables.md %}).  You can also define your own [custom helpers]({% link _docs/custom-helpers.md %}) if you need to.
 
 #### Lono Generate
 
-It is helpful to generate the templates and verify that the files in `output/templates` look like what we expect before launching.
+It is helpful to generate the templates and verify that the files in `output/templates` look like before launching.
 
 ```
 $ lono generate
@@ -78,7 +80,7 @@ Resources:
 $
 ```
 
-We can see that `ec2` has 2 resources and `eip` has 4 resources; what's expected.
+We can see that `ec2` has 2 resources and `eip` has 4 resources; what we expect.
 
 #### Launch Stacks
 
@@ -93,7 +95,7 @@ You should see the new stacks now. It should look something like this:
 
 <img src="/img/tutorials/ec2/both-stacks.png" alt="Stack Created" class="doc-photo lono-flowchart">
 
-Notice how for the second command needed to specify the `--param output/params/ec2.json` option.  We're using the same params for both stacks.  The first command did not require us to specify the param file because of lono conventionally defaults the param name to the template name. The conventions covered in detailed in [Conventions]({% link _docs/conventions.md %}).
+Notice how for the second command needed to specify the `--param eip` option.  We're using the same params for both stacks.  The first command did not require us to specify the param file because lono conventionally defaults the param name to the template name. The conventions are covered in detailed in [Conventions]({% link _docs/conventions.md %}).
 
 
 #### Clean Up
@@ -101,8 +103,8 @@ Notice how for the second command needed to specify the `--param output/params/e
 Let's do a little clean up and delete some of the stacks before continuing with the `lono cfn delete` command:
 
 ```
-lono cfn delete eip
 lono cfn delete ec2
+lono cfn delete eip
 ```
 
 #### Congrats

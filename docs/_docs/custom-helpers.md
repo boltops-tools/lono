@@ -2,7 +2,7 @@
 title: Custom Helpers
 ---
 
-It is useful be able to call methods in your template views that are not built into lono. Lono allows you to add your own custom helpers for this case.  The custom helpers are first class citizens and have access to the same context and variables as [built-in lono helpers]({% link _docs/template-helpers.md %}).
+It is useful be able to call methods in your template views that are not built into lono. Lono allows you to add your own custom helpers for this case.  The custom helpers are first class citizens and have access to the same context and variables as [built-in lono helpers]({% link _docs/builtin-helpers.md %}).
 
 The starter project generated with `lono new [PROJECT_NAME]` generates an example of a custom helper in the `helpers` to help explain how to add your own custom helpers.
 
@@ -61,6 +61,6 @@ end
 
 Notice how `@disk_size` is used in the `size_in_bytes` helper method.
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/template-helpers.md %}">Back</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/builtin-helpers.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/conventions.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

@@ -26,7 +26,7 @@ Template shared variables are available to all template config blocks and templa
 
 ### Template Views
 
-Template views are ERB templates that are put together to build the CloudFormation templates. The template views are defined in the `templates` folder.  Variable substitution and partial rendering are both supported and provide a powerful way to build templates.  The template view is covered more detail in the [Template Configurations docs]({% link _docs/app-definitions.md %}).  Template view helpers are also covered in the [Template Helpers docs]({% link _docs/template-helpers.md %}).
+Template views are ERB templates that are put together to build the CloudFormation templates. The template views are defined in the `templates` folder.  Variable substitution and partial rendering are both supported and provide a powerful way to build templates.  The template view is covered more detail in the [Template Configurations docs]({% link _docs/app-definitions.md %}).  Template view helpers are also covered in the [Template Helpers docs]({% link _docs/builtin-helpers.md %}).
 
 ### Param Files
 
@@ -34,7 +34,7 @@ Param files provide a simple way of building parameters for CloudFormation templ
 
 ### Helpers
 
-Helpers are methods that help with the template view procesing. Lono comes with several [built-in helper methods]({% link _docs/template-helpers.md %}).  Lono also supports user-defined custom helper methods. With custom helper methods you can define you own helpers to help with the template view processing. More information on custom helpers is available in the [Custom Helpers docs]({% link _docs/custom-helpers.md %}).
+Helpers are methods that help with the template view procesing. Lono comes with several [built-in helper methods]({% link _docs/builtin-helpers.md %}).  Lono also supports user-defined custom helper methods. With custom helper methods you can define you own helpers to help with the template view processing. More information on custom helpers is available in the [Custom Helpers docs]({% link _docs/custom-helpers.md %}).
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/docs-start.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/directory-structure.md %}">Next Step</a>
