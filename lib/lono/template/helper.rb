@@ -7,10 +7,12 @@
 module Lono::Template::Helper
   # Bash code that is meant to included in user-data
   def extract_scripts(options={})
-    settings = Lono::Setting.new.data
+    check_s3_folder_settings!
+
+    settings = setting.data
     # defaults also here in case they are removed from settings
     to = options[:to] || settings[:to] || "/opt"
-    user = options[:user] || settings[:user] || "ec2-user"
+    user = options[:as] || settings[:as] || "ec2-user"
 
     if Dir.glob("#{Lono.config.scripts_path}/*").empty?
       puts "WARN: you are using the extract_scripts helper method but you do not have any app/scripts.".colorize(:yellow)
@@ -30,6 +32,14 @@ chown -R #{user}:#{user} #{to}/scripts
 BASH_CODE
   end
 
+  def check_s3_folder_settings!
+    return if setting.s3_folder
+    puts "Helper method called that requires the s3_folder to be set."
+    puts caller[0]
+    puts "Please configure your settings.yml with an s3_folder.".colorize(:red)
+    exit 1
+  end
+
   def scripts_name
     File.basename(scripts_s3_path)
   end
@@ -40,19 +50,11 @@ BASH_CODE
   end
 
   def template_s3_path(template_name)
+    check_s3_folder_settings!
+    # high jacking Upload for useful s3_https_url method
     template_path = "#{template_name}.yml"
-
-    # must have settings.s3_folder for this to owrk
-    settings = Lono::Setting.new
-    if settings.s3_folder
-      # high jacking Upload for useful s3_https_url method
-      upload = Lono::Template::Upload.new(@options)
-      upload.s3_https_url(template_path)
-    else
-      message = "template_s3_path helper called but s3_folder not configured in settings.yml"
-      puts "ERROR: #{message}".colorize(:red)
-      exit 1
-    end
+    upload = Lono::Template::Upload.new(@options)
+    upload.s3_https_url(template_path)
   end
 
   def template_params(param_name)
@@ -185,5 +187,9 @@ private
     return path if File.exist?(path) && !File.directory?(path)
 
     path # original path if this point is reached
+  end
+
+  def setting
+    @setting ||= Lono::Setting.new
   end
 end
