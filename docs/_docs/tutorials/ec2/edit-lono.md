@@ -42,11 +42,47 @@ template "eip" do
 end
 ```
 
-We also modified the [ec2.yml code](https://github.com/tongueroo/lono-tutorial-ec2/blob/eip/app/templates/ec2.yml) and used ERB to add conditional logic to the template. We added `<% if @eip %>` checks to the sections of the template where we want to include EIP related components.  You can see the exact adjustments with the [compare view](https://github.com/tongueroo/lono-tutorial-ec2/compare/eip).
+The above code tells lono to generate 2 templates at `output/templates/ec2.yml` and `output/templates/eip.yml`. Both templates use the same source template `app/templates/ec2.yml`. However, each one has a different value for the `eip` variable.  The `eip` variable is available in the `app/templates` as `@eip`.
+
+In the source template `app/templates/ec2.yml` we modified it to include a few
+`<% if @eip %>` checks at the sections of the template where we want to include EIP related components. Here's a portion of the template as an example:
+
+```
+...
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: '22'
+        ToPort: '22'
+        CidrIp:
+          Ref: SSHLocation
+<% if @eip %>
+  IPAddress:
+    Type: AWS::EC2::EIP
+  IPAssoc:
+    Type: AWS::EC2::EIPAssociation
+    Properties:
+      InstanceId:
+        Ref: EC2Instance
+      EIP:
+        Ref: IPAddress
+<% end %>
+Outputs:
+  InstanceId:
+    Description: InstanceId of the newly created EC2 instance
+    Value:
+      Ref: EC2Instance
+...
+```
+
+Here's the full template code [ec2.yml code](https://github.com/tongueroo/lono-tutorial-ec2/blob/eip/app/templates/ec2.yml).  You can also see the exact adjustments with the [compare view](https://github.com/tongueroo/lono-tutorial-ec2/compare/eip).
 
 ### ERB vs CloudFormation Template
 
-We're are not limited to just if statements.  Since this is ERB, we can use loops, variables, expressions, etc.  Here is a good post covering ERB templates [An Introduction to ERB Templating](http://www.stuartellis.name/articles/erb/). Additionally, we have access to [built-in helpers]({% link _docs/builtin-helpers.md %}) and [shared variables]({% link _docs/shared-variables.md %}).  You can also define your own [custom helpers]({% link _docs/custom-helpers.md %}) if you need to.
+We're are not limited to just if statements.  Since this is ERB, we can use loops, variables, expressions, etc.  Here is a good post covering ERB templates [An Introduction to ERB Templating](http://www.stuartellis.name/articles/erb/). Additionally, we have access to [built-in helpers]({% link _docs/builtin-helpers.md %}) and [shared variables]({% link _docs/shared-variables.md %}).  You can also define your own [custom helpers]({% link _docs/custom-helpers.md %}) if needed.
 
 #### Lono Generate
 
@@ -83,6 +119,40 @@ $
 ```
 
 We can see that `ec2` has 2 resources and `eip` has 4 resources; what we expect.
+
+Another way we can compare the 2 generated templates is by diff-ing them.
+
+```diff
+$ diff output/templates/ec2.yml output/templates/eip.yml
+394a395,403
+>   IPAddress:
+>     Type: AWS::EC2::EIP
+>   IPAssoc:
+>     Type: AWS::EC2::EIPAssociation
+>     Properties:
+>       InstanceId:
+>         Ref: EC2Instance
+>       EIP:
+>         Ref: IPAddress
+406,407c415,416
+<   PublicDNS:
+<     Description: Public DNSName of the newly created EC2 instance
+---
+>   InstanceIPAddress:
+>     Description: IP address of the newly created EC2 instance
+409,417c418
+<       Fn::GetAtt:
+<       - EC2Instance
+<       - PublicDnsName
+<   PublicIP:
+<     Description: Public IP address of the newly created EC2 instance
+<     Value:
+<       Fn::GetAtt:
+<       - EC2Instance
+<       - PublicIp
+---
+>       Ref: IPAddress
+```
 
 #### Launch Stacks
 

@@ -1,6 +1,8 @@
 ---
-title: Build the Params
+title: Param Files
 ---
+
+Let's take a closer look at the param files.
 
 #### Create the Param Files
 
@@ -53,6 +55,6 @@ Let's take a look at the `output/params/prod/single_instance.json` file:
 
 As you can see, the simple `params/base/single_instance.txt` has been converted to the CloudFormation parameter file format.
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/template-generate.md %}">Back</a>
+<a id="prev" class="btn btn-basic" href="">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/tutorials/ec2/cfn-create.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
