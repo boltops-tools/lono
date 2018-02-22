@@ -1,5 +1,5 @@
 ---
-title: "Tutorial EC2: Starting with lono new ec2"
+title: "Tutorial EC2: lono new ec2"
 ---
 
 The first command we'll walk through is the `lono new` command.  Here's the command with some output to focus on learning.

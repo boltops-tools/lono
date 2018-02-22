@@ -19,7 +19,7 @@ We'll show you 2 approaches so you can get a sense, learn, and decide when you w
 
 ### Compiling Different Templates Approach
 
-Compiling different templates is pretty straightforward with lono templates.  The source code for these changes are in the eip branch of [lono-tutorial-ec2](https://github.com/tongueroo/lono-tutorial-ec2/blob/eip/app/templates/ec2.yml).  Let's take a look at the relevant [changes](https://github.com/tongueroo/lono-tutorial-ec2/compare/eip).
+First, we'll take compiling different templates approach. Compiling different templates is pretty straightforward with lono templates.  The source code for these changes are in the eip branch of [lono-tutorial-ec2](https://github.com/tongueroo/lono-tutorial-ec2/blob/eip/app/templates/ec2.yml).  Let's take a look at the relevant [changes](https://github.com/tongueroo/lono-tutorial-ec2/compare/eip).
 
 We changed the `app/definitions/base.rb`:
 

@@ -1,5 +1,5 @@
 ---
-title: "Tutorial: Starting with lono new autoscaling"
+title: "Tutorial: lono new autoscaling"
 ---
 
 The first command we'll walk through is the `lono new` command.  Here's the command with some output to focus on learning.
