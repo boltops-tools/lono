@@ -2,10 +2,10 @@
 title: Delete the Stack
 ---
 
-Now it is time to clean up the resources.  You can delete the stack with the following command:
+We covered `lono cfn delete` early but for completeness we'll cover it at the end again.  Let's clean up any resources we no longer want.  You can delete the stack with the following command:
 
 ```sh
-$ lono cfn delete example
+$ lono cfn delete ec2
 Are you sure you want to want to delete the stack? (y/N)
 y
 Deleted example stack.
@@ -20,7 +20,12 @@ Deleted example stack.
 $
 ```
 
-Congratulations! 🎉 You have successfully created a lono project from scratch!
+Congratulations! 🎉 You have successfully gone through the lono introductory tutorial. You've created stacks, edit them, and updated them. Hopefully you've gotten a good sense of how lono works.  There is much more lono can do. Here are some additional links to learn more:
+
+* [Scripts] -
+* [Helper] -
+* [Params] -
+* [Nested Stacks] -
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/cfn-preview.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="">Next Step</a>

@@ -11,9 +11,11 @@ lono help
 You can append `help`, `-h` or `--help` to the end of any command to get more helpful information about that specific command.  These all work.
 
 ```sh
-lono docker build help
-lono ship --help
-lono ships -h
+lono new -h
+lono import -h
+lono generate -h
+lono cfn create -h
+lono cfn update -h
 ```
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/guard.md %}">Back</a>
