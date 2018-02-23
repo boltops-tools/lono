@@ -70,4 +70,18 @@ We can tell that we need to set the `KeyName` parameter to use the template.
 
 ### Configure Parameter Values
 
-For this template we need to specify a `KeyName` so we can ssh into the EC2 instance.  Set the `KeyName` to an ssh key that exists on your AWS account. We'll set it to `default` here.  If you use `default`, make sure that the `default` KeyPair exists on your account. Everything is now configured and we are ready to launch the the stack next!
+For this template we need to specify a `KeyName` so we can ssh into the EC2 instance.  Set the `KeyName` to an ssh key that exists on your AWS account. We'll set it to `default` here.  If you use `default`, make sure that the `default` KeyPair exists on your account.
+
+`config/params/base/ec2.txt`:
+
+```
+KeyName=default
+#InstanceType=        # optional
+#SSHLocation=         # optional
+```
+
+Everything is now configured and we are ready to launch the the stack next!
+
+<a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/project-structure.md %}">Back</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/tutorials/ec2/cfn-create.md %}">Next Step</a>
+<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

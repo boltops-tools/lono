@@ -2,7 +2,7 @@
 title: Delete the Stack
 ---
 
-We covered `lono cfn delete` early but for completeness we'll cover it at the end again.  Let's clean up any resources we no longer want.  You can delete the stack with the following command:
+We covered `lono cfn delete` earlier. For completeness, we'll cover it at the end again.  Let's clean up any resources we no longer want.  You can delete the stack with the following command:
 
 ```sh
 $ lono cfn delete ec2
@@ -22,12 +22,12 @@ $
 
 Congratulations! 🎉 You have successfully gone through the lono introductory tutorial. You've created stacks, edit them, and updated them. Hopefully you've gotten a good sense of how lono works.  There is much more lono can do. Here are some additional links to learn more:
 
-* [Scripts] -
-* [Helper] -
-* [Params] -
-* [Nested Stacks] -
+* [Scripts]({% link _docs/app-scripts.md %}) - Scripts that get automatically uploaded and available to you.
+* [Helpers]({% link _docs/builtin-helpers.md %}) - Built-in helpers and custom helpers are supported.
+* [Params]({% link _docs/params.md %}) - Params have layering and shared varaibles support which can sometimes simplify your param files.
+* [Nested Stacks]({% link _docs/nested-stacks.md %}) - Helpers exists to support nested stacks.
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/cfn-preview.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="">Next Step</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/edit-native.md %}">Back</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/docs-start.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
 

@@ -191,3 +191,7 @@ lono cfn delete eip
 
 #### Congrats
 Congraluations 🎉 You have successfully added conditional logic to CloudFormation templates that decides whether or not to create an EIP.
+
+<a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/cfn-update.md %}">Back</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/tutorials/ec2/edit-native.md %}">Next Step</a>
+<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
