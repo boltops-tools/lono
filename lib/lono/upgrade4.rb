@@ -21,6 +21,7 @@ module Lono
       mv("config/templates", "app/definitions")
       mv("templates", "app/templates")
       mv("app/templates/partial", "app/partials")
+      mv("app/partials/user_data", "app/user_data")
       update_variables
       update_stacks
       update_params
