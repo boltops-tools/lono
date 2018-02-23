@@ -51,7 +51,7 @@ The template that will be used is `output/templates/different3.json` and the par
 
 ### Template Output and Source Name Convention
 
-By convention, the template source name defaults to output name specified. Often times, this means you do not have to specify the source.  For example:
+By convention, the template source name defaults to output name specified. Often, this means you do not have to specify the source.  For example:
 
 ```ruby
 template "example" do

@@ -34,7 +34,7 @@ Param files provide a simple way of building parameters for CloudFormation templ
 
 ### Helpers
 
-Helpers are methods that help with the template view procesing. Lono comes with several [built-in helper methods]({% link _docs/builtin-helpers.md %}).  Lono also supports user-defined custom helper methods. With custom helper methods you can define you own helpers to help with the template view processing. More information on custom helpers is available in the [Custom Helpers docs]({% link _docs/custom-helpers.md %}).
+Helpers are methods that help with the template view processing. Lono comes with several [built-in helper methods]({% link _docs/builtin-helpers.md %}).  Lono also supports user-defined custom helper methods. With custom helper methods you can define your own helpers to help with the template view processing. More information on custom helpers is available in the [Custom Helpers docs]({% link _docs/custom-helpers.md %}).
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/docs-start.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/directory-structure.md %}">Next Step</a>

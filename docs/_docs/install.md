@@ -18,7 +18,7 @@ gem "lono"
 
 ### Bolts Toolbelt
 
-If you want to install lono without having to worry about lono's ruby dependency you can simply install the Bolts Toolbelt which has lono included.
+If you want to install lono without having to worry about lono's ruby dependency you can install the Bolts Toolbelt which has lono included.
 
 ```sh
 brew cask install boltopslabs/software/bolts

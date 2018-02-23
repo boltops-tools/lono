@@ -60,7 +60,7 @@ Resources:
 
 Note that some of the source code is truncated to keep the explanation concise.  In this example, the source is set as `example`. This tells lono to use the template source found at `source/example.yml`.  The `.yml` extension is inferred automatically.
 
-The variables to use are: `app`, `instance_type` and `elb`.  These variables will be available to the `source/example.yml` template. These variables are only avalable specifically to the template source, whereas [shared variables]({% link _docs/shared-variables.md %}) are available globally to all templates.
+The variables to use are: `app`, `instance_type` and `elb`.  These variables will be available to the `source/example.yml` template. These variables are only available specifically to the template source, whereas [shared variables]({% link _docs/shared-variables.md %}) are available globally to all templates.
 
 Lastly, the output name specified is `example-stack`.  This tells lono to generate the output template to `output/example-stack.yml`.  The `.yml` extension is inferred automatically.
 
@@ -110,7 +110,7 @@ At this point the `do...end` block is optional so then the template declaration 
 template "example"
 ```
 
-You might think that you will always need to specify template variables in the code block but it is not always necessary depending on how you use [shared variables]({% link _docs/shared-variables.md %}) which are covered next.
+You might think that you will always need to specify template variables in the code block, but it is not always necessary depending on how you use [shared variables]({% link _docs/shared-variables.md %}) which are covered next.
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/import-template.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/shared-variables.md %}">Next Step</a>

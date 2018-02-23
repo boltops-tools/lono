@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="http://lono.cloud/img/logos/lono-logo.png" style="max-width: 300px" />
+</div>
+
 # Lono
 
 [![Gem Version](https://badge.fury.io/rb/lono.png)](http://badge.fury.io/rb/lono)
@@ -11,13 +15,19 @@
 [3]: https://codeclimate.com/repos/51d7f1407e00a4042c010ab4/badges/5273fe6cdb5a13e58554/gpa.png
 [4]: https://codeclimate.com/repos/51d7f1407e00a4042c010ab4/feed
 
-Lono is a tool to help you easily manage your CloudFormation templates. Lono handles the entire CloudFormation lifecyle. It starts with helping you craft of the templates and helps you all the way to end when you provision of the infrastructure.
+Lono is a tool to help you manage your CloudFormation templates. Lono handles the entire CloudFormation lifecyle. It helps you craft the templates and then provisions of the infrastructure.
 
-* Lono generates CloudFormation templates based on ERB ruby templates in either `yaml` or `json` format.
-* Lono takes simple env-like files to and generates the CloudFormation parameter files.
-* Lono wraps the CloudFormation api calls in a simple interface using the generated files to launch the CloudFormation stacks.
+* Lono generates CloudFormation templates based on ERB ruby templates in `yaml` format.
+* Lono takes simple env-like files and generates the CloudFormation parameter files.
+* Lono provides a simple CLI interface to launch the CloudFormation stacks.
 
 See [lono.cloud](http://lono.cloud) for full lono documentation.
+
+## Important
+
+If you are on version 3, you can run `lono upgrade4` within your project to upgrade it to version 4.  Refer to the [CHANGELOG](CHANGELOG.md).
+
+## Blog Posts
 
 These blog posts also cover lono:
 
@@ -35,23 +45,21 @@ It only takes a couple of commands to start using lono.
 gem install lono
 lono new infra
 cd infra
-lono generate # not needed but showing for explanation
-lono cfn create example
+lono import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/EC2InstanceWithSecurityGroupSample.template --name ec2
+# update the generated params file
+lono cfn create ec2
 ```
-
-This sets up a starter lono project called infra with example templates.  You cd into the folder and call `lono cfn create` which automatically generates the CloudFormation template and parameter files to `output` and `output/params` and launches the stack.
-
 ![Lono flowchart](http://tongueroo.com/images/github-readmes/lono-flowchart.png "Lono flowchart")
 
-### lono cfn summary
+### Lono Cfn Lifecycle Commands
 
-Lono also provides a `lono cfn` management command that allows you to launch stacks from the lono templates.  The `lono cfn` tool automatically runs `lono generate` internally and then launches the CloudFormation stack all in one command.  Provided that you are in a lono project and have a `my-stack` lono template definition.  To create a stack you can simply run:
+Lono provides a `lono cfn` lifecycle command that allows you to launch stacks quickly.  The `lono cfn` tool automatically runs `lono generate` internally and then launches the CloudFormation stack all in one command.  If you are in a lono project and have a `my-stack` lono template definition.  To create a stack you can simply run:
 
 ```
 $ lono cfn create my-stack
 ```
 
-The above command will generate files to `output/my-stack.json` and `output/params/my-stack.txt` and use them to create a CloudFormation stack.  Here are some more examples of cfn commands:
+The above command will generate files to `output/templates/my-stack.json` and `output/params/my-stack.txt` and use them to create a CloudFormation stack.  Here are some more examples of cfn commands:
 
 ```
 $ lono cfn create mystack-$(date +%Y%m%d%H%M%S) --template mystack --params mystack
