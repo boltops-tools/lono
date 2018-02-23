@@ -103,7 +103,9 @@ class Lono::Importer
 
   def template_name
     return @options[:name] if @options[:name]
-    # else infer name from the original source
+    # Else infer name from the original source.
+    # Not really being used since --name is now required but leaving in place
+    # in case we decide to make --name optional again
     name = File.basename(@source, ".*")
     @options[:casing] == "camelcase" ? name.camelize : name.underscore.dasherize
   end

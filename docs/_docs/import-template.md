@@ -5,42 +5,42 @@ title: Import Template
 Lono provides a `lono import` command to spare you from manually having to convert a standard CloudFormation template into a lono CloudFormation template.  Usage:
 
 ```sh
-lono import https://s3.amazonaws.com/cloudformation-templates-us-east-1/EC2InstanceWithSecurityGroupSample.template
-lono generate
+$ lono import https://s3.amazonaws.com/cloudformation-templates-us-east-1/EC2InstanceWithSecurityGroupSample.template --name ec2
+=> Imported CloudFormation template and lono-fied it.
+Template definition added to app/definitions/base.rb
+Params file created to config/params/base/ec2.txt
+Template downloaded to app/templates/ec2.yml
+=> CloudFormation Template Summary:
+Parameters:
+Required:
+  KeyName (AWS::EC2::KeyPair::KeyName)
+Optional:
+  InstanceType (String) Default: t2.small
+  SSHLocation (String) Default: 0.0.0.0/0
+Resources:
+  1 AWS::EC2::Instance
+  1 AWS::EC2::SecurityGroup
+  2 Total
+Here are contents of the params config/params/base/ec2.txt file:
+KeyName=
+#InstanceType=        # optional
+#SSHLocation=         # optional
+$
 ```
 
 You can also specify standard file paths:
 
 ```sh
 lono import path/to/template
-lono generate
 ```
 
 The command downloads the template to `templates` folder, converts it into YAML, and declares a new template definition in `app/definitions/base.rb`.
 
-You can run `lono generate` immediately after the `lono import` command.
-
-### Template name: CamelCase or dasherize
-
-You can specify whether or not to CamelCase or dasherize the name of the final template file with the `--casing` option.  Examples:
-
-Underscore:
+You can `lono generate` immediately after the `lono import` command to generate a template in the `output/templates` folder.
 
 ```sh
-lono import https://s3.amazonaws.com/cloudformation-templates-us-east-1/EC2InstanceWithSecurityGroupSample.template --casing dasherize
+lono generate
 ```
-
-CamelCase:
-
-```sh
-lono import https://s3.amazonaws.com/cloudformation-templates-us-east-1/EC2InstanceWithSecurityGroupSample.template --casing camelcase
-```
-
-The default is dasherize.
-
-Question: You might be wondering, why does lono import has dasherize vs underscore?
-
-Answer: I prefer filenames to be underscore. However, CloudFormation stack names do not allow underscores in their naming, so it is encourage to either dasherize or camelize your template names so the stack name and the template name can be the same.
 
 This blog post [Introducing the lono import Command](https://blog.boltops.com/2017/09/15/introducing-the-lono-import-command) also covers `lono import`.
 

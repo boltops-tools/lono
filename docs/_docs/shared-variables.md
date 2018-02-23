@@ -8,7 +8,7 @@ Template shared variables are available to all template definition config blocks
 
 Here's an example:
 
-`config/variables/base/variables.rb`:
+`config/variables/base.rb`:
 
 ```ruby
 @ami = "ami-base"

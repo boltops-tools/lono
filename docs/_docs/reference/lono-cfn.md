@@ -6,7 +6,7 @@ Lono provides `lono cfn` lifecycle management commands that allow you to launch 
 $ lono cfn create mystack
 ```
 
-The above command will generate files to `output/templates/mystack.json` and `output/params/prod/mystack.txt` and use them to create a CloudFormation stack. Here are some more examples of cfn commands::
+The above command will generate files to `output/templates/mystack.json` and `output/params/mystack.txt` and use them to create a CloudFormation stack. Here are some more examples of cfn commands::
 
 ```
 $ lono cfn create mystack-$(date +%Y%m%d%H%M%S) --template mystack --params mystack

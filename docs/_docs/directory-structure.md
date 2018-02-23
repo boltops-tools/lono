@@ -5,41 +5,28 @@ title: Directory Structure
 A basic lono project usually looks something like this:
 
 ```sh
-.
-├── config
+├── app
+│   ├── definitions
+│   │   │── base.rb
+│   │   │── development.rb
+│   │   └── production.rb
+│   ├── helpers
+│   ├── partials
+│   ├── scripts
 │   ├── templates
+│   │   └── ec2.yml
+│   └── user_data
+├── config
+│   ├── params
 │   │   ├── base
-│   │   │   └── stacks.rb
-│   │   ├── prod
-│   │   │   └── stacks.rb
-│   │   └── stag
-│   │       └── stacks.rb
-│   └── variables
-│       ├── base
-│       │   └── variables.rb
-│       ├── prod
-│       │   └── variables.rb
-│       └── stag
-│           └── variables.rb
-├── helpers
-│   └── my_custom_helper.rb
-├── output
-├── params
-│   ├── base
-│   │   └── example.txt
-│   ├── prod
-│   │   └── example.txt
-│   └── stag
-│       └── example.txt
-└── templates
-    ├── db.yml
-    ├── example.yml
-    ├── partial
-    │   ├── host_record.yml
-    │   ├── server.yml
-    │   └── user_data
-    │       └── bootstrap.sh
-    └── web.yml
+│   │   │   └── ec2.txt
+│   │   └── production
+│   │       └── ec2.txt
+│   │── variables
+│   │   ├── base.rb
+│   │   └── production.rb
+│   └── settings.yml
+└── output
 ```
 
 {% include structure.md %}
