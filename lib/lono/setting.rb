@@ -50,9 +50,7 @@ module Lono
       return s3_folder if s3_folder.nil? or s3_folder.is_a?(String)
 
       # If reach here then the s3_folder is a Hash
-      options = s3_folder
-      options["default"]
-      options[ENV['AWS_PROFILE']] || s3_folder["default"]
+      s3_folder[ENV['AWS_PROFILE']] || s3_folder["default"]
     end
 
   private

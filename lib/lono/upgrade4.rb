@@ -119,12 +119,6 @@ module Lono
       end
       data.delete("aws_profile_lono_env_map")
 
-      (data["lono_env_cluster_map"] || {}).each do |lono_env, cluster|
-        new_structure[env_map(lono_env)] ||= {}
-        new_structure[env_map(lono_env)]["cluster"] = cluster
-      end
-      data.delete("lono_env_cluster_map")
-
       data = update_s3_setting(data)
 
       new_structure["base"] = data

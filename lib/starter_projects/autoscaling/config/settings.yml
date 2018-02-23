@@ -28,15 +28,13 @@ base:
 
 
 development:
-  # cluster: dev
-  # When you have AWS_PROFILE set to one of these values, ufo will switch to the desired
+  # When you have AWS_PROFILE set to one of these values, lono will switch to the desired
   # environment. This prevents you from switching AWS_PROFILE, forgetting to
-  # also switch UFO_ENV, and accidentally deploying to production vs development.
+  # also switch LONO_ENV, and accidentally deploying to production vs development.
   # aws_profiles:
   #   - dev_profile1
   #   - dev_profile2
 
 production:
-  # cluster: prod
   # aws_profiles:
   #   - prod_profile

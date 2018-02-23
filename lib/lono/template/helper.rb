@@ -34,9 +34,13 @@ BASH_CODE
 
   def check_s3_folder_settings!
     return if setting.s3_folder
-    puts "Helper method called that requires the s3_folder to be set."
-    puts caller[0]
+
+    puts "Helper method called that requires the s3_folder to be set at:"
+    lines = caller.reject { |l| l =~ %r{lib/lono} } # hide internal lono trace
+    puts "  #{lines[0]}"
+
     puts "Please configure your settings.yml with an s3_folder.".colorize(:red)
+    puts "Detected AWS_PROFILE #{ENV['AWS_PROFILE'].inspect}"
     exit 1
   end
 
