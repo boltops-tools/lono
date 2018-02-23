@@ -4,7 +4,7 @@ title: "Tutorial EC2: Edit Template Natively"
 
 ### Native CloudFormation Logical Constructs Approach
 
-In the last section, we added conditional logical to create or not create an EIP using lono. In this section, we'll use native CloudFormation constructs. Hopefully, this gives you a sense of the differences between the 2 approaches.
+In the last section, we added conditional logical to create or not create an EIP using lono and generate different templates from the same source template. In this section, we'll use native CloudFormation constructs within one template. Hopefully, this gives you a helpful comparison between the 2 approaches.
 
 Using native CloudFormation logical constructs is a little bit different but is just another valid approach. Sometimes it is preferable over compiling different templates; it just depends.  Here are the changes required to make the desired adjustments: [compare/eip-native](https://github.com/tongueroo/lono-tutorial-ec2/compare/eip-native).
 
@@ -49,14 +49,23 @@ lono cfn create ec2
 lono cfn create eip --template ec2 --param eip
 ```
 
-For the the `eip` stack, we need to specify both `--template` and `--param` options since it breaks away from lono conventions.
+For the the `eip` stack, we need to specify both `--template` and `--param` options since it breaks away from lono conventions.  Update the stack as much as you need to get things working:
 
-We have successfully relaunched stacks!  This time with native CloudFormation constructs.  Remember to clean up and delete the stacks again.
+```
+lono cfn update ec2
+lono cfn update eip --template ec2 --param eip
+```
+
+Once you're ready, remember to clean up and delete the stacks again.
 
 ```
 lono cfn delete ec2
 lono cfn delete eip
 ```
+
+### Congrats
+
+You have successfully created stacks, this time, using native CloudFormation constructs.
 
 ### Thoughts
 

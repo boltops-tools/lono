@@ -171,6 +171,14 @@ You should see the new stacks now. It should look something like this:
 
 Notice how for the second command needed to specify the `--param eip` option.  We're using the same params for both stacks.  The first command did not require us to specify the param file because lono conventionally defaults the param name to the template name. The conventions are covered in detailed in [Conventions]({% link _docs/conventions.md %}).
 
+If you need to, use `lono cfn update` that you learned in the last section until you get the template working as you expect.
+
+```
+lono cfn update ec2
+lono cfn update eip --param ec2
+```
+
+Move on once things look good and you're ready to move onto the next step.
 
 #### Clean Up
 
