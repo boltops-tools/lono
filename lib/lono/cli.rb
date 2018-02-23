@@ -26,6 +26,13 @@ module Lono
       Param::Generator.generate_all(options)
     end
 
+    desc "user_data NAME", "Generates user_data script for debugging"
+    long_desc Help.text(:user_data)
+    option :clean, type: :boolean, default: true, desc: "remove all output/user_data files before generating"
+    def user_data(name)
+      UserData.new(options.merge(name: name)).generate
+    end
+
     desc "summary STACK", "Prints summary of CloudFormation template"
     long_desc Help.text("summary")
     def summary(name)

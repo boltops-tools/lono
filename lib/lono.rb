@@ -37,6 +37,7 @@ module Lono
   autoload :Core, 'lono/core'
   autoload :Upgrade4, 'lono/upgrade4'
   autoload :Script, 'lono/script'
+  autoload :UserData, 'lono/user_data'
 
   extend Core
 end
