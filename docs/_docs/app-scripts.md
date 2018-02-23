@@ -73,3 +73,7 @@ $
 Notice, that the name of the scripts tarball includes a md5 checksum.  Lono first generates a `scripts.tgz`, computes the file's md5sum and then renames the it to include the md5sum.  There's a very good reason for this.
 
 Whenever you make changes in your `app/scripts` folder and update your CloudFormation templates.  If the same `scripts.tgz` s3 url was used then CloudFormation would not know that it needed to update the EC2 instance that uses the user-data script.  By including the md5 checksum in the file name, this lets CloudFormation know that the the scripts have changed.
+
+<a id="prev" class="btn btn-basic" href="{% link _docs/layering.md %}">Back</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/builtin-helpers.md %}">Next Step</a>
+<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

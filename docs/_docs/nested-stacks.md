@@ -90,7 +90,7 @@ DomainName=stack.local
 
 Note you might want to put any inline parameter values in the parent template after the `template_params` loop so it is immediately clear from looking at the one file the final values parameters being passed into the child template.
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/settings.md %}">Back</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/starter-templates.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/organizing-lono.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
 
