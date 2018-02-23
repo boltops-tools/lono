@@ -1,19 +1,14 @@
-require 'json'
-require 'yaml'
-require 'pp'
+require 'active_support/core_ext/string'
 require 'colorize'
 require 'fileutils'
-# http://guides.rubyonrails.org/active_support_core_extensions.html#inflections
-require 'active_support/core_ext/string'
+require 'json'
+require 'pp'
+require 'render_me_pretty'
+require 'yaml'
 
 # vendor because need https://github.com/futurechimp/plissken/pull/6 to be merged
 $:.unshift(File.expand_path("../../vendor/plissken/lib", __FILE__))
 require "plissken"
-
-# vendor because pretty new gem and need to test it more
-$:.unshift(File.expand_path("../../vendor/render_me_pretty/lib", __FILE__))
-require "render_me_pretty"
-require "tilt" # render_me_pretty dependency
 
 $:.unshift(File.expand_path('../', __FILE__))
 module Lono
