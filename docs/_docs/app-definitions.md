@@ -1,11 +1,11 @@
 ---
-title: Template Configuration
+title: Template Definitions
 ---
 
-Template configurations are a core component of lono.  Template configurations are:
+Template definitions are a core component of lono.  Template definitions are:
 
 1. where you specify the template source to use
-2. what variables to make available for those templates
+2. what variables to make available for those specific templates
 3. where the output template files should be written to
 
 A template configuration takes the following general form:
@@ -19,13 +19,13 @@ template "[OUTPUT NAME]" do
 end
 ```
 
-Template configurations are defined in the `config/templates` folder of your project.
+Template definitions are defined in the `app/definitions` folder of your project.
 
 ### Examples
 
 Let's walk through an example. Given:
 
-`config/templates/base/stacks.rb`:
+`app/definitions/base.rb`:
 
 ```ruby
 template "example-stack" do
@@ -60,19 +60,19 @@ Resources:
 
 Note that some of the source code is truncated to keep the explanation concise.  In this example, the source is set as `example`. This tells lono to use the template source found at `source/example.yml`.  The `.yml` extension is inferred automatically.
 
-The variables to use are: `app`, `instance_type` and `elb`.  These variables will be available to the `source/example.yml` template.
+The variables to use are: `app`, `instance_type` and `elb`.  These variables will be available to the `source/example.yml` template. These variables are only avalable specifically to the template source, whereas [shared variables]({% link _docs/shared-variables.md %}) are available globally to all templates.
 
 Lastly, the output name specified is `example-stack`.  This tells lono to generate the output template to `output/example-stack.yml`.  The `.yml` extension is inferred automatically.
 
-When `lono generate` runs, lono uses the information in `config/templates/base/stacks.rb` and files in `templates` to generate templates in the `output` folder.
+When `lono generate` runs, lono uses the information in `app/definitions/base.rb` and `app/templates/example.yml` to generate the template to `output/templates/example.yml`.
 
-Template configurations are also layered by lono which is covered in [Layering Support]({% link _docs/layering.md %}).
+Template definitions also support layering, covered in [Layering Support]({% link _docs/layering.md %}).
 
 ### Template conventions
 
 The template declaration follows a naming convention that can be used to shorten your template declarations.  Let's say that the template's output name matches the source name:
 
-`config/templates/base/stacks.rb`:
+`app/definitions/base.rb`:
 
 ```ruby
 template "example" do
@@ -110,7 +110,7 @@ At this point the `do...end` block is optional so then the template declaration 
 template "example"
 ```
 
-You might think that you will always need to specify template variables in the code block but it is not always necessary depending on how you use shared variables which are covered next.
+You might think that you will always need to specify template variables in the code block but it is not always necessary depending on how you use [shared variables]({% link _docs/shared-variables.md %}) which are covered next.
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/import-template.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/shared-variables.md %}">Next Step</a>

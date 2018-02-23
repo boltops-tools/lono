@@ -26,7 +26,7 @@ end
 
 The `shared_partial` method is now available in your template views.  Notice how in the example `shared_partial` calls built-in lono helper methods like `partial_exist?` with no problem. All lono built-in helper methods are available in your custom helper methods.  Variables are also available to be used in your custom helper methods.  Example:
 
-`config/templates/base/stacks.rb`:
+`app/definitions/base.rb`:
 
 ```ruby
 template "example" do

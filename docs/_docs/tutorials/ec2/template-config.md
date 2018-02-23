@@ -2,7 +2,7 @@
 title: Configure the Template
 ---
 
-Let's configure the `@route53` variable in the template from the previous section. You configure this in the `config/templates/base/stacks.rb` file by adding the following:
+Let's configure the `@route53` variable in the template from the previous section. You configure this in the `app/definitions/base.rb` file by adding the following:
 
 ```ruby
 template "single_instance" do

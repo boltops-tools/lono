@@ -16,7 +16,7 @@ lono import path/to/template
 lono generate
 ```
 
-The command downloads the template to `templates` folder, converts it into YAML, and declares a new template definition in `config/templates/base/stacks.rb`.
+The command downloads the template to `templates` folder, converts it into YAML, and declares a new template definition in `app/definitions/base.rb`.
 
 You can run `lono generate` immediately after the `lono import` command.
 
