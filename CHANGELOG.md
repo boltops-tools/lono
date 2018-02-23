@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [4.0.0]
+- lono upgrade4 command
+- simplified lono project structure
+- app/scripts upload support and extract_scripts helper
+- new settings.yml format: environment support, simplified s3_folder and aws_profiles options
+- revamped starter projects
+- added focus to lono import flow
+- move lono summary up to top-level cli
+- cli auto-completion support
+- improved YAML parse error: shows error line immediately to user of output template
+- better ERB template error rendering with render_me_pretty gem
+- remove json support. focus on yaml.
+- lono user_data command
+
 ## [3.5.0]
 - Using Lono.root instead of scattered project_root parameters
 - prefer use of Lono.env over LONO_ENV internally
