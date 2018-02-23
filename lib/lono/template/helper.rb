@@ -22,7 +22,8 @@ module Lono::Template::Helper
     end
 
     <<-BASH_CODE
-# Download #{scripts_name} from s3, extract and setup
+# Generated from the lono extract_scripts helper.
+# Downloads scripts from s3, extract them, and setup.
 mkdir -p #{to}
 aws s3 cp #{scripts_s3_path} #{to}/
 cd #{to}

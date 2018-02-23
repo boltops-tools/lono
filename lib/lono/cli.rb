@@ -30,6 +30,7 @@ module Lono
     long_desc Help.text(:user_data)
     option :clean, type: :boolean, default: true, desc: "remove all output/user_data files before generating"
     def user_data(name)
+      Script::Build.new(options).run
       UserData.new(options.merge(name: name)).generate
     end
 
