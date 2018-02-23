@@ -21,7 +21,7 @@ class Lono::Cfn::Update < Lono::Cfn::Base
     error = nil
     diff.run if @options[:diff]
     preview.run if @options[:preview]
-    are_you_sure?(:update)
+    are_you_sure?(@stack_name, :update)
 
     if @options[:change_set] # defaults to this
       message << " via change set: #{preview.change_set_name}"

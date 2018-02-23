@@ -12,7 +12,7 @@ class Lono::Cfn::Delete
     if @options[:noop]
       puts "NOOP #{message}"
     else
-      are_you_sure?(:delete)
+      are_you_sure?(@stack_name, :delete)
 
       if stack_exists?(@stack_name)
         cfn.delete_stack(stack_name: @stack_name)

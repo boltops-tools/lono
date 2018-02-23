@@ -34,8 +34,15 @@ module Lono
     end
 
     def create_empty_directories
-      Lono::Core::Config::PATHS.keys.each do |meth|
-        empty_directory Lono.config.send(meth)
+      meths = Lono::Core::Config::PATHS.keys
+      meths.each do |meth|
+        path = "#{@cwd}/#{project_name}/#{Lono.config.send(meth)}"
+        next if File.exist?(path)
+        if ENV['TEST']
+          empty_directory Lono.config.send(meth)
+        else
+          empty_directory path
+        end
       end
     end
 

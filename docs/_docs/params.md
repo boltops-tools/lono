@@ -7,7 +7,7 @@ Lono provides a way to specify your runtime CloudFormation launch parameters in 
 `params/base/example.txt`:
 
 ```sh
-KeyName=tutorial
+KeyName=default
 InstanceType=t2.micro
 ```
 
@@ -21,7 +21,7 @@ This results in:
   },
   {
     "ParameterKey": "KeyName",
-    "ParameterValue": "tutorial"
+    "ParameterValue": "default"
   }
 ]
 ```
@@ -32,7 +32,7 @@ These files can be used to launch the CloudFormation stack with the `aws cloudfo
 
 Shared variables substitution is supported in params file.  Here's an example:
 
-`config/variables/base/variables.rb`:
+`config/variables/base.rb`:
 
 ```sh
 @ami = "ami-12345"
@@ -46,7 +46,7 @@ Ami=<%= @ami %>
 
 Will produce:
 
-`output/params/prod/mystack.json`:
+`output/params/mystack.json`:
 
 ```json
 [
@@ -61,6 +61,6 @@ Will produce:
 
 Lono param files also support layering which is covered in [Layering Support]({% link _docs/layering.md %}).
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/config-variables.md %}">Back</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/shared-variables.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/layering.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

@@ -2,13 +2,11 @@
 title: Custom Helpers
 ---
 
-It is useful be able to call methods in your template views that are not built into lono. Lono allows you to add your own custom helpers for this case.  The custom helpers are first class citizens and have access to the same context and variables as [built-in lono helpers]({% link _docs/template-helpers.md %}).
-
-The starter project generated with `lono new [PROJECT_NAME]` generates an example of a custom helper in the `helpers` to help explain how to add your own custom helpers.
+It is useful be able to call methods in your template views that are not built into lono. Lono allows you to add your own custom helpers for this case.  The custom helpers are first class citizens and have access to the same context and variables as [built-in lono helpers]({% link _docs/builtin-helpers.md %}).
 
 ### How to Add Custom Helper Methods
 
-To add custom helpers methods yourself, create a file that ends with `_helper.rb` in the `helpers` folder of your project. Declare a module in that file naming the module the same as the filename except in camel case form.  Then define your helper methods in the module.  For example:
+To add custom helpers methods, create a file that ends with `_helper.rb` in the `app/helpers` folder of your project. Declare a module in that file naming the module the same as the filename except in camel case form.  Then define your helper methods in the module.  For example:
 
 `helpers/my_custom_helper.rb:`
 
@@ -26,7 +24,7 @@ end
 
 The `shared_partial` method is now available in your template views.  Notice how in the example `shared_partial` calls built-in lono helper methods like `partial_exist?` with no problem. All lono built-in helper methods are available in your custom helper methods.  Variables are also available to be used in your custom helper methods.  Example:
 
-`config/templates/base/stacks.rb`:
+`app/definitions/base.rb`:
 
 ```ruby
 template "example" do
@@ -61,6 +59,6 @@ end
 
 Notice how `@disk_size` is used in the `size_in_bytes` helper method.
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/template-helpers.md %}">Back</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/builtin-helpers.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/conventions.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

@@ -9,10 +9,11 @@ module Lono::Template::Helper
   def extract_scripts(options={})
     check_s3_folder_settings!
 
-    settings = setting.data
+    settings = setting.data["extract_scripts"] || {}
+    options = settings.merge(options)
     # defaults also here in case they are removed from settings
-    to = options[:to] || settings[:to] || "/opt"
-    user = options[:as] || settings[:as] || "ec2-user"
+    to = options[:to] || "/opt"
+    user = options[:as] || "ec2-user"
 
     if Dir.glob("#{Lono.config.scripts_path}/*").empty?
       puts "WARN: you are using the extract_scripts helper method but you do not have any app/scripts.".colorize(:yellow)
@@ -22,7 +23,8 @@ module Lono::Template::Helper
     end
 
     <<-BASH_CODE
-# Download #{scripts_name} from s3, extract and setup
+# Generated from the lono extract_scripts helper.
+# Downloads scripts from s3, extract them, and setup.
 mkdir -p #{to}
 aws s3 cp #{scripts_s3_path} #{to}/
 cd #{to}
@@ -34,9 +36,13 @@ BASH_CODE
 
   def check_s3_folder_settings!
     return if setting.s3_folder
-    puts "Helper method called that requires the s3_folder to be set."
-    puts caller[0]
+
+    puts "Helper method called that requires the s3_folder to be set at:"
+    lines = caller.reject { |l| l =~ %r{lib/lono} } # hide internal lono trace
+    puts "  #{lines[0]}"
+
     puts "Please configure your settings.yml with an s3_folder.".colorize(:red)
+    puts "Detected AWS_PROFILE #{ENV['AWS_PROFILE'].inspect}"
     exit 1
   end
 

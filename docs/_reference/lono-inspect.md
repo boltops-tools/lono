@@ -11,7 +11,7 @@ The `lono inspect summary` command summarizes the parameters and resources types
 ```sh
 $ lono import https://s3.amazonaws.com/cloudformation-templates-us-east-1/AutoScalingMultiAZWithNotifications.template --name asg
 $ lono inspect summary asg
-CloudFormation Template Summary:
+=> CloudFormation Template Summary:
 Parameters:
 Required:
   VpcId (AWS::EC2::VPC::Id)

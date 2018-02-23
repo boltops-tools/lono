@@ -2,52 +2,55 @@
 title: LONO_ENV
 ---
 
-Lono's behavior is controlled by the `LONO_ENV` environment variable.  For example, the `LONO_ENV` variable is used to layer different lono files together to make it easy to define multiple environments like production and staging.  This is covered thoroughly in the [Layering]({% link _docs/layering.md %}) section.  `LONO_ENV` defaults to `prod` when not set.
+Lono's behavior is controlled by the `LONO_ENV` environment variable.  For example, the `LONO_ENV` variable is used to layer different lono files together to make it easy to define multiple environments like production and development.  This is covered thoroughly in the [Layering docs]({% link _docs/layering.md %}).  `LONO_ENV` defaults to `development` when not set.
 
 ### Setting LONO_ENV
 
-The `LONO_ENV` can be set easily in several ways:
+The `LONO_ENV` can be set in several ways:
 
 1. At the CLI command invocation - This takes the highest precedence.
 2. Exported as an environment variable to your shell - This takes the second highest precedence.
-3. As a `aws_profile_lono_env_map` value in your lono `settings.yml` file - This takes the lowest precedence.
+3. As a `aws_profiles` value in your lono `settings.yml` file - This takes the lowest precedence.
 
 ### At the CLI Command
 
 ```sh
-LONO_ENV=prod lono generate
+LONO_ENV=production lono generate
 ```
 
 ### As an environment variable
 
 ```sh
-export LONO_ENV=prod
+export LONO_ENV=production
 lono generate
 ```
 
-Most people will set `LONO_ENV` in their `~/.profile`.
+If you do not want to remember to type `LONO_ENV=production`, you can set it in your `~/.profile`.
 
-### In lono settings.yml
+### Settings: aws_profiles
 
-The most interesting way to set `LONO_ENV` is with the `aws_profile_lono_env_map` in `settings.yml`.  Let's say you have a `~/.lono/settings.yml` with the following:
+The most interesting way to set `LONO_ENV` is with `aws_profiles` in `settings.yml`.  Let's say you have a `settings.yml` with the following:
 
 ```yaml
-aws_profile_lono_env_map:
-  default: dev
-  my-prod-profile: prod
-  my-stag-profile: stag
+development:
+  aws_profiles:
+    - dev_profile1
+    - dev_profile2
+production:
+  aws_profiles:
+    - prod_profile
 ```
 
-In this case, when you set `AWS_PROFILE` to switch AWS profiles, lono picks this up and maps the `AWS_PROFILE` value to the specified `LONO_ENV` using the `aws_profile_lono_env_map` lookup.  Example:
+In this case, when you set `AWS_PROFILE` to switch AWS profiles, lono picks this up and maps `aws_profiles` to the containing `LONO_ENV` config.  Example:
 
 ```sh
-AWS_PROFILE=my-prod-profile => LONO_ENV=prod
-AWS_PROFILE=my-stag-profile => LONO_ENV=stag
-AWS_PROFILE=default => LONO_ENV=dev
-AWS_PROFILE=whatever => LONO_ENV=dev
+AWS_PROFILE=dev_profile1 => LONO_ENV=development
+AWS_PROFILE=dev_profile2 => LONO_ENV=development
+AWS_PROFILE=prod_profile => LONO_ENV=production
+AWS_PROFILE=whatever => LONO_ENV=development # default since whatever is not found
 ```
 
-Notice how `AWS_PROFILE=whatever` results in `LONO_ENV=dev`.  This is because the `default: dev` map is specially treated. If you set the `default` map, this becomes the default value when the profile map is not specified in the rest of `lono/settings.yml`.  More info on settings is available at [settings]({% link _docs/settings.md %}).
+This prevents you from switching `AWS_PROFILE`, forgetting to also switch `LONO_ENV`, and accidentally deploying to production vs development. More info on settings is available at the [Settings docs]({% link _docs/settings.md %}).
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/directory-structure.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/import-template.md %}">Next Step</a>

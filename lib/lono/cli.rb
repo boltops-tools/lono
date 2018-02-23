@@ -9,7 +9,6 @@ module Lono
 
     desc "import SOURCE", "Imports raw CloudFormation template and lono-fies it"
     long_desc Help.text(:import)
-    option :casing, default: "underscore", desc: "camelcase or underscore the template name"
     option :name, required: true, default: nil, desc: "final name of downloaded template without extension"
     option :summary, default: true, type: :boolean, desc: "provide template summary after import"
     def import(source)
@@ -18,13 +17,21 @@ module Lono
 
     desc "generate", "Generate both CloudFormation templates and parameters files"
     long_desc Help.text(:generate)
-    option :clean, type: :boolean, desc: "remove all output files before generating"
+    option :clean, type: :boolean, default: true, desc: "remove all output files before generating"
     option :quiet, type: :boolean, desc: "silence the output"
     def generate
       puts "Generating CloudFormation templates, parameters, and scripts"
       Script::Build.new(options).run
       Template::DSL.new(options).run
       Param::Generator.generate_all(options)
+    end
+
+    desc "user_data NAME", "Generates user_data script for debugging"
+    long_desc Help.text(:user_data)
+    option :clean, type: :boolean, default: true, desc: "remove all output/user_data files before generating"
+    def user_data(name)
+      Script::Build.new(options).run
+      UserData.new(options.merge(name: name)).generate
     end
 
     desc "summary STACK", "Prints summary of CloudFormation template"

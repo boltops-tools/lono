@@ -39,11 +39,11 @@ Then import a standard CloudFormation template into lono. The `--name` option is
 
 ```
 $ lono import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/AutoScalingMultiAZWithNotifications.template --name autoscaling
-Imported raw CloudFormation template and lono-fied it.
+=> Imported CloudFormation template and lono-fied it.
 Template definition added to app/definitions/base.rb
 Params file created to config/params/base/autoscaling.txt
 Template downloaded to app/templates/autoscaling.yml
-CloudFormation Template Summary:
+=> CloudFormation Template Summary:
 Parameters:
 Required:
   VpcId (AWS::EC2::VPC::Id)
@@ -71,6 +71,7 @@ OperatorEMail=
 KeyName=
 #InstanceType=        # optional
 #SSHLocation=         # optional
+$
 ```
 
 The template was imported from [CloudFormation Auto Scaling Samples](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sample-templates-services-us-west-2.html#w2ab2c23c48c13b7).

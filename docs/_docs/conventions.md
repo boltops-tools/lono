@@ -2,7 +2,7 @@
 title: Conventions
 ---
 
-Lono follows a set of naming conventions to encourage best practices in a naming scheme. This also dramatically allows lono commands to be concise and memorable.
+Lono follows a set of naming conventions to encourage best practices in a naming scheme. This also dramatically allows lono commands to be shorter and hopefully more memorable.
 
 ### CLI Template Name Convention
 
@@ -35,19 +35,19 @@ Both template and param conventions can be overridden.  Here are examples of ove
 $ lono cfn create mystack --template different1
 ```
 
-The template that will be use is `output/different1.json` and the parameters that will use `output/params/prod/different1.json`.
+The template that will be use is `output/templates/different1.json` and the parameters that will use `output/params/different1.json`.
 
 ```
 $ lono cfn create mystack --param different2
 ```
 
-The template that will be used is `output/mystack.json` and the parameters that will use `output/params/prod/different2.json`.
+The template that will be used is `output/templates/mystack.json` and the parameters that will use `output/params/different2.json`.
 
 ```
 $ lono cfn create mystack --template different3 --param different4
 ```
 
-The template that will be used is `output/different3.json` and the parameters that will use `output/params/prod/different4.json`.
+The template that will be used is `output/templates/different3.json` and the parameters that will use `output/params/different4.json`.
 
 ### Template Output and Source Name Convention
 
@@ -74,7 +74,7 @@ template "example"
 
 ### Format and Extension Convention
 
-At the beginning of the generation process, lono auto-detects the format of the template files. The format is then tacked onto the output filenames automatically when writing the final generated templates. For example:
+For templates, lono assumes a format extension of `.yml`.  The format is then tacked onto the output filenames automatically when writing the final generated templates. For example:
 
 ```ruby
 template "example" do
@@ -82,9 +82,9 @@ template "example" do
 end
 ```
 
-A `templates/example.yml` file results in creating `output/example.yml` when lono generate is ran. The extension is detected from the source template file path itself.
+A `templates/example.yml` file results in creating `output/templates/example.yml` when lono generate is ran.
 
-The extension for filenames used in partial helper is also auto-detected. For example, given a partial in `templates/partials/elb.yml` a call to `partial("elb")` would automatically know to load elb.yml. As another example, given a partial in `templates/partials/script.sh`, then `partial("script")` would automatically load `script.sh`.
+The extension for filenames used in partial helper is auto-detected. For example, given a partial in `templates/partials/elb.yml` a call to `partial("elb")` would automatically know to load elb.yml. As another example, given a partial in `templates/partials/script.sh`, then `partial("script")` would automatically load `script.sh`.
 
 In the case where the extension is ambiguous, you must specify the extension explicitly. For example, given:
 

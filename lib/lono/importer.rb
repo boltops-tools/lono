@@ -16,7 +16,7 @@ class Lono::Importer
       download_template
       template_definition_path = add_template_definition
       create_params
-      puts "Imported raw CloudFormation template and lono-fied it.".colorize(:green)
+      puts "=> Imported CloudFormation template and lono-fied it.".colorize(:green)
       puts "Template definition added to #{pretty_path(template_definition_path)}"
       puts "Params file created to #{pretty_path(params_path)}"
     end
@@ -103,7 +103,9 @@ class Lono::Importer
 
   def template_name
     return @options[:name] if @options[:name]
-    # else infer name from the original source
+    # Else infer name from the original source.
+    # Not really being used since --name is now required but leaving in place
+    # in case we decide to make --name optional again
     name = File.basename(@source, ".*")
     @options[:casing] == "camelcase" ? name.camelize : name.underscore.dasherize
   end
