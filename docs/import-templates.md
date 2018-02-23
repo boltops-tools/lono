@@ -8,7 +8,7 @@ Lono provides a handy `lono import` command. The command:
 2. Imports it into the lono with the right structure
 3. Summarize the template's required parameters and resources
 
-It gives you quick sense of how to use downloaded template.  Let's use a simple sample template from the [AWS Samples documentation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sample-templates-services-us-west-2.html#w2ab2c23c48c13c15).  The template creates an EC2 instance.
+It gives you quick sense of how to use the downloaded template.  Let's use a simple sample template from the [AWS Samples documentation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sample-templates-services-us-west-2.html#w2ab2c23c48c13c15).  The template creates an EC2 instance.
 
 {% highlight bash %}
 $ lono new infra

@@ -7,7 +7,7 @@ title: "Tutorial EC2: Import EC2 Template"
 Let's grab an AutoScaling template from [Amazon EC2 instance in a security group  ](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sample-templates-services-us-west-2.html#w2ab2c23c48c13c15).  We'll grab the "Amazon EC2 instance in a security group" example and run the `lono import` command with it.  We'll use the `--name ec2` option to set the imported template name.
 
 ```
-$ cd ec2 # cd into the newly created project if you havent already
+$ cd ec2 # cd into the newly created project if you haven't already
 $ lono import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/EC2InstanceWithSecurityGroupSample.template --name ec2
 => Imported CloudFormation template and lono-fied it.
 Template definition added to app/definitions/base.rb
@@ -30,13 +30,13 @@ KeyName=
 #SSHLocation=         # optional
 ```
 
-The output tells you what happened, but here's addiitonal explanation of what `lono import` did:
+The output tells you what happened, but here's additional explanation of what `lono import` did:
 
 * A template definition was added to the `app/definitions/base.rb`.
 * A lono env-like params file was created at `config/params/base/ec2.txt`.
 * The CloudFormation template was downloaded to `app/templates/ec2.yml`
 * A summary of the CloudFormation template was provided.  The required parameters to use the template are worth noting.
-* The contents of the `config/params/base/ec2.txt` params file is shown so you know what to edit.
+* The contents of the `config/params/base/ec2.txt` params file is shown, so you know what to edit.
 
 ### Looking at the Generated Files
 
@@ -48,7 +48,7 @@ The `app/templates/ec2.yml` is simply the template that was imported into the lo
 
 #### app/definitions/base.rb
 
-Even though the template exists in the `app/templates` folder, a template definition in `app/definitions` is required to tell lono to generate to template to the `outputs` folder.  Here are the contents of `app/definitions/base.rb`:
+Even though the template exists in the `app/templates` folder, a template definition in `app/definitions` is required to tell lono to generate to the template to the `outputs` folder.  Here are the contents of `app/definitions/base.rb`:
 
 ```ruby
 template "ec2"
@@ -70,7 +70,7 @@ We can tell that we need to set the `KeyName` parameter to use the template.
 
 ### Configure Parameter Values
 
-For this template we need to specify a `KeyName` so we can ssh into the EC2 instance.  Set the `KeyName` to an ssh key that exists on your AWS account. We'll set it to `default` here.  If you use `default`, make sure that the `default` KeyPair exists on your account.
+For this template, we need to specify a `KeyName` so we can ssh into the EC2 instance.  Set the `KeyName` to an ssh key that exists on your AWS account. We'll set it to `default` here.  If you use `default`, make sure that the `default` KeyPair exists on your account.
 
 `config/params/base/ec2.txt`:
 
@@ -80,7 +80,7 @@ KeyName=default
 #SSHLocation=         # optional
 ```
 
-Everything is now configured and we are ready to launch the the stack next!
+Everything is now configured, and we are ready to launch the stack next!
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/project-structure.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/tutorials/ec2/cfn-create.md %}">Next Step</a>

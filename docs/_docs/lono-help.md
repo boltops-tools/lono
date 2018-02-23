@@ -14,6 +14,7 @@ You can append `help`, `-h` or `--help` to the end of any command to get more he
 lono new -h
 lono import -h
 lono generate -h
+lono summary -h
 lono cfn create -h
 lono cfn update -h
 ```

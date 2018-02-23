@@ -69,7 +69,7 @@ cp config/params/base/ec2.txt config/params/base/ec2-different.txt
 lono cfn create ec2 --template ec2 --param --ec2-different
 ```
 
-Notice, that we needed to specific the `--template` and `--param` option in this case. We did not have to specifiy it before because lono uses a set of conventions. If no param option is provided, then the convention is for the param file to default to the name of the template option. The conventions covered in detailed in [Conventions]({% link _docs/conventions.md %}) and makes for shorter commands when files are named consistently.
+Notice, that we needed to specify the `--template` and `--param` option in this case. We did not have to specify it before because lono uses a set of conventions. If no param option is provided, then the convention is for the param file to default to the name of the template option. The conventions are covered in detailed in [Conventions]({% link _docs/conventions.md %}) and makes for shorter commands when files are named consistently.
 
 
 Next, we'll make some edits to the template and learn how to update the stack.

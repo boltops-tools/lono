@@ -4,7 +4,7 @@ title: Shared Variables
 
 ### Template Shared Variables
 
-Template shared variables are available to all template definition config blocks, template views and params.  These variables are defined in the `config/variables` folder.  The variables files are simply ruby scripts where any instance variable (variables with an @ sign in front) is made available.
+Template shared variables are available to all template definition config blocks, template views, and params.  These variables are defined in the `config/variables` folder.  The variables files are merely ruby scripts where instance variables (variables with an @ sign in front) are made available.
 
 Here's an example:
 

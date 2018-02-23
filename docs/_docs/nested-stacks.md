@@ -4,16 +4,16 @@ title: Nested Stack Support
 
 ### Uploading Templates to S3
 
-By default, lono provides the generated template on the local file system when creating CloudFormation stacks. This is done to keep things simple and fast for the common use case of single template.
+By default, lono provides the generated template on the local file system when creating CloudFormation stacks. This is done to keep things simple and fast for the common use case of a single template.
 
-However, if you are working with advanced nested CloudFormation templates that contain a parent stack and several child stacks, then the templates must be uploaded and available in s3 for CloudFormation to work. Lono can upload the generated templates automatically with a simple configuration setting.  To enable s3 uploading post template generation:
+However, if you are working with advanced nested CloudFormation templates that contain a parent stack and several child stacks, then the child templates must be uploaded and available in s3 for CloudFormation to work. Lono can upload the generated templates automatically with a simple configuration setting.  To enable s3 uploading post template generation:
 
 ```yaml
 base:
   s3_folder: bucket/path/to/folder
 ```
 
-That's all that is required to tell lono to upload the generated templates to s3. When `s3_folder` is set, lono will automaticaly upload templates to the s3_folder as part of the lifecycle `lono cfn` commands.
+That's all that is required to tell lono to upload the generated templates to s3. When `s3_folder` is set, lono will automatically upload templates to the `s3_folder` as part of the lifecycle `lono cfn` commands.
 
 ### Helper method for nested templates
 
@@ -21,12 +21,12 @@ Lono also provides helper methods to help work with nested CloudFormation templa
 
 Helper  | Description
 ------------- | -------------
-`template_s3_path(name)`  | This is the s3 path where template gets uploaded to s3. This required for the `TemplateURL` property of a `AWS::CloudFormation::Stack` child stack resource.
+`template_s3_path(name)`  | This is the s3 path where template gets uploaded to s3. This required for the `TemplateURL` property of an `AWS::CloudFormation::Stack` child stack resource.
 `template_params(name)`  | This returns an Array of the parameter values. This is useful in a parent template if you are using nested templates. You can use this to grab the params values from child templates and specify the parameters within the parent template to other child templates.
 
 #### The template_s3_path helper
 
-Instead of hard coding the s3 bucket and path name in your parent stack you can use this helper to reference it from your `settings.yml` configuration. For example, if your s3_folder is configured in `settings.yml` like so:
+Instead of hard-coding the s3 bucket and path name in your parent stack you can use this helper to reference it from your `settings.yml` configuration. For example, if your s3_folder is configured in `settings.yml` like so:
 
 ```yaml
 s3:
@@ -88,7 +88,7 @@ VpcName=main
 DomainName=stack.local
 ```
 
-Note you might want to put any inline parameter values in the parent template after the `template_params` loop so it is immediately clear from looking at the one file the final values parameters being passed into the child template.
+Note you might want to put inline parameter values in the parent template at the bottom after the `template_params` loop, so it is  clear what the final values parameters being passed into the child template are.
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/starter-templates.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/organizing-lono.md %}">Next Step</a>

@@ -56,7 +56,7 @@ $ cd infra
 $ lono cfn create example # launches stack
 {% endhighlight %}
 
-The last command do a few things:
+The last command does a few things:
 
 1. Generate templates and params files from `app/definitions` and `app/templates` to `output/templates`.
 2. Generate parameter files from `config/params` to `output/params`.

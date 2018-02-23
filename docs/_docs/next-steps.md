@@ -8,7 +8,7 @@ From here, there are a few resources that can help you continue along:
 
 * Check out the [lono](https://github.com/tongueroo/lono) repo on GitHub
 * Submit an issue
-* Write a blog post describing how you are using lono, or an interesting problem lono has allowed you to solve
+* Write a blog post describing how you are using lono, or a problem lono has allowed you to solve
 
 Everyone can contribute to making lono better, including the documentation. These docs are the lono repo located the [docs folder](https://github.com/tongueroo/lono/tree/master/docs). Please fork the project and open a pull request!  We love your pull requests. Contributions are encouraged and welcomed!
 

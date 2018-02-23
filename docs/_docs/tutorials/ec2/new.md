@@ -32,11 +32,11 @@ Cd into your project and check things out:
 
   cd ec2
 
-Add and edit templates to your project.  When you are ready to launch a CloudFormation stack run:
+Add and edit templates for your project.  When you are ready to launch a CloudFormation stack run:
 
   lono cfn create STACK_NAME
 
-You can also get started quickly by importing other CloudFormration templates into lono.  For example:
+You can also get started quickly by importing other CloudFormation templates into lono.  For example:
 
   lono import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/EC2InstanceWithSecurityGroupSample.template --name ec2
 
@@ -54,7 +54,7 @@ $
 The new command does a few things:
 
 1. Generates a starter lono project structure
-2. Installs the projects dependencies
+2. Installs the project's dependencies
 3. Initialized a git repository
 4. Displays a welcome message and provides some guidance on what to do next
 

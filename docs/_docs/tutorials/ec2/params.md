@@ -4,8 +4,7 @@ title: Params
 
 ### Param Files
 
-
-With lono, you can specify CloudFormation parameters with simple formatted `key=value` env-like file instead of the CloudFormation's normal json format. Let's take a closer look at the params file we've been using so far. The `config/params/base/ec2.txt` file looks like this:
+With lono, you can specify CloudFormation parameters with simple formatted `key=value` env-like file instead of the CloudFormation's normal JSON format. Let's take a closer look at the params file we've been using so far. The `config/params/base/ec2.txt` file looks like this:
 
 ```
 KeyName=default
@@ -13,7 +12,7 @@ KeyName=default
 #SSHLocation=         # optional
 ```
 
-When lono goes through the generation phase, it translates the param files from the simple env-like format to the CloudFormation json format and writes it to `output/params/ec2.json`:
+When lono goes through the generation phase, it translates the param files from the simple env-like format to the CloudFormation JSON format and writes it to `output/params/ec2.json`:
 
 ```json
 [
@@ -28,7 +27,7 @@ The env-like format allows you to add comments to the params files and are more 
 
 ### Layering support
 
-Notice that the file in the config folder include a `base` in it's path, but the file in the output folder do not include a `base` portion. This is because params files are layered together to produce a final result.  This layering is simply the merging of multiple params files together.
+Notice that the file in the config folder includes a `base` in its path, but the file in the output folder does not. This is because params files are layered together to produce a final result.  This layering is merely the merging of multiple params files together.
 
 We'll demonstrate layering by adding few changes. For the existing param file `config/params/base/ec2.txt` we'll update it to:
 
@@ -85,13 +84,13 @@ It produces a different `output/params/ec2.json` result:
 ]
 ```
 
-The `base` param files are special and they always get merged. The other param files associated with `LONO_ENV` are merged for its specific environment.
+The `base` param files are special, and they always get merged. The other param files associated with `LONO_ENV` are merged for its specific environment.
 
 Layering allows us to use some different parameter values for different environments.  The layering concept applies to other components as well and is covered in more detailed in the [Layering docs]({% link _docs/layering.md %}).
 
 ### Shared Variables Support
 
-Param files have access to shared variables, which also support layering.  Sometimes, by using shared variables you can simply your param files.  Let's through another example.  We'll add some shared variables files.
+Param files have access to shared variables, which also support layering.  Sometimes, by using shared variables, you can use simplify your param files.  Let's go through another example.  We'll add some shared variables files.
 
 We'll create a `config/variables/base.rb` which has:
 
@@ -119,7 +118,7 @@ rm -f config/params/production/ec2.txt
 rmdir config/params/production
 ```
 
-When you generate the params again you we'll get the same result as before. A `lono generate` produces at `output/params/ec2.json` result a InstanceType of `t2.micro` and a `LONO_ENV=production lono generate` will have a InstanceType of `t2.small`.
+When you generate the params again, we get the same result as before. A `lono generate` produces at `output/params/ec2.json` result a InstanceType of `t2.micro` and a `LONO_ENV=production lono generate` will have a InstanceType of `t2.small`.
 
 ### Helper Support
 

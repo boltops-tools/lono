@@ -50,7 +50,7 @@ AWS_PROFILE=prod_profile => LONO_ENV=production
 AWS_PROFILE=whatever => LONO_ENV=development # default since whatever is not found
 ```
 
-This prevents you from switching `AWS_PROFILE`, forgetting to also switch `LONO_ENV`, and accidentally deploying to production vs development. More info on settings is available at the [Settings docs]({% link _docs/settings.md %}).
+This prevents you from switching `AWS_PROFILE`, forgetting to also switch `LONO_ENV`, and accidentally deploying to production vs. development. More info on settings is available at the [Settings docs]({% link _docs/settings.md %}).
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/directory-structure.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/import-template.md %}">Next Step</a>

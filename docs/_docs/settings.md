@@ -51,19 +51,19 @@ Setting  | Description
 
 ### The randomize_stack_name setting
 
-The `randomize_stack_name` is an option that was added after realizing a common development flow pattern that was being used repeatedly. When working with CloudFormation templates and developing the source code we must often launch stacks over and over as we fine tune the stack. Since we cannot launch a stack with a duplicate name it is useful to use a command like this:
+The `randomize_stack_name` is an option that was added after realizing a common development flow pattern that was being repeatedly used. When working with CloudFormation templates and developing the source code, we must often launch stacks over and over as we fine tune the stack. Since we cannot launch a stack with a duplicate name it is useful to use a command like this:
 
 ```sh
 lono cfn create my-stack-$(date +%s) --template my-stack
 ```
 
-This command automatically adds a random string to the end of the stack name but uses the a template name without the random string. The `randomize_stack_name` option automates this. So we can create multiple stacks with different names but the same source template rapidly.  We can create multiple stacks in rapid fire fashion and debug.  When the option is enabled:
+This command automatically adds a random string to the end of the stack name but uses the template name without the random string. The `randomize_stack_name` option automates this. So we can create multiple stacks with different names but the same source template rapidly.  We can create multiple stacks in rapid-fire fashion and debug.  When the option is enabled:
 
 ```sh
 lono cfn create my-stack
 ```
 
-Will create a my-stack-[RANDOM] using the my-stack template name.  The random string is a short 3 character string.
+Will create a "my-stack-[RANDOM]" using the my-stack template name.  The random string is a short 3 character string.
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/conventions.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/starter-templates.md %}">Next Step</a>

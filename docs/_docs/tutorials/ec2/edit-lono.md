@@ -2,7 +2,7 @@
 title: "Tutorial EC2: Edit Template"
 ---
 
-The imported EC2 template we've been working with contains an EC2 instance and security group.  Next, we're show you how you can use lono to managed your templates.
+The imported EC2 template we've been working with contains an EC2 instance and security group.  Next, we show you how you can use lono to manage your templates.
 
 ### Lono Phases Review
 
@@ -21,7 +21,7 @@ As an example, let's add an EIP address to the template and associate it with th
 
 ### Compiling Different Templates Approach
 
-Compiling different templates is pretty straightforward with lono templates.  The source code for these changes are in the eip branch of [lono-tutorial-ec2](https://github.com/tongueroo/lono-tutorial-ec2/blob/eip/app/templates/ec2.yml).  Let's take a look at the relevant [changes](https://github.com/tongueroo/lono-tutorial-ec2/compare/eip).
+Compiling different templates is pretty straightforward with lono templates.  The source code for these changes is in the `eip` branch of [lono-tutorial-ec2](https://github.com/tongueroo/lono-tutorial-ec2/blob/eip/app/templates/ec2.yml).  Let's take a look at the relevant [changes](https://github.com/tongueroo/lono-tutorial-ec2/compare/eip).
 
 How we changed `app/definitions/base.rb`:
 
@@ -182,7 +182,7 @@ Move on once things look good and you're ready to move onto the next step.
 
 #### Clean Up
 
-Let's do a little clean up and introduce the `lono cfn delete` command.  The delete commands will prompt you with a "Are you sure?" prompt.  Delete some of the stacks before continuing with:
+Let's do a little cleanup and introduce the `lono cfn delete` command.  The delete commands will prompt you with a "Are you sure?" prompt.  Delete some of the stacks before continuing with:
 
 ```
 lono cfn delete ec2
@@ -190,7 +190,7 @@ lono cfn delete eip
 ```
 
 #### Congrats
-Congraluations 🎉 You have successfully added conditional logic to CloudFormation templates that decides whether or not to create an EIP.
+Congratulations 🎉 You have successfully added conditional logic to CloudFormation templates that decide whether or not to create an EIP.
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/cfn-update.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/tutorials/ec2/edit-native.md %}">Next Step</a>

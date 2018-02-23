@@ -2,11 +2,11 @@
 title: Update the Stack
 ---
 
-Now is a good time to introduce `lono cfn update` command before moving on. In the previous section, we use the `lono cfn create` command and assumed that the template magically worked the very first time.  In practice, it usually takes a few iterations before you get the CloudFormation template working right.  The CloudFormation development flow more commonly goes:
+Now is a good time to introduce `lono cfn update` command before moving on. In the previous section, we used the `lono cfn create` command and assumed that the template magically worked the very first time.  In practice, it usually takes a few iterations before you get the CloudFormation template working right.  The CloudFormation development flow more commonly goes:
 
 <img src="/img/tutorials/ec2/dev-flow.png" alt="CloudFormation Development Flow" class="doc-photo">
 
-Let's make a simple change to test out the `lono cfn update` command. We'll chnage the default InstanceType from `t2.small` to `t2.micro` and then run:
+Let's make a simple change to test out the `lono cfn update` command. We'll change the default InstanceType from `t2.small` to `t2.micro` and then run:
 
 ```sh
 lono cfn update ec2

@@ -20,11 +20,11 @@ Deleted example stack.
 $
 ```
 
-Congratulations! 🎉 You have successfully gone through the lono introductory tutorial. You've created stacks, edit them, and updated them. Hopefully you've gotten a good sense of how lono works.  There is much more lono can do. Here are some additional links to learn more:
+Congratulations! 🎉 You have successfully gone through the lono introductory tutorial. You've created stacks, edit them, and updated them. Hopefully, you've got a good sense of how lono works.  There is much more lono can do. Here are some additional links to learn more:
 
 * [Scripts]({% link _docs/app-scripts.md %}) - Scripts that get automatically uploaded and available to you.
 * [Helpers]({% link _docs/builtin-helpers.md %}) - Built-in helpers and custom helpers are supported.
-* [Params]({% link _docs/params.md %}) - Params have layering and shared varaibles support which can sometimes simplify your param files.
+* [Params]({% link _docs/params.md %}) - Params have layering and shared variables support which can sometimes simplify your param files.
 * [Nested Stacks]({% link _docs/nested-stacks.md %}) - Helpers exists to support nested stacks.
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/edit-native.md %}">Back</a>
