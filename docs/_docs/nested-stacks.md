@@ -28,7 +28,7 @@ Helper  | Description
 
 #### The template_s3_path helper
 
-Instead of hard coding the s3 bucket and path name in your parent stack you can use this helper to reference it from your `settings.yml` configuration. For example, if your s3.path is configured in `settings.yml` like so:
+Instead of hard coding the s3 bucket and path name in your parent stack you can use this helper to reference it from your `settings.yml` configuration. For example, if your s3_folder is configured in `settings.yml` like so:
 
 ```yaml
 s3:
