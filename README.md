@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="http://lono.cloud/img/logos/lono-logo.png" style="max-width: 300px" />
+  <img src="http://lono.cloud/img/logos/lono-logo-small.png" />
 </div>
 
 # Lono
