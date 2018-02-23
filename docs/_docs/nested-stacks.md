@@ -9,22 +9,20 @@ By default, lono provides the generated template on the local file system when c
 However, if you are working with advanced nested CloudFormation templates that contain a parent stack and several child stacks, then the templates must be uploaded and available in s3 for CloudFormation to work. Lono can upload the generated templates automatically with a simple configuration setting.  To enable s3 uploading post template generation:
 
 ```yaml
-s3:
-  path:
-    default: s3://bucket/path
+base:
+  s3_folder: bucket/path/to/folder
 ```
 
-That's all that is required to tell lono to upload the generated templates to s3.
+That's all that is required to tell lono to upload the generated templates to s3. When `s3_folder` is set, lono will automaticaly upload templates to the s3_folder as part of the lifecycle `lono cfn` commands.
 
 ### Helper method for nested templates
 
 Lono also provides helper methods to help work with nested CloudFormation templates.
 
-
 Helper  | Description
 ------------- | -------------
-`template_s3_path(name)`  | This is the s3 path where template gets uploaded to s3.
-`template_params(name)`  | This returns an Array of the parameter values. This is useful in a parent template if you are using nested templates. You can use this to grab the params values and specify the parameters within the parent template.
+`template_s3_path(name)`  | This is the s3 path where template gets uploaded to s3. This required for the `TemplateURL` property of a `AWS::CloudFormation::Stack` child stack resource.
+`template_params(name)`  | This returns an Array of the parameter values. This is useful in a parent template if you are using nested templates. You can use this to grab the params values from child templates and specify the parameters within the parent template to other child templates.
 
 #### The template_s3_path helper
 
