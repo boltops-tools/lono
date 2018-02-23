@@ -8,13 +8,15 @@ Any scripts added to the `app/scripts` folder get tarballed up and uploaded to s
 
 ### extract_scripts helper
 
-Lono provides a [extract_scripts]({% link _docs/builtin-helpers.md %}) helper that you can include your [user_data]({% link _docs/directory-structure.md %}) scripts to extract the `app/scripts` files in your lono project to `/opt/scripts` on the server.  Here's an example:
+Lono provides a [extract_scripts]({% link _docs/builtin-helpers.md %}) helper that you can include your `user_data` scripts to extract the `app/scripts` files in your lono project to `/opt/scripts` on the server.  Here's an example:
 
 `app/user_data/bootstrap.sh`:
 
 ```
 #!/bin/bash -exu
+
 <%= extract_scripts(to: "/opt") %>
+
 SCRIPTS=/opt/scripts
 $SCRIPTS/install_stuff.sh
 ```
@@ -22,8 +24,8 @@ $SCRIPTS/install_stuff.sh
 In order to use extract_scripts, you'll need scripts in the `app/scripts` folder. We'll add a test script:
 
 ```sh
-cat app/scripts/test.sh <<EOL
-echo test
+cat >app/scripts/install_stuff.sh <<EOL
+yum install -y jq
 EOL
 ```
 

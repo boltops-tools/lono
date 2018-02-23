@@ -9,10 +9,11 @@ module Lono::Template::Helper
   def extract_scripts(options={})
     check_s3_folder_settings!
 
-    settings = setting.data
+    settings = setting.data["extract_scripts"] || {}
+    options = settings.merge(options)
     # defaults also here in case they are removed from settings
-    to = options[:to] || settings[:to] || "/opt"
-    user = options[:as] || settings[:as] || "ec2-user"
+    to = options[:to] || "/opt"
+    user = options[:as] || "ec2-user"
 
     if Dir.glob("#{Lono.config.scripts_path}/*").empty?
       puts "WARN: you are using the extract_scripts helper method but you do not have any app/scripts.".colorize(:yellow)

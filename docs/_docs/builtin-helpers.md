@@ -6,7 +6,7 @@ Lono provides a few built-in helper methods that help with template processing. 
 
 Helper  | Description
 ------------- | -------------
-`extract_scripts` | Generates a script that can be included in user_data scripts to extract `app/script` files.
+`extract_scripts` | Generates a script that can be included in user_data scripts to extract `app/script` files. More info about the helper is in the [App Scripts docs]({% link _docs/app-scripts.md %}).
 `indent(text, amount)` | This is a helper method indents the provided string by a specified number of spaces.
 `partial(name, variables, options)` | Can be use to embed other files in a template.  The partial view should be placed in the `templates/partial` folder of the project.
 `partial_exist?(name)` | Checks whether a partial name exist. This can be helpful for writing custom helpers, covered in [Custom Helpers]({% link _docs/custom-helpers.md %})
@@ -14,7 +14,7 @@ Helper  | Description
 `template_s3_path(name)` | This is the s3 path where template gets uploaded to s3 if s3 upload is enabled.
 `user_data(path, vars, options)`  | Helper method includes files in the `app/user_data` folder.
 
-The full list of helper methods is available here: [lib/lono/template/helper.rb](lib/lono/template/helper.rb}).
+The full list of helper methods is available here: [lib/lono/template/helper.rb](https://github.com/tongueroo/lono/blob/master/lib/lono/template/helper.rb).
 
 ### Partial examples
 
