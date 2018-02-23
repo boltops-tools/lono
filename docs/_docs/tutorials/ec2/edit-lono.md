@@ -2,7 +2,7 @@
 title: "Tutorial EC2: Edit Template"
 ---
 
-The imported EC2 template contains an EC2 instance and security group.  Let's say we wanted to sometimes associate an EIP address with the EC2 instance but not always.  We can achieve this in several ways.
+The imported EC2 template we've been working with contains an EC2 instance and security group.  Next, we're show you how you can use lono to managed your templates.
 
 ### Lono Phases Review
 
@@ -10,23 +10,25 @@ First, let's review the lono phases:
 
 <img src="/img/tutorial/lono-flowchart.png" alt="Stack Created" class="doc-photo lono-flowchart">
 
-Lono introduces a Compile phase where it takes the `app/templates` files, uses ERB variables, and produces different templates in the `output/templates` folder.
+Lono introduces a Compile phase where it takes the `app/templates` files, uses ERB variables, and produces different templates in the `output/templates` folder.  With Lono, there are a few possible approaches to editing the templates:
 
-We'll show you 2 approaches so you can get a sense, learn, and decide when you want to use one approach over the other. The 2 approaches:
+1. Compiling Different Templates with Lono during the first generation phase
+2. Using Native CloudFormation Logical Constructs during the second run-time phase
 
-1. Compiling Different Templates with Lono
-2. Using Native CloudFormation Logical Constructs
+### Add EIP Address to Instance
+
+As an example, let's add an EIP address to the template and associate it with the EC2 instance.  Let's say that sometimes an EIP address is desirable and sometimes it is not.  We'll first show you how to achieve this with the compiling different templates approach.
 
 ### Compiling Different Templates Approach
 
-First, we'll take compiling different templates approach. Compiling different templates is pretty straightforward with lono templates.  The source code for these changes are in the eip branch of [lono-tutorial-ec2](https://github.com/tongueroo/lono-tutorial-ec2/blob/eip/app/templates/ec2.yml).  Let's take a look at the relevant [changes](https://github.com/tongueroo/lono-tutorial-ec2/compare/eip).
+Compiling different templates is pretty straightforward with lono templates.  The source code for these changes are in the eip branch of [lono-tutorial-ec2](https://github.com/tongueroo/lono-tutorial-ec2/blob/eip/app/templates/ec2.yml).  Let's take a look at the relevant [changes](https://github.com/tongueroo/lono-tutorial-ec2/compare/eip).
 
-We changed the `app/definitions/base.rb`:
+How we changed `app/definitions/base.rb`:
 
 Before:
 
 ```ruby
-template "ec2" do
+template "ec2"
 ```
 
 After:
@@ -42,10 +44,10 @@ template "eip" do
 end
 ```
 
-The above code tells lono to generate 2 templates at `output/templates/ec2.yml` and `output/templates/eip.yml`. Both templates use the same source template `app/templates/ec2.yml`. However, each one has a different value for the `eip` variable.  The `eip` variable is available in the `app/templates` as `@eip`.
+The new code tells lono to generate 2 templates at `output/templates/ec2.yml` and `output/templates/eip.yml`. Both templates use the same source template `app/templates/ec2.yml`. However, each one has a different value for the `eip` variable.  The `eip` variable is available in the `app/templates` as the `@eip` instance variable.
 
-In the source template `app/templates/ec2.yml` we modified it to include a few
-`<% if @eip %>` checks at the sections of the template where we want to include EIP related components. Here's a portion of the template as an example:
+We modify the source template `app/templates/ec2.yml` and add
+`<% if @eip %>` checks where we want to include EIP related components. Here's a portion of the template to demonstrate:
 
 ```
 ...
@@ -82,11 +84,11 @@ Here's the full template code [ec2.yml code](https://github.com/tongueroo/lono-t
 
 ### ERB vs CloudFormation Template
 
-We're are not limited to just if statements.  Since this is ERB, we can use loops, variables, expressions, etc.  Here is a good post covering ERB templates [An Introduction to ERB Templating](http://www.stuartellis.name/articles/erb/). Additionally, we have access to [built-in helpers]({% link _docs/builtin-helpers.md %}) and [shared variables]({% link _docs/shared-variables.md %}).  You can also define your own [custom helpers]({% link _docs/custom-helpers.md %}) if needed.
+With ERB, we are not limited to just if statements.  We can use loops, variables, expressions, etc.  Here is a good post covering ERB templates [An Introduction to ERB Templating](http://www.stuartellis.name/articles/erb/). Additionally, we have access to lono [built-in helpers]({% link _docs/builtin-helpers.md %}) and [shared variables]({% link _docs/shared-variables.md %}).  We can also define our own [custom helpers]({% link _docs/custom-helpers.md %}) if needed.
 
 #### Lono Generate
 
-It is helpful to generate the templates and verify that the files in `output/templates` look like before launching.
+It is helpful to generate the templates and verify that the files in `output/templates` look like what we expect before launching.
 
 ```
 $ lono generate
@@ -100,7 +102,7 @@ Generating parameter files:
 $
 ```
 
-You can also use `lono summary` to see that the resources are different. Here's the output of `lono summary` with the parameters info filtered out:
+We can also use `lono summary` to see that the resources are different. Here's the output of `lono summary` with the parameters info filtered out:
 
 ```
 $ lono summary ec2
@@ -172,7 +174,7 @@ Notice how for the second command needed to specify the `--param eip` option.  W
 
 #### Clean Up
 
-Let's do a little clean up and delete some of the stacks before continuing with the `lono cfn delete` command:
+Let's do a little clean up and introduce the `lono cfn delete` command.  The delete commands will prompt you with a "Are you sure?" prompt.  Delete some of the stacks before continuing with:
 
 ```
 lono cfn delete ec2
