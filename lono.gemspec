@@ -10,6 +10,7 @@ Gem::Specification.new do |gem|
   files = `git ls-files`.split($\) + Dir.glob("vendor/**/*")
   files = files.reject { |p| p =~ /^docs/ }
   gem.files         = files
+  gem.bindir        = "exe"
   gem.executables   = gem.files.grep(%r{^exe/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features|docs)/})
   gem.name          = "lono"
