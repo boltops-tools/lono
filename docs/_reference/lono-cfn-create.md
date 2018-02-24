@@ -25,11 +25,11 @@ Here are examples of overriding the template and params name conventions.
 
 The template used is `output/templates/different1.json` and the parameters used is `output/params/different1.json`.
 
-    lono cfn create my-stack --params different2
+    lono cfn create my-stack --param different2
 
 The template used is `output/templates/my-stack.json` and the parameters used is `output/params/different2.json`.
 
-    lono cfn create my-stack --template different3 --params different4
+    lono cfn create my-stack --template different3 --param different4
 
 The template used is `output/templates/different3.json` and the parameters used is `output/params/different4.json`.
 
