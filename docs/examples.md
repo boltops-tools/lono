@@ -1,5 +1,5 @@
 ---
-title: Example Templates
+title: Examples
 ---
 
 Here are some example lono templates:
