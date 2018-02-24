@@ -45,8 +45,8 @@ The template used is output/different3.json and the parameters used is output/pa
 [--preview], [--no-preview]        # Show preview of the stack changes before continuing.
                                    # Default: true
 [--sure], [--no-sure]              # Skips are you sure prompt
-[--verbose], [--no-verbose]        
-[--noop], [--no-noop]              
+[--verbose], [--no-verbose]
+[--noop], [--no-noop]
 [--template=TEMPLATE]              # override convention and specify the template file to use
 [--param=PARAM]                    # override convention and specify the param file to use
 [--lono], [--no-lono]              # invoke lono to generate CloudFormation templates

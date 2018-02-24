@@ -13,7 +13,7 @@ title: Articles
 * [Lono Improvements v2.1.0](https://blog.boltops.com/2017/05/23/lono-improvements-v2-1-0)
 * [Lono CloudFormation Framework Version 3 Release](https://blog.boltops.com/2017/08/28/lono-cloudformation-framework-version-3-release)
 
-### Introductory Series on CloudFormation
+## Introductory Series on CloudFormation
 
 * [A Simple Introduction to AWS CloudFormation Part 1: EC2 Instance
 ](https://blog.boltops.com/2017/03/06/a-simple-introduction-to-aws-cloudformation-part-1-ec2-instance)

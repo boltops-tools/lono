@@ -19,8 +19,8 @@ update a CloudFormation stack
 [--preview], [--no-preview]        # Show preview of the stack changes before continuing.
                                    # Default: true
 [--sure], [--no-sure]              # Skips are you sure prompt
-[--verbose], [--no-verbose]        
-[--noop], [--no-noop]              
+[--verbose], [--no-verbose]
+[--noop], [--no-noop]
 [--region=REGION]                  # AWS region
 [--template=TEMPLATE]              # override convention and specify the template file to use
 [--param=PARAM]                    # override convention and specify the param file to use

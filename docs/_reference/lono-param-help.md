@@ -15,8 +15,8 @@ Describe subcommands or one specific subcommand
 ## Options
 
 ```
-[--verbose], [--no-verbose]  
-[--noop], [--no-noop]        
-[--mute], [--no-mute]        
+[--verbose], [--no-verbose]
+[--noop], [--no-noop]
+[--mute], [--no-mute]
 ```
 

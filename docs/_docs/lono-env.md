@@ -4,7 +4,7 @@ title: LONO_ENV
 
 Lono's behavior is controlled by the `LONO_ENV` environment variable.  For example, the `LONO_ENV` variable is used to layer different lono files together to make it easy to define multiple environments like production and development.  This is covered thoroughly in the [Layering docs]({% link _docs/layering.md %}).  `LONO_ENV` defaults to `development` when not set.
 
-### Setting LONO_ENV
+## Setting LONO_ENV
 
 The `LONO_ENV` can be set in several ways:
 
@@ -12,13 +12,13 @@ The `LONO_ENV` can be set in several ways:
 2. Exported as an environment variable to your shell - This takes the second highest precedence.
 3. As a `aws_profiles` value in your lono `settings.yml` file - This takes the lowest precedence.
 
-### At the CLI Command
+## At the CLI Command
 
 ```sh
 LONO_ENV=production lono generate
 ```
 
-### As an environment variable
+## As an environment variable
 
 ```sh
 export LONO_ENV=production
@@ -27,7 +27,7 @@ lono generate
 
 If you do not want to remember to type `LONO_ENV=production`, you can set it in your `~/.profile`.
 
-### Settings: aws_profiles
+## Settings: aws_profiles
 
 The most interesting way to set `LONO_ENV` is with `aws_profiles` in `settings.yml`.  Let's say you have a `settings.yml` with the following:
 

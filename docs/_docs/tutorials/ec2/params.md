@@ -2,7 +2,7 @@
 title: Params
 ---
 
-### Param Files
+## Param Files
 
 With lono, you can specify CloudFormation parameters with simple formatted `key=value` env-like file instead of the CloudFormation's normal JSON format. Let's take a closer look at the params file we've been using so far. The `config/params/base/ec2.txt` file looks like this:
 
@@ -25,7 +25,7 @@ When lono goes through the generation phase, it translates the param files from 
 
 The env-like format allows you to add comments to the params files and are more simple to read.
 
-### Layering support
+## Layering support
 
 Notice that the file in the config folder includes a `base` in its path, but the file in the output folder does not. This is because params files are layered together to produce a final result.  This layering is merely the merging of multiple params files together.
 
@@ -88,7 +88,7 @@ The `base` param files are special, and they always get merged. The other param 
 
 Layering allows us to use some different parameter values for different environments.  The layering concept applies to other components as well and is covered in more detailed in the [Layering docs]({% link _docs/layering.md %}).
 
-### Shared Variables Support
+## Shared Variables Support
 
 Param files have access to shared variables, which also support layering.  Sometimes, by using shared variables, you can use simplify your param files.  Let's go through another example.  We'll add some shared variables files.
 
@@ -120,7 +120,7 @@ rmdir config/params/production
 
 When you generate the params again, we get the same result as before. A `lono generate` produces at `output/params/ec2.json` result a InstanceType of `t2.micro` and a `LONO_ENV=production lono generate` will have a InstanceType of `t2.small`.
 
-### Helper Support
+## Helper Support
 
 Param files also have access to your own [custom helpers]({% link _docs/custom-helpers.md %}).  This allows you to add logic at the run-time phase.  You can pretty much add any logic you need.
 

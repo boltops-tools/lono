@@ -13,8 +13,8 @@ create a CloudFormation stack
 
 ```
 [--randomize-stack-name], [--no-randomize-stack-name]  # tack on random string at the end of the stack name
-[--verbose], [--no-verbose]                            
-[--noop], [--no-noop]                                  
+[--verbose], [--no-verbose]
+[--noop], [--no-noop]
 [--region=REGION]                                      # AWS region
 [--template=TEMPLATE]                                  # override convention and specify the template file to use
 [--param=PARAM]                                        # override convention and specify the param file to use

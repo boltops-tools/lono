@@ -15,8 +15,8 @@ preview a CloudFormation stack update
 [--keep], [--no-keep]           # keep the changeset instead of deleting it afterwards
 [--diff], [--no-diff]           # Show diff of the source code template changes also.
                                 # Default: true
-[--verbose], [--no-verbose]     
-[--noop], [--no-noop]           
+[--verbose], [--no-verbose]
+[--noop], [--no-noop]
 [--region=REGION]               # AWS region
 [--template=TEMPLATE]           # override convention and specify the template file to use
 [--param=PARAM]                 # override convention and specify the param file to use

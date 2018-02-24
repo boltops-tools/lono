@@ -6,7 +6,7 @@ Often it is useful to be able to upload custom scripts to the server and run the
 
 Any scripts added to the `app/scripts` folder get tarballed up and uploaded to s3. The s3 location is configured with the `s3_folder` option in [settings.yml]({% link _docs/settings.md %}) file.  The `lono cfn create` and `lono cfn update` commands will automatically upload the `app/scripts` folder as part of generating templates.
 
-### extract_scripts helper
+## extract_scripts helper
 
 Lono provides a [extract_scripts]({% link _docs/builtin-helpers.md %}) helper that you can include your `user_data` scripts to extract the `app/scripts` files in your lono project to `/opt/scripts` on the server.  Here's an example:
 
@@ -36,7 +36,7 @@ base:
   s3_folder: mybucket/path/to/folder # just an example
 ```
 
-### lono user_data command
+## lono user_data command
 
 Typically, the `app/user_data` scripts are embedded in your CloudFormation templates with the `user_data` helper method.  You can see the generated script with `lono generate` and looking at the template in the `output/templates` folder.
 
@@ -68,7 +68,7 @@ $SCRIPTS/install_stuff.sh
 $
 ```
 
-### MD5 Checksum
+## MD5 Checksum
 
 Notice, that the name of the scripts tarball includes an md5 checksum.  Lono first generates a `scripts.tgz`, computes the file's md5sum and then renames it to include the md5sum.  There's a very good reason for this.
 

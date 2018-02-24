@@ -2,7 +2,7 @@
 title: "Tutorial EC2: Import EC2 Template"
 ---
 
-### Import Template
+## Import Template
 
 Let's grab an AutoScaling template from [Amazon EC2 instance in a security group  ](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sample-templates-services-us-west-2.html#w2ab2c23c48c13c15).  We'll grab the "Amazon EC2 instance in a security group" example and run the `lono import` command with it.  We'll use the `--name ec2` option to set the imported template name.
 
@@ -38,15 +38,15 @@ The output tells you what happened, but here's additional explanation of what `l
 * A summary of the CloudFormation template was provided.  The required parameters to use the template are worth noting.
 * The contents of the `config/params/base/ec2.txt` params file is shown, so you know what to edit.
 
-### Looking at the Generated Files
+## Looking at the Generated Files
 
 Let's look at the files that were created by `lono import`.
 
-#### app/templates/ec2.yml
+### app/templates/ec2.yml
 
 The `app/templates/ec2.yml` is simply the template that was imported into the lono project. If the original template's format was JSON, lono converts the template into YAML.  If the original format was YAML, lono imports the template as is.
 
-#### app/definitions/base.rb
+### app/definitions/base.rb
 
 Even though the template exists in the `app/templates` folder, a template definition in `app/definitions` is required to tell lono to generate to the template to the `outputs` folder.  Here are the contents of `app/definitions/base.rb`:
 
@@ -56,7 +56,7 @@ template "ec2"
 
 It's just simple one line template definition.  `lono import` added the template definition.
 
-#### config/params/base/ec2.txt
+### config/params/base/ec2.txt
 
 The generated params file is interesting. Here are the contents of `config/params/base/ec2.txt`:
 
@@ -68,7 +68,7 @@ KeyName=
 
 We can tell that we need to set the `KeyName` parameter to use the template.
 
-### Configure Parameter Values
+## Configure Parameter Values
 
 For this template, we need to specify a `KeyName` so we can ssh into the EC2 instance.  Set the `KeyName` to an ssh key that exists on your AWS account. We'll set it to `default` here.  If you use `default`, make sure that the `default` KeyPair exists on your account.
 

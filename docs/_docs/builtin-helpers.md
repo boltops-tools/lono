@@ -16,7 +16,7 @@ Helper  | Description
 
 The full list of helper methods is available here: [lib/lono/template/helper.rb](https://github.com/tongueroo/lono/blob/master/lib/lono/template/helper.rb).
 
-### Partial examples
+## Partial examples
 
 The partial template helper is useful and is covered a little more detail here:
 

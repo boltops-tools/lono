@@ -23,8 +23,8 @@ The above command will delete my-stack.
 
 ```
 [--sure], [--no-sure]           # Skips are you sure prompt
-[--verbose], [--no-verbose]     
-[--noop], [--no-noop]           
+[--verbose], [--no-verbose]
+[--noop], [--no-noop]
 [--template=TEMPLATE]           # override convention and specify the template file to use
 [--param=PARAM]                 # override convention and specify the param file to use
 [--lono], [--no-lono]           # invoke lono to generate CloudFormation templates

@@ -49,7 +49,7 @@ Setting  | Description
 `s3_folder`  | This allows you to specify the base folder telling lono where to upload files to s3.  [app/scripts]({% link _docs/app-scripts.md %}) files are uploaded in the scripts subfolder in here and templates when using lono with [nested stacks]({% link _docs/nested-stacks.md %}) are uploaded in the templates subfolder.
 `extract_scripts` | This configures how the `extract_scripts` helper works.  The extract_script helpers can take some options like `to` to specify where you want to extract `app/scripts` to.  The default is `/opt`, so scripts end up in `/opt/scripts`.
 
-### The randomize_stack_name setting
+## The randomize_stack_name setting
 
 The `randomize_stack_name` is an option that was added after realizing a common development flow pattern that was being repeatedly used. When working with CloudFormation templates and developing the source code, we must often launch stacks over and over as we fine tune the stack. Since we cannot launch a stack with a duplicate name it is useful to use a command like this:
 

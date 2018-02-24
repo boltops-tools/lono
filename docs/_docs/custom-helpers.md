@@ -4,7 +4,7 @@ title: Custom Helpers
 
 It is useful be able to call methods in your template views that are not built into lono. Lono allows you to add custom helpers for this case.  The custom helpers are first class citizens and have access to the same context and variables as [built-in lono helpers]({% link _docs/builtin-helpers.md %}).
 
-### How to Add Custom Helper Methods
+## How to Add Custom Helper Methods
 
 To add custom helpers methods, create a file that ends with `_helper.rb` in the `app/helpers` folder of your project. Declare a module in that file naming the module the same as the filename except in camel case form.  Then define your helper methods in the module.  For example:
 

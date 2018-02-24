@@ -37,7 +37,7 @@ You can check on the status of the stack creation with the AWS Console.  It shou
 
 Congratulations!  You have successfully created a CloudFormation stack with lono.
 
-### lono generate
+## lono generate
 
 Let's take a closer look at the output of the `lono cfn create` command. Notice that it generated the template and parameter files from what was imported and wrote them to `output/templates` and `output/params`.  When working with templates, it is helpful to generate the templates and inspect them without launching a stack.  We can use the `lono generate` command to do that:
 
@@ -54,7 +54,7 @@ $
 
 You can then inspect `output/templates/ec2.yml` as well as `output/params/ec2.json` to make sure everything looks good before running `lono cfn create`.
 
-### lono cfn create
+## lono cfn create
 
 Let's review the `lono cfn create` command in a little bit more detail.  We the following command to launch the stack:
 

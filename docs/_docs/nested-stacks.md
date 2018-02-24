@@ -2,7 +2,7 @@
 title: Nested Stack Support
 ---
 
-### Uploading Templates to S3
+## Uploading Templates to S3
 
 By default, lono provides the generated template on the local file system when creating CloudFormation stacks. This is done to keep things simple and fast for the common use case of a single template.
 
@@ -15,7 +15,7 @@ base:
 
 That's all that is required to tell lono to upload the generated templates to s3. When `s3_folder` is set, lono will automatically upload templates to the `s3_folder` as part of the lifecycle `lono cfn` commands.
 
-### Helper method for nested templates
+## Helper method for nested templates
 
 Lono also provides helper methods to help work with nested CloudFormation templates.
 
@@ -24,7 +24,7 @@ Helper  | Description
 `template_s3_path(name)`  | This is the s3 path where template gets uploaded to s3. This required for the `TemplateURL` property of an `AWS::CloudFormation::Stack` child stack resource.
 `template_params(name)`  | This returns an Array of the parameter values. This is useful in a parent template if you are using nested templates. You can use this to grab the params values from child templates and specify the parameters within the parent template to other child templates.
 
-#### The template_s3_path helper
+### The template_s3_path helper
 
 Instead of hard-coding the s3 bucket and path name in your parent stack you can use this helper to reference it from your `settings.yml` configuration. For example, if your s3_folder is configured in `settings.yml` like so:
 
@@ -48,7 +48,7 @@ https://s3.amazonaws.com/my-bucket/templates/prod/ChildTemplate.yml
 
 Note that the `LONO_ENV` is automatically added to the final s3 path in case you are using the same s3 bucket for multiple environments.
 
-#### The template_params helper
+### The template_params helper
 
 Typically child templates in a nested stack setup use parameters specified in the parent stack template definition. The `template_params` helper allows you to grab the parameter values in the params files and inject them into the parent template. This allows you to launch the child template as separate stand-alone stacks using the runtime `params` values or as an embedded child stack using those same parameter values. Example:
 

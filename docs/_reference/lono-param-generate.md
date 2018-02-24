@@ -25,8 +25,8 @@ If you have params/my-stack.txt. It will generate a CloudFormation json file in 
 
 ```
 [--path=PATH]                # Name of the source that maps to the params txt file.  name -> params/NAME.txt.  Use this to override the params/NAME.txt convention
-[--verbose], [--no-verbose]  
-[--noop], [--no-noop]        
-[--mute], [--no-mute]        
+[--verbose], [--no-verbose]
+[--noop], [--no-noop]
+[--mute], [--no-mute]
 ```
 
