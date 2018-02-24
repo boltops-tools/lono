@@ -11,10 +11,6 @@ if git log -1 --pretty=oneline | grep 'docs updated by circleci' ; then
   exit
 fi
 
-# configure git
-git config --global user.email "tongueroo@gmail.com"
-git config --global user.name "Tung Nguyen"
-
 # if reach here, we have some changes on docs that we should commit
 git add docs
 git commit -m "docs updated by circleci"

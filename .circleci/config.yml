@@ -42,6 +42,12 @@ jobs:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile" }}
 
+      # specs need git configured ad commit_docs.sh required it also
+      - run:
+          name: configure git
+          command: |
+            git config --global user.email "tongueroo@gmail.com"
+            git config --global user.name "Tung Nguyen"
 
       # run tests!
       - run:
