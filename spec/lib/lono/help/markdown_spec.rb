@@ -28,8 +28,8 @@ describe Lono::Help::Markdown do
       puts markdown.doc
     end
 
-    it "#all" do
-      Lono::Help::MarkdownMaker.all(cli_class)
+    it "#make_all" do
+      Lono::Help::MarkdownMaker.make_all(cli_class)
     end
   end
 
@@ -38,13 +38,18 @@ describe Lono::Help::Markdown do
   context "summary" do
     let(:command) { "summary" }
 
+    # empty options
     it "#options" do
       expect(markdown.options).to eq ""
     end
 
+    # empty description
     it "#description" do
       expect(markdown.description).to eq ""
     end
-  end
 
+    it "#doc" do
+      puts markdown.doc
+    end
+  end
 end

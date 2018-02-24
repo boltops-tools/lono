@@ -10,15 +10,15 @@ module Lono::Help
   end
 
   class MarkdownMaker
-    def self.all(command_class)
-      new(command_class).all
+    def self.make_all(command_class)
+      new(command_class).make_all
     end
 
     def initialize(command_class)
       @command_class = command_class
     end
 
-    def all
+    def make_all
       @command_class.commands.keys.each do |command_name|
         markdown = Markdown.new(@command_class, command_name)
         create(markdown)
@@ -72,7 +72,7 @@ module Lono::Help
       shell = Lono::Help::Shell.new
       Lono::CLI.send(:class_options_help, shell, nil => @command.options.values)
       text = shell.stdout.string
-      return "NONE" if text.empty? # there are no options
+      return "" if text.empty? # there are no options
 
       lines = text.split("\n")[1..-1] # remove first line wihth "Options: "
       lines.map! do |line|
@@ -108,13 +108,29 @@ title: #{usage}
 ## Summary
 
 #{summary}
+#{options_doc}
+#{desc_doc}
+EOL
+    end
 
+    # handles blank options
+    def options_doc
+      return '' if options.empty?
+
+      <<-EOL
 ## Options
 
 ```
 #{options}
 ```
+EOL
+    end
 
+    # handles blank description
+    def desc_doc
+      return '' if description.empty?
+
+      <<-EOL
 ## Description
 
 #{description}
