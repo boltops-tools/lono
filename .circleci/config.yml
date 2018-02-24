@@ -51,8 +51,8 @@ jobs:
 
       # The specs will generate reference docs.
       # Commit it again so that the reference docs are published to GitHub pages.
-      - commit_docs:
-          name: commit cli reference docs again
+      - run:
+          name: commit cli reference docs
           command: |
             .circleci/bin/commit_docs.sh
 
