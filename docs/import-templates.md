@@ -50,7 +50,7 @@ Now we can launch the stack.
 lono cfn create ec2 # launches stack
 ````
 
-The `lono import` command gets you up and running with existing CloudFormation templates
+The `lono import` command gets you up and running with existing CloudFormation templates quickly.
 
 Next, we'll cover how to some different ways to lono.
 
