@@ -4,7 +4,8 @@ describe Lono::Markdown::Page do
 
   context "MarkdownMaker.create_all" do
     it "generates all docs pages" do
-      # Lono::Markdown::Creator.create_all(cli_class)
+      Lono::Markdown::Creator.mute = true
+      Lono::Markdown::Creator.create_all(cli_class)
     end
   end
 

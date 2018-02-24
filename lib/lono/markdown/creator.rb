@@ -1,5 +1,9 @@
+require "active_support/core_ext/object"
+
 module Lono::Markdown
   class Creator
+    cattr_accessor :mute
+
     def self.create_all(command_class,  parent_command_name=nil)
       new(command_class, parent_command_name).create_all
     end
@@ -21,14 +25,14 @@ module Lono::Markdown
           subcommand_class = subcommand_class(command_name)
           parent_command_name = command_name
 
-          puts "Creating subcommands pages for #{parent_command_name}..."
+          say "Creating subcommands pages for #{parent_command_name}..."
           Creator.create_all(subcommand_class, parent_command_name)
         end
       end
     end
 
     def create_page(page)
-      puts "Creating #{page.path}..."
+      say "Creating #{page.path}..."
       FileUtils.mkdir_p(File.dirname(page.path))
       IO.write(page.path, page.doc)
     end
@@ -36,7 +40,7 @@ module Lono::Markdown
     def create_index
       page = Index.new(@command_class)
       FileUtils.mkdir_p(File.dirname(page.path))
-      puts "Creating #{page.path}"
+      say "Creating #{page.path}"
       IO.write(page.path, page.doc)
     end
 
@@ -46,6 +50,10 @@ module Lono::Markdown
 
     def subcommand_class(command_name)
       @command_class.subcommand_classes[command_name]
+    end
+
+    def say(text)
+      puts text unless self.class.mute
     end
   end
 end
