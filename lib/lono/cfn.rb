@@ -23,7 +23,7 @@ class Lono::Cfn < Lono::Command
   class_option :iam, type: :boolean, desc: "Shortcut for common IAM capabilities: CAPABILITY_IAM, CAPABILITY_NAMED_IAM"
   class_option :rollback, type: :boolean, desc: "rollback", default: true
 
-  desc "create STACK", "Create a CloudFormation stack using generated templates."
+  desc "create STACK", "Create a CloudFormation stack using the generated template."
   option :randomize_stack_name, type: :boolean, desc: "tack on random string at the end of the stack name", default: nil
   long_desc Lono::Help.text("cfn/create")
   def create(name)
