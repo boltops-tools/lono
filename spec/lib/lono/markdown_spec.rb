@@ -3,8 +3,8 @@ describe Lono::Markdown::Page do
   let(:cli_class) { Lono::CLI }
 
   context "MarkdownMaker.create_all" do
-    it "markdown command" do
-      out = execute("exe/lono markdown")
+    it "docs command" do
+      out = execute("exe/lono docs")
       expect(out).to include("Creating")
     end
 

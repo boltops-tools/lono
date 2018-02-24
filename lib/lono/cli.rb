@@ -71,9 +71,8 @@ module Lono
       Upgrade4.new(options).run
     end
 
-    desc "markdown", "Generates cli reference docs as markdown"
-    long_desc Help.text("markdown")
-    def markdown
+    desc "docs", "Generates cli reference docs as markdown"
+    def docs
       Markdown::Creator.create_all(CLI)
     end
 
