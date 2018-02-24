@@ -14,7 +14,6 @@ module Lono::Markdown
       create_index unless @parent_command_name
 
       @command_class.commands.keys.each do |command_name|
-        puts "=> #{command_name}"
         page = Page.new(@command_class, command_name, @parent_command_name)
         create_page(page)
 

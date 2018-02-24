@@ -107,6 +107,7 @@ EOL
       <<-EOL
 ---
 title: #{usage}
+reference: true
 ---
 
 ## Usage

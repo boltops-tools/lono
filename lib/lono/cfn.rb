@@ -14,7 +14,6 @@ class Lono::Cfn < Lono::Command
 
   class_option :verbose, type: :boolean
   class_option :noop, type: :boolean
-  class_option :region, desc: "AWS region"
 
   # common to create and update
   class_option :template, desc: "override convention and specify the template file to use"

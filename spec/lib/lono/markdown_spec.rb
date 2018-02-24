@@ -4,7 +4,7 @@ describe Lono::Markdown::Page do
 
   context "MarkdownMaker.create_all" do
     it "generates all docs pages" do
-      Lono::Markdown::Creator.create_all(cli_class)
+      # Lono::Markdown::Creator.create_all(cli_class)
     end
   end
 
@@ -31,7 +31,8 @@ describe Lono::Markdown::Page do
     end
 
     it "#doc" do
-      puts page.doc
+      expect(page.doc).to include("# Summary")
+      # puts page.doc # uncomment to see generated page for debugging
     end
   end
 
@@ -58,11 +59,13 @@ describe Lono::Markdown::Page do
     end
 
     it "#subcommand_list" do
-      puts page.subcommand_list
+      expect(page.doc).to include("# Subcommands")
+      # puts page.subcommand_list # uncomment to see generated list for debugging
     end
 
     it "#doc" do
-      puts page.doc
+      expect(page.doc).to include("# Summary")
+      # puts page.doc # uncomment to see generated page for debugging
     end
   end
 
@@ -83,7 +86,8 @@ describe Lono::Markdown::Page do
     end
 
     it "#doc" do
-      puts page.doc
+      expect(page.doc).to include("# Summary")
+      # puts page.doc # uncomment to see generated page for debugging
     end
   end
 end
