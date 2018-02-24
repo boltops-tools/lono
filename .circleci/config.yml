@@ -42,6 +42,7 @@ jobs:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile" }}
 
+
       # run tests!
       - run:
           name: run tests
@@ -54,6 +55,7 @@ jobs:
       - run:
           name: commit cli reference docs
           command: |
+            chmod a+x -R .circleci/bin
             .circleci/bin/commit_docs.sh
 
       # collect reports
