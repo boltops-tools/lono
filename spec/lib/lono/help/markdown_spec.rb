@@ -24,8 +24,12 @@ describe Lono::Help::Markdown do
       expect(markdown.description).to include("    lono generate")
     end
 
-    it "#generate" do
-      puts markdown.generate
+    it "#doc" do
+      puts markdown.doc
+    end
+
+    it "#all" do
+      Lono::Help::MarkdownMaker.all(cli_class)
     end
   end
 end

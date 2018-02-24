@@ -9,14 +9,86 @@ module Lono::Help
     end
   end
 
-  class Markdown
-    def initialize(cli_class, command_name)
-      @cli_class = cli_class
-      @command_name = command_name
-      @command = @cli_class.commands[@command_name]
+  class MarkdownMaker
+    def self.all(command_class)
+      new(command_class).all
     end
 
-    def generate
+    def initialize(command_class)
+      @command_class = command_class
+    end
+
+    def all
+      @command_class.commands.keys.each do |command_name|
+        markdown = Markdown.new(@command_class, command_name)
+        if markdown.subcommand?
+          puts "subcommand: #{command_name}"
+        else
+          puts "regular: #{command_name}"
+          puts "markdown.filename #{markdown.filename}"
+        end
+      end
+    end
+
+    def filename
+
+    end
+  end
+
+  class Markdown
+    def initialize(command_class, command_name)
+      @command_class = command_class
+      @command_name = command_name
+      @command = @command_class.commands[@command_name]
+    end
+
+    def cli_name
+      "lono"
+    end
+
+    def filename
+      "_docs/#{cli_name}-#{@command_name}.md"
+    end
+
+    def subcommand?
+      @command_class.subcommands.include?(@command_name)
+    end
+
+    def usage
+      banner = @command_class.send(:banner, @command) # banner is protected method
+      invoking_command = File.basename($0) # could be rspec, etc
+      banner.sub(invoking_command, cli_name)
+    end
+
+    # Use command's description as summary
+    def summary
+      @command.description
+    end
+
+    def options
+      shell = Lono::Help::Shell.new
+      Lono::CLI.send(:class_options_help, shell, nil => @command.options.values)
+      text = shell.stdout.string
+      lines = text.split("\n")[1..-1] # remove first line wihth "Options: "
+      lines.map! do |line|
+        # remove 2 leading spaces
+        line.sub(/^  /, '')
+      end
+      lines.join("\n")
+    end
+
+    # Use command's long description as many description
+    def description
+      text = @command.long_description
+      lines = text.split("\n")
+      lines.map do |line|
+        # In the CLI help, we use 2 spaces to designate commands
+        # In Markdown we need 4 spaces.
+        line.sub(/^  \b/, '    ')
+      end.join("\n")
+    end
+
+    def doc
       <<-EOL
 ---
 title: #{usage}
@@ -42,33 +114,5 @@ title: #{usage}
 EOL
     end
 
-    def usage
-      banner = @cli_class.send(:banner, @command) # banner is protected method
-      invoking_command = File.basename($0) # could be rspec, etc
-      banner.sub(invoking_command, "lono")
-    end
-
-    # Use command's description as summary
-    def summary
-      @command.description
-    end
-
-    def options
-      shell = Lono::Help::Shell.new
-      Lono::CLI.send(:class_options_help, shell, nil => @command.options.values)
-      text = shell.stdout.string
-      text.split("\n")[1..-1].join("\n") # remove first line wihth "Options: "
-    end
-
-    # Use command's long description as many description
-    def description
-      text = @command.long_description
-      lines = text.split("\n")
-      lines.map do |line|
-        # In the CLI help, we use 2 spaces to designate commands
-        # In Markdown we need 4 spaces.
-        line.sub(/^  \b/, '    ')
-      end.join("\n")
-    end
   end
 end
