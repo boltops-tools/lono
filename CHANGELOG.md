@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [4.0.1]
+- add http://lono.cloud/reference/
+- improve cli docs
+
 ## [4.0.0]
 - lono upgrade4 command
 - simplified lono project structure
