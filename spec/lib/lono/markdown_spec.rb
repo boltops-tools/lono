@@ -22,23 +22,19 @@ describe Lono::Markdown::Page do
       expect(page.usage).to eq "lono generate"
     end
 
-    it "#summary" do
-      expect(page.summary).to eq "Generate both CloudFormation templates and parameters files"
+    it "#desc_markdown" do
+      expect(page.desc_markdown).to include "# Description"
     end
 
-    it "#options" do
-      expect(page.options).to include("--clean")
+    it "#options_markdown" do
+      expect(page.options_markdown).to include("--clean")
       # [--clean], [--no-clean]  # remove all output files before generating
       #                          # Default: true
       # [--quiet], [--no-quiet]  # silence the output
     end
 
-    it "#description" do
-      expect(page.description).to include("    lono generate")
-    end
-
     it "#doc" do
-      expect(page.doc).to include("# Summary")
+      expect(page.doc).to include("# Description")
       # puts page.doc # uncomment to see generated page for debugging
     end
   end
@@ -51,18 +47,15 @@ describe Lono::Markdown::Page do
       expect(page.usage).to eq "lono cfn SUBCOMMAND"
     end
 
-    it "#summary" do
-      expect(page.summary).to eq "cfn subcommand tasks"
+    it "#desc_markdown" do
+      puts page.desc_markdown
+      expect(page.desc_markdown).to include "# Description"
     end
 
-    # Think it is better to hide subcommand options at the top-level.
+    # Think it is better to hide subcommand options_markdown at the top-level.
     # User will see the optoins once they click into the subcommand.
-    it "#options" do
-      expect(page.options).to include("")
-    end
-
-    it "#description" do
-      expect(page.description).to include("Examples")
+    it "#options_markdown" do
+      expect(page.options_markdown).to include("")
     end
 
     it "#subcommand_list" do
@@ -71,7 +64,7 @@ describe Lono::Markdown::Page do
     end
 
     it "#doc" do
-      expect(page.doc).to include("# Summary")
+      expect(page.doc).to include("# Description")
       # puts page.doc # uncomment to see generated page for debugging
     end
   end
@@ -81,18 +74,13 @@ describe Lono::Markdown::Page do
   context "summary" do
     let(:command) { "summary" }
 
-    # empty options
-    it "#options" do
-      expect(page.options).to eq ""
-    end
-
-    # empty description
-    it "#description" do
-      expect(page.description).to eq ""
+    # empty options_markdown
+    it "#options_markdown" do
+      expect(page.options_markdown).to eq ""
     end
 
     it "#doc" do
-      expect(page.doc).to include("# Summary")
+      expect(page.doc).to include("# Description")
       # puts page.doc # uncomment to see generated page for debugging
     end
   end
