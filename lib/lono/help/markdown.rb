@@ -19,6 +19,8 @@ module Lono::Help
     end
 
     def make_all
+      create_index
+
       @command_class.commands.keys.each do |command_name|
         markdown = Markdown.new(@command_class, command_name)
         create(markdown)
@@ -31,10 +33,46 @@ module Lono::Help
       end
     end
 
+    def create_index
+      page = MarkdownIndex.new(@command_class)
+      FileUtils.mkdir_p(File.dirname(page.path))
+      puts "Creating #{page.path}"
+      IO.write(page.path, page.doc)
+    end
+
     def create(markdown)
       puts "Creating #{markdown.path}..."
       FileUtils.mkdir_p(File.dirname(markdown.path))
       IO.write(markdown.path, markdown.doc)
+    end
+  end
+
+  class MarkdownIndex
+    def initialize(command_class)
+      @command_class = command_class
+    end
+
+    def command_list
+      @command_class.commands.keys.sort.map.each do |command_name|
+        page = Markdown.new(@command_class, command_name)
+        link = page.path.sub("docs/", "")
+        # Example: [lono cfn]({% link _reference/lono-cfn.md %})
+        "* [lono #{command_name}]({% link #{link} %})"
+      end.join("\n")
+    end
+
+    def path
+      "docs/reference.md"
+    end
+
+    def doc
+      <<-EOL
+---
+title: Lono Reference
+---
+
+#{command_list}
+EOL
     end
   end
 
