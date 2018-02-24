@@ -22,8 +22,8 @@ module Lono::Help
       create_index
 
       @command_class.commands.keys.each do |command_name|
-        markdown = MarkdownPage.new(@command_class, command_name)
-        create_page(markdown)
+        page = MarkdownPage.new(@command_class, command_name)
+        create_page(page)
         # if markdown.subcommand?
         #   puts "subcommand: #{command_name}"
         # else
