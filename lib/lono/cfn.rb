@@ -30,7 +30,7 @@ class Lono::Cfn < Lono::Command
     Create.new(name, options).run
   end
 
-  desc "update STACK", "update a CloudFormation stack"
+  desc "update STACK", "Update a CloudFormation stack using the generated template."
   long_desc Lono::Help.text("cfn/update")
   option :change_set, type: :boolean, default: true, desc: "Uses generated change set to update the stack.  If false, will perform normal update-stack."
   option :diff, type: :boolean, default: true, desc: "Show diff of the source code template changes before continuing."
@@ -40,14 +40,14 @@ class Lono::Cfn < Lono::Command
     Update.new(name, options).run
   end
 
-  desc "delete STACK", "delete a CloudFormation stack"
+  desc "delete STACK", "Delete a CloudFormation stack."
   long_desc Lono::Help.text("cfn/delete")
   option :sure, type: :boolean, desc: "Skips are you sure prompt"
   def delete(name)
     Delete.new(name, options).run
   end
 
-  desc "preview STACK", "preview a CloudFormation stack update"
+  desc "preview STACK", "Preview a CloudFormation stack update.  This is similar to terraform's plan or puppet's dry-run mode."
   long_desc Lono::Help.text("cfn/preview")
   option :keep, type: :boolean, desc: "keep the changeset instead of deleting it afterwards"
   option :diff, type: :boolean, default: true, desc: "Show diff of the source code template changes also."
@@ -56,13 +56,13 @@ class Lono::Cfn < Lono::Command
     Preview.new(name, options).run
   end
 
-  desc "diff STACK", "diff of newly generated template vs existing template in AWS"
+  desc "diff STACK", "Diff newly generated template vs existing template."
   long_desc Lono::Help.text("cfn/diff")
   def diff(name)
     Diff.new(name, options).run
   end
 
-  desc "download STACK", "download CloudFormation template from existing stack"
+  desc "download STACK", "Download CloudFormation template from existing stack."
   long_desc Lono::Help.text("cfn/download")
   option :name, desc: "Name you want to save the template as. Default: existing stack name."
   def download(stack_name)

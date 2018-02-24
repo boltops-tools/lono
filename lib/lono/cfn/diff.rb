@@ -38,7 +38,7 @@ class Lono::Cfn::Diff < Lono::Cfn::Base
   end
 
   def diff_viewer
-    return ENV['LONO_CFN_DIFF'] if ENV['LONO_CFN_DIFF']
+    return ENV['LONO_DIFF'] if ENV['LONO_DIFF']
     system("type colordiff > /dev/null") ? "colordiff" : "diff"
   end
 

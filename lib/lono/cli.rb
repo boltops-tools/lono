@@ -76,19 +76,19 @@ module Lono
       puts VERSION
     end
 
-    desc "template SUBCOMMAND", "template subcommand tasks"
+    desc "template SUBCOMMAND", "template subcommands"
     long_desc Help.text(:template)
     subcommand "template", Template
 
-    desc "cfn SUBCOMMAND", "cfn subcommand tasks"
+    desc "cfn SUBCOMMAND", "cfn subcommands"
     long_desc Help.text(:cfn)
     subcommand "cfn", Cfn
 
-    desc "param SUBCOMMAND", "param subcommand tasks"
+    desc "param SUBCOMMAND", "param subcommands"
     long_desc Help.text(:param)
     subcommand "param", Param
 
-    desc "script SUBCOMMAND", "script subcommand tasks"
+    desc "script SUBCOMMAND", "script subcommands"
     long_desc Help.text(:script)
     subcommand "script", Script
   end

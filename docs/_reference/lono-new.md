@@ -7,13 +7,11 @@ reference: true
 
     lono new NAME
 
-## Summary
+## Description
 
 generates new CLI project
 
-## Description
-
-Examples:
+## Examples
 
     lono new infra # skeleton project with barebones structure
     TEMPLATE=ec2 lono new infra # creates a single server

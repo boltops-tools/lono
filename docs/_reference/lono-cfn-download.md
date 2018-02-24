@@ -7,15 +7,11 @@ reference: true
 
     lono cfn download STACK
 
-## Summary
-
-download CloudFormation template from existing stack
-
 ## Description
 
-Download CloudFormation template from existing template on AWS.
+Download CloudFormation template from existing stack.
 
-Examples:
+## Examples
 
     lono cfn download my-stack
 

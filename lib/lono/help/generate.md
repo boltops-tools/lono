@@ -1,4 +1,4 @@
-Examples:
+## Examples
 
   lono generate
   lono generate --clean

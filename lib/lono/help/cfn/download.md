@@ -1,5 +1,3 @@
-Download CloudFormation template from existing template on AWS.
-
-Examples:
+## Examples
 
   lono cfn download my-stack

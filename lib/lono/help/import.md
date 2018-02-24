@@ -1,4 +1,4 @@
-Examples:
+## Examples
 
   lono import /path/to/file
   lono import http://url.com/path/to/template.json

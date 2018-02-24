@@ -7,10 +7,9 @@ reference: true
 
     lono script help [COMMAND]
 
-## Summary
+## Description
 
 Describe subcommands or one specific subcommand
-
 
 
 

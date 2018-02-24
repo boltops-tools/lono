@@ -7,11 +7,9 @@ reference: true
 
     lono completion *PARAMS
 
-## Summary
+## Description
 
 prints words for auto-completion
-
-## Description
 
 Example:
 
@@ -19,7 +17,7 @@ Example:
 
 Prints words for TAB auto-completion.
 
-Examples:
+## Examples
 
     lono completion
     lono completion hello

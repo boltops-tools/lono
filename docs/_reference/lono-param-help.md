@@ -7,10 +7,9 @@ reference: true
 
     lono param help [COMMAND]
 
-## Summary
+## Description
 
 Describe subcommands or one specific subcommand
-
 
 
 ## Options

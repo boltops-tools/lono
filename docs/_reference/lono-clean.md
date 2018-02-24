@@ -7,10 +7,9 @@ reference: true
 
     lono clean
 
-## Summary
+## Description
 
 Clean up generated files
-
 
 
 

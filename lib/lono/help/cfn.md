@@ -1,4 +1,4 @@
-Examples:
+## Examples
 
   lono cfn create my-stack
   lono cfn preview my-stack

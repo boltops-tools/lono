@@ -7,13 +7,11 @@ reference: true
 
     lono param SUBCOMMAND
 
-## Summary
-
-param subcommand tasks
-
 ## Description
 
-Examples:
+param subcommands
+
+## Examples
 
     lono param generate
 

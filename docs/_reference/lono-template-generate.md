@@ -7,13 +7,11 @@ reference: true
 
     lono template generate
 
-## Summary
+## Description
 
 Generate the CloudFormation templates
 
-## Description
-
-Examples:
+## Examples
 
     lono template generate
     lono template generate --clean

@@ -7,10 +7,9 @@ reference: true
 
     lono template upload
 
-## Summary
+## Description
 
 Uploads templates to configured s3 folder
-
 
 
 ## Options

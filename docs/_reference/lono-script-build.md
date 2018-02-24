@@ -7,15 +7,13 @@ reference: true
 
     lono script build
 
-## Summary
+## Description
 
 Builds output/scripts/scripts-md5sum.tgz from app/script folder
 
-## Description
-
 Builds output/scripts/scripts-md5sum.tgz from app/script folder.
 
-Examples:
+## Examples
 
     lono script build
 

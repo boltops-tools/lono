@@ -1,16 +1,3 @@
----
-title: lono summary
-reference: true
----
-
-## Usage
-
-    lono summary STACK
-
-## Description
-
-Prints summary of CloudFormation template
-
 ## Example
 
     $ lono summary ec2
@@ -26,6 +13,3 @@ Prints summary of CloudFormation template
       1 AWS::EC2::SecurityGroup
       2 Total
     $
-
-
-

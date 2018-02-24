@@ -7,13 +7,11 @@ reference: true
 
     lono template bashify URL-OR-PATH
 
-## Summary
+## Description
 
 Convert the UserData section of an existing CloudFormation Template to a starter bash script that is compatiable with lono
 
-## Description
-
-Examples:
+## Examples
 
     lono template bashify /path/to/cloudformation-template.json
     lono template bashify https://s3.amazonaws.com/cloudformation-templates-us-east-1/EC2WebSiteSample.template

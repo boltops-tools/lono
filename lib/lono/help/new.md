@@ -1,4 +1,4 @@
-Examples:
+## Examples
 
   lono new infra # skeleton project with barebones structure
   TEMPLATE=ec2 lono new infra # creates a single server

@@ -1,5 +1,5 @@
 Builds output/scripts/scripts-md5sum.tgz from app/script folder.
 
-Examples:
+## Examples
 
   lono script build

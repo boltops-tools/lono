@@ -7,11 +7,9 @@ reference: true
 
     lono param generate
 
-## Summary
+## Description
 
 generate all parameter files to json format
-
-## Description
 
 Example:
 
@@ -19,7 +17,7 @@ To generate a CloudFormation json parameter files in the params folder to the ou
 
     lono-params generate
 
-If you have params/my-stack.txt. It will generate a CloudFormation json file in output/params/my-stack.json.
+If you have output/params/my-stack.txt. It will generate a CloudFormation json file in output/output/params/my-stack.json.
 
 
 ## Options

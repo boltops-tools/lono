@@ -4,7 +4,7 @@ Example:
 
 Prints words for TAB auto-completion.
 
-Examples:
+## Examples
 
   lono completion
   lono completion hello

@@ -7,10 +7,9 @@ reference: true
 
     lono script SUBCOMMAND
 
-## Summary
+## Description
 
-script subcommand tasks
-
+script subcommands
 
 ## Subcommands
 

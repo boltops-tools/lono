@@ -3,6 +3,6 @@ Uploads output/scripts/scripts-md5sum.tgz to s3_folder configured in settings.ym
   * output/scripts/scripts-md5sum.tgz
   * output/data/scripts_name.txt
 
-Examples:
+## Examples
 
   lono script upload

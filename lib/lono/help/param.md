@@ -1,3 +1,3 @@
-Examples:
+## Examples
 
   lono param generate

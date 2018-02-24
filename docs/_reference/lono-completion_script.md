@@ -7,11 +7,9 @@ reference: true
 
     lono completion_script
 
-## Summary
+## Description
 
 generates script that can be eval to setup auto-completion
-
-## Description
 
 To use, add the following to your ~/.bashrc or ~/.profile
 

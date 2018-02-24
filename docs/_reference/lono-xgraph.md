@@ -7,10 +7,9 @@ reference: true
 
     lono xgraph STACK
 
-## Summary
+## Description
 
 Graphs dependencies tree of CloudFormation template resources
-
 
 
 ## Options

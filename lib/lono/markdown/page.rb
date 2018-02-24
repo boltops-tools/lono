@@ -13,8 +13,7 @@ module Lono::Markdown
       banner.sub(invoking_command, cli_name)
     end
 
-    # Use command's description as summary
-    def summary
+    def description
       @command.description
     end
 
@@ -33,7 +32,7 @@ module Lono::Markdown
     end
 
     # Use command's long description as many description
-    def description
+    def long_description
       text = @command.long_description
       return "" if text.nil? # empty description
 
@@ -80,6 +79,7 @@ module Lono::Markdown
 
       invoking_command = File.basename($0) # could be rspec, etc
       command_list = subcommand_class.printable_commands
+        .sort_by { |a| a[0] }
         .map { |a| a[0].sub!(invoking_command, cli_name); a } # replace with proper comand
         .reject { |a| a[0].include?("help [COMMAND]") } # filter out help
 
@@ -107,8 +107,7 @@ EOL
       <<-EOL
 #{front_matter}
 #{usage_markdown}
-#{summary_markdown}
-#{desc_markdown}
+#{long_desc_markdown}
 #{subcommand_list}
 #{options_markdown}
 EOL
@@ -132,22 +131,24 @@ EOL
 EOL
     end
 
-    def summary_markdown
+    def desc_markdown
       <<-EOL
-## Summary
+## Description
 
-#{summary}
+#{description}
 EOL
     end
 
-    # handles blank description
-    def desc_markdown
-      return '' if description.empty?
+    # If the Thor long_description is empty then use the description.
+    def long_desc_markdown
+      return desc_markdown if long_description.empty?
 
       <<-EOL
 ## Description
 
 #{description}
+
+#{long_description}
 EOL
     end
 

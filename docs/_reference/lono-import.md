@@ -7,13 +7,11 @@ reference: true
 
     lono import SOURCE --name=NAME
 
-## Summary
+## Description
 
 Imports raw CloudFormation template and lono-fies it
 
-## Description
-
-Examples:
+## Examples
 
     lono import /path/to/file
     lono import http://url.com/path/to/template.json
