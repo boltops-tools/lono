@@ -6,7 +6,7 @@ Lono supports a concept called layering.  Layering is how lono merges multiple f
 
 Going through a few examples of how lono performs layering will help make it clear the power of layering.
 
-### Templates Layering
+## Templates Layering
 
 You configured your lono templates in the `app/definitions` folder. The starter project sets up a standard directory structure that layering is designed for.  Here's an example structure:
 
@@ -63,11 +63,11 @@ Notice, how for `LONO_ENV=sandbox` because there are no `app/definitions/sandbox
 
 The layering ability of the templates definitions allows you to override which template view to use based on `LONO_ENV`. With this ability, you can have common infrastructure code in the base folder and override the specific environment parts.
 
-### Variables Layering
+## Variables Layering
 
 {% include variable-layering.md %}
 
-### Params Layering
+## Params Layering
 
 Layering is also performed during param generation.  For example, given the following param structure:
 
@@ -100,7 +100,7 @@ $ lono cfn create example # InstanceType=t2.small
 $ LONO_ENV=production lono cfn create example # InstanceType=t2.medium
 ```
 
-### Summary
+## Summary
 
 Lono's layering concept provides you with the ability to define common infrastructure components and override them for specific environments when necessary. This helps you build multiple environments in an organized way. The layering processing happens for these lono components:
 

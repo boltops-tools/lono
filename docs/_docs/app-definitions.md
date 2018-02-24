@@ -21,7 +21,7 @@ end
 
 Template definitions are defined in the `app/definitions` folder of your project.
 
-### Examples
+## Examples
 
 Let's walk through an example. Given:
 
@@ -68,7 +68,7 @@ When `lono generate` runs, lono uses the information in `app/definitions/base.rb
 
 Template definitions also support layering, covered in [Layering Support]({% link _docs/layering.md %}).
 
-### Template conventions
+## Template conventions
 
 The template declaration follows a naming convention that can be used to shorten your template declarations.  Let's say that the template's output name matches the source name:
 

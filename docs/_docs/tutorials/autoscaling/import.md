@@ -2,7 +2,7 @@
 title: "Tutorial: Import Auto Scaling Template"
 ---
 
-### Import Template
+## Import Template
 
 Let's grab an AutoScaling template from [CloudFormation Auto Scaling Samples](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sample-templates-services-us-west-2.html#w2ab2c23c48c13b7).  We'll grab the "Load-based auto scaling" example and run the `lono import` command with it.  We'll use the `--name autoscaling` option to set the imported template name.
 
@@ -52,15 +52,15 @@ The output tells you what happened, but here's addiitonal explanation of what `l
 * A summary of the CloudFormation template was provided.  The required parameters to use the template are worth noting.
 * The contents of the `config/params/base/autoscaling.txt` params file is shown so you know what to edit.
 
-### Looking at the Generated Files
+## Looking at the Generated Files
 
 Let's look at the files that were created by `lono import`.
 
-#### app/templates/autoscaling.yml
+### app/templates/autoscaling.yml
 
 The `app/templates/autoscaling.yml` is simply the template that was imported into the lono project. If the original template's format was JSON, lono converts the template into YAML.  If the original format was YAML, lono imports the template as is.
 
-#### app/definitions/base.rb
+### app/definitions/base.rb
 
 Even though the template exists in the `app/templates` folder, a template definition in `app/definitions` is required to tell lono to generate to template to the `outputs` folder.  Here are the contents of `app/definitions/base.rb`:
 
@@ -70,7 +70,7 @@ template "autoscaling"
 
 It's just simple one line template definition.  `lono import` added the template definition.
 
-#### config/params/base/autoscaling.txt
+### config/params/base/autoscaling.txt
 
 The generated params file is interesting. Here are the contents of `config/params/base/autoscaling.txt`:
 
@@ -85,7 +85,7 @@ KeyName=
 
 We can tell that we need to set the `VpcId`, `Subnets`, `OperatorEMail`, and `KeyName` template parameters to use the template.
 
-### Configure Parameter Values
+## Configure Parameter Values
 
 For the sake of this guide, we'll use the default VPC and subnets. You can use the following commands to set bash variables that we'll use to set the required parameters:
 

@@ -2,7 +2,7 @@
 title: Articles
 ---
 
-### Articles On Lono and CloudFormation
+## Articles On Lono and CloudFormation
 
 * [Why Generate CloudFormation Templates with Lono](https://blog.boltops.com/2017/04/09/why-generate-cloudformation-templates-with-lono)
 * [Generating Hundreds of CloudFormation Templates with Lono](https://blog.boltops.com/2017/05/07/generating-hundreds-of-cloudformation-templates-with-lono)
@@ -13,7 +13,7 @@ title: Articles
 * [Lono Improvements v2.1.0](https://blog.boltops.com/2017/05/23/lono-improvements-v2-1-0)
 * [Lono CloudFormation Framework Version 3 Release](https://blog.boltops.com/2017/08/28/lono-cloudformation-framework-version-3-release)
 
-### Introductory Series on CloudFormation
+## Introductory Series on CloudFormation
 
 * [A Simple Introduction to AWS CloudFormation Part 1: EC2 Instance
 ](https://blog.boltops.com/2017/03/06/a-simple-introduction-to-aws-cloudformation-part-1-ec2-instance)
@@ -25,5 +25,5 @@ title: Articles
 ](https://blog.boltops.com/2017/04/07/a-simple-introduction-to-aws-cloudformation-part-4-change-sets-dry-run-mode)
 
 <a id="prev" class="btn btn-basic" href="{% link examples.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _reference/lono-inspect.md %}">Next Step</a>
+<a id="next" class="btn btn-primary" href="{% link reference.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

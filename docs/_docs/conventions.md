@@ -4,7 +4,7 @@ title: Conventions
 
 Lono follows a set of naming conventions to encourage best practices in a naming scheme. This also dramatically allows lono commands to be shorter and hopefully more memorable.
 
-### CLI Template Name Convention
+## CLI Template Name Convention
 
 These conventions are followed by all the `lono cfn` commands: `create`, `update`, `preview`, etc.
 
@@ -49,7 +49,7 @@ $ lono cfn create mystack --template different3 --param different4
 
 The template that will be used is `output/templates/different3.json` and the parameters that will use `output/params/different4.json`.
 
-### Template Output and Source Name Convention
+## Template Output and Source Name Convention
 
 By convention, the template source name defaults to output name specified. Often, this means you do not have to specify the source.  For example:
 
@@ -72,7 +72,7 @@ Furthermore, since the `do...end` block is empty at this point it can be removed
 template "example"
 ```
 
-### Format and Extension Convention
+## Format and Extension Convention
 
 For templates, lono assumes a format extension of `.yml`.  The format is then tacked onto the output filenames automatically when writing the final generated templates. For example:
 

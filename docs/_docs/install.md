@@ -2,7 +2,7 @@
 title: Installation
 ---
 
-### RubyGems
+## RubyGems
 
 You can also install lono via RubyGems.
 
@@ -16,7 +16,7 @@ Or you can add lono to your Gemfile in your project if you are working with a ru
 gem "lono"
 {% endhighlight %}
 
-### Bolts Toolbelt
+## Bolts Toolbelt
 
 If you want to install lono without having to worry about lono's ruby dependency you can install the Bolts Toolbelt which has lono included.
 

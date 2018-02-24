@@ -68,7 +68,7 @@ The example launches an EC2 instance with a security group. Check out the newly 
 
 Congratulations!  You have successfully created a CloudFormation stack with lono. It's that simple. 😁
 
-### Summarized Commands
+## Summarized Commands
 
 Here are the commands again in compact summarized form for copy and paste:
 

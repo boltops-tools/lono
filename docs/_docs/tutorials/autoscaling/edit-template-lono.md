@@ -4,7 +4,7 @@ title: "Tutorial: Edit Template Lono"
 
 The imported AutoScaling template contains a Load Balancer and AutoScaling.  It is designed for web applications.  Let's say we still wanted AutoScaling but do not need the Load Balancer.  A common example of this use case is an AutoScaling worker or queue tier.  We can achieve this in several ways.
 
-### Lono Phases Review
+## Lono Phases Review
 
 First, let's review the lono phases:
 
@@ -17,7 +17,7 @@ We'll show you 2 approaches so you can get a sense, learn, and decide when you w
 1. Compiling Different Templates with Lono
 2. Using Native CloudFormation Logical Constructs
 
-### Compiling Different Templates Approach
+## Compiling Different Templates Approach
 
 Compiling different templates is pretty straightforward with lono templates.  The source code for these changes are in the lono-constructs branch of [lono-tutorial-autoscaling](https://github.com/tongueroo/lono-tutorial-autoscaling/blob/native-constructs/app/templates/autoscaling.yml).  Let's take a look at the relevant [changes](https://github.com/tongueroo/lono-tutorial-autoscaling/compare/lono-constructs).
 
@@ -44,7 +44,7 @@ end
 
 Then we added `<% if @load_balancer %>` checks to the sections of the template where we want to turn on and off the load balancer.  The template is large so here is a link to the [autoscaling.yml code](https://github.com/tongueroo/lono-tutorial-autoscaling/blob/lono-constructs/app/templates/autoscaling.yml) and the [compare view](https://github.com/tongueroo/lono-tutorial-autoscaling/compare/lono-constructs) that adds this adjustment.
 
-#### Lono Generate
+### Lono Generate
 
 It is helpful to generate the templates and verify that the files in `output/templates` look like what we expect before launching.
 
@@ -89,7 +89,7 @@ $
 
 We can see that `autoscaling-web` has 9 resources and `autoscaling-worker` has 6 resources.  That's what we should expect.
 
-#### Launch Stacks
+### Launch Stacks
 
 When things look good, launch both stacks:
 
@@ -118,7 +118,7 @@ lono cfn create autoscaling-worker
 
 This is due to conventions that lono uses. If no param option is provided, then the convention is for the param file to default to the name of the template option. The conventions covered in detailed in [Conventions]({% link _docs/conventions.md %}).
 
-#### Clean Up
+### Clean Up
 
 Let's do a little clean up and delete some of the stacks before continuing with the `lono cfn delete` command:
 
@@ -128,5 +128,5 @@ lono cfn delete autoscaling-worker
 lono cfn delete autoscaling
 ```
 
-#### Congrats
+### Congrats
 Congraluations 🎉 You have successfully added conditional logic to CloudFormation templates that decides whether or not to create a Load Balancer.

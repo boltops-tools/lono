@@ -14,7 +14,6 @@ class Lono::Cfn < Lono::Command
 
   class_option :verbose, type: :boolean
   class_option :noop, type: :boolean
-  class_option :region, desc: "AWS region"
 
   # common to create and update
   class_option :template, desc: "override convention and specify the template file to use"
@@ -24,7 +23,7 @@ class Lono::Cfn < Lono::Command
   class_option :iam, type: :boolean, desc: "Shortcut for common IAM capabilities: CAPABILITY_IAM, CAPABILITY_NAMED_IAM"
   class_option :rollback, type: :boolean, desc: "rollback", default: true
 
-  desc "create STACK", "create a CloudFormation stack"
+  desc "create STACK", "Create a CloudFormation stack using the generated template."
   option :randomize_stack_name, type: :boolean, desc: "tack on random string at the end of the stack name", default: nil
   long_desc Lono::Help.text("cfn/create")
   def create(name)

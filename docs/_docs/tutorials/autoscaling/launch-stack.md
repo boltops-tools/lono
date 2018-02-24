@@ -2,7 +2,7 @@
 title: "Tutorial: Launch the Stack"
 ---
 
-### Launch the Stack
+## Launch the Stack
 
 We're now ready to launch the stack!  Use the `lono cfn create autoscaling` command:
 
@@ -43,7 +43,7 @@ You should see a CloudFormation stack creating:
 
 <img src="/img/tutorial/lono-cfn-create-autoscaling.png" alt="Stack Created" class="doc-photo lono-flowchart">
 
-### Check the Created Resources
+## Check the Created Resources
 
 You can use `lono summary autoscaling` to get a summary of the Resources again.
 

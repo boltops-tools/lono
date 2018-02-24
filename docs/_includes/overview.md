@@ -9,7 +9,7 @@ Here is a diagram that describes how lono works.
 
 <img src="/img/tutorial/lono-flowchart.png" alt="Stack Created" class="doc-photo lono-flowchart">
 
-### Lono Features
+## Lono Features
 
 * Lono generates standard CloudFormation templates from ERB templates, providing you with the expressive power of the ERB's templating engine.
 * Lono allows you to write your CloudFormation parameters files in a simple env-like file.

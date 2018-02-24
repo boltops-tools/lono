@@ -40,7 +40,6 @@ pre {
 }
 
 ol.overview-stages li {
-    font-size: 1.1em;
     padding: 10px 0;
 }
 
@@ -96,12 +95,20 @@ section#main .intro-text .skills {
     text-align: left;
     margin-top: 30px;
     @media (min-width: 992px) {
-        margin-top: 40px;
+        margin-top: 35px;
     }
 }
 
-.content-body h2 {
-    text-align: center;
+.content-body {
+    h1 {
+        font-size: 1.8em;
+    }
+    h2 {
+        font-size: 1.4em;
+    }
+    h3 {
+        font-size: 1.2em;
+    }
 }
 
 .content-body ul,
@@ -110,12 +117,11 @@ section#main .intro-text .skills {
 }
 .content-body ul li,
 .content-body ol li {
-    font-size: 1.2em;
 }
 
 .content-nav {
     /*background-color: green;*/
-    margin-top: 40px;
+    margin-top: 20px;
     font-size: 1.25em;
 }
 
@@ -133,6 +139,12 @@ section#main .intro-text .skills {
     color: #101010;
     text-decoration: underline;
     font-weight: bold;
+}
+
+.reference-nav {
+    // background-color: blue;
+    margin-top: 30px;
+    margin-bottom: -10px;
 }
 
 footer h3 {

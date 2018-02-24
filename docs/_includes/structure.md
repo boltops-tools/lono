@@ -1,4 +1,4 @@
-#### Folders Overview
+### Folders Overview
 
 File / Directory  | Description
 ------------- | -------------

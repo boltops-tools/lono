@@ -2,7 +2,7 @@
 title: "Tutorial: Edit Template Native"
 ---
 
-### Native CloudFormation Logical Constructs Approach
+## Native CloudFormation Logical Constructs Approach
 
 In the last section, we added conditional logical to create or not create a Load Balancer using lono variables. In this section, we'll use native CloudFormation constructs.  This hopefully gives you a sense of the differences in the 2 approaches.
 
@@ -64,7 +64,7 @@ After:
 
 For the sake of this guide, feel free to grab `app/templates/autoscaling` from the [native-constructs](https://github.com/tongueroo/lono-tutorial-autoscaling/blob/native-constructs/app/templates/autoscaling.yml) branch and update the code.
 
-#### Launch Stack
+### Launch Stack
 
 After they have completed deletion, we're ready to relaunch both stacks:
 
@@ -80,7 +80,7 @@ lono cfn delete autoscaling-web
 lono cfn delete autoscaling-worker
 ```
 
-### Thoughts
+## Thoughts
 
 We have successfully edited existing CloudFormation templates and taken 2 approaches to adding conditional logic:
 

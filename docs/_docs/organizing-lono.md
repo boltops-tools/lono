@@ -2,7 +2,7 @@
 title: Organizing Lono
 ---
 
-### Breaking up app/definitions
+## Breaking up app/definitions
 
 If you have a lot of templates, the `app/definitions/base.rb` file can become unwieldy long.  You can break up the file and put them under the `app/definitions/base` folder. All files are loaded.
 
