@@ -100,8 +100,16 @@ section#main .intro-text .skills {
     }
 }
 
-.content-body h2 {
-    // text-align: center;
+.content-body {
+    h1 {
+        font-size: 1.8em;
+    }
+    h2 {
+        font-size: 1.4em;
+    }
+    h3 {
+        font-size: 1.2em;
+    }
 }
 
 .content-body ul,
