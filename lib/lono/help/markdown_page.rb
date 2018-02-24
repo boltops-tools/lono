@@ -22,8 +22,8 @@ module Lono::Help
       create_index
 
       @command_class.commands.keys.each do |command_name|
-        markdown = Markdown.new(@command_class, command_name)
-        create(markdown)
+        markdown = MarkdownPage.new(@command_class, command_name)
+        create_page(markdown)
         # if markdown.subcommand?
         #   puts "subcommand: #{command_name}"
         # else
@@ -33,17 +33,17 @@ module Lono::Help
       end
     end
 
+    def create_page(markdown)
+      puts "Creating #{markdown.path}..."
+      FileUtils.mkdir_p(File.dirname(markdown.path))
+      IO.write(markdown.path, markdown.doc)
+    end
+
     def create_index
       page = MarkdownIndex.new(@command_class)
       FileUtils.mkdir_p(File.dirname(page.path))
       puts "Creating #{page.path}"
       IO.write(page.path, page.doc)
-    end
-
-    def create(markdown)
-      puts "Creating #{markdown.path}..."
-      FileUtils.mkdir_p(File.dirname(markdown.path))
-      IO.write(markdown.path, markdown.doc)
     end
   end
 
@@ -52,17 +52,23 @@ module Lono::Help
       @command_class = command_class
     end
 
+    def path
+      "docs/reference.md"
+    end
+
     def command_list
       @command_class.commands.keys.sort.map.each do |command_name|
-        page = Markdown.new(@command_class, command_name)
+        page = MarkdownPage.new(@command_class, command_name)
         link = page.path.sub("docs/", "")
         # Example: [lono cfn]({% link _reference/lono-cfn.md %})
         "* [lono #{command_name}]({% link #{link} %})"
       end.join("\n")
     end
 
-    def path
-      "docs/reference.md"
+    def summary
+      <<-EOL
+Lono is a CloudFormation framework tool that helps you manage your templates. Lono handles the entire CloudFormation lifecycle. It starts with helping you develop your templates and helps you all the way to the infrastructure provisioning step.
+EOL
     end
 
     def doc
@@ -70,13 +76,13 @@ module Lono::Help
 ---
 title: Lono Reference
 ---
-
+#{summary}
 #{command_list}
 EOL
     end
   end
 
-  class Markdown
+  class MarkdownPage
     def initialize(command_class, command_name)
       @command_class = command_class
       @command_name = command_name

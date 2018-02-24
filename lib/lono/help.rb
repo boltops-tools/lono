@@ -1,5 +1,5 @@
 module Lono::Help
-  autoload :Markdown, 'lono/help/markdown'
+  autoload :MarkdownPage, 'lono/help/markdown_page'
 
   class << self
     # namespaced_command: cfn/create or cfn:create

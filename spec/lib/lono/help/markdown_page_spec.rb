@@ -1,5 +1,5 @@
-describe Lono::Help::Markdown do
-  let(:markdown) { Lono::Help::Markdown.new(cli_class, command) }
+describe Lono::Help::MarkdownPage do
+  let(:markdown) { Lono::Help::MarkdownPage.new(cli_class, command) }
   let(:cli_class) { Lono::CLI }
 
   context "generate" do
