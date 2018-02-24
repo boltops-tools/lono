@@ -1,5 +1,6 @@
 ---
 title: lono param generate
+reference: true
 ---
 
 ## Usage

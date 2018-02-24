@@ -1,5 +1,6 @@
 ---
 title: lono generate
+reference: true
 ---
 
 ## Usage

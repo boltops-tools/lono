@@ -1,5 +1,6 @@
 ---
 title: lono param help [COMMAND]
+reference: true
 ---
 
 ## Usage

@@ -1,5 +1,6 @@
 ---
 title: lono template help [COMMAND]
+reference: true
 ---
 
 ## Usage

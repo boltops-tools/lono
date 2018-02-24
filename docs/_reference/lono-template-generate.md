@@ -1,5 +1,6 @@
 ---
 title: lono template generate
+reference: true
 ---
 
 ## Usage

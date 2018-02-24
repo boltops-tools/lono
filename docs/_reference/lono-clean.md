@@ -1,5 +1,6 @@
 ---
 title: lono clean
+reference: true
 ---
 
 ## Usage

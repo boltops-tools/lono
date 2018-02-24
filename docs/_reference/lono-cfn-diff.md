@@ -1,5 +1,6 @@
 ---
 title: lono cfn diff STACK
+reference: true
 ---
 
 ## Usage

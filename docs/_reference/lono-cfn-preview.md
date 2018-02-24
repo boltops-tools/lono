@@ -1,5 +1,6 @@
 ---
 title: lono cfn preview STACK
+reference: true
 ---
 
 ## Usage

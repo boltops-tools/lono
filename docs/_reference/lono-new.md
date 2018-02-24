@@ -1,5 +1,6 @@
 ---
 title: lono new NAME
+reference: true
 ---
 
 ## Usage

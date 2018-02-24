@@ -1,5 +1,6 @@
 ---
 title: lono completion *PARAMS
+reference: true
 ---
 
 ## Usage

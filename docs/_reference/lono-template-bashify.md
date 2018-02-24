@@ -1,5 +1,6 @@
 ---
 title: lono template bashify URL-OR-PATH
+reference: true
 ---
 
 ## Usage

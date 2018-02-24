@@ -1,5 +1,6 @@
 ---
 title: lono cfn help [COMMAND]
+reference: true
 ---
 
 ## Usage

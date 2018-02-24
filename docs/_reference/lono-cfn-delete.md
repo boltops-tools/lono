@@ -1,5 +1,6 @@
 ---
 title: lono cfn delete STACK
+reference: true
 ---
 
 ## Usage

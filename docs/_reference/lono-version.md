@@ -1,5 +1,6 @@
 ---
 title: lono version
+reference: true
 ---
 
 ## Usage

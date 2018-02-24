@@ -1,5 +1,6 @@
 ---
 title: lono script help [COMMAND]
+reference: true
 ---
 
 ## Usage

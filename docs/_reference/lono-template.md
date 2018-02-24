@@ -1,5 +1,6 @@
 ---
 title: lono template SUBCOMMAND
+reference: true
 ---
 
 ## Usage

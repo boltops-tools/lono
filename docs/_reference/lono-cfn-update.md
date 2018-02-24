@@ -1,5 +1,6 @@
 ---
 title: lono cfn update STACK
+reference: true
 ---
 
 ## Usage

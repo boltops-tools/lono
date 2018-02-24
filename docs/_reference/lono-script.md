@@ -1,5 +1,6 @@
 ---
 title: lono script SUBCOMMAND
+reference: true
 ---
 
 ## Usage

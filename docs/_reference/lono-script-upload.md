@@ -1,5 +1,6 @@
 ---
 title: lono script upload
+reference: true
 ---
 
 ## Usage

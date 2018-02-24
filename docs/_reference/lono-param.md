@@ -1,5 +1,6 @@
 ---
 title: lono param SUBCOMMAND
+reference: true
 ---
 
 ## Usage

@@ -1,5 +1,6 @@
 ---
 title: lono xgraph STACK
+reference: true
 ---
 
 ## Usage

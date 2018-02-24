@@ -1,5 +1,6 @@
 ---
 title: lono completion_script
+reference: true
 ---
 
 ## Usage

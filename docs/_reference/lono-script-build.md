@@ -1,5 +1,6 @@
 ---
 title: lono script build
+reference: true
 ---
 
 ## Usage

@@ -1,5 +1,6 @@
 ---
 title: lono template upload
+reference: true
 ---
 
 ## Usage

@@ -1,5 +1,6 @@
 ---
 title: lono cfn download STACK
+reference: true
 ---
 
 ## Usage

@@ -1,5 +1,6 @@
 ---
 title: lono import SOURCE --name=NAME
+reference: true
 ---
 
 ## Usage

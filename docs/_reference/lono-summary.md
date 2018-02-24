@@ -1,5 +1,6 @@
 ---
 title: lono summary STACK
+reference: true
 ---
 
 ## Usage

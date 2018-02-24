@@ -96,7 +96,7 @@ section#main .intro-text .skills {
     text-align: left;
     margin-top: 30px;
     @media (min-width: 992px) {
-        margin-top: 40px;
+        margin-top: 35px;
     }
 }
 
@@ -115,7 +115,7 @@ section#main .intro-text .skills {
 
 .content-nav {
     /*background-color: green;*/
-    margin-top: 40px;
+    margin-top: 20px;
     font-size: 1.25em;
 }
 
@@ -133,6 +133,12 @@ section#main .intro-text .skills {
     color: #101010;
     text-decoration: underline;
     font-weight: bold;
+}
+
+.reference-nav {
+    // background-color: blue;
+    margin-top: 30px;
+    margin-bottom: -10px;
 }
 
 footer h3 {

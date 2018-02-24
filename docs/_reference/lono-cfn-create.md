@@ -1,5 +1,6 @@
 ---
 title: lono cfn create STACK
+reference: true
 ---
 
 ## Usage
