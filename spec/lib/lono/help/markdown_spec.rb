@@ -32,4 +32,19 @@ describe Lono::Help::Markdown do
       Lono::Help::MarkdownMaker.all(cli_class)
     end
   end
+
+  ################
+  # rest are edge cases
+  context "summary" do
+    let(:command) { "summary" }
+
+    it "#options" do
+      expect(markdown.options).to eq ""
+    end
+
+    it "#description" do
+      expect(markdown.description).to eq ""
+    end
+  end
+
 end

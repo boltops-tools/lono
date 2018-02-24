@@ -21,17 +21,20 @@ module Lono::Help
     def all
       @command_class.commands.keys.each do |command_name|
         markdown = Markdown.new(@command_class, command_name)
-        if markdown.subcommand?
-          puts "subcommand: #{command_name}"
-        else
-          puts "regular: #{command_name}"
-          puts "markdown.filename #{markdown.filename}"
-        end
+        create(markdown)
+        # if markdown.subcommand?
+        #   puts "subcommand: #{command_name}"
+        # else
+        #   puts "regular: #{command_name}"
+        #   puts "markdown.filename #{markdown.filename}"
+        # end
       end
     end
 
-    def filename
-
+    def create(markdown)
+      puts "Creating #{markdown.path}..."
+      FileUtils.mkdir_p(File.dirname(markdown.path))
+      IO.write(markdown.path, markdown.doc)
     end
   end
 
@@ -46,8 +49,8 @@ module Lono::Help
       "lono"
     end
 
-    def filename
-      "_docs/#{cli_name}-#{@command_name}.md"
+    def path
+      "docs/_reference/#{cli_name}-#{@command_name}.md"
     end
 
     def subcommand?
@@ -69,6 +72,8 @@ module Lono::Help
       shell = Lono::Help::Shell.new
       Lono::CLI.send(:class_options_help, shell, nil => @command.options.values)
       text = shell.stdout.string
+      return "NONE" if text.empty? # there are no options
+
       lines = text.split("\n")[1..-1] # remove first line wihth "Options: "
       lines.map! do |line|
         # remove 2 leading spaces
@@ -80,6 +85,8 @@ module Lono::Help
     # Use command's long description as many description
     def description
       text = @command.long_description
+      return "" if text.nil? # empty description
+
       lines = text.split("\n")
       lines.map do |line|
         # In the CLI help, we use 2 spaces to designate commands
