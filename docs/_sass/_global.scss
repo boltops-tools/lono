@@ -39,10 +39,34 @@ h6 {
 }
 
 p {
-    font-size: 16px;
+    font-size: 1em;
     line-height: 1.5;
     margin-bottom: 20px;
+    @media (min-width:992px) {
+        font-size: 1.1em;
+    }
 }
+
+li {
+    font-size: 16px;
+    @media (min-width:992px) {
+        font-size: 18px;
+    }
+}
+
+// code blocks
+pre {
+    font-size: 12px;
+}
+
+table td {
+    vertical-align: top;
+}
+
+code {
+    font-size: 80%;
+}
+
 
 section {
     padding: 60px 0;
