@@ -7,7 +7,7 @@ fi
 
 # If the last commit already updated the docs, then exit.
 # Preventable measure to avoid infinite loop.
-if git log -1 --pretty=oneline | grep 'circleci updated docs' ; then
+if git log -1 --pretty=oneline | grep 'docs updated by circleci' ; then
   exit
 fi
 
@@ -17,7 +17,7 @@ git config --global user.name "Tung Nguyen"
 
 # if reach here, we have some changes on docs that we should commit
 git add docs
-git commit -m "circleci updated docs"
+git commit -m "docs updated by circleci"
 
 # https://makandracards.com/makandra/12107-git-show-current-branch-name-only
 current_branch=$(git rev-parse --abbrev-ref HEAD)
