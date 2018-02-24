@@ -16,6 +16,30 @@ module Lono::Help
       @command = @cli_class.commands[@command_name]
     end
 
+    def generate
+      <<-EOL
+---
+title: #{usage}
+---
+
+## Usage
+
+    #{usage}
+
+## Summary
+
+#{summary}
+
+## Options
+
+#{options}
+
+## Description
+
+#{description}
+EOL
+    end
+
     def usage
       banner = @cli_class.send(:banner, @command) # banner is protected method
       invoking_command = File.basename($0) # could be rspec, etc
