@@ -1,5 +1,5 @@
 ---
-title: lono script SUBCOMMAND
+title: lono script
 reference: true
 ---
 
@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 script subcommand tasks
+
 
 ## Subcommands
 

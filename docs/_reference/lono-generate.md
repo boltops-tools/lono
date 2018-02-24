@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 Generate both CloudFormation templates and parameters files
+
 ## Description
 
 Examples:

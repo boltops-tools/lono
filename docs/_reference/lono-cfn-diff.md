@@ -1,5 +1,5 @@
 ---
-title: lono cfn diff STACK
+title: lono cfn diff
 reference: true
 ---
 
@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 diff of newly generated template vs existing template in AWS
+
 ## Description
 
 Displays code diff of the generated CloudFormation template locally vs the existing template on AWS. You can set a desired diff viewer by setting the LONO_CFN_DIFF environment variable.

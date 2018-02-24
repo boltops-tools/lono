@@ -1,5 +1,5 @@
 ---
-title: lono completion *PARAMS
+title: lono completion
 reference: true
 ---
 
@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 prints words for auto-completion
+
 ## Description
 
 Example:

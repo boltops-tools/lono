@@ -1,5 +1,5 @@
 ---
-title: lono cfn update STACK
+title: lono cfn update
 reference: true
 ---
 
@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 update a CloudFormation stack
+
 ## Description
 
 Examples:

@@ -1,5 +1,5 @@
 ---
-title: lono summary STACK
+title: lono summary
 reference: true
 ---
 
@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 Prints summary of CloudFormation template
+
 
 
 

@@ -1,5 +1,5 @@
 ---
-title: lono cfn preview STACK
+title: lono cfn preview
 reference: true
 ---
 
@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 preview a CloudFormation stack update
+
 ## Description
 
 Generates a CloudFormation preview.  This is similar to a `terraform plan` or puppet's dry-run mode.

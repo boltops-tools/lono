@@ -1,5 +1,5 @@
 ---
-title: lono cfn create STACK
+title: lono cfn create
 reference: true
 ---
 
@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 Create a CloudFormation stack using the generated template.
+
 ## Description
 
 Provided that you are in a lono project and have a `my-stack` lono template definition.  To create a stack you can simply run:

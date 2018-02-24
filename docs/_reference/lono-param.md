@@ -1,5 +1,5 @@
 ---
-title: lono param SUBCOMMAND
+title: lono param
 reference: true
 ---
 
@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 param subcommand tasks
+
 ## Description
 
 Examples:

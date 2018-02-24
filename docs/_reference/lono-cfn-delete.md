@@ -1,5 +1,5 @@
 ---
-title: lono cfn delete STACK
+title: lono cfn delete
 reference: true
 ---
 
@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 delete a CloudFormation stack
+
 ## Description
 
 Examples:

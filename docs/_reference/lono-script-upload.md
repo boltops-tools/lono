@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 Uploads output/scripts/scripts-md5sum.tgz to s3
+
 ## Description
 
 Uploads output/scripts/scripts-md5sum.tgz to s3_folder configured in settings.yml.  This command must be ran after `lono script build` since it relies the artifacts of that command. Namely:

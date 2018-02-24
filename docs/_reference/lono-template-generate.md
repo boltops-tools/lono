@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 Generate the CloudFormation templates
+
 ## Description
 
 Examples:

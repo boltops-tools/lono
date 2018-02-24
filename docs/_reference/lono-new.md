@@ -1,5 +1,5 @@
 ---
-title: lono new NAME
+title: lono new
 reference: true
 ---
 
@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 generates new CLI project
+
 ## Description
 
 Examples:

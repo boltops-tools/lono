@@ -1,5 +1,5 @@
 ---
-title: lono xgraph STACK
+title: lono xgraph
 reference: true
 ---
 
@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 Graphs dependencies tree of CloudFormation template resources
+
 
 
 ## Options

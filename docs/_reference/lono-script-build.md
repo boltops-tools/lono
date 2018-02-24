@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 Builds output/scripts/scripts-md5sum.tgz from app/script folder
+
 ## Description
 
 Builds output/scripts/scripts-md5sum.tgz from app/script folder.

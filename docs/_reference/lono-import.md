@@ -1,5 +1,5 @@
 ---
-title: lono import SOURCE --name=NAME
+title: lono import
 reference: true
 ---
 
@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 Imports raw CloudFormation template and lono-fies it
+
 ## Description
 
 Examples:

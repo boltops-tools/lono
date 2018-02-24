@@ -1,5 +1,5 @@
 ---
-title: lono template help [COMMAND]
+title: lono template help
 reference: true
 ---
 
@@ -10,6 +10,7 @@ reference: true
 ## Summary
 
 Describe subcommands or one specific subcommand
+
 
 
 ## Options
