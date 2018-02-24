@@ -1,5 +1,5 @@
 ---
-title: Lono Reference
+title: CLI Reference
 ---
 Lono is a CloudFormation framework tool that helps you manage your templates. Lono handles the entire CloudFormation lifecycle. It starts with helping you develop your templates and helps you all the way to the infrastructure provisioning step.
 
