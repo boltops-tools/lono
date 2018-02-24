@@ -11,7 +11,7 @@ module Lono::Markdown
 
     def self.clean
       FileUtils.rm_rf("docs/_reference")
-      FileUtils.rm_rf("docs/reference.md")
+      FileUtils.rm_f("docs/reference.md")
     end
 
     # command_class is top-level CLI class.
