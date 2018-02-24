@@ -5,7 +5,13 @@ module Lono::Markdown
     cattr_accessor :mute
 
     def self.create_all(command_class,  parent_command_name=nil)
+      clean unless parent_command_name
       new(command_class, parent_command_name).create_all
+    end
+
+    def self.clean
+      FileUtils.rm_rf("docs/_reference")
+      FileUtils.rm_rf("docs/reference.md")
     end
 
     # command_class is top-level CLI class.
