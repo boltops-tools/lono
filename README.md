@@ -15,7 +15,7 @@
 [3]: https://codeclimate.com/repos/51d7f1407e00a4042c010ab4/badges/5273fe6cdb5a13e58554/gpa.png
 [4]: https://codeclimate.com/repos/51d7f1407e00a4042c010ab4/feed
 
-Lono is a tool to help you manage your CloudFormation templates. Lono handles the entire CloudFormation lifecyle. It helps you craft the templates and then provisions of the infrastructure.
+Lono is a tool to help you manage your CloudFormation templates. Lono handles the entire CloudFormation lifecyle. It helps you craft the templates and then provision the infrastructure.
 
 * Lono generates CloudFormation templates based on ERB ruby templates in `yaml` format.
 * Lono takes simple env-like files and generates the CloudFormation parameter files.
