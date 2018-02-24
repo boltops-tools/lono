@@ -1,16 +1,3 @@
----
-title: lono upgrade4
-reference: true
----
-
-## Usage
-
-    lono upgrade4
-
-## Description
-
-Upgrade from version 3 to 4.
-
 Lono version 4 changed a few things:
 
 * Simplified the [directory structure](http://lono.cloud/docs/directory-structure/) of a lono project.
@@ -36,6 +23,3 @@ This task helps you upgrade from lono version 3 to version 4.
     mv config/params/stag config/params/staging
     Upgrade to lono version 4 complete!
     $
-
-
-

@@ -9,9 +9,7 @@ reference: true
 
 ## Description
 
-Builds output/scripts/scripts-md5sum.tgz from app/script folder
-
-Builds output/scripts/scripts-md5sum.tgz from app/script folder.
+Builds `output/scripts/scripts-md5sum.tgz` from `app/script` folder
 
 ## Examples
 

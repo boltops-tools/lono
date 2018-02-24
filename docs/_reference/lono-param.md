@@ -17,6 +17,6 @@ param subcommands
 
 ## Subcommands
 
-* [lono param generate]({% link _reference/lono-param-generate.md %}) - generate all parameter files to json format
+* [lono param generate]({% link _reference/lono-param-generate.md %}) - Generate all parameter files to `output/params`.
 
 

@@ -7,7 +7,7 @@ module Lono
     end
     register(New, "new", "new NAME", "generates new CLI project")
 
-    desc "import SOURCE", "Imports raw CloudFormation template and lono-fies it"
+    desc "import SOURCE", "Imports CloudFormation template and lono-fies it."
     long_desc Help.text(:import)
     option :name, required: true, default: nil, desc: "final name of downloaded template without extension"
     option :summary, default: true, type: :boolean, desc: "provide template summary after import"
@@ -41,14 +41,14 @@ module Lono
     end
 
     desc "xgraph STACK", "Graphs dependencies tree of CloudFormation template resources"
-    long_desc Help.text("graph")
+    long_desc Help.text("xgraph")
     option :display, type: :string, desc: "graph or text", default: "graph"
     option :noop, type: :boolean, desc: "noop mode"
     def xgraph(name)
       Lono::Inspector::Graph.new(name, options).run
     end
 
-    desc "clean", "Clean up generated files"
+    desc "clean", "Clean up generated files in `output` folder."
     def clean
       Clean.new(options).run
     end
@@ -65,8 +65,8 @@ module Lono
       Completer::Script.generate
     end
 
-    desc "upgrade4", "upgrade from version 3 to 4"
-    long_desc Help.text("upgrade3")
+    desc "upgrade4", "Upgrade from version 3 to 4."
+    long_desc Help.text("upgrade4")
     def upgrade4
       Upgrade4.new(options).run
     end

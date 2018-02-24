@@ -7,7 +7,7 @@ class Lono::Param < Lono::Command
   class_option :noop, type: :boolean
   class_option :mute, type: :boolean
 
-  desc "generate", "generate all parameter files to json format"
+  desc "generate", "Generate all parameter files to `output/params`."
   long_desc Lono::Help.text("param/generate")
   option :path, desc: "Name of the source that maps to the params txt file.  name -> params/NAME.txt.  Use this to override the params/NAME.txt convention"
   def generate

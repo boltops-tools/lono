@@ -1,4 +1,6 @@
-## Example
+Lono inspect is provides commands to help you quickly understand a CloudFormation template.
+
+## Examples
 
     $ lono summary ec2
     => CloudFormation Template Summary:
@@ -13,3 +15,5 @@
       1 AWS::EC2::SecurityGroup
       2 Total
     $
+
+Blog Post also covers this: [lono inspect summary Tutorial Introduction](https://blog.boltops.com/2017/09/18/lono-inspect-summary-tutorial-introduction)
