@@ -49,6 +49,13 @@ jobs:
             mkdir /tmp/test-results
             bundle exec rspec
 
+      # The specs will generate reference docs.
+      # Commit it again so that the reference docs are published to GitHub pages.
+      - commit_docs:
+          name: commit cli reference docs again
+          command: |
+            .circleci/bin/commit_docs.sh
+
       # collect reports
       - store_test_results:
           path: /tmp/test-results
