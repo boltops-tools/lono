@@ -149,19 +149,19 @@ EOL
       subcommand_class = @command_class.subcommand_classes[@command_name]
 
       command_list = subcommand_class.printable_commands
-        .map { |a| a[0] }
-        .map { |c| c.sub(invoking_command, cli_name) } # replace with proper comand
-        .reject { |c| c.include?("help [COMMAND]") } # filter out help
+        .map { |a| a[0].sub!(invoking_command, cli_name); a } # replace with proper comand
+        .reject { |a| a[0].include?("help [COMMAND]") } # filter out help
 
       # dress up with markdown
-      text = command_list.map do |command|
+      text = command_list.map do |a|
+        command, comment = a[0], a[1].sub(/^# /,'')
         subcommand_name = command.split(' ')[2]
         full_command = "#{cli_name}-#{@command_name}-#{subcommand_name}"
         link = "_reference/#{full_command}.md"
 
         # "* [#{command}]({% link #{link} %})"
         # Example: [lono cfn delete STACK]({% link _reference/lono-cfn-delete.md %})
-        "* [#{command}]()"
+        "* [#{command}]() - #{comment}"
       end.join("\n")
 
       <<-EOL
