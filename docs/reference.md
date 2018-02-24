@@ -18,5 +18,3 @@ Lono is a CloudFormation framework tool that helps you manage your templates. Lo
 * [lono user_data]({% link _reference/lono-user_data.md %})
 * [lono version]({% link _reference/lono-version.md %})
 * [lono xgraph]({% link _reference/lono-xgraph.md %})
-
-test
