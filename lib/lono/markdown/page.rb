@@ -1,98 +1,9 @@
-require 'thor'
-
-module Lono::Help
-  # Override stdout as an @io object so we can grab the text written normally
-  # outputted to the shell.
-  class Shell < Thor::Shell::Basic
-    def stdout
-      @io ||= StringIO.new
-    end
-  end
-
-  class MarkdownMaker
-    def self.make_all(command_class)
-      new(command_class).make_all
-    end
-
-    def initialize(command_class)
-      @command_class = command_class
-    end
-
-    def make_all
-      create_index
-
-      @command_class.commands.keys.each do |command_name|
-        page = MarkdownPage.new(@command_class, command_name)
-        create_page(page)
-      end
-    end
-
-    def create_page(markdown)
-      puts "Creating #{markdown.path}..."
-      FileUtils.mkdir_p(File.dirname(markdown.path))
-      IO.write(markdown.path, markdown.doc)
-    end
-
-    def create_index
-      page = MarkdownIndex.new(@command_class)
-      FileUtils.mkdir_p(File.dirname(page.path))
-      puts "Creating #{page.path}"
-      IO.write(page.path, page.doc)
-    end
-  end
-
-  class MarkdownIndex
-    def initialize(command_class)
-      @command_class = command_class
-    end
-
-    def path
-      "docs/reference.md"
-    end
-
-    def command_list
-      @command_class.commands.keys.sort.map.each do |command_name|
-        page = MarkdownPage.new(@command_class, command_name)
-        link = page.path.sub("docs/", "")
-        # Example: [lono cfn]({% link _reference/lono-cfn.md %})
-        "* [lono #{command_name}]({% link #{link} %})"
-      end.join("\n")
-    end
-
-    def summary
-      <<-EOL
-Lono is a CloudFormation framework tool that helps you manage your templates. Lono handles the entire CloudFormation lifecycle. It starts with helping you develop your templates and helps you all the way to the infrastructure provisioning step.
-EOL
-    end
-
-    def doc
-      <<-EOL
----
-title: Lono Reference
----
-#{summary}
-#{command_list}
-EOL
-    end
-  end
-
-  class MarkdownPage
+module Lono::Markdown
+  class Page
     def initialize(command_class, command_name)
       @command_class = command_class
       @command_name = command_name
       @command = @command_class.commands[@command_name]
-    end
-
-    def cli_name
-      "lono"
-    end
-
-    def path
-      "docs/_reference/#{cli_name}-#{@command_name}.md"
-    end
-
-    def subcommand?
-      @command_class.subcommands.include?(@command_name)
     end
 
     def usage
@@ -107,7 +18,7 @@ EOL
     end
 
     def options
-      shell = Lono::Help::Shell.new
+      shell = Shell.new
       @command_class.send(:class_options_help, shell, nil => @command.options.values)
       text = shell.stdout.string
       return "" if text.empty? # there are no options
@@ -131,6 +42,18 @@ EOL
         # In Markdown we need 4 spaces.
         line.sub(/^  \b/, '    ')
       end.join("\n")
+    end
+
+    def cli_name
+      "lono"
+    end
+
+    def path
+      "docs/_reference/#{cli_name}-#{@command_name}.md"
+    end
+
+    def subcommand?
+      @command_class.subcommands.include?(@command_name)
     end
 
     # Note:
@@ -171,25 +94,8 @@ EOL
 EOL
     end
 
-    # require './lib/lono'
-    # shell = Thor::Shell::Basic.new
-    # Lono::CLI.help(shell, "generate") # works
-    # Lono::CLI.help(shell, "cfn") # doesnt works
-
-    # Lono::CLI.subcommand_classes["cfn"].help(shell, true) # works - subcommand top-level help
-    # Lono::Cfn.help(shell, true) # same as above
-
-    # # to get another level deep
-    # Lono::Cfn.command_help(shell, "create") # works - help for each subcommand command help
     def doc
-      shell = Lono::Help::Shell.new
-      # puts @command_class.send(:class_options_help, shell, nil => @command.options.values)
-
-      # @subcommand_class = Lono::CLI.subcommand_classes[@command_name]
-      # @subcommand_class.help(shell, true)
-      # text = shell.stdout.string
-      # puts text
-
+      shell = Shell.new
       <<-EOL
 ---
 title: #{usage}
