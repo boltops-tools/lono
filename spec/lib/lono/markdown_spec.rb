@@ -1,6 +1,7 @@
 describe Lono::Markdown::Page do
-  let(:page) { Lono::Markdown::Page.new(cli_class, command) }
+  let(:page) { Lono::Markdown::Page.new(cli_class, command, parent_command_name) }
   let(:cli_class) { Lono::CLI }
+  let(:parent_command_name) { nil }
 
   context "MarkdownMaker.create_all" do
     it "docs command" do
@@ -74,7 +75,6 @@ describe Lono::Markdown::Page do
       # puts page.doc # uncomment to see generated page for debugging
     end
   end
-
 
   ################
   # rest are edge cases

@@ -87,12 +87,13 @@ module Lono::Markdown
       text = command_list.map do |a|
         command, comment = a[0], a[1].sub(/^# /,'')
         subcommand_name = command.split(' ')[2]
-        full_command = "#{cli_name}-#{@command_name}-#{subcommand_name}"
-        link = "_reference/#{full_command}.md"
+        full_command_path = "#{cli_name}-#{@command_name}-#{subcommand_name}"
+        full_command_name = "#{cli_name} #{@command_name} #{subcommand_name}"
+        link = "_reference/#{full_command_path}.md"
 
         # "* [#{command}]({% link #{link} %})"
         # Example: [lono cfn delete STACK]({% link _reference/lono-cfn-delete.md %})
-        "* [#{command}]({% link #{link} %}) - #{comment}"
+        "* [#{full_command_name}]({% link #{link} %}) - #{comment}"
       end.join("\n")
 
       <<-EOL
@@ -103,28 +104,55 @@ EOL
     end
 
     def doc
-      shell = Shell.new
+      <<-EOL
+#{front_matter}
+#{usage_markdown}
+#{summary_markdown}
+#{desc_markdown}
+#{subcommand_list}
+#{options_markdown}
+EOL
+    end
+
+    def front_matter
+      command = [cli_name, @parent_command_name, @command_name].compact.join(' ')
       <<-EOL
 ---
-title: #{usage}
+title: #{command}
 reference: true
 ---
+EOL
+    end
 
+    def usage_markdown
+      <<-EOL
 ## Usage
 
     #{usage}
+EOL
+    end
 
+    def summary_markdown
+      <<-EOL
 ## Summary
 
 #{summary}
-#{desc_doc}
-#{subcommand_list}
-#{options_doc}
+EOL
+    end
+
+    # handles blank description
+    def desc_markdown
+      return '' if description.empty?
+
+      <<-EOL
+## Description
+
+#{description}
 EOL
     end
 
     # handles blank options
-    def options_doc
+    def options_markdown
       return '' if options.empty?
 
       <<-EOL
@@ -133,17 +161,6 @@ EOL
 ```
 #{options}
 ```
-EOL
-    end
-
-    # handles blank description
-    def desc_doc
-      return '' if description.empty?
-
-      <<-EOL
-## Description
-
-#{description}
 EOL
     end
 
