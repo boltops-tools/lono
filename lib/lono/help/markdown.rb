@@ -1,8 +1,8 @@
 require 'thor'
 
 module Lono::Help
-  # Override stdout as an @io object so we can pass the text of the written
-  # output to the shell around.
+  # Override stdout as an @io object so we can grab the text written normally
+  # outputted to the shell.
   class Shell < Thor::Shell::Basic
     def stdout
       @io ||= StringIO.new
@@ -32,7 +32,9 @@ title: #{usage}
 
 ## Options
 
+```
 #{options}
+```
 
 ## Description
 

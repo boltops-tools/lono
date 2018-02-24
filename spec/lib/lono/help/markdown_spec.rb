@@ -3,7 +3,7 @@ describe Lono::Help::Markdown do
   let(:cli_class) { Lono::CLI }
 
   context "generate" do
-    let(:command) { "generate" }
+    let(:command) { "import" }
 
     it "#usage" do
       expect(markdown.usage).to eq "lono generate"
@@ -22,6 +22,10 @@ describe Lono::Help::Markdown do
 
     it "#description" do
       expect(markdown.description).to include("    lono generate")
+    end
+
+    it "#generate" do
+      puts markdown.generate
     end
   end
 end
