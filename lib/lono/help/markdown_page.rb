@@ -114,7 +114,7 @@ EOL
 
     def options
       shell = Lono::Help::Shell.new
-      Lono::CLI.send(:class_options_help, shell, nil => @command.options.values)
+      @command_class.send(:class_options_help, shell, nil => @command.options.values)
       text = shell.stdout.string
       return "" if text.empty? # there are no options
 
@@ -145,7 +145,29 @@ EOL
       @command_class.subcommand_classes[@command_name]
     end
 
+    # require './lib/lono'
+    # shell = Thor::Shell::Basic.new
+    # Lono::CLI.help(shell, "generate") # works
+    # Lono::CLI.help(shell, "cfn") # doesnt works
+
+    # Lono::CLI.subcommand_classes["cfn"].help(shell, true) # works - subcommand top-level help
+    # Lono::Cfn.help(shell, true) # same as above
+
+    # # to get another level deep
+    # Lono::Cfn.command_help(shell, "create") # works - help for each subcommand command help
     def doc
+      puts "HI"
+      shell = Lono::Help::Shell.new
+      # puts @command_class.send(:class_options_help, shell, nil => @command.options.values)
+
+      @subcommand_class = Lono::CLI.subcommand_classes[@command_name]
+      @subcommand_class.help(shell, true)
+      text = shell.stdout.string
+      puts text
+      return
+
+      # @command_class.send(:subcommand_help, "cfn")
+
       <<-EOL
 ---
 title: #{usage}
