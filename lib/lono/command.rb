@@ -42,6 +42,20 @@ module Lono
 
         super
       end
+
+      # Override command_help to include the description at the top of the
+      # long_description.
+      def command_help(shell, command_name)
+        meth = normalize_command_name(command_name)
+        command = all_commands[meth]
+        long_desc = if command.long_description
+            "#{command.description}\n\n#{command.long_description}"
+          else
+            command.description
+          end
+        command.long_description = long_desc
+        super
+      end
     end
   end
 end
