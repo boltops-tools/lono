@@ -2,7 +2,7 @@ describe Lono::Markdown::Page do
   let(:page) { Lono::Markdown::Page.new(cli_class, command) }
   let(:cli_class) { Lono::CLI }
 
-  context "MarkdownMaker.make_all" do
+  context "MarkdownMaker.create_all" do
     it "generates all docs pages" do
       Lono::Markdown::Creator.create_all(cli_class)
     end
@@ -47,13 +47,11 @@ describe Lono::Markdown::Page do
       expect(page.summary).to eq "cfn subcommand tasks"
     end
 
-    # TODO: should I display the sub commands optoins?
-    # it "#options" do
-    #   expect(page.options).to include("--clean")
-    #   # [--clean], [--no-clean]  # remove all output files before generating
-    #   #                          # Default: true
-    #   # [--quiet], [--no-quiet]  # silence the output
-    # end
+    # Think it is better to hide subcommand options at the top-level.
+    # User will see the optoins once they click into the subcommand.
+    it "#options" do
+      expect(page.options).to include("")
+    end
 
     it "#description" do
       expect(page.description).to include("Examples")

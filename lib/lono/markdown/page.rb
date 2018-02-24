@@ -1,8 +1,9 @@
 module Lono::Markdown
   class Page
-    def initialize(command_class, command_name)
+    def initialize(command_class, command_name, parent_command_name=nil)
       @command_class = command_class
       @command_name = command_name
+      @parent_command_name = parent_command_name
       @command = @command_class.commands[@command_name]
     end
 
@@ -49,11 +50,20 @@ module Lono::Markdown
     end
 
     def path
-      "docs/_reference/#{cli_name}-#{@command_name}.md"
+      full_name = if @parent_command_name
+        "#{cli_name}-#{@parent_command_name}-#{@command_name}"
+      else
+        "#{cli_name}-#{@command_name}"
+      end
+      "docs/_reference/#{full_name}.md"
     end
 
     def subcommand?
       @command_class.subcommands.include?(@command_name)
+    end
+
+    def subcommand_class
+      @command_class.subcommand_classes[@command_name]
     end
 
     # Note:
@@ -69,8 +79,6 @@ module Lono::Markdown
       return '' unless subcommand?
 
       invoking_command = File.basename($0) # could be rspec, etc
-      subcommand_class = @command_class.subcommand_classes[@command_name]
-
       command_list = subcommand_class.printable_commands
         .map { |a| a[0].sub!(invoking_command, cli_name); a } # replace with proper comand
         .reject { |a| a[0].include?("help [COMMAND]") } # filter out help
@@ -84,7 +92,7 @@ module Lono::Markdown
 
         # "* [#{command}]({% link #{link} %})"
         # Example: [lono cfn delete STACK]({% link _reference/lono-cfn-delete.md %})
-        "* [#{command}]() - #{comment}"
+        "* [#{command}]({% link #{link} %}) - #{comment}"
       end.join("\n")
 
       <<-EOL
@@ -108,9 +116,9 @@ title: #{usage}
 ## Summary
 
 #{summary}
-#{options_doc}
 #{desc_doc}
 #{subcommand_list}
+#{options_doc}
 EOL
     end
 
