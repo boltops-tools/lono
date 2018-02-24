@@ -26,7 +26,7 @@ EOL
     def doc
       <<-EOL
 ---
-title: Lono Reference
+title: CLI Reference
 ---
 #{summary}
 #{command_list}
