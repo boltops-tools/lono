@@ -4,7 +4,7 @@ describe Lono::Markdown::Page do
 
   context "MarkdownMaker.create_all" do
     it "docs command" do
-      out = execute("exe/lono docs")
+      out = execute("rake docs")
       expect(out).to include("Creating")
     end
 

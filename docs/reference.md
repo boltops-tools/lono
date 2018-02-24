@@ -7,7 +7,6 @@ Lono is a CloudFormation framework tool that helps you manage your templates. Lo
 * [lono clean]({% link _reference/lono-clean.md %})
 * [lono completion]({% link _reference/lono-completion.md %})
 * [lono completion_script]({% link _reference/lono-completion_script.md %})
-* [lono docs]({% link _reference/lono-docs.md %})
 * [lono generate]({% link _reference/lono-generate.md %})
 * [lono import]({% link _reference/lono-import.md %})
 * [lono new]({% link _reference/lono-new.md %})

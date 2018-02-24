@@ -59,7 +59,7 @@ module Lono
       Completer.new(CLI, *params).run
     end
 
-    desc "completion_script", "generates script that can be eval to setup auto-completion", hide: true
+    desc "completion_script", "generates script that can be eval to setup auto-completion"
     long_desc Help.text("completion_script")
     def completion_script
       Completer::Script.generate
@@ -69,11 +69,6 @@ module Lono
     long_desc Help.text("upgrade3")
     def upgrade4
       Upgrade4.new(options).run
-    end
-
-    desc "docs", "Generates cli reference docs as markdown"
-    def docs
-      Markdown::Creator.create_all(CLI)
     end
 
     desc "version", "Prints version"
