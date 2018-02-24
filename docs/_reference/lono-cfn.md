@@ -21,7 +21,7 @@ Examples:
 
 ## Subcommands
 
-* [lono cfn create STACK]({% link _reference/lono-cfn-create.md %}) - Create a CloudFormation stack using generated templates.
+* [lono cfn create STACK]({% link _reference/lono-cfn-create.md %}) - Create a CloudFormation stack using the generated template.
 * [lono cfn update STACK]({% link _reference/lono-cfn-update.md %}) - update a CloudFormation stack
 * [lono cfn delete STACK]({% link _reference/lono-cfn-delete.md %}) - delete a CloudFormation stack
 * [lono cfn preview STACK]({% link _reference/lono-cfn-preview.md %}) - preview a CloudFormation stack update
