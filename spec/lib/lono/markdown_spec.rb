@@ -3,6 +3,11 @@ describe Lono::Markdown::Page do
   let(:cli_class) { Lono::CLI }
 
   context "MarkdownMaker.create_all" do
+    it "markdown command" do
+      out = execute("exe/lono markdown")
+      expect(out).to include("Creating")
+    end
+
     it "generates all docs pages" do
       Lono::Markdown::Creator.mute = true
       Lono::Markdown::Creator.create_all(cli_class)
