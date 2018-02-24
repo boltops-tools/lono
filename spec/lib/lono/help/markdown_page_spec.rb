@@ -58,6 +58,10 @@ describe Lono::Help::MarkdownPage do
       expect(page.description).to include("    lono generate")
     end
 
+    it "#subcommand_list" do
+      puts page.subcommand_list
+    end
+
     it "#doc" do
       puts page.doc
     end

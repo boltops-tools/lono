@@ -24,12 +24,6 @@ module Lono::Help
       @command_class.commands.keys.each do |command_name|
         page = MarkdownPage.new(@command_class, command_name)
         create_page(page)
-        # if markdown.subcommand?
-        #   puts "subcommand: #{command_name}"
-        # else
-        #   puts "regular: #{command_name}"
-        #   puts "markdown.filename #{markdown.filename}"
-        # end
       end
     end
 
@@ -139,10 +133,42 @@ EOL
       end.join("\n")
     end
 
+    # Note:
+    # printable_commands are in the form:
+    #  [
+    #    [command_form,command_comment],
+    #    [command_form,command_comment],
+    #  ]
+    #
+    # It is useful to grab the command form printable_commands as it shows
+    # the proper form.
     def subcommand_list
       return '' unless subcommand?
 
-      @command_class.subcommand_classes[@command_name]
+      invoking_command = File.basename($0) # could be rspec, etc
+      subcommand_class = @command_class.subcommand_classes[@command_name]
+
+      command_list = subcommand_class.printable_commands
+        .map { |a| a[0] }
+        .map { |c| c.sub(invoking_command, cli_name) } # replace with proper comand
+        .reject { |c| c.include?("help [COMMAND]") } # filter out help
+
+      # dress up with markdown
+      text = command_list.map do |command|
+        subcommand_name = command.split(' ')[2]
+        full_command = "#{cli_name}-#{@command_name}-#{subcommand_name}"
+        link = "_reference/#{full_command}.md"
+
+        # "* [#{command}]({% link #{link} %})"
+        # Example: [lono cfn delete STACK]({% link _reference/lono-cfn-delete.md %})
+        "* [#{command}]()"
+      end.join("\n")
+
+      <<-EOL
+## Subcommands
+
+#{text}
+EOL
     end
 
     # require './lib/lono'
@@ -156,17 +182,13 @@ EOL
     # # to get another level deep
     # Lono::Cfn.command_help(shell, "create") # works - help for each subcommand command help
     def doc
-      puts "HI"
       shell = Lono::Help::Shell.new
       # puts @command_class.send(:class_options_help, shell, nil => @command.options.values)
 
-      @subcommand_class = Lono::CLI.subcommand_classes[@command_name]
-      @subcommand_class.help(shell, true)
-      text = shell.stdout.string
-      puts text
-      return
-
-      # @command_class.send(:subcommand_help, "cfn")
+      # @subcommand_class = Lono::CLI.subcommand_classes[@command_name]
+      # @subcommand_class.help(shell, true)
+      # text = shell.stdout.string
+      # puts text
 
       <<-EOL
 ---
