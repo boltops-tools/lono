@@ -9,7 +9,7 @@ reference: true
 
 ## Summary
 
-create a CloudFormation stack
+Create a CloudFormation stack using generated templates.
 ## Description
 
 Examples:
