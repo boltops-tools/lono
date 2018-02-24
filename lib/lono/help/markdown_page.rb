@@ -139,6 +139,12 @@ EOL
       end.join("\n")
     end
 
+    def subcommand_list
+      return '' unless subcommand?
+
+      @command_class.subcommand_classes[@command_name]
+    end
+
     def doc
       <<-EOL
 ---
@@ -154,6 +160,7 @@ title: #{usage}
 #{summary}
 #{options_doc}
 #{desc_doc}
+#{subcommand_list}
 EOL
     end
 
