@@ -1,4 +1,4 @@
-Generates CloudFormation template, parameter files, and scripts in lono project. Writes writes them to the `output` folder.
+Generates CloudFormation template, parameter files, and scripts in lono project and writes them to the `output` folder.
 
 ## Examples
 
