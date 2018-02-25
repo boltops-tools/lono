@@ -5,7 +5,7 @@ module Lono
     New.cli_options.each do |args|
       option *args
     end
-    register(New, "new", "new NAME", "generates new CLI project")
+    register(New, "new", "new NAME", "Generates new lono project.")
 
     desc "import SOURCE", "Imports CloudFormation template and lono-fies it."
     long_desc Help.text(:import)
