@@ -9,7 +9,7 @@ reference: true
 
 ## Description
 
-generates new CLI project
+Generates new lono project.
 
 ## Examples
 
