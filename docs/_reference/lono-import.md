@@ -59,9 +59,9 @@ lono import https://s3.amazonaws.com/cloudformation-templates-us-east-1/EC2Insta
 
 The default is dasherize.
 
-Question: You might be wondering, why does lono import has dasherize vs underscore?
+Question: You might be wondering, why does lono import uses dasherize vs underscore?
 
-Answer: I prefer filenames to be underscore. However, CloudFormation stack names do not allow underscores in their naming, so it is encourage to either dasherize or camelize your template names so the stack name and the template name can be the same.
+Answer: I prefer filenames to be underscored. However, CloudFormation stack names do not allow underscores in their naming, so it is encourage to either dasherize or camelize your template names so the stack name and the template name can be the same.
 
 This blog post [Introducing the lono import Command](https://blog.boltops.com/2017/09/15/introducing-the-lono-import-command) also covers `lono import`.
 
