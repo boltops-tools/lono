@@ -69,7 +69,11 @@ BASH_CODE
     }.merge(@options)
     generator = Lono::Param::Generator.new(param_name, generator_options)
     # do not generate because lono cfn calling logic already generated it we only need the values
-    generator.params    # Returns Array in underscore keys format
+    params = generator.params    # Returns Array in underscore keys format
+    # convert Array to simplified hash structure
+    params.inject({}) do |h, param|
+      h.merge(param[:parameter_key] => param[:parameter_value])
+    end
   end
 
   # Adjust the partial path so that it will use app/user_data

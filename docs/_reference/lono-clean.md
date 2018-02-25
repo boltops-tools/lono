@@ -9,7 +9,7 @@ reference: true
 
 ## Description
 
-Clean up generated files in `output` folder.
+Removes `output` folder.
 
 
 

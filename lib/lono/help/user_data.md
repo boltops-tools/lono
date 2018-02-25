@@ -13,7 +13,7 @@ Script:
     SCRIPTS=/opt/scripts
     $SCRIPTS/install_stuff.sh
 
-Running `ono user_data bootstrap` produces:
+Running `lono user_data bootstrap` produces:
 
     $ lono user_data bootstrap
     Detected app/scripts

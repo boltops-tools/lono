@@ -10,12 +10,13 @@ module Lono
     desc "import SOURCE", "Imports CloudFormation template and lono-fies it."
     long_desc Help.text(:import)
     option :name, default: nil, desc: "final name of downloaded template without extension"
+    option :casing, default: "dasherize", desc: "camelcase or dasherize the template name"
     option :summary, default: true, type: :boolean, desc: "provide template summary after import"
     def import(source)
       Importer.new(source, options).run
     end
 
-    desc "generate", "Generate both CloudFormation templates and parameters files"
+    desc "generate", "Generate both CloudFormation templates and parameters files."
     long_desc Help.text(:generate)
     option :clean, type: :boolean, default: true, desc: "remove all output files before generating"
     option :quiet, type: :boolean, desc: "silence the output"
@@ -26,7 +27,7 @@ module Lono
       Param::Generator.generate_all(options)
     end
 
-    desc "user_data NAME", "Generates user_data script for debugging"
+    desc "user_data NAME", "Generates user_data script for debugging."
     long_desc Help.text(:user_data)
     option :clean, type: :boolean, default: true, desc: "remove all output/user_data files before generating"
     def user_data(name)
@@ -34,13 +35,13 @@ module Lono
       UserData.new(options.merge(name: name)).generate
     end
 
-    desc "summary STACK", "Prints summary of CloudFormation template"
+    desc "summary STACK", "Prints summary of CloudFormation template."
     long_desc Help.text("summary")
     def summary(name)
       Lono::Inspector::Summary.new(name, options).run
     end
 
-    desc "xgraph STACK", "Graphs dependencies tree of CloudFormation template resources"
+    desc "xgraph STACK", "Graphs dependencies tree of CloudFormation template resources."
     long_desc Help.text("xgraph")
     option :display, type: :string, desc: "graph or text", default: "graph"
     option :noop, type: :boolean, desc: "noop mode"
@@ -48,18 +49,18 @@ module Lono
       Lono::Inspector::Graph.new(name, options).run
     end
 
-    desc "clean", "Clean up generated files in `output` folder."
+    desc "clean", "Removes `output` folder."
     def clean
       Clean.new(options).run
     end
 
-    desc "completion *PARAMS", "prints words for auto-completion"
+    desc "completion *PARAMS", "Prints words for auto-completion."
     long_desc Help.text("completion")
     def completion(*params)
       Completer.new(CLI, *params).run
     end
 
-    desc "completion_script", "generates script that can be eval to setup auto-completion"
+    desc "completion_script", "Generates a script that can be eval to setup auto-completion."
     long_desc Help.text("completion_script")
     def completion_script
       Completer::Script.generate

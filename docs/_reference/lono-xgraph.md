@@ -9,14 +9,14 @@ reference: true
 
 ## Description
 
-Graphs dependencies tree of CloudFormation template resources
+Graphs dependencies tree of CloudFormation template resources.
 
 ## Example
 
-With more complex CloudFormation templates, the dependency get more difficult to follow.  Visualizing the dependencies is helpful.
+With more complex CloudFormation templates, the dependency can get difficult to follow.  Visualizing the dependencies is helpful.
 
     lono import https://s3.amazonaws.com/solutions-reference/aws-waf-security-automations/latest/aws-waf-security-automations.template --name waf
-    lono inspect depends waf
+    lono xgraph waf
 
 This above command generates a dependency chart.  The command uses the DependsOn attribute specified in each resource to figure this out.  It does not show implied dependencies that CloudFormaton automatically computes for us.  The chart looks like this:
 

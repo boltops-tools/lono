@@ -1,4 +1,4 @@
-Lono inspect is provides commands to help you quickly understand a CloudFormation template.
+The `lono summary` command helps you quickly understand a CloudFormation template.
 
 ## Examples
 
@@ -16,4 +16,4 @@ Lono inspect is provides commands to help you quickly understand a CloudFormatio
       2 Total
     $
 
-Blog Post also covers this: [lono inspect summary Tutorial Introduction](https://blog.boltops.com/2017/09/18/lono-inspect-summary-tutorial-introduction)
+Blog Post also covers this: [lono summary Tutorial Introduction](https://blog.boltops.com/2017/09/18/lono-inspect-summary-tutorial-introduction)

@@ -29,24 +29,23 @@ Helper  | Description
 Instead of hard-coding the s3 bucket and path name in your parent stack you can use this helper to reference it from your `settings.yml` configuration. For example, if your s3_folder is configured in `settings.yml` like so:
 
 ```yaml
-s3:
-  path:
-    default: s3://my-bucket/templates
+base:
+  s3_folder: my-bucket/templates
 ```
 
-This results in `templates/parent.yml`:
+And you use it in your `app/templates/parent.yml` like so:
 
 ```ruby
 <%= template_s3_path("ChildTemplate") %>
 ```
 
-Producing:
+This produces the url in your `output/templates/parent.yml`:
 
 ```ruby
-https://s3.amazonaws.com/my-bucket/templates/prod/ChildTemplate.yml
+https://s3.amazonaws.com/my-bucket/templates/production/ChildTemplate.yml
 ```
 
-Note that the `LONO_ENV` is automatically added to the final s3 path in case you are using the same s3 bucket for multiple environments.
+Note that the `LONO_ENV` is added to the final s3 path in case you are using the same s3 bucket for multiple environments.
 
 ### The template_params helper
 
@@ -62,8 +61,8 @@ Resources:
     Properties:
       TemplateURL: <%= template_s3_path("network") %>
       Parameters:
-      <% template_params("network").each do |param| %>
-        <%= param[:parameter_key] %>: <%= param[:parameter_value] %>
+      <% template_params("network").each do |key, value| %>
+        <%= key %>: <%= value %>
       <% end %>
         CIDR: 10.11.0.0/16
 ...
@@ -88,7 +87,7 @@ VpcName=main
 DomainName=stack.local
 ```
 
-Note you might want to put inline parameter values in the parent template at the bottom after the `template_params` loop, so it is  clear what the final values parameters being passed into the child template are.
+Note you might want to put inline parameter values in the parent template at the bottom after the `template_params` loop, so it is clear what the final values parameters being passed into the child template are.
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/starter-templates.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/organizing-lono.md %}">Next Step</a>
