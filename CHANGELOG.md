@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [4.0.3]
+- update cli docs
+- make `--name` option for lono import optional
+- simplified template_params helper return structure
+
 ## [4.0.2]
 - update cli docs
 
