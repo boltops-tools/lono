@@ -5,7 +5,7 @@ reference: true
 
 ## Usage
 
-    lono import SOURCE --name=NAME
+    lono import SOURCE
 
 ## Description
 
@@ -43,7 +43,7 @@ Imports CloudFormation template and lono-fies it.
 ## Options
 
 ```
---name=NAME                  # final name of downloaded template without extension
+[--name=NAME]                # final name of downloaded template without extension
 [--summary], [--no-summary]  # provide template summary after import
                              # Default: true
 ```

@@ -25,7 +25,7 @@ Prints words for TAB auto-completion.
 
 To enable, TAB auto-completion add the following to your profile:
 
-    eval $(lono completion script)
+    eval $(lono completion_script)
 
 Auto-completion example usage:
 

@@ -9,7 +9,7 @@ module Lono
 
     desc "import SOURCE", "Imports CloudFormation template and lono-fies it."
     long_desc Help.text(:import)
-    option :name, required: true, default: nil, desc: "final name of downloaded template without extension"
+    option :name, default: nil, desc: "final name of downloaded template without extension"
     option :summary, default: true, type: :boolean, desc: "provide template summary after import"
     def import(source)
       Importer.new(source, options).run
