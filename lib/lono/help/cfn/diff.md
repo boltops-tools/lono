@@ -8,8 +8,6 @@ Displays code diff of the generated CloudFormation template locally vs the exist
     No detected app/scripts
     Generating CloudFormation templates:
       output/templates/ec2.yml
-    Not modified: output/templates/ec2.yml to s3://boltops-stag/cloudformation-templates/development/templates/ec2.yml
-    Templates uploaded to s3.
       output/params/ec2.json
     Generating CloudFormation source code diff...
     Running: colordiff /tmp/existing_cfn_template.yml output/templates/ec2.yml
@@ -17,6 +15,7 @@ Displays code diff of the generated CloudFormation template locally vs the exist
     <     Default: t2.small
     ---
     >     Default: t2.medium
+    $ subl -a ~/.lono/settings.yml
     $
 
 Here's a screenshot of the output with the colorized diff:
