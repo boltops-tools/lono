@@ -17,7 +17,7 @@ Generates new lono project.
     TEMPLATE=ec2 lono new infra # creates a single server
     TEMPLATE=autoscaling lono new infra
 
-List of the [starter templates](https://github.com/tongueroo/lono/tree/master/lib/starter_projects).
+By default, `lono new` generates a skeleton project. Use `TEMPLATE` to generate different starter projects. List of the [starter templates](https://github.com/tongueroo/lono/tree/master/lib/starter_projects).
 
 ## Example Output
 
