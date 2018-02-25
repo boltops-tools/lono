@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [4.0.4]
+- update lono cfn diff docs
+- add S3_REGION env option to configure different s3 client region vs AWS_PROFILE
+
 ## [4.0.3]
 - update cli docs
 - make `--name` option for lono import optional
