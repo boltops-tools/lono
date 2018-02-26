@@ -6,7 +6,8 @@ task :default => :spec
 RSpec::Core::RakeTask.new
 
 require_relative "lib/lono"
+require "cli_markdown"
 desc "Generates cli reference docs as markdown"
 task :docs do
-  Lono::Markdown::Creator.create_all(Lono::CLI)
+  CliMarkdown::Creator.create_all(Lono::CLI)
 end
