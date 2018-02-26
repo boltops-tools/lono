@@ -33,7 +33,6 @@ module Lono
   autoload :Upgrade4, 'lono/upgrade4'
   autoload :Script, 'lono/script'
   autoload :UserData, 'lono/user_data'
-  autoload :Markdown, 'lono/markdown'
 
   extend Core
 end

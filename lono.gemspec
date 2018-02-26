@@ -37,6 +37,7 @@ Gem::Specification.new do |gem|
   # until https://github.com/futurechimp/plissken/pull/6 gets merged
 
   gem.add_development_dependency "byebug"
+  gem.add_development_dependency "cli_markdown"
   gem.add_development_dependency "guard-bundler"
   gem.add_development_dependency "guard-rspec"
   gem.add_development_dependency "rake"
