@@ -54,14 +54,28 @@ module Lono
 
       def alter_command_description(command)
         return unless command
+
+        # Add description to beginning of long_description
         long_desc = if command.long_description
             "#{command.description}\n\n#{command.long_description}"
           else
             command.description
           end
+
+        # add reference url to end of the long_description
+        unless website.empty?
+          full_command = [command.ancestor_name, command.name].compact.join('-')
+          url = "#{website}/reference/lono-#{full_command}"
+          long_desc += "\n\nAlso available at: #{url}"
+        end
+
         command.long_description = long_desc
       end
       private :alter_command_description
+
+      def website
+        "http://lono.cloud"
+      end
     end
   end
 end
