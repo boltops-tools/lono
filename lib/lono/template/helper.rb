@@ -1,3 +1,5 @@
+require "aws-sdk-core"
+
 # This is included into Lono::Template::Context.
 # It has access to the original thor CLI options via @options.
 #

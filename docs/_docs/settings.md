@@ -26,6 +26,7 @@ base:
   #   aws_profile1: mybucket/path
   #   aws_profile2: another-bucket/storage/path
   # randomize_stack_name: true # tack on a 3 char random string at the end of the stack name for lono cfn create
+  # s3_region: us-west-2 # to get rid of WARNING: S3 client configured for "us-east-1" but the bucket "xxx" is in "us-west-2"; Please configure the proper region to avoid multiple unnecessary redirects and signing attempts
 
 development:
   # When you have AWS_PROFILE set to one of these values, ufo will switch to the desired
