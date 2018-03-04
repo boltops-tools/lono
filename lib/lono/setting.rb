@@ -69,7 +69,7 @@ module Lono
 
     # automatically add base settings to the rest of the environments
     def merge_base(all_envs)
-      base = all_envs["base"]
+      base = all_envs["base"] || {}
       all_envs.each do |lono_env, env_settings|
         all_envs[lono_env] = base.merge(env_settings) unless lono_env == "base"
       end
