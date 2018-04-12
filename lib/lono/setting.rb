@@ -58,7 +58,7 @@ module Lono
       return Hash.new({}) unless File.exist?(path)
 
       content = RenderMePretty.result(path)
-      data = YAML.load(content)
+      data = YAML.load(content) || {}
       # If key is is accidentally set to nil it screws up the merge_base later.
       # So ensure that all keys with nil value are set to {}
       data.each do |lono_env, _setting|
