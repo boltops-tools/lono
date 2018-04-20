@@ -3,7 +3,6 @@ class Lono::Inspector::Summary < Lono::Inspector::Base
     puts "=> CloudFormation Template Summary:".colorize(:green)
     return if @options[:noop]
 
-    puts "Parameters:"
     print_parameters_summary
 
     puts "Resources:"
@@ -12,10 +11,10 @@ class Lono::Inspector::Summary < Lono::Inspector::Base
 
   def print_parameters_summary
     if parameters.empty?
-      puts "  There are no parameters"
+      puts "There are no parameters in this template."
     else
-      print_parameters("Required", required_parameters)
-      print_parameters("Optional", optional_parameters)
+      print_parameters("Required Parameters", required_parameters)
+      print_parameters("Optional Parameters", optional_parameters)
     end
   end
 

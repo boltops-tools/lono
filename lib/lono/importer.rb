@@ -34,7 +34,7 @@ class Lono::Importer
 
   def show_params_file
     path = "config/params/base/#{template_name}.txt"
-    puts "Here are contents of the params #{path} file:"
+    puts "Here are contents of the params #{path.colorize(:green)} file:"
     puts IO.read("#{Lono.root}/#{path}")
   end
 
