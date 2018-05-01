@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [4.1.0]
+- Merge pull request #36 from tongueroo/cli_markdown
+- fix current_region helper in variables, add s3_region setting
+- settings: fix edge cases, nil base, file is empty
+- simplify how to set s3 endpoint override so region doesnt have to also be set
+- use subshell for extract_scripts
+
 ## [4.0.6]
 - Update cli docs: generate, import, new, upload
 - fix thor description override when command not found
