@@ -85,7 +85,7 @@ class Lono::Cfn::Base
 
   def upload_files
     return unless s3_folder
-    Lono::File.new.upload
+    Lono::FileUploader.new.upload_all
   end
 
   def generate_params(options={})

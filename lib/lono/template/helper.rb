@@ -122,6 +122,14 @@ BASH_CODE
     path && File.exist?(path)
   end
 
+  def file_s3_key(path)
+    s3_folder = setting.s3_folder
+    return nil unless s3_folder
+
+    s3_key = s3_folder.sub('s3://','').split('/')[1..-1].join('/')
+    [s3_key, Lono.env, "files", path].join('/')
+  end
+
   def current_region
     region = Aws.config[:region]
     region ||= ENV['AWS_REGION']
