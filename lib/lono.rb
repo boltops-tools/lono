@@ -5,6 +5,7 @@ require 'json'
 require 'pp'
 require 'render_me_pretty'
 require 'yaml'
+require 'memoist'
 
 # vendor because need https://github.com/futurechimp/plissken/pull/6 to be merged
 $:.unshift(File.expand_path("../../vendor/plissken/lib", __FILE__))

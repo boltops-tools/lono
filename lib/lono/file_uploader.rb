@@ -1,6 +1,7 @@
 module Lono
   class FileUploader
     include Lono::Template::AwsService
+    extend Memoist
 
     def initialize(options={})
       @options = options
@@ -32,9 +33,25 @@ module Lono
       @checksums
     end
 
-    def s3_upload(path)
+    # used for file_s3_key helper
+    def md5(path)
+      Digest::MD5.file(path).to_s[0..7]
+    end
+    memoize :md5
+
+    def md5_key(path)
       pretty_path = path.sub(/^\.\//, '')
       key = "#{@prefix}/#{pretty_path.sub(%r{app/files/},'')}"
+      # add the short md5sum to the file
+      key = key.sub(/\.(\w+)$/,'') # strip extension
+      ext = $1
+      md5 = md5(path)
+      "#{key}-#{md5}.#{ext}"
+    end
+
+    def s3_upload(path)
+      pretty_path = path.sub(/^\.\//, '')
+      key = md5_key(path)
       s3_full_path = "s3://#{s3_bucket}/#{key}"
 
       local_checksum = Digest::MD5.hexdigest(IO.read(path))

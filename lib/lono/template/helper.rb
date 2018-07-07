@@ -122,12 +122,12 @@ BASH_CODE
     path && File.exist?(path)
   end
 
-  def file_s3_key(path)
+  def file_s3_key(name)
     s3_folder = setting.s3_folder
     return nil unless s3_folder
 
-    s3_key = s3_folder.sub('s3://','').split('/')[1..-1].join('/')
-    [s3_key, Lono.env, "files", path].join('/')
+    uploader = Lono::FileUploader.new
+    uploader.md5_key("#{Lono.root}/app/files/#{name}")
   end
 
   def current_region
