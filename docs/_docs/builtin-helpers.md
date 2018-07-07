@@ -26,6 +26,6 @@ The partial template helper is useful and is covered a little more detail here:
 
 Next, we'll cover how you add custom helpers.
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/app-scripts.md %}">Back</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/app-files.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/custom-helpers.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

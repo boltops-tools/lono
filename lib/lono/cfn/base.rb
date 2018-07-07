@@ -55,6 +55,7 @@ class Lono::Cfn::Base
       generate_templates
       unless @options[:noop]
         upload_scripts
+        upload_files
         upload_templates
       end
     end
@@ -80,6 +81,11 @@ class Lono::Cfn::Base
   def upload_scripts
     return unless s3_folder
     Lono::Script::Upload.new.run
+  end
+
+  def upload_files
+    return unless s3_folder
+    Lono::File.new.upload
   end
 
   def generate_params(options={})
