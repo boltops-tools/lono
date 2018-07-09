@@ -35,6 +35,13 @@ class Lono::Cfn::Base
         exit 1
       end
     end
+
+    return unless @options[:wait]
+    status.wait
+  end
+
+  def status
+    @status ||= Lono::Cfn::Status.new(@stack_name)
   end
 
   def prompt_for_iam(capabilities)

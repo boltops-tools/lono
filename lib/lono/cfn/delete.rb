@@ -21,5 +21,12 @@ class Lono::Cfn::Delete
         puts "#{@stack_name.inspect} stack does not exist".colorize(:red)
       end
     end
+
+    return unless @options[:wait]
+    status.wait
+  end
+
+  def status
+    @status ||= Lono::Cfn::Status.new(@stack_name)
   end
 end

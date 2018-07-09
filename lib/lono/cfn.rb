@@ -11,6 +11,7 @@ class Lono::Cfn < Lono::Command
   autoload :Preview, 'lono/cfn/preview'
   autoload :Diff, 'lono/cfn/diff'
   autoload :Download, 'lono/cfn/download'
+  autoload :Status, 'lono/cfn/status'
 
   class_option :verbose, type: :boolean
   class_option :noop, type: :boolean
@@ -23,8 +24,13 @@ class Lono::Cfn < Lono::Command
   class_option :iam, type: :boolean, desc: "Shortcut for common IAM capabilities: CAPABILITY_IAM, CAPABILITY_NAMED_IAM"
   class_option :rollback, type: :boolean, desc: "rollback", default: true
 
+  wait_option = Proc.new do
+    option :wait, type: :boolean, desc: "Wait for stack operation to complete.", default: true
+  end
+
   desc "create STACK", "Create a CloudFormation stack using the generated template."
   option :randomize_stack_name, type: :boolean, desc: "tack on random string at the end of the stack name", default: nil
+  wait_option.call
   long_desc Lono::Help.text("cfn/create")
   def create(name)
     Create.new(name, options).run
@@ -36,6 +42,7 @@ class Lono::Cfn < Lono::Command
   option :diff, type: :boolean, default: true, desc: "Show diff of the source code template changes before continuing."
   option :preview, type: :boolean, default: true, desc: "Show preview of the stack changes before continuing."
   option :sure, type: :boolean, desc: "Skips are you sure prompt"
+  wait_option.call
   def update(name)
     Update.new(name, options).run
   end
@@ -43,6 +50,7 @@ class Lono::Cfn < Lono::Command
   desc "delete STACK", "Delete a CloudFormation stack."
   long_desc Lono::Help.text("cfn/delete")
   option :sure, type: :boolean, desc: "Skips are you sure prompt"
+  wait_option.call
   def delete(name)
     Delete.new(name, options).run
   end
