@@ -67,7 +67,10 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
     case change_set.status
     when "CREATE_COMPLETE"
       puts "CloudFormation preview for '#{@stack_name}' stack update. Changes:"
-      change_set.changes.each do |change|
+      changes = change_set.changes.sort_by do |change|
+        change["resource_change"]["action"]
+      end
+      changes.each do |change|
         display_change(change)
       end
     when "FAILED"
