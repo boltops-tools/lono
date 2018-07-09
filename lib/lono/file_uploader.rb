@@ -10,6 +10,7 @@ module Lono
     end
 
     def upload_all
+      puts "Uploading app/files..."
       load_checksums!
 
       pattern = "#{Lono.root}/app/files/**/*"
@@ -55,7 +56,7 @@ module Lono
       s3_full_path = "s3://#{s3_bucket}/#{key}"
 
       local_checksum = Digest::MD5.hexdigest(IO.read(path))
-      remote_checksum = remote_checksum(path)
+      remote_checksum = remote_checksum(key)
       if local_checksum == remote_checksum
         puts("Not modified: #{pretty_path} to #{s3_full_path}".colorize(:yellow)) unless @options[:noop]
         return # do not upload unless the checksum has changed
@@ -76,15 +77,10 @@ module Lono
       puts message
     end
 
-    # @checksums map has a key format: s3_folder/files/development/docker.yml
-    #
-    # path = ./app/files/docker.yml
-    # s3_folder = s3://boltops-dev/s3_folder/files/development/docker.yml
-    def remote_checksum(path)
-      # first convert the local path to the path format that is stored in @checksums keys
-      # ./app/files/docker.yml => s3_folder/files/development/docker.yml
-      pretty_path = path.sub(/^\.\//, '')
-      key = "#{@prefix}/#{pretty_path.sub(%r{app/files/},'')}"
+    # key example: cloudformation/production/files/lifecycle-0719ab81.zip
+    # s3 path: s3://boltops-dev/cloudformation/production/files/lifecycle-0719ab81.zip
+    # s3_folder: s3://boltops-dev/cloudformation
+    def remote_checksum(key)
       @checksums[key]
     end
 

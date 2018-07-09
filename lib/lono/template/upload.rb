@@ -16,6 +16,7 @@ class Lono::Template::Upload
     ensure_s3_setup!
     load_checksums!
 
+    say "Uploading CloudFormation templates..."
     paths = Dir.glob("#{Lono.config.output_path}/templates/**/*")
     paths.select { |p| File.file?(p) }.each do |path|
       upload(path)
