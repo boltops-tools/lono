@@ -30,6 +30,8 @@ Lono prompts you with an "Are you sure?" message before the stack gets deleted. 
 
 ```
 [--sure], [--no-sure]           # Skips are you sure prompt
+[--wait], [--no-wait]           # Wait for stack operation to complete.
+                                # Default: true
 [--verbose], [--no-verbose]     
 [--noop], [--no-noop]           
 [--template=TEMPLATE]           # override convention and specify the template file to use
