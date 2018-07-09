@@ -18,6 +18,10 @@ class Lono::Cfn::Update < Lono::Cfn::Base
     end
     exit_unless_updatable!(stack_status(@stack_name))
 
+    options = @options.merge(lono: false, mute_params: true, mute_using: true, keep: true)
+    # create new copy of preview when update_stack is called because of IAM retry logic
+    preview = Lono::Cfn::Preview.new(@stack_name, options)
+
     error = nil
     diff.run if @options[:diff]
     preview.run if @options[:preview]
@@ -25,7 +29,7 @@ class Lono::Cfn::Update < Lono::Cfn::Base
 
     if @options[:change_set] # defaults to this
       message << " via change set: #{preview.change_set_name}"
-      change_set_update
+      preview.execute_change_set
     else
       standard_update(params)
     end
@@ -50,16 +54,7 @@ class Lono::Cfn::Update < Lono::Cfn::Base
     end
   end
 
-  def preview
-    options = @options.merge(lono: false, mute_params: true, mute_using: true, keep: true)
-    @preview ||= Lono::Cfn::Preview.new(@stack_name, options)
-  end
-
   def diff
     @diff ||= Lono::Cfn::Diff.new(@stack_name, @options.merge(lono: false, mute_params: true, mute_using: true))
-  end
-
-  def change_set_update
-    preview.execute_change_set
   end
 end
