@@ -23,7 +23,10 @@ class Lono::Cfn::Delete
     end
 
     return unless @options[:wait]
+    start_time = Time.now
     status.wait
+    took = Time.now - start_time
+    puts "Time took for stack deletion: #{status.pretty_time(took).green}."
   end
 
   def status

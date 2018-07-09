@@ -39,6 +39,8 @@ class Lono::Cfn
         puts "Stack success status: #{last_event_status}".colorize(:green)
       end
 
+      # Never gets here when deleting a stack because the describe stack returns nothing
+      # once the stack is deleted. Gets here for stack create and update though.
       took = Time.now - start_time
       puts "Time took for stack deployment: #{pretty_time(took).green}."
     end
