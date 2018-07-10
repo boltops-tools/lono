@@ -52,11 +52,11 @@ extract_scripts | This configures how the `extract_scripts` helper works.  The e
 
 ## The stack_name_suffix setting
 
-The `stack_name_suffix` is an option to help with a development flow. When working with CloudFormation templates and developing the source code, we must often launch stacks repeatedly as we fine tune the stack. Since we cannot launch a stack with a duplicate name it is useful to use a command like this:
+The `stack_name_suffix` is an option to help with a development workflow. When working with CloudFormation templates and developing the source code, we must often launch stacks repeatedly as we fine tune the stack. Since we cannot launch a stack with a duplicate name it is useful to use a command like this:
 
     lono cfn create my-stack-$(date +%s) --template my-stack
 
-Lono can automatically add a random string to the end of the stack name but uses the template name without the random string. The `stack_name_suffix random` option automates this. So we can create multiple stacks with different names but the same source template rapidly.  We can create multiple stacks in rapid-fire fashion and debug.  When the option is enabled:
+Lono can automatically add a random string to the end of the stack name but use the template name without the random string. The `stack_name_suffix random` option automates this. So we can create multiple stacks with different names but the same source template rapidly.  We can create multiple stacks in rapid-fire fashion and debug.  When the option is set to random:
 
     lono cfn create my-stack
 
