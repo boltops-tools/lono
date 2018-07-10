@@ -23,9 +23,18 @@ module Lono
     end
     memoize :env
 
+    # Precedence (highest to lowest)
+    #   1. LONO_SUFFIX
+    #   2. .current/lono
+    #   3. config/settings.yml
     def suffix
-      suffix = Current.suffix # TODO: add current concept
-      suffix = ENV['LONO_SUFFIX'] if ENV['LONO_SUFFIX'] # highest precedence
+      suffix = ENV['LONO_SUFFIX'] # highest precedence
+      suffix ||= Cfn::Current.suffix
+      unless suffix
+        settings = Setting.new.data
+        suffix ||= settings["stack_name_suffix"] # lowest precedence
+      end
+
       return if suffix&.empty?
       suffix
     end

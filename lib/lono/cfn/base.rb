@@ -22,7 +22,14 @@ class Lono::Cfn::Base
     Lono::Cfn::Current.name!(stack_name)
   end
 
+  def starting_message
+    action = self.class.to_s.split('::').last
+    action = action[0..-2] + 'ing' # create => creating
+    puts "#{action} #{@stack_name.colorize(:green)} stack..."
+  end
+
   def run
+    starting_message
     params = generate_all
     begin
       save_stack(params) # defined in the sub class

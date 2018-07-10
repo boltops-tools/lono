@@ -15,12 +15,12 @@ class Lono::Cfn::Create < Lono::Cfn::Base
     end
 
     if stack_exists?(@stack_name)
-      puts "Cannot create '#{@stack_name}' stack because it already exists.".colorize(:red)
+      puts "Cannot create #{@stack_name.colorize(:green)} stack because it already exists.".colorize(:red)
       return
     end
 
     unless File.exist?(@template_path)
-      puts "Cannot create '#{@stack_name}' template not found: #{@template_path}."
+      puts "Cannot create #{@stack_name.colorize(:green)} template not found: #{@template_path}."
       return
     end
 

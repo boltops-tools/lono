@@ -47,7 +47,7 @@ class Lono::Cfn
         puts <<-EOL
 There are no current settings.  To set a current stack run:
 
-    lono cfn current --stack mystack
+    lono cfn current --name mystack
     lono cfn current -h # for more examples
 EOL
         return
