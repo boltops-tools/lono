@@ -35,7 +35,7 @@ class Lono::Cfn < Lono::Command
   base_options.call
   wait_option.call
   long_desc Lono::Help.text("cfn/create")
-  def create(stack_name=:current)
+  def create(stack_name)
     Create.new(stack_name, options).run
   end
 
