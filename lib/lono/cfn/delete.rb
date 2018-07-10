@@ -3,7 +3,7 @@ class Lono::Cfn::Delete
   include Lono::Cfn::Util
 
   def initialize(stack_name, options={})
-    @stack_name = stack_name
+    @stack_name = switch_current(stack_name)
     @options = options
   end
 
@@ -31,5 +31,9 @@ class Lono::Cfn::Delete
 
   def status
     @status ||= Lono::Cfn::Status.new(@stack_name)
+  end
+
+  def switch_current(stack_name)
+    Lono::Cfn::Current.name!(stack_name)
   end
 end
