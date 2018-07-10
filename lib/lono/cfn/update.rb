@@ -37,14 +37,13 @@ class Lono::Cfn::Update < Lono::Cfn::Base
   end
 
   def standard_update(params)
-    template_body = IO.read(@template_path)
     params = {
       stack_name: @stack_name,
-      template_body: template_body,
       parameters: params,
       capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
       disable_rollback: !@options[:rollback],
     }
+    set_template_body!(params)
     show_parameters(params, "cfn.update_stack")
     begin
       cfn.update_stack(params)

@@ -22,14 +22,13 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
     end
     exit_unless_updatable!(stack_status(@stack_name))
 
-    template_body = IO.read(@template_path)
     params = {
       change_set_name: change_set_name,
       stack_name: @stack_name,
-      template_body: template_body,
       parameters: params,
       capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
     }
+    set_template_body!(params)
     show_parameters(params, "cfn.create_change_set")
     begin
       cfn.create_change_set(params)

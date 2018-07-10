@@ -8,7 +8,7 @@ class Lono::Cfn::Create < Lono::Cfn::Base
 
   # aws cloudformation create-stack --stack-name prod-hi-123456789 --parameters file://output/params/prod-hi-123456789.json --template-body file://output/prod-hi.json
   def create_stack(params)
-    message = "Creating #{@stack_name} stack."
+    message = "Creating #{@stack_name.colorize(:green)} stack."
     if @options[:noop]
       puts "NOOP #{message}"
       return
@@ -24,14 +24,14 @@ class Lono::Cfn::Create < Lono::Cfn::Base
       return
     end
 
-    template_body = IO.read(@template_path)
     params = {
       stack_name: @stack_name,
-      template_body: template_body,
       parameters: params,
       capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
       disable_rollback: !@options[:rollback],
     }
+    set_template_body!(params)
+
     show_parameters(params, "cfn.create_stack")
     cfn.create_stack(params)
     puts message unless @options[:mute]

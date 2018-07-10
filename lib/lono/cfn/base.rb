@@ -271,4 +271,25 @@ class Lono::Cfn::Base
     setting = Lono::Setting.new
     setting.s3_folder
   end
+
+  # Either set the templmate_body or template_url attribute based on
+  # if template was uploaded to s3.
+  # Nice to reference s3 url because the max size of the template body is
+  # greater if the template body is on s3. Limits:
+  #
+  #   template_body: 51,200 bytes
+  #   template_url: 460,800 bytes
+  #
+  # Reference: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html
+  def set_template_body!(params)
+    if s3_folder # s3_folder defined in cfn/base.rb
+      upload = Lono::Template::Upload.new
+      url = upload.s3_https_url(@template_path)
+      params[:template_url] = url
+    else
+      params[:template_body] = IO.read(@template_path)
+    end
+
+    params
+  end
 end
