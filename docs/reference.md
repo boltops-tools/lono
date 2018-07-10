@@ -14,7 +14,7 @@ title: CLI Reference
 * [lono script]({% link _reference/lono-script.md %})
 * [lono summary]({% link _reference/lono-summary.md %})
 * [lono template]({% link _reference/lono-template.md %})
-* [lono upgrade4]({% link _reference/lono-upgrade4.md %})
+* [lono upgrade]({% link _reference/lono-upgrade.md %})
 * [lono user_data]({% link _reference/lono-user_data.md %})
 * [lono version]({% link _reference/lono-version.md %})
 * [lono xgraph]({% link _reference/lono-xgraph.md %})
