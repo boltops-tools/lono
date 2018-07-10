@@ -4,19 +4,22 @@ class Lono::Cfn::Base
   include Lono::Cfn::AwsService
   include Lono::Cfn::Util
 
-  attr_reader :randomize_stack_name
   def initialize(stack_name, options={})
-    @randomize_stack_name = options[:randomize_stack_name]
-    @stack_name = randomize(stack_name)
-    @options = options
+    @options = options # options must be set first because @option used in append_suffix
+    stack_name = switch_current(stack_name)
+    @stack_name = append_suffix(stack_name)
     Lono::ProjectChecker.check unless options[:lono] # already ran checker in lono generate
 
-    @template_name = options[:template] || derandomize(@stack_name)
+    @template_name = options[:template] || remove_suffix(@stack_name)
     @param_name = options[:param] || @template_name
     @template_path = get_source_path(@template_name, :template)
     @param_path = get_source_path(@param_name, :param)
     puts "Using template: #{@template_path}" unless @options[:mute_using]
     puts "Using parameters: #{@param_path}" unless @options[:mute_using]
+  end
+
+  def switch_current(stack_name)
+    Lono::Cfn::Current.name!(stack_name)
   end
 
   def run
@@ -185,28 +188,61 @@ class Lono::Cfn::Base
     exit signal
   end
 
-  # Do nothing unless in Create class
-  def randomize(stack_name)
-    stack_name
+  # Appends a short suffix at the end of a stack name.
+  # Lono internally strips this same suffix for the template name.
+  # Makes it convenient for the development flow.
+  #
+  #   lono cfn current --suffix 1
+  #   lono cfn create demo => demo-1
+  #   lono cfn update demo-1
+  #
+  # Instead of typing:
+  #
+  #   lono cfn create demo-1 --template demo
+  #   lono cfn update demo-1 --template demo
+  #
+  # The suffix can be specified at the CLI but can also be saved as a
+  # preference.
+  #
+  # A random suffix can be specified with random. Example:
+  #
+  #   lono cfn current --suffix random
+  #   lono cfn create demo => demo-[RANDOM], example: demo-abc
+  #   lono cfn update demo-abc
+  #
+  # It is not a default setting because it might confuse new lono users.
+  def append_suffix(stack_name)
+    suffix = Lono.suffix == 'random' ? random_suffix : Lono.suffix
+    [stack_name, suffix].compact.join('-')
   end
 
-  # Strip the random string at end of the template name
-  def derandomize(template_name)
-    if randomize_stack_name?
-      template_name.sub(/-(\w{3})$/,'') # strip the random part at the end
+  def remove_suffix(stack_name)
+    return stack_name unless Lono.suffix
+
+    if stack_name_suffix == 'random'
+      stack_name.sub(/-(\w{3})$/,'') # strip the random suffix at the end
+    elsif stack_name_suffix
+      pattern = Regexp.new("-#{stack_name_suffix}$",'')
+      stack_name.sub(pattern, '') # strip suffix
     else
-      template_name
+      stack_name
     end
   end
 
-  def randomize_stack_name?
-    if !randomize_stack_name.nil?
-      return randomize_stack_name # CLI option takes highest precedence
+  # only generate random suffix for Lono::Cfn::Create class
+  def random_suffix
+    return nil unless self.class.name.to_s =~ /Create/
+    (0...3).map { (65 + rand(26)).chr }.join.downcase # Ex: jhx
+  end
+
+  def stack_name_suffix
+    if @options[:suffix] && !@options[:suffix].nil?
+      return @options[:suffix] # CLI option takes highest precedence
     end
 
     # otherwise use the settings preference
     settings = Lono::Setting.new
-    settings.data['randomize_stack_name']
+    settings.data['stack_name_suffix']
   end
 
   def capabilities

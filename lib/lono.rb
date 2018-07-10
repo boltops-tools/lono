@@ -32,7 +32,7 @@ module Lono
   autoload :Sequence, 'lono/sequence'
   autoload :Setting, 'lono/setting'
   autoload :Template, 'lono/template'
-  autoload :Upgrade4, 'lono/upgrade4'
+  autoload :Upgrade, 'lono/upgrade'
   autoload :UserData, 'lono/user_data'
   autoload :VERSION, 'lono/version'
 

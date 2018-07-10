@@ -1,7 +1,7 @@
 require 'fileutils'
 require 'yaml'
 
-module Lono
+class Lono::Upgrade
   class Upgrade4
     def initialize(options)
       @options = options
