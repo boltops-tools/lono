@@ -60,6 +60,13 @@ module Lono
       if local_checksum == remote_checksum
         puts("Not modified: #{pretty_path} to #{s3_full_path}".colorize(:yellow)) unless @options[:noop]
         return # do not upload unless the checksum has changed
+      else
+        # Example output:
+        # Uploaded: app/files/docker.yml to s3://boltops-dev/s3_folder/templates/development/docker.yml
+        # Uploaded: app/files/ecs/private.yml to s3://boltops-dev/s3_folder/templates/development/ecs/private.yml
+        message = "Uploading: #{pretty_path} to #{s3_full_path}".colorize(:green)
+        message = "NOOP: #{message}" if @options[:noop]
+        puts message
       end
 
       resp = s3.put_object(
@@ -68,13 +75,6 @@ module Lono
         key: key,
         storage_class: "REDUCED_REDUNDANCY"
       ) unless @options[:noop]
-
-      # Example output:
-      # Uploaded: app/files/docker.yml to s3://boltops-dev/s3_folder/templates/development/docker.yml
-      # Uploaded: app/files/ecs/private.yml to s3://boltops-dev/s3_folder/templates/development/ecs/private.yml
-      message = "Uploaded: #{pretty_path} to #{s3_full_path}".colorize(:green)
-      message = "NOOP: #{message}" if @options[:noop]
-      puts message
     end
 
     # key example: cloudformation/production/files/lifecycle-0719ab81.zip
