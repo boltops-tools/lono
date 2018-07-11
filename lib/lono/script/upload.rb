@@ -8,7 +8,7 @@ class Lono::Script
       return unless scripts_built?
 
       upload(tarball_path)
-      puts "Uploaded #{File.basename(s3_dest)} to s3}"
+      puts "Uploaded #{File.basename(s3_dest)} to s3."
     end
 
     def upload(tarball_path)

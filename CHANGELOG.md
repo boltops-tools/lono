@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [4.2.0]
+- lono current
+- lono cfn status
+- app/files support with file_s3_key helper
+- Display status of stack deployment and wait for completion
+- fix iam retry logic for cfn update
+
 ## [4.1.0]
 - Merge pull request #36 from tongueroo/cli_markdown
 - fix current_region helper in variables, add s3_region setting

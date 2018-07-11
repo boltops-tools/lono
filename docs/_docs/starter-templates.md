@@ -13,6 +13,6 @@ For a list of the starter templates look at the [lib/starter_projects](https://g
 
 If you'll like to add more starter templates, feel free to send in a pull request!
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/settings.md %}">Back</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/lono-suffix.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/nested-stacks.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

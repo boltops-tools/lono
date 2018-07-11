@@ -71,8 +71,6 @@ The template used is `output/templates/different3.json` and the parameters used 
 [--preview], [--no-preview]        # Show preview of the stack changes before continuing.
                                    # Default: true
 [--sure], [--no-sure]              # Skips are you sure prompt
-[--verbose], [--no-verbose]        
-[--noop], [--no-noop]              
 [--template=TEMPLATE]              # override convention and specify the template file to use
 [--param=PARAM]                    # override convention and specify the param file to use
 [--lono], [--no-lono]              # invoke lono to generate CloudFormation templates
@@ -81,5 +79,9 @@ The template used is `output/templates/different3.json` and the parameters used 
 [--iam], [--no-iam]                # Shortcut for common IAM capabilities: CAPABILITY_IAM, CAPABILITY_NAMED_IAM
 [--rollback], [--no-rollback]      # rollback
                                    # Default: true
+[--wait], [--no-wait]              # Wait for stack operation to complete.
+                                   # Default: true
+[--verbose], [--no-verbose]        
+[--noop], [--no-noop]              
 ```
 

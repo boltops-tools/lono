@@ -22,14 +22,13 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
     end
     exit_unless_updatable!(stack_status(@stack_name))
 
-    template_body = IO.read(@template_path)
     params = {
       change_set_name: change_set_name,
       stack_name: @stack_name,
-      template_body: template_body,
       parameters: params,
       capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
     }
+    set_template_body!(params)
     show_parameters(params, "cfn.create_change_set")
     begin
       cfn.create_change_set(params)
@@ -67,7 +66,10 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
     case change_set.status
     when "CREATE_COMPLETE"
       puts "CloudFormation preview for '#{@stack_name}' stack update. Changes:"
-      change_set.changes.each do |change|
+      changes = change_set.changes.sort_by do |change|
+        change["resource_change"]["action"]
+      end
+      changes.each do |change|
         display_change(change)
       end
     when "FAILED"

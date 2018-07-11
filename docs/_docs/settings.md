@@ -25,7 +25,7 @@ base:
   #   default: mybucket/path
   #   aws_profile1: mybucket/path
   #   aws_profile2: another-bucket/storage/path
-  # randomize_stack_name: true # tack on a 3 char random string at the end of the stack name for lono cfn create
+  # stack_name_suffix: random # tack on a 3 char random string at the end of the stack name for lono cfn create
   # s3_endpoint: https://s3.us-east-1.amazonaws.com  # Allows using a bucket in a different region than the stack.  Gets rid of WARNING: S3 client configured for "us-east-1" but the bucket "xxx" is in "us-west-2"; Please configure the proper region to avoid multiple unnecessary redirects and signing attempts.
 
 development:
@@ -46,26 +46,36 @@ The table below covers what each setting does:
 Setting  | Description
 ------------- | -------------
 aws_profiles  | This provides a way to automatically map your `AWS_PROFILE` to a `LONO_ENV`. This prevents you from forgetting to switch your `LONO_ENV` when switching your `AWS_PROFILE` thereby accidentally launching a stack meant to be in the development account on the production account and vice versa. More details are explained in the [LONO_ENV docs]({% link _docs/lono-env.md %}).
-randomize_stack_name  | This is a convenience flag that results in lono automatically appending a random string to your stack name with the `lono cfn` lifecycle commands that speeds up your development flow when you are launching many stacks repeatedly. The random string gets appended to the stack name, but gets removed internally so that lono can use its [conventions]({% link _docs/conventions.md %}). It is explained in more detail below. Default: false
+stack_name_suffix  | This is a convenience flag that results in lono automatically appending a string to your stack name.  The string gets appended to the stack name, but gets removed internally so that lono can use its [conventions]({% link _docs/conventions.md %}). This can speed up your development flow when you are launching many stacks repeatedly. It is explained in more detail below. Default: false
 s3_folder  | This allows you to specify the base folder telling lono where to upload files to s3.  [app/scripts]({% link _docs/app-scripts.md %}) files are uploaded in the scripts subfolder in here and templates when using lono with [nested stacks]({% link _docs/nested-stacks.md %}) are uploaded in the templates subfolder.
 extract_scripts | This configures how the `extract_scripts` helper works.  The extract_script helpers can take some options like `to` to specify where you want to extract `app/scripts` to.  The default is `/opt`, so scripts end up in `/opt/scripts`.
 
-## The randomize_stack_name setting
+## The stack_name_suffix setting
 
-The `randomize_stack_name` is an option that was added after realizing a common development flow pattern that was being repeatedly used. When working with CloudFormation templates and developing the source code, we must often launch stacks over and over as we fine tune the stack. Since we cannot launch a stack with a duplicate name it is useful to use a command like this:
+The `stack_name_suffix` is an option to help with a development workflow. When working with CloudFormation templates and developing the source code, we must often launch stacks repeatedly as we fine tune the stack. Since we cannot launch a stack with a duplicate name it is useful to use a command like this:
 
-```sh
-lono cfn create my-stack-$(date +%s) --template my-stack
-```
+    lono cfn create my-stack-$(date +%s) --template my-stack
 
-This command automatically adds a random string to the end of the stack name but uses the template name without the random string. The `randomize_stack_name` option automates this. So we can create multiple stacks with different names but the same source template rapidly.  We can create multiple stacks in rapid-fire fashion and debug.  When the option is enabled:
+Lono can automatically add a random string to the end of the stack name but use the template name without the random string. The `stack_name_suffix random` option automates this. So we can create multiple stacks with different names but the same source template rapidly.  We can create multiple stacks in rapid-fire fashion and debug.  When the option is set to random:
 
-```sh
-lono cfn create my-stack
-```
+    lono cfn create my-stack
 
 Will create a "my-stack-[RANDOM]" using the my-stack template name.  The random string is a short 3 character string.
 
+If you prefer not to use a random suffix. You can specify the suffix with the exact name. The value 'random' is treated specially.  Example without random suffix:
+
+    lono cfn create my-stack --suffix 2
+    lono cfn update my-stack-2 --suffix 2 # --suffix 2 so '-2' gets removed for the template name
+    lono cfn update my-stack-2 --template my-stack # also works
+
+For non-random suffixes the a natural flow might be to use lono current so you don't have to remember to type --suffix 2. Example:
+
+    lono cfn current --suffix 2
+    lono cfn create my-stack
+    lono cfn update my-stack-2
+
+More info about lono current is available at the [Lono Current docs]({% link _docs/lono-current.md %})
+
 <a id="prev" class="btn btn-basic" href="{% link _docs/conventions.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/starter-templates.md %}">Next Step</a>
+<a id="next" class="btn btn-primary" href="{% link _docs/lono-current.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

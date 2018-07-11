@@ -109,7 +109,7 @@ lono new autoscaling
 cd autoscaling
 lono import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/AutoScalingMultiAZWithNotifications.template --name autoscaling
 VPC=$(aws ec2 describe-vpcs | jq -r '.Vpcs[] | select(.IsDefault == true) | .VpcId')
-SUBNETS=$(aws ec2 describe-subnets | jq -r '.Subnets[].SubnetId' | tr -s '\n' ',' | sed 's/,*$//g')
+SUBNETS=$(aws ec2 describe-subnets --filters Name=vpc-id,Values=$VPC | jq -r '.Subnets[].SubnetId' | tr -s '\n' ',' | sed 's/,*$//g')
 EMAIL=email@domain.com
 KEY_NAME=default
 sed "s/VpcId=/VpcId=$VPC/; s/Subnets=/Subnets=$SUBNETS/; s/OperatorEMail=/OperatorEMail=$EMAIL/; s/KeyName=/KeyName=$KEY_NAME/;" config/params/base/autoscaling.txt > config/params/base/autoscaling.txt.1

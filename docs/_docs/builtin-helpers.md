@@ -7,6 +7,7 @@ Lono provides a few built-in helper methods that help with template processing. 
 Helper  | Description
 ------------- | -------------
 extract_scripts | Generates a script that can be included in user_data scripts to extract `app/script` files. More info about the helper is in the [App Scripts docs]({% link _docs/app-scripts.md %}).
+flie_s3_key(name)  | Helper method that references the s3 key of the file uploaded in app/files.
 indent(text, amount) | This is a helper method indents the provided string by a specified number of spaces.
 partial(name, variables, options) | Can be used to embed other files in a template.  The partial view should be placed in the `templates/partial` folder of the project.
 partial_exist?(name) | Checks whether a partial name exists. This can be helpful for writing custom helpers, covered in [Custom Helpers]({% link _docs/custom-helpers.md %})
@@ -26,6 +27,6 @@ The partial template helper is useful and is covered a little more detail here:
 
 Next, we'll cover how you add custom helpers.
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/app-scripts.md %}">Back</a>
+<a id="prev" class="btn btn-basic" href="{% link _docs/app-files.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/custom-helpers.md %}">Next Step</a>
 <p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

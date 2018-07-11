@@ -122,6 +122,14 @@ BASH_CODE
     path && File.exist?(path)
   end
 
+  def file_s3_key(name)
+    s3_folder = setting.s3_folder
+    return nil unless s3_folder
+
+    uploader = Lono::FileUploader.new
+    uploader.md5_key("#{Lono.root}/app/files/#{name}")
+  end
+
   def current_region
     region = Aws.config[:region]
     region ||= ENV['AWS_REGION']

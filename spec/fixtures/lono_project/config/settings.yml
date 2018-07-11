@@ -13,7 +13,7 @@ base:
   #   default: mybucket/folder
   #   aws_profile1: mybucket/folder
   #   aws_profile2: another-bucket/storage/folder
-  # randomize_stack_name: true # tack on a 3 char random string at the end of the stack name
+  # stack_name_suffix: random # tack on a 3 char random string at the end of the stack name
     # for lono cfn create
 
 development:

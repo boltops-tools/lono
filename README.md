@@ -25,7 +25,9 @@ See [lono.cloud](http://lono.cloud) for full lono documentation.
 
 ## Important
 
-If you are on version 3, you can run `lono upgrade4` within your project to upgrade it to version 4.  Refer to the [CHANGELOG](CHANGELOG.md).
+If you are on version 3, you can run `lono upgrade v3to4` within your project to upgrade it to version 4.  Refer to the [CHANGELOG](CHANGELOG.md).
+
+If you are on version 4.0 or 4.1 and need to uppgrade to 4.2.  You can run `lono upgrade v4to4_2` within your project to upgrade it to version 4.2.  Refer to the [CHANGELOG](CHANGELOG.md).
 
 ## Blog Posts
 
