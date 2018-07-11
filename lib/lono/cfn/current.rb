@@ -4,17 +4,9 @@ class Lono::Cfn
   class Current
     def initialize(options={})
       Lono::ProjectChecker.check_lono_project
-      @options = remove_cli_class_options(options)
+      @options = options
       @file = ".lono/current"
       @path = "#{Lono.root}/#{@file}"
-    end
-
-    # dont include the cfn.rb cli class_options that default to true
-    def remove_cli_class_options(options)
-      options.delete_if do |k,v|
-        %w[lono rollback].include?(k)
-      end
-      options
     end
 
     def run
