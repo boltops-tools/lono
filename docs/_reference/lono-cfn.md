@@ -26,6 +26,7 @@ cfn subcommands
 * [lono cfn diff]({% link _reference/lono-cfn-diff.md %}) - Diff newly generated template vs existing template.
 * [lono cfn download]({% link _reference/lono-cfn-download.md %}) - Download CloudFormation template from existing stack.
 * [lono cfn preview]({% link _reference/lono-cfn-preview.md %}) - Preview a CloudFormation stack update. This is similar to terraform's plan or puppet's dry-run mode.
+* [lono cfn status]({% link _reference/lono-cfn-status.md %}) - Shows the current status for the stack.
 * [lono cfn update]({% link _reference/lono-cfn-update.md %}) - Update a CloudFormation stack using the generated template.
 
 
