@@ -31,7 +31,6 @@ class Lono::Cfn < Lono::Command
   end
 
   desc "create STACK", "Create a CloudFormation stack using the generated template."
-  option :randomize_stack_name, type: :boolean, desc: "tack on random string at the end of the stack name", default: nil
   base_options.call
   wait_option.call
   long_desc Lono::Help.text("cfn/create")

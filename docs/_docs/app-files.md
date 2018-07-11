@@ -16,9 +16,7 @@ Local path | S3 path
 --- | ---
 app/files/lambda-function.zip | s3://my-bucket/cloudformation/development/files/lambda-function-0719ab81.zip
 
-Notice the 0719ab81 is the md5 sum of the file.  This is added automatically beause it is useful if you are using the upload for as the lambda function s3 key in a CloudFormation Lambda function resource.
-
-You can refer to the file with a the `file_s3_key("lambda-function")` [built-in helper]({% link _docs/builtin-helpers.md %}).
+Notice the 0719ab81 is the md5 sum of the file.  This is added automatically beause it is useful if you are uploading the file to be used as a lambda function in a CloudFormation Lambda resource.  You can refer to the file with the `file_s3_key("lambda-function")` [built-in helper]({% link _docs/builtin-helpers.md %}).
 
 <a id="prev" class="btn btn-basic" href="{% link _docs/app-scripts.md %}">Back</a>
 <a id="next" class="btn btn-primary" href="{% link _docs/builtin-helpers.md %}">Next Step</a>
