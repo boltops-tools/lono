@@ -12,16 +12,21 @@ class Lono::Cfn
     # used for the lono cfn status command
     def run
       unless stack_exists?(@stack_name)
-        puts "The stack #{@stack_name} does not exist."
+        puts "The stack #{@stack_name.colorize(:green)} does not exist."
         return
       end
 
       resp = cfn.describe_stacks(stack_name: @stack_name)
       stack = resp.stacks.first
+
+      puts "The current status for the stack #{@stack_name.colorize(:green)} is #{stack.stack_status.colorize(:green)}"
       if stack.stack_status =~ /_IN_PROGRESS$/
+        puts "Stack events (tailing):"
         # tail all events until done
+        @hide_time_took = true
         wait
       else
+        puts "Stack events:"
         # show the last events that was user initiated
         refresh_events
         show_events(true)
@@ -65,6 +70,7 @@ class Lono::Cfn
 
       # Never gets here when deleting a stack because the describe stack returns nothing
       # once the stack is deleted. Gets here for stack create and update though.
+      return if @hide_time_took # set in run
       took = Time.now - start_time
       puts "Time took for stack deployment: #{pretty_time(took).green}."
     end
