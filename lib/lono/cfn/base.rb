@@ -282,9 +282,10 @@ class Lono::Cfn::Base
   #
   # Reference: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html
   def set_template_body!(params)
+    # if s3_folder is set this means s3 upload is enabled
     if s3_folder # s3_folder defined in cfn/base.rb
       upload = Lono::Template::Upload.new
-      url = upload.s3_https_url(@template_path)
+      url = upload.s3_presigned_url(@template_path)
       params[:template_url] = url
     else
       params[:template_body] = IO.read(@template_path)

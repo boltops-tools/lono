@@ -98,6 +98,17 @@ class Lono::Template::Upload
     "https://s3.amazonaws.com/#{s3_bucket}/#{@prefix}/#{template_path}"
   end
 
+  # used for cfn/base.rb def set_template_body!(params)
+  def s3_presigned_url(template_output_path)
+    template_path = template_output_path.sub('output/templates/','')
+    key = "#{@prefix}/#{template_path}"
+    s3_presigner.presigned_url(:get_object, bucket: s3_bucket, key: key)
+  end
+
+  def s3_presigner
+    @signer ||= Aws::S3::Presigner.new
+  end
+
   # Parse the s3_folder setting and remove the folder portion to leave the
   # "s3_bucket" portion
   # Example:
