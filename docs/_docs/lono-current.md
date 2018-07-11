@@ -28,20 +28,6 @@ The stack name is not longer required because it is set as the current name.
 
 ## Suffix Example
 
-You can specify the suffix as a cli option. The commands get a little bit long though. Example:
-
-    lono cfn create demo --suffix 2
-    lono cfn update demo-2 --suffix 2 # --suffix usage tells lono to strip the '-2' for the --template parameter
-    lono cfn update demo-2 --template demo # same
-
-You can set the suffix using lono currentt to shorten some commands. Example:
-
-    lono cfn current --name demo-2 --suffix 2
-    lono cfn create demo
-    lono cfn update
-
-## Suffix Random
-
 Random suffixes can help streamlined your development workflow.
 
     lono cfn current --suffix random
