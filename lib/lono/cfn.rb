@@ -93,4 +93,10 @@ class Lono::Cfn < Lono::Command
   def current
     Current.new(options).run
   end
+
+  desc "status", "Shows the current status for the stack."
+  long_desc Lono::Help.text("cfn/status")
+  def status(stack_name=:current)
+    Status.new(stack_name, options).run
+  end
 end

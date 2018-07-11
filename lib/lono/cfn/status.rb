@@ -3,9 +3,33 @@ class Lono::Cfn
     include AwsService
 
     attr_reader :events
-    def initialize(stack_name)
-      @stack_name = stack_name
+    def initialize(stack_name, options={})
+      @stack_name = switch_current(stack_name)
+      @options = options
       reset
+    end
+
+    # used for the lono cfn status command
+    def run
+      unless stack_exists?(@stack_name)
+        puts "The stack #{@stack_name} does not exist."
+        return
+      end
+
+      resp = cfn.describe_stacks(stack_name: @stack_name)
+      stack = resp.stacks.first
+      if stack.stack_status =~ /_IN_PROGRESS$/
+        # tail all events until done
+        wait
+      else
+        # show the last events that was user initiated
+        refresh_events
+        show_events(true)
+      end
+    end
+
+    def switch_current(stack_name)
+      Lono::Cfn::Current.name!(stack_name)
     end
 
     def reset
