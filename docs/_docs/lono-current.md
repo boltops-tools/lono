@@ -4,25 +4,28 @@ title: Lono Current
 
 Sets current values so you do not have to provide the options repeatedly.  This shortens the commands.
 
+{% include current-options.md %}
+
 ## Examples
 
 Create a demo stack and set it as the current stack name.
 
     lono cfn create demo
-    lono cfn current --name demo
 
-Normal update command:
+The normal update and preview commands are:
 
     lono cfn update demo
     lono cfn preview demo
 
 Shortened commands:
 
+    lono cfn current --name demo
     lono cfn update
     lono cfn delete
     lono cfn preview
     lono cfn diff
     lono cfn download
+    lono cfn status
 
 The stack name is not longer required because it is set as the current name.
 

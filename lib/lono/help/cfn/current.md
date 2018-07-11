@@ -1,9 +1,11 @@
 Set current values like stack name and suffix.
 
+{% include current-options.md %}
+
 ## Static Example
 
-    lono cfn current --name demo
     lono cfn create demo
+    lono cfn current --name demo
     lono cfn update
 
 ## Suffix Example

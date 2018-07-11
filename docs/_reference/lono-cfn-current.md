@@ -13,13 +13,15 @@ Current stack that you're working with.
 
 Set current values like stack name and suffix.
 
-## Static Suffix Example
+{% include current-options.md %}
 
-    lono cfn current --name demo-2 --suffix 2
+## Static Example
+
     lono cfn create demo
+    lono cfn current --name demo
     lono cfn update
 
-## Random Suffix Example
+## Suffix Example
 
     lono cfn current --suffix random
     lono cfn create demo
