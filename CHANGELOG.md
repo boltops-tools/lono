@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [4.2.1]
+- update docs
+- fix status tailing check for nested stacks
+
 ## [4.2.0]
 - lono current
 - lono cfn status
