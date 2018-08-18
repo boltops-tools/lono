@@ -77,6 +77,7 @@ class Lono::Cfn
 
     def completed
       last_event_status =~ /(_COMPLETE|_FAILED)$/ &&
+      @events[0]["logical_resource_id"] == @stack_name &&
       @events[0]["resource_type"] == "AWS::CloudFormation::Stack"
     end
 
