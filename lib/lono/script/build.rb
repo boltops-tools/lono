@@ -36,7 +36,7 @@ class Lono::Script
     def create_tarball
       # https://apple.stackexchange.com/questions/14980/why-are-dot-underscore-files-created-and-how-can-i-avoid-them
       # using system to avoid displaying command
-      system "cd app && dot_clean ." if system("type dot_clean > /dev/null")
+      system "cd app && dot_clean ." if system("type dot_clean > /dev/null 2>&1")
 
       # https://serverfault.com/questions/110208/different-md5sums-for-same-tar-contents
       # Using tar czf directly results in a new m5sum each time because the gzip
