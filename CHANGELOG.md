@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [4.2.5]
+- use rainbow gem for terminal colors
+
 ## [4.2.4]
 - bin/release wrapper script
 
