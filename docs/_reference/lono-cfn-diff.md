@@ -31,7 +31,7 @@ Displays code diff of the generated CloudFormation template locally vs the exist
     $ subl -a ~/.lono/settings.yml
     $
 
-Here's a screenshot of the output with the colorized diff:
+Here's a screenshot of the output with the colored diff:
 
 <img src="/img/reference/lono-cfn-diff.png" alt="Stack Update" class="doc-photo">
 
