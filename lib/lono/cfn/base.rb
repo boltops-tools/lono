@@ -25,7 +25,7 @@ class Lono::Cfn::Base
   def starting_message
     action = self.class.to_s.split('::').last
     action = action[0..-2] + 'ing' # create => creating
-    puts "#{action} #{@stack_name.colorize(:green)} stack..."
+    puts "#{action} #{@stack_name.color(:green)} stack..."
   end
 
   def run
@@ -38,7 +38,7 @@ class Lono::Cfn::Base
       confirm = prompt_for_iam(capabilities)
       if confirm =~ /^y/
         @options.merge!(capabilities: [capabilities])
-        puts "Re-running: #{command_with_iam(capabilities).colorize(:green)}"
+        puts "Re-running: #{command_with_iam(capabilities).color(:green)}"
         retry
       else
         puts "Exited"
@@ -119,12 +119,12 @@ class Lono::Cfn::Base
     errors, warns = check_files
     unless errors.empty?
       puts "Please double check the command you ran.  There were some errors."
-      puts "ERROR: #{errors.join("\n")}".colorize(:red)
+      puts "ERROR: #{errors.join("\n")}".color(:red)
       exit
     end
     unless warns.empty?
       puts "Please double check the command you ran.  There were some warnings."
-      puts "WARN: #{warns.join("\n")}".colorize(:yellow)
+      puts "WARN: #{warns.join("\n")}".color(:yellow)
     end
   end
 
@@ -185,7 +185,7 @@ class Lono::Cfn::Base
     return false if @options[:noop]
 
     unless status =~ /_COMPLETE$/
-      puts "Cannot create a change set for the stack because the #{@stack_name} is not in an updatable state.  Stack status: #{status}".colorize(:red)
+      puts "Cannot create a change set for the stack because the #{@stack_name} is not in an updatable state.  Stack status: #{status}".color(:red)
       quit(1)
     end
   end

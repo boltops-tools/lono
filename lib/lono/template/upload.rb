@@ -61,7 +61,7 @@ class Lono::Template::Upload
     local_checksum = Digest::MD5.hexdigest(IO.read(path))
     remote_checksum = remote_checksum(path)
     if local_checksum == remote_checksum
-      say("Not modified: #{pretty_path} to #{s3_full_path}".colorize(:yellow)) unless @options[:noop]
+      say("Not modified: #{pretty_path} to #{s3_full_path}".color(:yellow)) unless @options[:noop]
       return # do not upload unless the checksum has changed
     end
 
@@ -75,7 +75,7 @@ class Lono::Template::Upload
     # Example output:
     # Uploaded: output/templates/docker.yml to s3://boltops-dev/s3_folder/templates/development/docker.yml
     # Uploaded: output/templates/ecs/private.yml to s3://boltops-dev/s3_folder/templates/development/ecs/private.yml
-    message = "Uploaded: #{pretty_path} to #{s3_full_path}".colorize(:green)
+    message = "Uploaded: #{pretty_path} to #{s3_full_path}".color(:green)
     message = "NOOP: #{message}" if @options[:noop]
     say message
   end
@@ -141,8 +141,8 @@ class Lono::Template::Upload
     return if @options[:noop]
     return if s3_folder
 
-    say "Unable to upload templates to s3 because you have not configured the s3_folder option in lono settings.yml.".colorize(:red)
-    say "Please configure settings.yml with s3_folder.  For more help: http://lono.cloud/docs/settings/".colorize(:red)
+    say "Unable to upload templates to s3 because you have not configured the s3_folder option in lono settings.yml.".color(:red)
+    say "Please configure settings.yml with s3_folder.  For more help: http://lono.cloud/docs/settings/".color(:red)
     exit 1
   end
 

@@ -17,7 +17,7 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
 
   def create_change_set(params)
     unless stack_exists?(@stack_name)
-      puts "WARN: Cannot create a change set for the stack because the #{@stack_name} does not exists.".colorize(:yellow)
+      puts "WARN: Cannot create a change set for the stack because the #{@stack_name} does not exists.".color(:yellow)
       return false
     end
     exit_unless_updatable!(stack_status(@stack_name))
@@ -44,7 +44,7 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
     raise if ENV['FULL_BACKTRACE']
 
     if e.message =~ /^Parameters: / || e.message =~ /^Template error: /
-      puts "Error creating CloudFormation preview because invalid CloudFormation parameters. Full error message:".colorize(:red)
+      puts "Error creating CloudFormation preview because invalid CloudFormation parameters. Full error message:".color(:red)
       puts e.message
       puts "For full backtrace run command again with FULL_BACKTRACE=1"
       quit(1)
@@ -73,7 +73,7 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
         display_change(change)
       end
     when "FAILED"
-      puts "Fail to create a CloudFormation preview for '#{@stack_name}' stack update. Reason:".colorize(:red)
+      puts "Fail to create a CloudFormation preview for '#{@stack_name}' stack update. Reason:".color(:red)
       puts change_set.status_reason
       quit(1)
     else
@@ -131,7 +131,7 @@ private
 
     colors = { Remove: :red, Add: :green, Modify: :yellow }
     action = change.resource_change.action.to_sym
-    message = message.colorize(colors[action]) if colors.has_key?(action)
+    message = message.color(colors[action]) if colors.has_key?(action)
     puts message
   end
 

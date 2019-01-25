@@ -8,19 +8,19 @@ class Lono::Cfn::Create < Lono::Cfn::Base
 
   # aws cloudformation create-stack --stack-name prod-hi-123456789 --parameters file://output/params/prod-hi-123456789.json --template-body file://output/prod-hi.json
   def create_stack(params)
-    message = "Creating #{@stack_name.colorize(:green)} stack."
+    message = "Creating #{@stack_name.color(:green)} stack."
     if @options[:noop]
       puts "NOOP #{message}"
       return
     end
 
     if stack_exists?(@stack_name)
-      puts "Cannot create #{@stack_name.colorize(:green)} stack because it already exists.".colorize(:red)
+      puts "Cannot create #{@stack_name.color(:green)} stack because it already exists.".color(:red)
       return
     end
 
     unless File.exist?(@template_path)
-      puts "Cannot create #{@stack_name.colorize(:green)} template not found: #{@template_path}."
+      puts "Cannot create #{@stack_name.color(:green)} template not found: #{@template_path}."
       return
     end
 

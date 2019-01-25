@@ -58,13 +58,13 @@ module Lono
       local_checksum = Digest::MD5.hexdigest(IO.read(path))
       remote_checksum = remote_checksum(key)
       if local_checksum == remote_checksum
-        puts("Not modified: #{pretty_path} to #{s3_full_path}".colorize(:yellow)) unless @options[:noop]
+        puts("Not modified: #{pretty_path} to #{s3_full_path}".color(:yellow)) unless @options[:noop]
         return # do not upload unless the checksum has changed
       else
         # Example output:
         # Uploaded: app/files/docker.yml to s3://boltops-dev/s3_folder/templates/development/docker.yml
         # Uploaded: app/files/ecs/private.yml to s3://boltops-dev/s3_folder/templates/development/ecs/private.yml
-        message = "Uploading: #{pretty_path} to #{s3_full_path}".colorize(:green)
+        message = "Uploading: #{pretty_path} to #{s3_full_path}".color(:green)
         message = "NOOP: #{message}" if @options[:noop]
         puts message
       end

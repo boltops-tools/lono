@@ -18,7 +18,7 @@ module Lono::Template::Helper
     user = options[:as] || "ec2-user"
 
     if Dir.glob("#{Lono.config.scripts_path}/*").empty?
-      puts "WARN: you are using the extract_scripts helper method but you do not have any app/scripts.".colorize(:yellow)
+      puts "WARN: you are using the extract_scripts helper method but you do not have any app/scripts.".color(:yellow)
       calling_line = caller[0].split(':')[0..1].join(':')
       puts "Called from: #{calling_line}"
       return ""
@@ -45,7 +45,7 @@ BASH_CODE
     lines = caller.reject { |l| l =~ %r{lib/lono} } # hide internal lono trace
     puts "  #{lines[0]}"
 
-    puts "Please configure your settings.yml with an s3_folder.".colorize(:red)
+    puts "Please configure your settings.yml with an s3_folder.".color(:red)
     puts "Detected AWS_PROFILE #{ENV['AWS_PROFILE'].inspect}"
     exit 1
   end
@@ -197,11 +197,11 @@ private
     end
 
     if paths.size > 1 # ambiguous match
-      puts "ERROR: Multiple possible partials found:".colorize(:red)
+      puts "ERROR: Multiple possible partials found:".color(:red)
       paths.each do |path|
         puts "  #{path}"
       end
-      puts "Please specify an extension in the name to remove the ambiguity.".colorize(:green)
+      puts "Please specify an extension in the name to remove the ambiguity.".color(:green)
       exit 1
     end
 

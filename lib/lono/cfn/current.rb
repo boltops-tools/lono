@@ -82,7 +82,7 @@ EOL
       return name if name
 
       # TODO: don't think it is possible to get here...
-      puts "ERROR: stack name must be specified.".colorize(:red)
+      puts "ERROR: stack name must be specified.".color(:red)
       puts <<-EOL
 Example:
     lono cfn #{ARGV[1]} STACK

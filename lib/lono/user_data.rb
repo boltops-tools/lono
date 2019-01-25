@@ -17,7 +17,7 @@ module Lono
       if File.exist?(@path)
         puts RenderMePretty.result(@path, context: context)
       else
-        puts "ERROR: #{@path} does not exist".colorize(:red)
+        puts "ERROR: #{@path} does not exist".color(:red)
         exit 1
       end
     end

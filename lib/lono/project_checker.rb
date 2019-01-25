@@ -16,7 +16,7 @@ module Lono
         ]
         paths.each do |path|
           unless File.exist?("#{Lono.root}/#{path}")
-            puts "ERROR: The #{path} does not exist in this project.  Are you sure you are in lono project?".colorize(:red)
+            puts "ERROR: The #{path} does not exist in this project.  Are you sure you are in lono project?".color(:red)
             quit 1
           end
         end
@@ -25,7 +25,7 @@ module Lono
       # Dont exit for this one. It's okay. But show a warning.
       def empty_templates
         if Dir["#{Lono.config.templates_path}/**/*"].empty?
-          puts "INFO: The app/templates folder does not contain any lono template definitions.".colorize(:yellow)
+          puts "INFO: The app/templates folder does not contain any lono template definitions.".color(:yellow)
         end
       end
 

@@ -16,7 +16,7 @@ class Lono::Importer
       download_template
       template_definition_path = add_template_definition
       create_params
-      puts "=> Imported CloudFormation template and lono-fied it.".colorize(:green)
+      puts "=> Imported CloudFormation template and lono-fied it.".color(:green)
       puts "Template definition added to #{pretty_path(template_definition_path)}"
       puts "Params file created to #{pretty_path(params_path)}"
     end
@@ -34,7 +34,7 @@ class Lono::Importer
 
   def show_params_file
     path = "config/params/base/#{template_name}.txt"
-    puts "Here are contents of the params #{path.colorize(:green)} file:"
+    puts "Here are contents of the params #{path.color(:green)} file:"
     puts IO.read("#{Lono.root}/#{path}")
   end
 

@@ -16,7 +16,7 @@ class Lono::Script
       obj = s3_resource.bucket(bucket_name).object(key)
       start_time = Time.now
       obj.upload_file(tarball_path)
-      time_took = pretty_time(Time.now-start_time).colorize(:green)
+      time_took = pretty_time(Time.now-start_time).color(:green)
       puts "Time to upload code to s3: #{time_took}"
     end
 

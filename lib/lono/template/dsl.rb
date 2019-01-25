@@ -57,7 +57,7 @@ class Lono::Template::DSL
     error_info = e.backtrace.first
     path, line_no, _ = error_info.split(':')
     line_no = line_no.to_i
-    puts "Error evaluating #{path}:".colorize(:red)
+    puts "Error evaluating #{path}:".color(:red)
     puts e.message
     puts "Here's the line in #{path} with the error:\n\n"
 
@@ -69,7 +69,7 @@ class Lono::Template::DSL
     content_lines[top..bottom].each_with_index do |line_content, index|
       line_number = top+index+1
       if line_number == line_no
-        printf("%#{spacing}d %s\n".colorize(:red), line_number, line_content)
+        printf("%#{spacing}d %s\n".color(:red), line_number, line_content)
       else
         printf("%#{spacing}d %s\n", line_number, line_content)
       end
@@ -113,8 +113,8 @@ class Lono::Template::DSL
 
   def handle_yaml_syntax_error(e, path)
     io = StringIO.new
-    io.puts "Invalid yaml.  Output written to debugging: #{path}".colorize(:red)
-    io.puts "ERROR: #{e.message}".colorize(:red)
+    io.puts "Invalid yaml.  Output written to debugging: #{path}".color(:red)
+    io.puts "ERROR: #{e.message}".color(:red)
 
     # Grab line info.  Example error:
     #   ERROR: (<unknown>): could not find expected ':' while scanning a simple key at line 2 column 1
@@ -128,7 +128,7 @@ class Lono::Template::DSL
     lines[top..bottom].each_with_index do |line_content, index|
       line_number = top+index+1
       if line_number == line
-        io.printf("%#{spacing}d %s\n".colorize(:red), line_number, line_content)
+        io.printf("%#{spacing}d %s\n".color(:red), line_number, line_content)
       else
         io.printf("%#{spacing}d %s\n", line_number, line_content)
       end

@@ -3,7 +3,7 @@ class Lono::Cfn::Diff < Lono::Cfn::Base
 
   def run
     unless stack_exists?(@stack_name)
-      puts "WARN: Cannot create a diff for the stack because the #{@stack_name} does not exists.".colorize(:yellow)
+      puts "WARN: Cannot create a diff for the stack because the #{@stack_name} does not exists.".color(:yellow)
       return
     end
 

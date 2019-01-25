@@ -13,7 +13,7 @@ module Lono
       return @@data if @@data
 
       if @check_lono_project && !File.exist?(project_settings_path)
-        puts "ERROR: No settings file at #{project_settings_path}.  Are you sure you are in a project with lono setup?".colorize(:red)
+        puts "ERROR: No settings file at #{project_settings_path}.  Are you sure you are in a project with lono setup?".color(:red)
         exit 1
       end
 

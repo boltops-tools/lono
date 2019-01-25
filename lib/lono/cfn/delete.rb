@@ -18,7 +18,7 @@ class Lono::Cfn::Delete
         cfn.delete_stack(stack_name: @stack_name)
         puts message
       else
-        puts "#{@stack_name.inspect} stack does not exist".colorize(:red)
+        puts "#{@stack_name.inspect} stack does not exist".color(:red)
       end
     end
 

@@ -24,7 +24,7 @@ class Lono::Inspector::Base
   # does not exist.
   def check_template_exists(template_path)
     unless File.exist?(template_path)
-      puts "The template #{template_path} does not exist. Are you sure you use the right template name?  The template name does not require the extension.".colorize(:red)
+      puts "The template #{template_path} does not exist. Are you sure you use the right template name?  The template name does not require the extension.".color(:red)
       exit 1
     end
   end

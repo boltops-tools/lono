@@ -46,7 +46,7 @@ class Lono::Template::Template
     if File.exist?(@source_path)
       RenderMePretty.result(@source_path, context: context)
     else
-      puts "ERROR: #{@source_path} does not exist, but it was used as a template source.".colorize(:red)
+      puts "ERROR: #{@source_path} does not exist, but it was used as a template source.".color(:red)
       exit 1
     end
   end
