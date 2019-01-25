@@ -8,6 +8,7 @@ ENV['HOME'] = "spec/fixtures/home"
 #
 # This is done because changing LONO_ROOT for specs was a mess.
 ENV['LONO_ROOT'] = "tmp/lono_project" # this gets kept
+ENV['AWS_REGION'] ||= "us-west-2"
 
 require "pp"
 require "byebug"

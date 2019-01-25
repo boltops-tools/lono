@@ -47,7 +47,7 @@ class Lono::Cfn::Base
     end
 
     return unless @options[:wait]
-    status.wait
+    status.wait unless @options[:noop]
   end
 
   def status
