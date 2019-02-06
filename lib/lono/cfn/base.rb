@@ -115,17 +115,26 @@ class Lono::Cfn::Base
     generator.params    # Returns Array in underscore keys format
   end
 
+  # Maps to CloudFormation format.  Example:
+  #
+  #   {"a"=>"1", "b"=>"2"}
+  # To
+  #   [{key: "a", value: "1"}, {key: "b", value: "2"}]
+  #
   def tags
-    # Map to CloudFormation format.  Example:
-    #
-    #   {"a"=>"1", "b"=>"2"}
-    # To
-    #   [{key: "a", value: "1"}, {key: "b", value: "2"}]
-    #
     tags = @options[:tags] || []
-    tags.map do |k,v|
+    tags = tags.map do |k,v|
       { key: k, value: v }
     end
+
+    update_operation = %w[Lono::Cfn::Preview Lono::Cfn::Update].include?(self.class.to_s)
+    if tags.empty? && update_operation
+      resp = cfn.describe_stacks(stack_name: @stack_name)
+      tags = resp.stacks.first.tags
+      tags = tags.map(&:to_h)
+    end
+
+    tags
   end
 
   def check_for_errors

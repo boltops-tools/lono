@@ -42,6 +42,7 @@ class Lono::Cfn::Update < Lono::Cfn::Base
       parameters: params,
       capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
       disable_rollback: !@options[:rollback],
+      tags: tags,
     }
     set_template_body!(params)
     show_parameters(params, "cfn.update_stack")

@@ -26,7 +26,8 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
       change_set_name: change_set_name,
       stack_name: @stack_name,
       parameters: params,
-      capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
+      capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"],
+      tags: tags,
     }
     set_template_body!(params)
     show_parameters(params, "cfn.create_change_set")
