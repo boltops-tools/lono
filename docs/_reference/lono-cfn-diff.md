@@ -49,6 +49,7 @@ A `lono cfn diff` is perform automatically as part of `lono cfn update`.
 [--iam], [--no-iam]             # Shortcut for common IAM capabilities: CAPABILITY_IAM, CAPABILITY_NAMED_IAM
 [--rollback], [--no-rollback]   # rollback
                                 # Default: true
+[--tags=key:value]              # Tags for the stack. IE: name:api-web owner:bob
 [--verbose], [--no-verbose]     
 [--noop], [--no-noop]           
 ```

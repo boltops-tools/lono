@@ -45,6 +45,7 @@ The template used is `output/templates/different3.json` and the parameters used 
 [--iam], [--no-iam]             # Shortcut for common IAM capabilities: CAPABILITY_IAM, CAPABILITY_NAMED_IAM
 [--rollback], [--no-rollback]   # rollback
                                 # Default: true
+[--tags=key:value]              # Tags for the stack. IE: name:api-web owner:bob
 [--wait], [--no-wait]           # Wait for stack operation to complete.
                                 # Default: true
 [--verbose], [--no-verbose]     

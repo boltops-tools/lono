@@ -115,6 +115,19 @@ class Lono::Cfn::Base
     generator.params    # Returns Array in underscore keys format
   end
 
+  def tags
+    # Map to CloudFormation format.  Example:
+    #
+    #   {"a"=>"1", "b"=>"2"}
+    # To
+    #   [{key: "a", value: "1"}, {key: "b", value: "2"}]
+    #
+    tags = @options[:tags] || []
+    tags.map do |k,v|
+      { key: k, value: v }
+    end
+  end
+
   def check_for_errors
     errors, warns = check_files
     unless errors.empty?
