@@ -29,6 +29,7 @@ class Lono::Cfn::Create < Lono::Cfn::Base
       parameters: params,
       capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
       disable_rollback: !@options[:rollback],
+      tags: tags,
     }
     set_template_body!(params)
 

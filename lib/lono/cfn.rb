@@ -25,6 +25,7 @@ class Lono::Cfn < Lono::Command
     option :capabilities, type: :array, desc: "iam capabilities. Ex: CAPABILITY_IAM, CAPABILITY_NAMED_IAM"
     option :iam, type: :boolean, desc: "Shortcut for common IAM capabilities: CAPABILITY_IAM, CAPABILITY_NAMED_IAM"
     option :rollback, type: :boolean, desc: "rollback", default: true
+    option :tags, type: :hash, desc: "Tags for the stack. IE: name:api-web owner:bob"
   end
   wait_option = Proc.new do
     option :wait, type: :boolean, desc: "Wait for stack operation to complete.", default: true
