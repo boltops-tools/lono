@@ -38,6 +38,7 @@ Lono prompts you with an "Are you sure?" message before the stack gets deleted. 
 [--iam], [--no-iam]             # Shortcut for common IAM capabilities: CAPABILITY_IAM, CAPABILITY_NAMED_IAM
 [--rollback], [--no-rollback]   # rollback
                                 # Default: true
+[--tags=key:value]              # Tags for the stack. IE: name:api-web owner:bob
 [--wait], [--no-wait]           # Wait for stack operation to complete.
                                 # Default: true
 [--verbose], [--no-verbose]     
