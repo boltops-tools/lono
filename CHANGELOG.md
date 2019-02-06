@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [4.2.7]
+- retain tag values on cfn update operations
+
 ## [4.2.6]
 - #40 lono cfn create --tags a:1 b:2 option
 
