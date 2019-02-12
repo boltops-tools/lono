@@ -36,7 +36,7 @@ Set current values like stack name and suffix.
 ```
 [--rm], [--no-rm]            # Remove all current settings. Removes `.lono/current`
 [--name=NAME]                # Current stack name.
-[--suffix=SUFFIX]            # Current suffix for stack name.
+[--suffix=SUFFIX]            # Suffix for stack name.
 [--verbose], [--no-verbose]  
 [--noop], [--no-noop]        
 ```

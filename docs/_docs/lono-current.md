@@ -1,5 +1,6 @@
 ---
 title: Lono Current
+nav_order: 55
 ---
 
 Sets current values so you do not have to provide the options repeatedly.  This shortens the commands.
@@ -20,6 +21,7 @@ The normal update and preview commands are:
 Shortened commands:
 
     lono cfn current --name demo
+    lono cfn deploy
     lono cfn update
     lono cfn delete
     lono cfn preview
@@ -54,6 +56,4 @@ To remove all current settings.
 * The current name setting does not apply to the `lono create` method. The create method requires that you explicitly specify the name: `lono create STACK_NAME`. The create command uses the `--suffix` option only.
 * The current name setting applies on commands that refer to existing stacks like update, delete, preview, diff and download.
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/settings.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/lono-suffix.md %}">Next Step</a>
-<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
+{% include prev_next.md %}

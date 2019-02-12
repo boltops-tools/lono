@@ -30,7 +30,7 @@ module Helper
   # Added SHOW_COMMAND because DEBUG is also used by other libraries like
   # bundler and it shows its internal debugging logging also.
   def show_command?
-    ENV['DEBUG'] || ENV['SHOW_COMMAND']
+    ENV['LONO_DEBUG'] || ENV['SHOW_COMMAND']
   end
 
   def ensure_tmp_exists
@@ -45,6 +45,7 @@ module Helper
   end
 
   def destroy_lono_project
+    return if ENV['KEEP_TMP_PROJECT']
     # Only use KEEP_TMP_PROJECT if you are testing exactly 1 spec for debugging
     # or it'll affect other tests.
     FileUtils.rm_rf(Lono.root)
@@ -58,6 +59,15 @@ RSpec.configure do |c|
     copy_lono_project
   end
   c.after(:all) do
-    destroy_lono_project unless ENV['KEEP_TMP_PROJECT']
+    destroy_lono_project
+  end
+end
+
+# Using this helper since the strings in the parsed structure are actually Parslet::Slice
+# and have the .str method, which is used in the Transform class
+# Hack only for specs.
+class String
+  def str
+    to_s
   end
 end

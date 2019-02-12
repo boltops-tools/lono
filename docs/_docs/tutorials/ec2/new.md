@@ -1,5 +1,5 @@
 ---
-title: "Tutorial EC2: lono new ec2"
+title: 'Tutorial EC2: lono new ec2'
 ---
 
 The first command we'll walk through is the `lono new` command.  Here's the command with some output to focus on learning.
@@ -59,7 +59,3 @@ The new command does a few things:
 4. Displays a welcome message and provides some guidance on what to do next
 
 Let's focus on the project structure since this might be your first time looking at a lono.
-
-<a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/intro.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/tutorials/ec2/project-structure.md %}">Next Step</a>
-<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

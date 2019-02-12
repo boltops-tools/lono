@@ -1,5 +1,5 @@
 ---
-title: "Tutorial EC2: Import EC2 Template"
+title: 'Tutorial EC2: Import EC2 Template'
 ---
 
 ## Import Template
@@ -81,7 +81,3 @@ KeyName=default
 ```
 
 Everything is now configured, and we are ready to launch the stack next!
-
-<a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/project-structure.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/tutorials/ec2/cfn-create.md %}">Next Step</a>
-<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

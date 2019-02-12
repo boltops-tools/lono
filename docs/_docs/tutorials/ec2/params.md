@@ -86,7 +86,7 @@ It produces a different `output/params/ec2.json` result:
 
 The `base` param files are special, and they always get merged. The other param files associated with `LONO_ENV` are merged for its specific environment.
 
-Layering allows us to use some different parameter values for different environments.  The layering concept applies to other components as well and is covered in more detailed in the [Layering docs]({% link _docs/layering.md %}).
+Layering allows us to use some different parameter values for different environments.  The layering concept applies to other components as well and is covered in more detailed in the [Layering docs]({% link _docs/core/layering.md %}).
 
 ## Shared Variables Support
 
@@ -122,8 +122,4 @@ When you generate the params again, we get the same result as before. A `lono ge
 
 ## Helper Support
 
-Param files also have access to your own [custom helpers]({% link _docs/custom-helpers.md %}).  This allows you to add logic at the run-time phase.  You can pretty much add any logic you need.
-
-<a id="prev" class="btn btn-basic" href="">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/tutorials/ec2/cfn-create.md %}">Next Step</a>
-<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
+Param files also have access to your own [custom helpers]({% link _docs/erb/helpers/custom-helpers.md %}).  This allows you to add logic at the run-time phase.  You can pretty much add any logic you need.

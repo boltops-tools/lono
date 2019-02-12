@@ -35,6 +35,7 @@ If current name is set.
 ## Options
 
 ```
+[--suffix=SUFFIX]            # Suffix for stack name.
 [--verbose], [--no-verbose]  
 [--noop], [--no-noop]        
 ```

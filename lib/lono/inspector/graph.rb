@@ -2,13 +2,17 @@ require "yaml"
 require "graph"
 
 class Lono::Inspector::Graph < Lono::Inspector::Base
-  def initialize(stack_name, options)
+  def initialize(blueprint, template, options)
     super
     @nodes = [] # lookup map
   end
 
-  def perform
-    puts "Generating dependencies tree..."
+  def perform(template_name)
+    # little dirty but @template_name is used in data method
+    # so we dont have to pass it to the data method
+    @template_name = template_name
+
+    puts "Generating dependencies tree for template #{@template_name}..."
     return if @options[:noop]
 
     # First loop through top level nodes and build set depends_on property

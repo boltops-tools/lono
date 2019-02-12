@@ -2,6 +2,6 @@ require "thor"
 
 class Lono::Inspector
   autoload :Base, 'lono/inspector/base'
-  autoload :Graph, 'lono/inspector/graph'
   autoload :Summary, 'lono/inspector/summary'
+  autoload :Graph, 'lono/inspector/graph'
 end

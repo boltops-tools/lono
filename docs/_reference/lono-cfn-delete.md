@@ -30,6 +30,7 @@ Lono prompts you with an "Are you sure?" message before the stack gets deleted. 
 
 ```
 [--sure], [--no-sure]           # Skips are you sure prompt
+[--blueprint=BLUEPRINT]         # override convention and specify the template file to use
 [--template=TEMPLATE]           # override convention and specify the template file to use
 [--param=PARAM]                 # override convention and specify the param file to use
 [--lono], [--no-lono]           # invoke lono to generate CloudFormation templates

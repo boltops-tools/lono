@@ -3,17 +3,17 @@ module Lono
     include Lono::Template::AwsService
     extend Memoist
 
-    def initialize(options={})
-      @options = options
+    def initialize(blueprint, options={})
+      @blueprint, @options = blueprint, options
       @checksums = {}
-      @prefix = "#{folder_key}/#{Lono.env}/files" # s3://s3-bucket/folder/development/files
+      @prefix = "#{folder_key}/#{Lono.env}/#{blueprint}/files" # s3://s3-bucket/folder/development/files
     end
 
     def upload_all
       puts "Uploading app/files..."
       load_checksums!
 
-      pattern = "#{Lono.root}/app/files/**/*"
+      pattern = "#{Lono.blueprint_root}/app/files/**/*"
       Dir.glob(pattern).each do |path|
         next if ::File.directory?(path)
         s3_upload(path)
@@ -50,7 +50,12 @@ module Lono
       "#{key}-#{md5}.#{ext}"
     end
 
+    # Inputs:
+    #
+    #   path: can be full path or relative path
+    #
     def s3_upload(path)
+      path = path.gsub("#{Lono.root}/",'') # remove Lono.root
       pretty_path = path.sub(/^\.\//, '')
       key = md5_key(path)
       s3_full_path = "s3://#{s3_bucket}/#{key}"

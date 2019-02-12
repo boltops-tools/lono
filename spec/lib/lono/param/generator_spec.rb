@@ -1,14 +1,19 @@
 describe Lono::Param::Generator do
   context "layering" do
     def generate(context)
-      path = "spec/fixtures/params/#{context}/params/development/network.txt"
-      param = Lono::Param::Generator.new("network",
-        path: path,
-        mute: true,
-      )
+      setup_params(context)
+      param = Lono::Param::Generator.new("example", mute: true)
       json = param.generate
       data = JSON.load(json)
       param_value = data.first["ParameterValue"]
+    end
+
+    def setup_params(fixture_type)
+      src = "spec/fixtures/params/#{fixture_type}/params"
+      dest = "tmp/lono_project/configs/example/params"
+      FileUtils.rm_rf(dest) # clear out old fixtures from previous run
+      FileUtils.mkdir_p(File.dirname(dest))
+      FileUtils.cp_r(src, dest)
     end
 
     context "overlay params" do
@@ -46,11 +51,61 @@ describe Lono::Param::Generator do
   context "shared variables access" do
     it "should have access to shared variables" do
       # quickest to write test by shelling out
-      out = execute("exe/lono generate")
-      text = IO.read("#{Lono.root}/output/params/example.json")
+      out = execute("LONO_PARAM_DEBUG=1 exe/lono generate ec2")
+      text = IO.read("#{Lono.root}/output/ec2/params/development.json")
       data = JSON.load(text)
       param = data.select { |i| i["ParameterKey"] == "Ami" }.first
       expect(param["ParameterValue"]).to eq "ami-base-main"
+    end
+  end
+
+  context "all 3 blueprint, template and param are the same" do
+    let(:generator) { Lono::Param::Generator.new("ec2") }
+
+    it "root1: all 3 form files exist" do
+      param_file = generator.lookup_param_file(root: "spec/fixtures/lookup_param_file/root1")
+      expect(param_file).to include("configs/ec2/params/development/ec2/ec2.txt")
+    end
+
+    it "root2: long form exists" do
+      param_file = generator.lookup_param_file(root: "spec/fixtures/lookup_param_file/root2")
+      expect(param_file).to include("configs/ec2/params/development/ec2/ec2.txt")
+    end
+
+    it "root3: medium form exists" do
+      param_file = generator.lookup_param_file(root: "spec/fixtures/lookup_param_file/root3")
+      expect(param_file).to include("configs/ec2/params/development/ec2.txt")
+    end
+
+    it "root4: short form exists" do
+      param_file = generator.lookup_param_file(root: "spec/fixtures/lookup_param_file/root4")
+      expect(param_file).to include("configs/ec2/params/development.txt")
+    end
+  end
+
+  context "all 3 blueprint, template and param are different" do
+    let(:generator) { Lono::Param::Generator.new("ec2", template: "jenkins", param: "large") }
+    it "root5: all 3 form files exist" do
+      param_file = generator.lookup_param_file(root: "spec/fixtures/lookup_param_file/root5")
+      expect(param_file).to include("configs/ec2/params/development/jenkins/large.txt")
+    end
+
+    it "root6: long form does not exists" do
+      param_file = generator.lookup_param_file(root: "spec/fixtures/lookup_param_file/root6")
+      expect(param_file).to be nil
+    end
+  end
+
+  context "only template and param are the same" do
+    let(:generator) { Lono::Param::Generator.new("ec2", template: "jenkins") } # param is the same implicitly
+    it "root7: medium form and long form exists" do
+      param_file = generator.lookup_param_file(root: "spec/fixtures/lookup_param_file/root7")
+      expect(param_file).to include("configs/ec2/params/development/jenkins/jenkins.txt")
+    end
+
+    it "root8: medium exists" do
+      param_file = generator.lookup_param_file(root: "spec/fixtures/lookup_param_file/root8")
+      expect(param_file).to include("configs/ec2/params/development/jenkins.txt")
     end
   end
 end

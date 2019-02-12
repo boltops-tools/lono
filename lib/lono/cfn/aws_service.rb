@@ -31,6 +31,22 @@ module Lono::Cfn::AwsService
     exist
   end
 
+  def find_stack(stack_name)
+    resp = cfn.describe_stacks(stack_name: stack_name)
+    resp.stacks.first
+  rescue Aws::CloudFormation::Errors::ValidationError => e
+    # example: Stack with id demo-web does not exist
+    if e.message =~ /Stack with/ && e.message =~ /does not exist/
+      nil
+    else
+      raise
+    end
+  end
+
+  def rollback_complete?(stack)
+    stack.stack_status == 'ROLLBACK_COMPLETE'
+  end
+
   def testing_update?
     ENV['TEST'] && self.class.name == "LonoCfn::Update"
   end

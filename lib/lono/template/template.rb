@@ -5,7 +5,7 @@ require 'base64'
 class Lono::Template::Template
   include ERB::Util
 
-  # Main template DSL methods are: source and variables
+  # Main template Erb methods are: source and variables
   #
   #   template "example-2" do
   #     source "example"
@@ -13,13 +13,8 @@ class Lono::Template::Template
   #   end
   #
   attr_reader :name
-  def initialize(name, block=nil, options={})
-    # Taking care to name instance variables with _ in front because we load the
-    # variables from config/variables and those instance variables can clobber these
-    # instance variables
-    @name = name
-    @block = block
-    @options = options
+  def initialize(blueprint, name, block=nil, options={})
+    @blueprint, @name, @block, @options = blueprint, name, block, options
     @source_path = default_source_path(name)
   end
 
@@ -54,6 +49,6 @@ class Lono::Template::Template
   # Context for ERB rendering.
   # This is where we control what references get passed to the ERB rendering.
   def context
-    @context ||= Lono::Template::Context.new(@options)
+    @context ||= Lono::Template::Context.new(@blueprint, @options)
   end
 end

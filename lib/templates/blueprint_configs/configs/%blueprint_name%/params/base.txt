@@ -1,0 +1,2 @@
+# Starter Example
+# InstanceType=t3.micro

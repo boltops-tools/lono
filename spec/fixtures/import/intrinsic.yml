@@ -1,0 +1,107 @@
+Top:
+  MyEIP:
+    Type: "AWS::EC2::EIP"
+    Properties:
+      InstanceId: !Ref MyEC2Instance
+  UserData2:
+    Fn::Base64:
+      !Sub string
+  UserData3: !Base64 valueToEncode
+  ExampleSubnet:
+    Type: AWS::EC2::Subnet
+    DependsOn: IPv6CidrBlock
+    Properties:
+        CidrBlock: !Select [ 0, !Cidr [ !GetAtt ExampleVpc.CidrBlock, 1, 8 ]]
+        Ipv6CidrBlock: !Select [ 0, !Cidr [ !Select [ 0, !GetAtt ExampleVpc.Ipv6CidrBlocks], 1, 64 ]]
+        VpcId: !Ref ExampleVpc
+  UseProdCondition:
+    !Equals [!Ref EnvironmentType, prod]
+  SecurityGroupId:
+    Something: !If [CreateNewSecurityGroup, !Ref NewSecurityGroup, !Ref ExistingSecurityGroup]
+  MyDB:
+    Type: "AWS::RDS::DBInstance"
+    Properties:
+      DBSnapshotIdentifier:
+        !If [UseDBSnapshot, !Ref DBSnapshotName, !Ref "AWS::NoValue"]
+  MyNotCondition:
+    !Not [!Equals [!Ref EnvironmentType, prod]]
+  MyOrCondition:
+    !Or [!Equals [sg-mysggroup, !Ref ASecurityGroup], Condition: SomeOtherCondition]
+  myELBIngressGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '80'
+          ToPort: '80'
+          SourceSecurityGroupOwnerId: !GetAtt myELB.SourceSecurityGroup.OwnerAlias
+          SourceSecurityGroupName: !GetAtt myELB.SourceSecurityGroup.GroupName
+  mySubnet:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      VpcId:
+        !Ref VPC
+      CidrBlock: 10.0.0.0/24
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+  Fn::ImportValue:
+    !Sub "${NetworkStack}-SubnetID"
+  Subnet0:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Select [ 0, !Ref DbSubnetIpBlocks ]
+  MySelectValue: !Select [2, !Split [",", !ImportValue AccountSubnetIDs]]
+  'Fn::Transform':
+      Name: 'AWS::Include'
+      Parameters: {Location: {Ref: InputValue}}
+  'Fn::Transform':
+      Name: 'AWS::Include'
+      Parameters: {Location: {'Fn::FindInMap': [RegionMap, us-east-1, s3Location]}}
+  SomeResource:
+    UserData:
+      !Base64
+        "Fn::Sub": string
+  Subnet: !Cidr [ "192.168.0.0/24", 6, 5 ]
+  MyAndCondition: !And
+    - !Equals ["sg-mysggroup", !Ref ASecurityGroup]
+    - !Condition SomeOtherCondition
+  SecurityGroups:
+    - !If [CreateNewSecurityGroup, !Ref NewSecurityGroup, !Ref ExistingSecurityGroup]
+  myEC2Instance:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap
+        - RegionMap
+        - !Ref 'AWS::Region'
+        - HVM64
+      InstanceType: m1.small
+  MyJoinValue:
+    !Join
+      - ''
+      - - 'arn:'
+        - !Ref Partition
+        - ':s3:::elasticbeanstalk-*-'
+        - !Ref 'AWS::AccountId'
+  Name: !Sub
+    - www.${Domain}
+    - { Domain: !Ref RootDomainName }
+  AvailabilityZone1: !Select
+    - 0
+    - Fn::GetAZs: !Ref 'AWS::Region'
+  AvailabilityZone2: !Select
+    - 0
+    - Fn::GetAZs: !Ref 'AWS::Region
+  AvailabilityZone3: !Select
+    - 0
+    - !GetAZs
+        Ref: 'AWS::Region'
+  UserData1:
+    Fn::Base64:
+      !Sub |
+        #!/bin/bash -xe
+        yum update -y aws-cfn-bootstrap
+        /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource LaunchConfig --configsets wordpress_install --region ${AWS::Region}
+        /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource WebServerGroup --region ${AWS::Region}

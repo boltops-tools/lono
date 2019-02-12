@@ -23,7 +23,6 @@ Generates CloudFormation template, parameter files, and scripts in lono project 
 
     $ lono generate
     Generating CloudFormation templates, parameters, and scripts
-    No detected app/scripts
     Generating CloudFormation templates:
       output/templates/ec2.yml
     Generating parameter files:
@@ -35,7 +34,6 @@ Generates CloudFormation template, parameter files, and scripts in lono project 
 
 ```
 [--clean], [--no-clean]  # remove all output files before generating
-                         # Default: true
 [--quiet], [--no-quiet]  # silence the output
 ```
 

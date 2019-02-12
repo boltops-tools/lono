@@ -5,11 +5,11 @@ reference: true
 
 ## Usage
 
-    lono summary STACK
+    lono summary BLUEPRINT TEMPLATE
 
 ## Description
 
-Prints summary of CloudFormation template.
+Prints summary of CloudFormation templates.
 
 The `lono summary` command helps you quickly understand a CloudFormation template.
 

@@ -1,5 +1,5 @@
 ---
-title: "Tutorial EC2: Edit Template"
+title: 'Tutorial EC2: Edit Template'
 ---
 
 The imported EC2 template we've been working with contains an EC2 instance and security group.  Next, we show you how you can use lono to manage your templates.
@@ -84,7 +84,7 @@ Here's the full template code [ec2.yml code](https://github.com/tongueroo/lono-t
 
 ## ERB vs CloudFormation Template
 
-With ERB, we are not limited to just if statements.  We can use loops, variables, expressions, etc.  Here is a good post covering ERB templates [An Introduction to ERB Templating](http://www.stuartellis.name/articles/erb/). Additionally, we have access to lono [built-in helpers]({% link _docs/builtin-helpers.md %}) and [shared variables]({% link _docs/shared-variables.md %}).  We can also define our own [custom helpers]({% link _docs/custom-helpers.md %}) if needed.
+With ERB, we are not limited to just if statements.  We can use loops, variables, expressions, etc.  Here is a good post covering ERB templates [An Introduction to ERB Templating](http://www.stuartellis.name/articles/erb/). Additionally, we have access to lono [built-in helpers]({% link _docs/erb/helpers/builtin-helpers.md %}) and [shared variables]({% link _docs/configs/shared-variables.md %}).  We can also define our own [custom helpers]({% link _docs/erb/helpers/custom-helpers.md %}) if needed.
 
 ### Lono Generate
 
@@ -191,7 +191,3 @@ lono cfn delete eip
 
 ### Congrats
 Congratulations 🎉 You have successfully added conditional logic to CloudFormation templates that decide whether or not to create an EIP.
-
-<a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/cfn-update.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/tutorials/ec2/edit-native.md %}">Next Step</a>
-<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

@@ -2,10 +2,13 @@
 # templates.
 class Lono::Template
   class Context
-    include Lono::Template::Helper
+    autoload :Loader, "lono/template/context/loader"
 
-    def initialize(options={})
-      @options = options
+    include Lono::Template::Helper
+    include Loader
+
+    def initialize(blueprint, options={})
+      @blueprint, @options = blueprint, options
       load_variables
       load_project_helpers
     end
@@ -16,58 +19,6 @@ class Lono::Template
       variables.each do |key, value|
         instance_variable_set('@' + key.to_s, value)
       end
-    end
-
-  private
-    # Variables in base.rb are overridden by their environment specific variables
-    # file.  Example, file LONO_ENV=development:
-    #
-    #   config/variables/base.rb
-    #   config/variables/development.rb - will override any variables in base.rb
-    #
-    def load_variables
-      load_variables_file("base")
-      load_variables_file(Lono.env)
-    end
-
-    # Load custom helper methods from project
-    def load_project_helpers
-      Dir.glob("#{Lono.config.helpers_path}/**/*_helper.rb").each do |path|
-        filename = path.sub(%r{.*/},'').sub('.rb','')
-        module_name = filename.classify
-
-        # Prepend a period so require works LONO_ROOT is set to a relative path
-        # without a period.
-        #
-        # Example: LONO_ROOT=tmp/lono_project
-        first_char = path[0..0]
-        path = "./#{path}" unless %w[. /].include?(first_char)
-        require path
-        self.class.send :include, module_name.constantize
-      end
-    end
-
-    # Load the variables defined in config/variables/* to make available in the
-    # template blocks in config/templates/*.
-    #
-    # Example:
-    #
-    #   `config/variables/base.rb`:
-    #     @foo = 123
-    #
-    #   `app/definitions/base.rb`:
-    #      template "mytemplate.yml" do
-    #        source "mytemplate.yml.erb"
-    #        variables(foo: @foo)
-    #      end
-    #
-    # NOTE: Only able to make instance variables avaialble with instance_eval,
-    #   wasnt able to make local variables available.
-    def load_variables_file(name)
-      path = "#{Lono.config.variables_path}/#{name}.rb"
-      return unless File.exist?(path)
-
-      instance_eval(IO.read(path))
     end
   end
 end

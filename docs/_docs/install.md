@@ -1,5 +1,6 @@
 ---
 title: Installation
+nav_order: 5
 ---
 
 ## RubyGems
@@ -26,6 +27,4 @@ brew cask install boltopslabs/software/bolts
 
 For more information about the Bolts Toolbelt or to get an installer for another operating system visit: [https://boltops.com/toolbelt](https://boltops.com/toolbelt)
 
-<a id="prev" class="btn btn-basic" href="{% link import-templates.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/tutorials/ec2/intro.md %}">Next Step</a>
-<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
+{% include prev_next.md %}

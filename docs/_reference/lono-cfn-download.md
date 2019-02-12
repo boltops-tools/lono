@@ -20,6 +20,7 @@ Download CloudFormation template from existing stack.
 
 ```
 [--name=NAME]                   # Name you want to save the template as. Default: existing stack name.
+[--blueprint=BLUEPRINT]         # override convention and specify the template file to use
 [--template=TEMPLATE]           # override convention and specify the template file to use
 [--param=PARAM]                 # override convention and specify the param file to use
 [--lono], [--no-lono]           # invoke lono to generate CloudFormation templates
@@ -29,6 +30,7 @@ Download CloudFormation template from existing stack.
 [--rollback], [--no-rollback]   # rollback
                                 # Default: true
 [--tags=key:value]              # Tags for the stack. IE: name:api-web owner:bob
+[--suffix=SUFFIX]               # Suffix for stack name.
 [--verbose], [--no-verbose]     
 [--noop], [--no-noop]           
 ```

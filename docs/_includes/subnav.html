@@ -1,62 +1,102 @@
 <div class="col-md-3 content-nav">
     <ul>
         <li><a href="{% link quick-start.md %}">Quick Start</a></li>
-        <li><a href="{% link docs.md %}">Overview</a>
-        <li><a href="{% link import-templates.md %}">Import Templates</a>
-        <li><a href="{% link _docs/install.md %}">Installation</a></li>
-        </li>
-        <li><a href="{% link _docs/tutorials/ec2/intro.md %}">Tutorial EC2</a>
-            <ul class="build-tutorial">
-                <li><a href="{% link _docs/tutorials/ec2/new.md %}">New Project</a></li>
-                <li><a href="{% link _docs/tutorials/ec2/project-structure.md %}">Project Structure</a></li>
-                <li><a href="{% link _docs/tutorials/ec2/import.md %}">Import Template</a></li>
-                <li><a href="{% link _docs/tutorials/ec2/cfn-create.md %}">Create the Stack</a></li>
-                <li><a href="{% link _docs/tutorials/ec2/cfn-update.md %}">Update the Stack</a></li>
-
-                <li><a href="{% link _docs/tutorials/ec2/edit-lono.md %}">Edit Template</a></li>
-                <li><a href="{% link _docs/tutorials/ec2/edit-native.md %}">Edit Natively</a></li>
-                <li><a href="{% link _docs/tutorials/ec2/cfn-delete.md %}">Delete the Stack</a></li>
-            </ul>
-        </li>
-        <!--
-        <li><a href="{% link _docs/tutorials/autoscaling/intro.md %}">Tutorial AutoScaling</a>
-            <ul class="build-tutorial">
-                <li><a href="{% link _docs/tutorials/autoscaling/project-structure.md %}">Project Structure</a></li>
-                <li><a href="{% link _docs/tutorials/autoscaling/import.md %}">Import Template</a></li>
-                <li><a href="{% link _docs/tutorials/autoscaling/launch-stack.md %}">Launch Stack</a></li>
-                <li><a href="{% link _docs/tutorials/autoscaling/edit-template-lono.md %}">Edit Template Lono</a></li>
-                <li><a href="{% link _docs/tutorials/autoscaling/edit-template-native.md %}">Edit Template Native</a></li>
-            </ul>
-        </li>
-        -->
-        <li><a href="{% link _docs/docs-start.md %}">Docs</a>
+        <li><a href="{% link docs.md %}">Docs</a>
             <ul>
-                <li><a href="{% link _docs/components.md %}">Components</a></li>
-                <li><a href="{% link _docs/directory-structure.md %}">Directory Structure</a></li>
-                <li><a href="{% link _docs/lono-env.md %}">LONO_ENV</a></li>
-                <li><a href="{% link _docs/import-template.md %}">Import Template</a></li>
-                <li><a href="{% link _docs/app-definitions.md %}">Template Configuration</a></li>
-                <li><a href="{% link _docs/shared-variables.md %}">Shared Variables</a></li>
-                <li><a href="{% link _docs/params.md %}">Params</a></li>
-                <li><a href="{% link _docs/layering.md %}">Layering Support</a></li>
-                <li><a href="{% link _docs/app-scripts.md %}">App Scripts</a></li>
-                <li><a href="{% link _docs/app-files.md %}">App Files</a></li>
-                <li><a href="{% link _docs/builtin-helpers.md %}">Built-In Helpers</a></li>
-                <li><a href="{% link _docs/custom-helpers.md %}">Custom Helpers</a></li>
-                <li><a href="{% link _docs/conventions.md %}">Conventions</a></li>
-                <li><a href="{% link _docs/settings.md %}">Settings</a></li>
+                <li><a href="{% link _docs/walkthrough.md %}">Walkthrough</a></li>
+                <li><a href="{% link _docs/project-structure.md %}">Project Structure</a></li>
+                <li><a href="{% link _docs/install.md %}">Installation</a></li>
+            </ul>
+        </li>
+        <li><a href="{% link _docs/core.md %}">Core Concepts</a>
+            <ul>
+              {% assign docs = site.docs | where: "categories","core" | sort: "order" %}
+              {% for doc in docs -%}
+                {% if doc.url == "/docs/core/configs/" %}
+                <li><a href="{% link _docs/core/configs.md %}">Configs</a>
+                    <ul>
+                        <li><a href='{% link _docs/configs/params.md %}'>Params</a></li>
+                        <li><a href='{% link _docs/configs/shared-variables.md %}'>Variables</a></li>
+                    </ul>
+                </li>
+                {% elsif doc.url == "/docs/core/layering/" %}
+                <li><a href="{% link _docs/core/layering.md %}">Layering</a>
+                    <ul>
+                        <li><a href='{% link _docs/layering/params.md %}'>Params</a></li>
+                        <li><a href='{% link _docs/layering/variables.md %}'>Variables</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+        </li>
+        <li><a href="{% link _docs/dsl.md %}">DSL Docs</a>
+            <ul>
+              {% assign docs = site.docs | where: "categories","dsl" %}
+              {% for doc in docs -%}
+                <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
+              {% endfor %}
+            </ul>
+        </li>
+        <li><a href="{% link _docs/dsl/components.md %}">DSL Extras</a>
+            <ul>
+              {% assign docs = site.docs | where: "categories","dsl-components" %}
+              {% for doc in docs -%}
+                <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
+              {% endfor %}
+            </ul>
+        </li>
+        <li><a href="{% link _docs/intrinsic-functions.md %}">Intrinsic Functions</a>
+            <ul>
+              {% assign docs = site.docs | where: "categories","intrinsic-function" %}
+              {% for doc in docs -%}
+                <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
+              {% endfor %}
+            </ul>
+        </li>
+        <li><a href="{% link _docs/conventions.md %}">Conventions</a></li>
+            <ul>
+              {% assign docs = site.docs | where: "categories","conventions" %}
+              {% for doc in docs -%}
+                <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
+              {% endfor %}
+            </ul>
+        </li>
+        <li>Lookup Precedence</a>
+            <ul>
+                <li><a href="{% link _docs/lookup-locations/params.md %}">Params</a></li>
+                <li><a href="{% link _docs/lookup-locations/variables.md %}">Variables</a></li>
+            </ul>
+        </li>
+        <li>Configuration</a>
+            <ul>
+                <li><a href="{% link _docs/configuration/settings.md %}">Settings</a></li>
+                <li><a href="{% link _docs/configuration/lono-env.md %}">Lono Env</a></li>
+                <li><a href="{% link _docs/configuration/lono-configure.md %}">Lono Configure</a></li>
+                <li><a href="{% link _docs/configuration/stack-name-suffix.md %}">Stack Suffix</a></li>
+            </ul>
+        </li>
+        <li>Extras
+            <ul>
+                <li><a href="{% link _docs/extras/upgrading.md %}">Upgrading Guide</a>
+                <li><a href="{% link _docs/extras/guard.md %}">Guard</a></li>
                 <li><a href="{% link _docs/lono-current.md %}">Lono Current</a></li>
                 <li><a href="{% link _docs/lono-suffix.md %}">Lono Suffix</a></li>
-                <li><a href="{% link _docs/starter-templates.md %}">Starter Templates</a></li>
-                <li><a href="{% link _docs/nested-stacks.md %}">Nested Stacks</a></li>
             </ul>
         </li>
-        <li><a href="{% link _docs/organizing-lono.md %}">Organizing Lono</a></li>
-        <li><a href="{% link _docs/guard.md %}">Guard</a></li>
+        <li><a href="{% link _docs/erb.md %}">ERB</a>
+            <ul>
+              {% assign docs = site.docs | where: "categories","erb" | sort: "order" %}
+              {% for doc in docs -%}
+                <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
+              {% endfor %}
+            </ul>
+        </li>
+        <li><a href="{% link articles.md %}">Articles</a></li>
         <li><a href="{% link _docs/lono-help.md %}">Lono Help</a></li>
         <li><a href="{% link _docs/next-steps.md %}">Next Steps</a></li>
-        <li><a href="{% link examples.md %}">Examples</a></li>
-        <li><a href="{% link articles.md %}">Articles</a></li>
         <li><a href="{% link reference.md %}">CLI Reference</a></li>
      </ul>
 </div>

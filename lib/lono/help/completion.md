@@ -8,7 +8,7 @@ Prints words for TAB auto-completion.
 
   lono completion
   lono completion cfn
-  lono completion cfn create
+  lono completion cfn deploy
 
 To enable, TAB auto-completion add the following to your profile:
 
@@ -18,5 +18,5 @@ Auto-completion example usage:
 
   lono [TAB]
   lono cfn [TAB]
-  lono cfn create [TAB]
-  lono cfn create --[TAB]
+  lono cfn deploy [TAB]
+  lono cfn deploy --[TAB]

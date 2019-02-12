@@ -2,7 +2,7 @@ describe Lono::CLI do
   describe "lono completion" do
     commands = {
       # "new" => "name", # options is the completion because it's a Thor::Group
-      "generate" => "--clean",
+      "generate blueprint" => "--clean",
       "cfn" =>  "create",
       "cfn create" =>  "name",
       "param" => "generate",

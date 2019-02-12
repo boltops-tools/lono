@@ -66,15 +66,10 @@ Let's say we wanted a different set of parameters, like using a different keypai
 
 ```
 cp config/params/base/ec2.txt config/params/base/ec2-different.txt
-lono cfn create ec2 --template ec2 --param --ec2-different
+lono cfn create ec2 --template ec2 --param ec2-different
 ```
 
 Notice, that we needed to specify the `--template` and `--param` option in this case. We did not have to specify it before because lono uses a set of conventions. If no param option is provided, then the convention is for the param file to default to the name of the template option. The conventions are covered in detailed in [Conventions]({% link _docs/conventions.md %}) and makes for shorter commands when files are named consistently.
 
 
 Next, we'll make some edits to the template and learn how to update the stack.
-
-<a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/import.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/tutorials/ec2/cfn-update.md %}">Next Step</a>
-<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
-

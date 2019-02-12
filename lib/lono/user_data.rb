@@ -3,11 +3,11 @@ module Lono
   # exposed to the lono userdata command so users can debug their generated
   # app/user_data scripts. It is useful for debugging.
   #
-  # Normally, the Lono::DSL#run method generates the CloudFormation templates
+  # Normally, the Lono::Erb#run method generates the CloudFormation templates
   # and embeds user-data script into the template.
   class UserData
-    def initialize(options)
-      @options = options
+    def initialize(blueprint, options)
+      @blueprint, @options = blueprint, options
       @name = options[:name]
       @path = "#{Lono.root}/app/user_data/#{@name}.sh"
     end
@@ -25,7 +25,7 @@ module Lono
     # Context for ERB rendering.
     # This is where we control what references get passed to the ERB rendering.
     def context
-      @context ||= Lono::Template::Context.new(@options)
+      @context ||= Lono::Template::Context.new(@blueprint, @options)
     end
   end
 end

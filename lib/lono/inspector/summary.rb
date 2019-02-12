@@ -1,6 +1,10 @@
 class Lono::Inspector::Summary < Lono::Inspector::Base
-  def perform
-    puts "=> CloudFormation Template Summary:".color(:green)
+  def perform(template_name)
+    # little dirty but @template_name is used in data method
+    # so we dont have to pass it to the data method
+    @template_name = template_name
+
+    puts "=> CloudFormation Template Summary for template #{@template_name.color(:sienna)}:"
     return if @options[:noop]
 
     print_parameters_summary
@@ -46,14 +50,22 @@ class Lono::Inspector::Summary < Lono::Inspector::Base
   end
 
   def resource_types
+    resources = data["Resources"]
+    return unless resources
+
     types = Hash.new(0)
-    data["Resources"].each do |logical_id, resource|
+    resources.each do |logical_id, resource|
       types[resource["Type"]] += 1
     end
     types
   end
 
   def print_resource_types
+    unless resource_types
+      puts "No resources found."
+      return
+    end
+
     types = resource_types.sort_by {|r| r[1] * -1} # Hash -> 2D Array
     types.each do |a|
       type, count = a

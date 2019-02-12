@@ -1,7 +1,7 @@
 #!/bin/bash -eux
 
 # Even though specs also generate docs, lets run again to ensure clean slate
-rake docs
+bundle exec rake docs
 
 out=$(git status docs)
 if [[ "$out" = *"nothing to commit"* ]]; then

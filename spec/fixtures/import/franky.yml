@@ -1,0 +1,68 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: Example from BoltOps.
+Metadata:
+  Authors:
+    Description: Tung Nguyen (tung@boltops.com)
+  License: MIT
+Parameters:
+  KeyName:
+    Type: String
+    Description: KeyName
+  EcsCluster:
+    Type: String
+    Description: EcsCluster
+    Default: development
+  Subnets:
+    Type: String
+    Description: Comma separated list of subnets
+Mappings:
+  AmiMap:
+    us-east-1:
+      Ami: ami-0a6a36557ea3b9859
+    us-east-2:
+      Ami: ami-0cca5d0eeadc8c3c4
+Resources:
+## VPC
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.30.0.0/16
+      EnableDnsSupport: 'True'
+      EnableDnsHostnames: 'True'
+      Tags:
+      - Key: Name
+        Value: !Ref VpcName
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: Name
+        Value: !Ref VpcName
+  GatewayToInternet:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+Conditions:
+  CreateProdResources: !Equals [ !Ref EnvType, prod ]
+
+# Transform: ["MyMacro", "AWS::Serverless"]
+Transform: AWS::Serverless-2016-10-31
+
+FutureSection:
+  Hello: World
+
+Outputs:
+  Test:
+    Value: "Test"
+  Vpc:
+    Value: !Ref Vpc
+  Ec2:
+    Description: Ec2
+    Value: !Ref Ec2
+  Elb1:
+    Value: !GetAtt Elb.DNSName
+  Elb2:
+    Value:
+      Fn::GetAtt: [Elb, DNSName]

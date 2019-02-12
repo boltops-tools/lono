@@ -12,10 +12,7 @@ module Lono
     def data
       return @@data if @@data
 
-      if @check_lono_project && !File.exist?(project_settings_path)
-        puts "ERROR: No settings file at #{project_settings_path}.  Are you sure you are in a project with lono setup?".color(:red)
-        exit 1
-      end
+      project_settings_path = lookup_project_settings_path
 
       # project based settings files
       project = load_file(project_settings_path)
@@ -29,6 +26,27 @@ module Lono
       all_envs = default.deep_merge(user.deep_merge(project))
       all_envs = merge_base(all_envs)
       @@data = all_envs[Lono.env] || all_envs["base"] || {}
+    end
+
+    def lookup_project_settings_path
+      standalone_path = "#{Lono.root}/config/settings.yml"
+      multimode_path = "#{Lono.root}/configs/settings.yml"
+      parent_multimode_path = "#{Lono.root}/../../configs/settings.yml"
+
+      settings_path = if File.exist?(standalone_path)
+                        standalone_path
+                      elsif File.exist?(multimode_path)
+                        multimode_path
+                      elsif File.exist?(parent_multimode_path)
+                        parent_multimode_path
+                      end
+
+      if @check_lono_project && !settings_path
+        puts "ERROR: No lono settings file found.  Are you sure you are in a project with lono setup?".color(:red)
+        exit 1
+      end
+
+      settings_path
     end
 
     # Special helper method to support multiple formats for s3_folder setting.
@@ -74,10 +92,6 @@ module Lono
         all_envs[lono_env] = base.merge(env_settings) unless lono_env == "base"
       end
       all_envs
-    end
-
-    def project_settings_path
-      "#{Lono.root}/config/settings.yml"
     end
   end
 end

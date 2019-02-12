@@ -3,12 +3,14 @@ title: CLI Reference
 ---
 {% include reference.md %}
 
+* [lono blueprint]({% link _reference/lono-blueprint.md %})
+* [lono blueprints]({% link _reference/lono-blueprints.md %})
 * [lono cfn]({% link _reference/lono-cfn.md %})
 * [lono clean]({% link _reference/lono-clean.md %})
 * [lono completion]({% link _reference/lono-completion.md %})
 * [lono completion_script]({% link _reference/lono-completion_script.md %})
+* [lono configure]({% link _reference/lono-configure.md %})
 * [lono generate]({% link _reference/lono-generate.md %})
-* [lono import]({% link _reference/lono-import.md %})
 * [lono new]({% link _reference/lono-new.md %})
 * [lono param]({% link _reference/lono-param.md %})
 * [lono script]({% link _reference/lono-script.md %})

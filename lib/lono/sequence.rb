@@ -6,27 +6,30 @@ require 'bundler'
 class Lono::Sequence < Thor::Group
   include Thor::Actions
 
-  def self.template_name
-    ENV['TEMPLATE'] || 'skeleton'
-  end
-
   def self.source_root
-    starter_projects = File.expand_path("../starter_projects", File.dirname(__FILE__))
-    template_folder = "#{starter_projects}/#{template_name}"
-    unless File.exist?(template_folder)
-      templates = Dir.glob("#{starter_projects}/*")
-        .select { |f| File.directory?(f) }
-        .map { |f| "  #{File.basename(f)}" }
-        .sort
-      puts "The TEMPLATE=#{ENV['TEMPLATE']} you specified does not exist.".color(:red)
-      puts "The available templates are:\n#{templates.join("\n")}"
-      exit
-    end
-    template_folder
+    File.expand_path("../templates/skeleton", File.dirname(__FILE__))
   end
 
 private
   def git_installed?
     system("type git > /dev/null")
+  end
+
+  def run_git?
+    options[:git] && git_installed?
+  end
+
+  def run_git_init
+    return unless run_git?
+    puts "=> Initialize git repo"
+    run("git init")
+  end
+
+  def run_git_commit
+    return unless run_git?
+
+    puts "=> Commit git repo"
+    run("git add .")
+    run("git commit -m 'first commit'")
   end
 end

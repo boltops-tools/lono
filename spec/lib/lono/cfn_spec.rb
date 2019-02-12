@@ -6,17 +6,17 @@ describe Lono::Cfn do
   describe "lono cfn" do
     it "create stack" do
       out = execute("#{@env} exe/lono cfn create example #{@args}")
-      expect(out).to include("Creating")
+      expect(out).to include("Create")
     end
 
     it "update stack" do
       out = execute("#{@env} exe/lono cfn update example #{@args}")
-      expect(out).to include("Updating")
+      expect(out).to include("Update")
     end
 
     it "delete stack" do
       out = execute("#{@env} exe/lono cfn delete example #{@args}")
-      expect(out).to include("Deleted")
+      expect(out).to include("Delete")
     end
 
     it "preview stack" do

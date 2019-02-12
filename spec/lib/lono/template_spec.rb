@@ -9,12 +9,12 @@ describe Lono do
 
   describe "cli specs" do
     it "should generate templates" do
-      out = execute("exe/lono template generate --clean")
+      out = execute("exe/lono template generate example --clean")
       expect(out).to match /Generating CloudFormation templates/
     end
 
     it "should upload templates" do
-      out = execute("exe/lono template upload --noop")
+      out = execute("exe/lono template upload example --noop")
       expect(out).to match /Templates uploaded to s3/
     end
   end

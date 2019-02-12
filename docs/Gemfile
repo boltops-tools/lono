@@ -1,3 +1,4 @@
 source "https://rubygems.org"
 
 gem "jekyll"
+gem "front_matter_parser"

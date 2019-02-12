@@ -1,5 +1,6 @@
 ---
 title: Lono Suffix
+nav_order: 56
 ---
 
 When working with CloudFormation templates and developing the source code, we must often launch stacks repeatedly as we fine tune the stack. Since we cannot launch a stack with a duplicate name it is useful to use a command like this:
@@ -8,9 +9,10 @@ When working with CloudFormation templates and developing the source code, we mu
 
 Lono can automatically add a suffix string to the end of the stack name but use the template name without the suffix string. You can set a suffix on the stack name you create with lono to help improve your development workflow.  Here are the ways to you can set a suffix and their order of precedence from highest to lowest.
 
-1. LONO_SUFFIX=mysuffix
-2. lono cfn current -\-suffix mysuffix
-3. config/settings.yml stack_name_suffix option. More docs in [Settings]({% link _docs/settings.md %})
+1. lono cfn create stack-name -\-suffix=random
+2. LONO_SUFFIX=mysuffix
+3. lono cfn current -\-suffix mysuffix
+4. configs/settings.yml stack_name_suffix option. More docs in [Settings]({% link _docs/configuration/settings.md %})
 
 ## Random Suffix
 
@@ -35,6 +37,4 @@ Random suffixes can help streamlined your development workflow.
 
 In this way, you can create multiple stacks continuously and random suffixes will be appended to the stack name. Then set the current stack name to the one are focused on updating and developing.
 
-<a id="prev" class="btn btn-basic" href="{% link _docs/lono-current.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/starter-templates.md %}">Next Step</a>
-<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
+{% include prev_next.md %}

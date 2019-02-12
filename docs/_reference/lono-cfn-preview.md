@@ -45,6 +45,7 @@ There are two types of "diffs" in the preview.
 [--keep], [--no-keep]           # keep the changeset instead of deleting it afterwards
 [--diff], [--no-diff]           # Show diff of the source code template changes also.
                                 # Default: true
+[--blueprint=BLUEPRINT]         # override convention and specify the template file to use
 [--template=TEMPLATE]           # override convention and specify the template file to use
 [--param=PARAM]                 # override convention and specify the param file to use
 [--lono], [--no-lono]           # invoke lono to generate CloudFormation templates
@@ -54,6 +55,7 @@ There are two types of "diffs" in the preview.
 [--rollback], [--no-rollback]   # rollback
                                 # Default: true
 [--tags=key:value]              # Tags for the stack. IE: name:api-web owner:bob
+[--suffix=SUFFIX]               # Suffix for stack name.
 [--verbose], [--no-verbose]     
 [--noop], [--no-noop]           
 ```

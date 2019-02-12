@@ -15,5 +15,6 @@ upgrade subcommands
 
 * [lono upgrade v3to4]({% link _reference/lono-upgrade-v3to4.md %}) - Upgrade from version 3 to 4.
 * [lono upgrade v4to4_2]({% link _reference/lono-upgrade-v4to4_2.md %}) - Upgrade from version 4.0 to 4.2
+* [lono upgrade v4to5]({% link _reference/lono-upgrade-v4to5.md %}) - Upgrade from version 4.2 to 5.0
 
 

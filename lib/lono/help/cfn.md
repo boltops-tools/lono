@@ -1,6 +1,7 @@
 ## Examples
 
-  lono cfn create my-stack
-  lono cfn preview my-stack
-  lono cfn update my-stack
-  lono cfn delete my-stack
+  lono cfn deploy demo
+  lono cfn create demo
+  lono cfn preview demo
+  lono cfn update demo
+  lono cfn delete demo

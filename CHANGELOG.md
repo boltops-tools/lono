@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [5.0.0]
+- Introduce lono DSL and set as default mode
+- Introduce blueprints concept
+- Restructure project structure
+- Introduce lono cfn deploy command
+- Remove aws\_profiles settings.yml in favor of aws_profile
+- lono upgrade v4to5 command
+
 ## [4.2.7]
 - retain tag values on cfn update operations
 

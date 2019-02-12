@@ -1,23 +1,25 @@
+require 'active_support/core_ext/hash'
 require 'active_support/core_ext/string'
+require 'cfn_camelizer'
 require 'fileutils'
 require 'json'
 require 'memoist'
+require 'plissken'
 require 'rainbow/ext/string'
 require 'render_me_pretty'
 require 'yaml'
 
-# vendor because need https://github.com/futurechimp/plissken/pull/6 to be merged
-$:.unshift(File.expand_path("../../vendor/plissken/lib", __FILE__))
-require "plissken"
-
 $:.unshift(File.expand_path('../', __FILE__))
 module Lono
+  autoload :Blueprint, 'lono/blueprint'
   autoload :Cfn, 'lono/cfn'
   autoload :Clean, 'lono/clean'
   autoload :CLI, 'lono/cli'
   autoload :Command, 'lono/command'
   autoload :Completer, 'lono/completer'
   autoload :Completion, 'lono/completion'
+  autoload :Configure, 'lono/configure'
+  autoload :Conventions, 'lono/conventions'
   autoload :Core, 'lono/core'
   autoload :Env, 'lono/env'
   autoload :FileUploader, 'lono/file_uploader'
@@ -37,3 +39,5 @@ module Lono
 
   extend Core
 end
+
+Lono.set_aws_profile!

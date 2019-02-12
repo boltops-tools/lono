@@ -1,4 +1,4 @@
 ## Examples
 
-  lono template generate --help
-  lono template bashify --help
+    lono template generate --help
+    lono template bashify --help

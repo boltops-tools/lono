@@ -1,0 +1,8 @@
+---
+# Simple Starter Example
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t3.micro
+      ImageId: ami-05b186cbeb4bd0170 # us-west-2 Amazon Linux 2 AMI (HVM), SSD Volume Type

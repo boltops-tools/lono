@@ -1,5 +1,6 @@
 ---
 title: Articles
+nav_order: 68
 ---
 
 ## Articles On Lono and CloudFormation
@@ -24,6 +25,4 @@ title: Articles
 * [A Simple Introduction to AWS CloudFormation Part 4: Change Sets = Dry Run Mode
 ](https://blog.boltops.com/2017/04/07/a-simple-introduction-to-aws-cloudformation-part-4-change-sets-dry-run-mode)
 
-<a id="prev" class="btn btn-basic" href="{% link examples.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link reference.md %}">Next Step</a>
-<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>
+{% include prev_next.md %}

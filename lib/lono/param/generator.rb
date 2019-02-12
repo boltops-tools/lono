@@ -1,47 +1,88 @@
 class Lono::Param::Generator
-  def self.generate_all(options)
-    puts "Generating parameter files:"
+  include Lono::Blueprint::Root
+  include Lono::Conventions
 
-    params = param_names("base") + param_names(Lono.env)
-    params.uniq.each do |name|
-      param = Lono::Param::Generator.new(name, options)
-      param.generate
+  attr_reader :env_path, :base_path # set when generate is called
+  def initialize(blueprint, options={})
+    @blueprint, @options = blueprint, options
+    set_blueprint_root(@blueprint)
+    @template, @param = template_param_convention(options)
+  end
+
+  def puts_param_message(type)
+    path = send("#{type}_path")
+    return unless path
+    if File.exist?(path)
+      pretty_path = path.sub("#{Lono.root}/",'')
+      puts "Using param: #{pretty_path}".color(:yellow)
     end
   end
 
-  # Returns param names
-  # Example:
-  # Given params:
-  #   params/base/a.txt params/base/b.txt params/base/c.txt
-  # Returns:
-  #   param_names("base") => ["a", "b", "c"]
-  def self.param_names(folder)
-    base_folder = "#{Lono.config.params_path}/#{folder}" # Example: "./params/base"
-    Dir.glob("#{base_folder}/**/*.txt").map do |path|
-      path.sub("#{base_folder}/", '').sub('.txt','')
+  # Lookup precedence:
+  #
+  #   configs/BLUEPRINT/params/development/TEMPLATE/PARAM.txt
+  #   configs/BLUEPRINT/params/development/PARAM.txt
+  #   configs/BLUEPRINT/params/development.txt
+  #
+  def lookup_param_file(root: Lono.root, env: Lono.env)
+    long_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@template}/#{@param}.txt"
+    medium_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}.txt"
+    short_form = "#{root}/configs/#{@blueprint}/params/#{env}.txt"
+
+    if ENV['LONO_PARAM_DEBUG']
+      puts "Lono.blueprint_root #{Lono.blueprint_root}"
+      puts "long_form #{long_form}"
+      puts "medium_form #{medium_form}"
+      puts "short_form #{short_form}"
+    end
+
+    return long_form if File.exist?(long_form) # always consider this first because its so explicit
+
+    # All 3 are the same
+    if @blueprint == @template && @template == @param
+      return medium_form if File.exist?(medium_form) # higher precedence between longer but short form should be encouraged
+      return short_form if File.exist?(short_form)
+      return # cannot find a param file
+    end
+
+    # Only template and param are the same
+    if @template == @param
+      return medium_form if File.exist?(medium_form) # only consider medium form
+      return # cannot find a param file
     end
   end
 
-  def initialize(name, options)
-    @name = "#{Lono.env}/#{name}"
-    @options = options
-    @env_path = options[:path] || "#{Lono.config.params_path}/#{@name}.txt"
-    @base_path = @env_path.sub("/#{Lono.env}/", "/base/")
+  def lookup_paths
+    @base_path = lookup_param_file(env: "base")
+    @env_path = lookup_param_file(env: Lono.env)
+
+    if ENV['LONO_PARAM_DEBUG']
+      puts "  @base_path #{@base_path.inspect}"
+      puts "  @env_path #{@env_path.inspect}"
+    end
+
+    [@base_path, @env_path]
   end
 
   def generate
-    # useful option for lono cfn
-    return if @options[:allow_no_file] && !source_exist?
+    puts "Generating parameter files for blueprint #{@blueprint.color(:green)}:"
+
+    @base_path, @env_path = lookup_paths
+
+    return unless @base_path || @env_path
+
+    # useful option for lono cfn, since some templates dont require params
+    return if @options[:allow_not_exists] && !source_exist?
 
     if source_exist?
       contents = process_erb
       data = convert_to_cfn_format(contents)
       json = JSON.pretty_generate(data)
       write_output(json)
-      # Example: @name = stag/ecs/private
-      #          pretty_name = ecs/private
-      pretty_name = @name.sub("#{Lono.env}/", '')
-      puts "  #{output_path}" unless @options[:mute]
+      unless @options[:mute]
+        short_output_path = output_path.sub("#{Lono.root}/","")
+        puts "  #{short_output_path}"
+      end
     else
       puts "#{@base_path} or #{@env_path} could not be found?  Are you sure it exist?"
       exit 1
@@ -49,10 +90,21 @@ class Lono::Param::Generator
     json
   end
 
+  # Checks both base and source path for existing of the param file.
+  # Example:
+  #   params/base/mystack.txt - base path
+  #   params/production/mystack.txt - source path
+  def source_exist?
+    @base_path && File.exist?(@base_path) ||
+    @env_path && File.exist?(@env_path)
+  end
+
   # useful for when calling CloudFormation via the aws-sdk gem
   def params(casing = :underscore)
+    @base_path, @env_path = lookup_paths
+
     # useful option for lono cfn
-    return {} if @options[:allow_no_file] && !source_exist?
+    return {} if @options[:allow_not_exists] && !source_exist?
 
     contents = process_erb
     convert_to_cfn_format(contents, casing)
@@ -61,7 +113,7 @@ class Lono::Param::Generator
   # Reads both the base source and env source and overlay the two
   # Example 1:
   #   params/base/mystack.txt - base path
-  #   params/prod/mystack.txt - env path
+  #   params/production/mystack.txt - env path
   #
   #   the base/mystack.txt gets combined with the prod/mystack.txt
   #   it produces a final prod/mystack.txt
@@ -72,17 +124,21 @@ class Lono::Param::Generator
   #   the base/mystack.txt is used to produced a prod/mystack.txt
   #
   # Example 3:
-  #   params/prod/mystack.txt - env path
+  #   params/production/mystack.txt - env path
   #
   #   the prod/mystack.txt is used to produced a prod/mystack.txt
   def process_erb
     contents = []
     contents << render_erb(@base_path)
     contents << render_erb(@env_path)
-    contents.compact.join("\n")
+    result = contents.compact.join("\n")
+    # puts "process_erb result".color(:yellow)
+    # puts result
+    result
   end
 
   def render_erb(path)
+    return unless path
     if File.exist?(path)
       RenderMePretty.result(path, context: context)
     end
@@ -91,15 +147,7 @@ class Lono::Param::Generator
   # Context for ERB rendering.
   # This is where we control what references get passed to the ERB rendering.
   def context
-    @context ||= Lono::Template::Context.new(@options)
-  end
-
-  # Checks both base and source path for existing of the param file.
-  # Example:
-  #   params/base/mystack.txt - base path
-  #   params/prod/mystack.txt - source path
-  def source_exist?
-    File.exist?(@base_path) || File.exist?(@env_path)
+    @context ||= Lono::Template::Context.new(@blueprint, @options)
   end
 
   def parse_contents(contents)
@@ -147,8 +195,14 @@ class Lono::Param::Generator
   end
 
   def output_path
-    name = @name.sub("#{Lono.env}/", "") # remove the Lono.env from the output path
-    "#{Lono.config.output_path}/params/#{name}.json".sub(/\.\//,'')
+    output = Lono.config.output_path.sub("#{Lono.root}/","")
+    path = if @base_path && !@env_path
+             # Handle case when base config exist but the env config does not
+             @base_path.sub("configs", output).sub("base", Lono.env)
+           else
+             @env_path.sub("configs", output)
+           end
+    path.sub(/\.txt$/,'.json')
   end
 
   def write_output(json)

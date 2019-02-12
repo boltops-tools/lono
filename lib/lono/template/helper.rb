@@ -5,7 +5,7 @@ require "aws-sdk-core"
 #
 # @options gets passed into:
 #
-#   Lono::Template::Context.new(@options)
+#   Lono::Template::Context.new(blueprint, @options)
 module Lono::Template::Helper
   # Bash code that is meant to included in user-data
   def extract_scripts(options={})
@@ -55,23 +55,24 @@ BASH_CODE
   end
 
   def scripts_s3_path
-    upload = Lono::Script::Upload.new
+    upload = Lono::Script::Upload.new(@blueprint)
     upload.s3_dest
   end
 
   def template_s3_path(template_name)
     check_s3_folder_settings!
     # high jacking Upload for useful s3_https_url method
-    template_path = "#{template_name}.yml"
-    upload = Lono::Template::Upload.new(@options)
+    template_path = "output/#{@blueprint}/templates/#{template_name}.yml"
+    upload = Lono::Template::Upload.new(@blueprint, @options)
     upload.s3_https_url(template_path)
   end
 
   def template_params(param_name)
     generator_options = {
-      allow_no_file: true
+      allow_not_exists: true
     }.merge(@options)
-    generator = Lono::Param::Generator.new(param_name, generator_options)
+    generator_options["param"] = param_name
+    generator = Lono::Param::Generator.new(@blueprint, generator_options)
     # do not generate because lono cfn calling logic already generated it we only need the values
     params = generator.params    # Returns Array in underscore keys format
     # convert Array to simplified hash structure
@@ -126,8 +127,8 @@ BASH_CODE
     s3_folder = setting.s3_folder
     return nil unless s3_folder
 
-    uploader = Lono::FileUploader.new
-    uploader.md5_key("#{Lono.root}/app/files/#{name}")
+    uploader = Lono::FileUploader.new(@blueprint)
+    uploader.md5_key("#{Lono.blueprint_root}/app/files/#{name}")
   end
 
   def current_region

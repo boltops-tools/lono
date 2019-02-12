@@ -3,50 +3,64 @@ module Lono
 
     long_desc Help.text(:new)
     New.cli_options.each do |args|
-      option *args
+      option(*args)
     end
     register(New, "new", "new NAME", "Generates new lono project.")
 
-    desc "import SOURCE", "Imports CloudFormation template and lono-fies it."
-    long_desc Help.text(:import)
-    option :name, default: nil, desc: "final name of downloaded template without extension"
-    option :casing, default: "dasherize", desc: "camelcase or dasherize the template name"
-    option :summary, default: true, type: :boolean, desc: "provide template summary after import"
-    def import(source)
-      Importer.new(source, options).run
+    long_desc Help.text(:blueprint)
+    Blueprint.cli_options.each do |args|
+      option(*args)
+    end
+    register(Blueprint, "blueprint", "blueprint NAME", "Generates new lono blueprint.")
+
+    desc "blueprints", "Lists available blueprints in the project."
+    long_desc Help.text(:blueprints)
+    def blueprints
+      Blueprint::List.available
     end
 
     desc "generate", "Generate both CloudFormation templates and parameters files."
     long_desc Help.text(:generate)
-    option :clean, type: :boolean, default: true, desc: "remove all output files before generating"
+    option :clean, type: :boolean, default: false, desc: "remove all output files before generating"
     option :quiet, type: :boolean, desc: "silence the output"
-    def generate
-      puts "Generating CloudFormation templates, parameters, and scripts"
-      Script::Build.new(options).run
-      Template::DSL.new(options).run
-      Param::Generator.generate_all(options)
+    def generate(blueprint=nil)
+      Blueprint::Find.one_or_all(blueprint).each do |b|
+        Script::Build.new(b, options).run
+        Template::Generator.new(b, options).run
+        Param::Generator.new(b, options).generate
+      end
     end
 
     desc "user_data NAME", "Generates user_data script for debugging."
     long_desc Help.text(:user_data)
     option :clean, type: :boolean, default: true, desc: "remove all output/user_data files before generating"
-    def user_data(name)
-      Script::Build.new(options).run
-      UserData.new(options.merge(name: name)).generate
+    def user_data(blueprint, name)
+      Script::Build.new(blueprint, options).run
+      UserData.new(blueprint, options.merge(name: name)).generate
     end
 
-    desc "summary STACK", "Prints summary of CloudFormation template."
+    desc "summary BLUEPRINT TEMPLATE", "Prints summary of CloudFormation templates."
     long_desc Help.text("summary")
-    def summary(name)
-      Lono::Inspector::Summary.new(name, options).run
+    def summary(blueprint=nil, template=nil)
+      Lono::Inspector::Summary.new(blueprint, template, options).run
     end
 
     desc "xgraph STACK", "Graphs dependencies tree of CloudFormation template resources."
     long_desc Help.text("xgraph")
     option :display, type: :string, desc: "graph or text", default: "graph"
     option :noop, type: :boolean, desc: "noop mode"
-    def xgraph(name)
-      Lono::Inspector::Graph.new(name, options).run
+    def xgraph(blueprint, template=nil)
+      template ||= blueprint
+      Lono::Inspector::Graph.new(blueprint, template, options).run
+    end
+
+    desc "configure", "Configure blueprint with starter values."
+    option :defaults, type: :boolean, desc: "Bypass prompt and use the blueprints configure default values."
+    option :param, desc: "override convention and specify the param file to use"
+    option :seed, default: :convention, desc: "path to seed file to allow prompts bypass. yaml format."
+    option :template, desc: "override convention and specify the template file to use"
+    def configure(blueprint)
+      Configure.new(blueprint, options).run
     end
 
     desc "clean", "Removes `output` folder."

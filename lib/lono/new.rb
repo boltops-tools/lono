@@ -1,9 +1,7 @@
 module Lono
   class New < Sequence
     autoload :Helper, 'lono/new/helper'
-    autoload :Message, 'lono/new/message'
     include Helper
-    include Message
 
     argument :project_name
 
@@ -13,19 +11,20 @@ module Lono
     # Also options from the cli can be pass through to here
     def self.cli_options
       [
-        [:force, type: :boolean, desc: "Bypass overwrite are you sure prompt for existing files."],
         [:bundle, type: :boolean, default: true, desc: "Runs bundle install on the project"],
+        [:force, type: :boolean, desc: "Bypass overwrite are you sure prompt for existing files."],
         [:git, type: :boolean, default: true, desc: "Git initialize the project"],
+        [:type, default: "dsl", desc: "Blueprint type: dsl or erb"],
       ]
     end
 
     cli_options.each do |args|
-      class_option *args
+      class_option(*args)
     end
 
     # for specs
     def set_cwd
-      @cwd = ENV['TEST'] ? File.dirname(Lono.root) : Dir.pwd
+      @cwd = Dir.pwd
     end
 
     def create_project
@@ -33,17 +32,9 @@ module Lono
       directory ".", "#{@cwd}/#{project_name}"
     end
 
-    def create_empty_directories
-      meths = Lono::Core::Config::PATHS.keys
-      meths.each do |meth|
-        path = "#{@cwd}/#{project_name}/#{Lono.config.send(meth)}"
-        next if File.exist?(path)
-        if ENV['TEST']
-          empty_directory Lono.config.send(meth)
-        else
-          empty_directory path
-        end
-      end
+    def create_starter_blueprint
+      # https://github.com/erikhuda/thor/wiki/Invocations
+      Lono::Blueprint.start(["demo", "--from-new", "--type", @options[:type], "--project-name", project_name])
     end
 
     # After this commands are executed with the newly created project
@@ -57,6 +48,11 @@ module Lono
       chmod("exe", 0755 & ~File.umask, verbose: false) if File.exist?("exe")
     end
 
+    def git_init
+      return if File.exist?(".git") # this is a clone repo
+      run_git_init
+    end
+
     def bundle_install
       return unless options[:bundle]
 
@@ -66,19 +62,36 @@ module Lono
       end
     end
 
-    def git_init
-      return if !options[:git]
-      return unless git_installed?
-      return if File.exist?(".git") # this is a clone repo
-
-      puts "=> Initialize git repo"
-      run("git init")
-      run("git add .")
-      run("git commit -m 'first commit'")
+    def git_commit
+      run_git_commit
     end
 
-    def final_message
-      puts welcome_message
+    def welcome_message
+      puts <<~EOL
+        #{"="*64}
+        Congrats 🎉 You have successfully created a lono project.  A starter demo blueprint was created
+        and is at blueprints/demo.  Check things out by going into the created infra folder.
+
+          cd #{project_name}
+
+        To generate the blueprint templates without launching a stack, you can run:
+
+          lono generate demo
+
+        The generated files are created at `output/demo/templates` and `output/demo/params`.
+
+        To deploy the CloudFormation stack:
+
+          lono cfn deploy my-demo --blueprint demo
+
+        If you name the stack according to conventions, you can simply run:
+
+          lono cfn deploy demo
+
+        To list and create additional blueprints refer to http://lono.cloud/docs/blueprints
+
+        More info: http://lono.cloud/
+      EOL
     end
   end
 end

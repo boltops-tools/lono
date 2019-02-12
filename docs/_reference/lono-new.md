@@ -13,55 +13,61 @@ Generates new lono project.
 
 ## Examples
 
-    lono new infra # skeleton project with barebones structure
-    TEMPLATE=ec2 lono new infra # creates a single server
-    TEMPLATE=autoscaling lono new infra
+    lono new infra # starter project with demo blueprint
 
 By default, `lono new` generates a skeleton project. Use `TEMPLATE` to generate different starter projects. List of the [starter templates](https://github.com/tongueroo/lono/tree/master/lib/starter_projects).
 
 ## Example Output
 
-    $ lono new ec2
-    => Creating new project called ec2.
-          create  ec2
-          create  ec2/.gitignore
-          create  ec2/Gemfile
-          create  ec2/Guardfile
-          create  ec2/README.md
-          create  ec2/app/definitions/base.rb
-          create  ec2/config/settings.yml
-          create  ec2/welcome.txt
-          create  ec2/app/helpers
-          create  ec2/app/partials
-          create  ec2/app/scripts
-          create  ec2/app/templates
-          create  ec2/app/user_data
-          create  ec2/config/params
-          create  ec2/config/variables
-          create  ec2/output
-    => Installing dependencies with: bundle install
+    $ lono new infra
+    => Creating new project called infra.
+          create  infra
+          create  infra/.gitignore
+          create  infra/Gemfile
+          create  infra/Guardfile
+          create  infra/README.md
+          create  infra/configs/settings.yml
+    => Creating new blueprint called demo.
+          create  infra/blueprints/demo
+          create  infra/blueprints/demo/demo.gemspec
+          create  infra/blueprints/demo/.gitignore
+          create  infra/blueprints/demo/.lono/config.yml
+          create  infra/blueprints/demo/Gemfile
+          create  infra/blueprints/demo/README.md
+          create  infra/blueprints/demo/setup/configs.rb
+           exist  infra/blueprints/demo
+          create  infra/blueprints/demo/app/templates/demo.rb
+          create  infra/blueprints/demo/app/user_data/bootstrap.sh
+           exist  infra/blueprints/demo/app/templates
+           exist  infra
+          create  infra/configs/demo/params/base.txt
+          create  infra/configs/demo/params/development.txt
+          create  infra/configs/demo/variables/base.rb
+          create  infra/configs/demo/variables/development.rb
     => Initialize git repo
+    => Installing dependencies with: bundle install
+    => Commit git repo
     ================================================================
-    Congrats 🎉 You have successfully created a lono project.
+    Congrats  You have successfully created a lono project.  A starter demo blueprint was created
+    and is at blueprints/demo.  Check things out by going into the created infra folder.
 
-    Cd into your project and check things out:
+      cd infra
 
-      cd ec2
+    To generate the blueprint templates without launching a stack, you can run:
 
-    Add and edit templates for your project.  When you are ready to launch a CloudFormation stack run:
+      lono generate demo
 
-      lono cfn create STACK_NAME
+    The generated files are created at `output/demo/templates` and `output/demo/params`.
 
-    You can also get started quickly by importing other CloudFormation templates into lono.  For example:
+    To deploy the CloudFormation stack:
 
-      lono import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/EC2InstanceWithSecurityGroupSample.template --name ec2
+      lono cfn deploy my-demo --blueprint demo
 
-    To re-generate your templates without launching a stack, you can run:
+    If you name the stack according to conventions, you can simply run:
 
-      lono generate
+      lono cfn deploy demo
 
-    The generated CloudFormation templates are in the output/templates folder.
-    The generated stack parameters are in the output/params folder.  Here's the command with some output filtered to focus on learning.
+    To list and create additional blueprints refer to http://lono.cloud/docs/blueprints
 
     More info: http://lono.cloud/
     $
@@ -70,10 +76,12 @@ By default, `lono new` generates a skeleton project. Use `TEMPLATE` to generate 
 ## Options
 
 ```
-[--force]                  # Bypass overwrite are you sure prompt for existing files.
 [--bundle], [--no-bundle]  # Runs bundle install on the project
                            # Default: true
+[--force]                  # Bypass overwrite are you sure prompt for existing files.
 [--git], [--no-git]        # Git initialize the project
                            # Default: true
+[--type=TYPE]              # Blueprint type: dsl or erb
+                           # Default: dsl
 ```
 

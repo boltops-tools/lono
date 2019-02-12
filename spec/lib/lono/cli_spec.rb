@@ -7,19 +7,14 @@ describe Lono::CLI do
       # using another name for the lono project because we call
       # exe/lono new lono_project for all specs via the RSpec.config already
       # NOTE: LONO_ROOT modified in the spec_helper.rb
-      execute("exe/lono new test_project --no-bundle")
-      exist = File.exist?("tmp/test_project/config/settings.yml")
+      execute("cd tmp && ../exe/lono new test_project --no-bundle")
+      exist = File.exist?("tmp/test_project/configs/settings.yml")
       expect(exist).to be true
       FileUtils.rm_rf("tmp/test_project")
     end
-
-    it "import should download template" do
-      out = execute("exe/lono import spec/fixtures/raw_templates/example.json --name ex")
-      expect(out).to match(/=> Imported CloudFormation template/)
-    end
   end
 
-  # Ensure the example starter project is always able to produce output/templates.
+  # # Ensure the example starter project is always able to produce output/templates.
   context "project generated from lono new command" do
     before(:all) do
       # hack to so we don't have to change LONO_ROOT
@@ -34,14 +29,13 @@ describe Lono::CLI do
 
     it "generate should build templates" do
       # NOTE: LONO_ROOT modified in the spec_helper.rb
-      execute("exe/lono new lono_project --no-bundle")
+      execute("cd tmp && ../exe/lono new lono_project --no-bundle")
       execute("exe/lono generate")
       success = $?.exitstatus == 0
       expect(success).to be true
 
-      exist = File.exist?("#{Lono.root}/config/settings.yml")
+      exist = File.exist?("#{Lono.root}/configs/settings.yml")
       expect(exist).to be true
     end
   end
 end
-

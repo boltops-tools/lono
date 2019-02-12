@@ -1,5 +1,5 @@
 ---
-title: "Tutorial EC2: Edit Natively"
+title: 'Tutorial EC2: Edit Natively'
 ---
 
 ## Native CloudFormation Logical Constructs Approach
@@ -75,7 +75,3 @@ We have successfully edited existing CloudFormation templates and taken 2 approa
 2. Using Native CloudFormation Logical Constructs
 
 A significant difference is when the conditional logic gets determined. When we use standard CloudFormation constructs, the logical decisions are made at **run-time**. When we use lono to produce multiple templates, it happens at **compile time**.  Whether this is good or bad is really up to how you use it. Remember, "With great power comes great responsibility."
-
-<a id="prev" class="btn btn-basic" href="{% link _docs/tutorials/ec2/edit-lono.md %}">Back</a>
-<a id="next" class="btn btn-primary" href="{% link _docs/tutorials/ec2/cfn-delete.md %}">Next Step</a>
-<p class="keyboard-tip">Pro tip: Use the <- and -> arrow keys to move back and forward.</p>

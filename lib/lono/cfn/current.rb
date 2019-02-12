@@ -3,7 +3,7 @@ require "yaml"
 class Lono::Cfn
   class Current
     def initialize(options={})
-      Lono::ProjectChecker.check_lono_project
+      Lono::ProjectChecker.check
       @options = options
       @file = ".lono/current"
       @path = "#{Lono.root}/#{@file}"

@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - uname -a
+      - pwd
+      - ls
+      - env
+      - ls /etc/*release*
+      - cat /etc/*release*
+      - whoami
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building project...
+      - uptime
+      - .codebuild/acceptance.sh
+artifacts:
+  files:
+    - result.txt
