@@ -1,22 +1,22 @@
 ---
-title: Pro vs Community Edition
+title: Community Edition vs Pro
 nav_order: 6
 ---
 
+Lono Community Edition is a free version of Lono.  It is available for anyone to use under a [Source Available license](https://www.boltops.com/boltops-community-license).
+
 Lono Pro is a paid version that adds additional features. It is available with a [BoltOps Pro subscription](https://boltops.com/pro) and to select BoltOps customers.
 
-Lono Community Edition is a free version of Lono.  It is available for anyone to use under an [Source Available license](https://www.boltops.com/boltops-community-license).
+## What's the Difference Between the Community Edition vs Pro?
 
-## What's the Difference Between Pro vs Community Edition?
-
-&nbsp; | Pro | Community
+&nbsp; | Community | Pro
 --- | --- | ---
 CFN Lifecycle commands | ![](/img/features/yes.svg) | ![](/img/features/yes.svg)
 ERB Template Generator | ![](/img/features/yes.svg) | ![](/img/features/yes.svg)
 DSL Generator | ![](/img/features/yes.svg) | ![](/img/features/yes.svg)
 Reusable Blueprints | ![](/img/features/yes.svg) | ![](/img/features/yes.svg)
-Import and Convert commands | ![](/img/features/yes.svg) | ![](/img/features/no.svg)
-Access to BoltOps Pro blueprints | ![](/img/features/yes.svg) | ![](/img/features/no.svg)
+Import and Convert commands | ![](/img/features/no.svg) | ![](/img/features/yes.svg)
+Access to BoltOps Pro blueprints | ![](/img/features/no.svg) | ![](/img/features/yes.svg)
 
 ## What are BoltOps Pro Blueprints?
 
