@@ -4,7 +4,7 @@ require_relative "lib/lono/version"
 Gem::Specification.new do |gem|
   gem.authors       = ["Tung Nguyen"]
   gem.email         = ["tongueroo@gmail.com"]
-  gem.summary       = "Lono is a CloudFormation Framework Tool"
+  gem.summary       = "Powerful CloudFormation Framework"
   gem.homepage      = "http://github.com/tongueroo/lono"
 
   vendor_files       = Dir.glob("vendor/**/*")
@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.name          = "lono"
   gem.require_paths = ["lib"]
   gem.version       = Lono::VERSION
-  gem.license       = "MIT"
+  gem.license       = "https://boltops.com/boltops-community-license"
 
   gem.add_dependency "activesupport"
   gem.add_dependency "aws-sdk-cloudformation"
