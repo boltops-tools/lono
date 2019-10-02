@@ -82,7 +82,8 @@ module Lono
 
     desc "version", "Prints version"
     def version
-      puts VERSION
+      puts "Lono: #{VERSION}"
+      puts "Lono Pro Addon: #{Lono.pro_version}"
     end
 
     desc "template SUBCOMMAND", "template subcommands"
