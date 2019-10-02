@@ -1,5 +1,8 @@
 describe Lono::CLI do
   context "general" do
+    before(:all) do
+      FileUtils.rm_rf("tmp/test_project")
+    end
     it "new generate new project" do
       # using another name for the lono project because we call
       # exe/lono new lono_project for all specs via the RSpec.config already
