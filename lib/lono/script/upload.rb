@@ -1,8 +1,9 @@
-require "aws-sdk-s3"
 require "filesize"
 
 class Lono::Script
   class Upload < Base
+    include Lono::AwsServices
+
     def run
       Lono::ProjectChecker.check
       return unless scripts_built?
@@ -33,19 +34,12 @@ class Lono::Script
       "#{dest_folder}/#{File.basename(tarball_path)}"
     end
 
-    # Example:
-    #   s3_folder: s3://infra-bucket/cloudformation
-    #   bucket_name: infra-bucket
     def bucket_name
-      s3_folder.sub('s3://','').split('/').first
+      Lono::S3::Bucket.name
     end
 
-    # Removes s3://bucket-name and adds Lono.env. Example:
-    #   s3_folder: s3://infra-bucket/cloudformation
-    #   bucket_name: cloudformation/development/scripts
     def dest_folder
-      folder = s3_folder.sub('s3://','').split('/')[1..-1].join('/')
-      "#{folder}/#{Lono.env}/scripts"
+      "#{Lono.env}/scripts"
     end
 
     # Scripts are only built if the app/scripts folder is non empty
@@ -55,16 +49,6 @@ class Lono::Script
 
     def tarball_path
       IO.read(SCRIPTS_INFO_PATH).strip
-    end
-
-    # s3_folder example:
-    def s3_folder
-      setting = Lono::Setting.new
-      setting.s3_folder
-    end
-
-    def s3_resource
-      @s3_resource ||= Aws::S3::Resource.new
     end
 
     # http://stackoverflow.com/questions/4175733/convert-duration-to-hoursminutesseconds-or-similar-in-rails-3-or-ruby

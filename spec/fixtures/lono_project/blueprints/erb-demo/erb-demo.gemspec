@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.summary       = "Write a short summary because it's required."  # TODO: Change me
   spec.description   = "Write a longer description or delete this line."  # TODO: Change me
   spec.homepage      = "https://github.com/user/repo"  # TODO: Change me
-  spec.license       = "MIT"
+  spec.license       = "https://www.boltops.com/boltops-community-license"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.

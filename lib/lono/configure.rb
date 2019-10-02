@@ -3,9 +3,6 @@ require "fileutils"
 module Lono
   class Configure
     include Blueprint::Root
-    autoload :AwsServices, "lono/configure/aws_services"
-    autoload :Base, "lono/configure/base"
-    autoload :Helpers, "lono/configure/helpers"
 
     def initialize(blueprint, options)
       @blueprint, @options = blueprint, options

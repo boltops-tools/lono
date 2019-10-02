@@ -2,7 +2,6 @@ aws_template_format_version "2010-09-09"
 description "Example from BoltOps."
 metadata(
   authors: { description: "Tung Nguyen (tung@boltops.com)" },
-  license: "MIT"
 )
 
 parameter :key_name

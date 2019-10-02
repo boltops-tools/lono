@@ -84,7 +84,7 @@ class Lono::Configure
       vpc = find_vpc(vpc_id)
       unless vpc
         # sometimes even default VPC has been deleted
-        abort "Cannot find subnets because cannot find vpc #{@vpc_id} Please double check that is the right vpc"
+        abort "ERROR: Cannot find subnets because cannot find vpc #{@vpc_id} Please double check that is the right vpc".color(:red)
       end
 
       resp = ec2.describe_subnets(filters: [{name: 'vpc-id', values: [vpc.vpc_id]}])

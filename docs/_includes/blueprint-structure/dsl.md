@@ -6,7 +6,7 @@
     │   └── user_data
     │       └── bootstrap.sh
     ├── demo.gemspec
-    ├── .lono
+    ├── .meta
     │   └── config.yml
     └── setup
         └── configs.rb
@@ -21,5 +21,5 @@ app/helpers | Define your custom helpers here. The custom helpers are made avail
 app/templates | Where CloudFromation templates are defined.  Refer to the [DSL docs]({% link _docs/dsl.md %}) for the syntax.
 app/user_data | Where user_data scripts live. You can include the user data script into your code with the user_data [builtin helper]({% link _docs/dsl/components/builtin-helpers.md %})
 demo.gemspec | Where the gem specs and dependencies are defined.  Blueprints make use of gemspecs to handle dependencies.
-.lono/config.yml | Where the blueprint_name and blueprint_type.  The blueprint name is determined in here, not by the gem name or folder name.
+.meta/config.yml | Where the blueprint_name and blueprint_type is set.  The blueprint name is determined in here, not by the gem name or folder name.
 setup/configs.rb | Where a setup script can be defined to work with [lono configure]({% link _docs/configuration/lono-configure.md %}).

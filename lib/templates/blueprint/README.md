@@ -15,7 +15,7 @@ If the blueprint has implemented it, you can use `lono configure` to quickly con
 
 To additional environments:
 
-    LONO_ENV=production lono configure BLUEPRINT --args key1:value1 key2:value2
+    LONO_ENV=production  lono configure BLUEPRINT --args key1:value1 key2:value2
 
 The generated files in `config/BLUEPRINT` folder look something like this:
 
@@ -34,4 +34,4 @@ The PARAM depends on how the blueprint was authored.  The PARAM conventionally d
 Use the [lono cfn deploy](http://lono.cloud/reference/lono-cfn-deploy/) command to deploy. Example:
 
     LONO_ENV=development lono cfn deploy BLUEPRINT-development --blueprint BLUEPRINT --iam
-    LONO_ENV=production lono cfn deploy BLUEPRINT-production --blueprint BLUEPRINT --iam
+    LONO_ENV=production  lono cfn deploy BLUEPRINT-production --blueprint BLUEPRINT --iam

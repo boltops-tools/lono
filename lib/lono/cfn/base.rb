@@ -3,7 +3,7 @@ require "lono"
 class Lono::Cfn
   class Base
     extend Memoist
-    include AwsService
+    include Lono::AwsServices
     include Lono::Blueprint::Root
     include Lono::Conventions
     include Suffix
@@ -50,16 +50,54 @@ class Lono::Cfn
           retry
         else
           puts "Exited"
-          exit 1
+          exit
         end
       rescue Aws::CloudFormation::Errors::ValidationError => e
-        puts "ERROR: #{e}".color(:red)
-        puts e.message
-        exit 1
+        if e.message.include?("No updates") # No updates are to be performed.
+          puts "WARN: #{e.message}".color(:yellow)
+        elsif e.message.include?("UPDATE_ROLLBACK_FAILED") # https://amzn.to/2IiEjc5
+          continue_update_rollback
+        else
+          puts "ERROR: #{e.message}".color(:red)
+          exit 1
+        end
       end
 
       return unless @options[:wait]
-      status.wait unless @options[:noop]
+
+      success = false
+      if !@options[:noop]
+        success = status.wait
+      end
+
+      # exit code for cfn.rb cli, so there's less duplication
+      exit 1 unless success
+      success
+    end
+
+    def continue_update_rollback_sure?
+      puts <<~EOL
+        The stack is in the UPDATE_ROLLBACK_FAILED state. More info here: https://amzn.to/2IiEjc5
+        Would you like to try to continue the update rollback? (y/N)
+      EOL
+
+      sure = @options[:sure] ? "y" : $stdin.gets
+      unless sure =~ /^y/
+        puts "Exiting without continuing the update rollback."
+        exit 0
+      end
+    end
+
+    def continue_update_rollback
+      continue_update_rollback_sure?
+      params = {stack_name: @stack_name}
+      show_parameters(params, "cfn.continue_update_rollback")
+      begin
+        cfn.continue_update_rollback(params)
+      rescue Aws::CloudFormation::Errors::ValidationError => e
+        puts "ERROR5: #{e.message}".red
+        exit 1
+      end
     end
 
     def delete_rollback_stack
@@ -68,7 +106,7 @@ class Lono::Cfn
     end
 
     def status
-      @status ||= Status.new(@stack_name)
+      @status ||= Cfn::Status.new(@stack_name)
     end
 
     def prompt_for_iam(capabilities)
@@ -89,11 +127,17 @@ class Lono::Cfn
       return @@generate_all if @@generate_all
 
       if @options[:lono]
+        ensure_s3_bucket_exist
+
         build_scripts
-        generate_templates
+        generate_templates # generates with some placeholders for build_files IE: file://app/files/my.rb
+        build_files # builds app/files to output/BLUEPRINT/files
+
+        post_process_templates
+
         unless @options[:noop]
-          upload_scripts
           upload_files
+          upload_scripts
           upload_templates
         end
       end
@@ -123,28 +167,38 @@ class Lono::Cfn
     end
     memoize :param_generator
 
+    def ensure_s3_bucket_exist
+      bucket = Lono::S3::Bucket.new
+      return if bucket.exist?
+      bucket.create
+    end
+
     def build_scripts
       Lono::Script::Build.new(@blueprint, @options).run
+    end
+
+    def build_files
+      Lono::AppFile::Build.new(@blueprint, @options).run
     end
 
     def generate_templates
       Lono::Template::Generator.new(@blueprint, @options).run
     end
 
-    # only upload templates if s3_folder configured in settings
-    def upload_templates
-      Lono::Template::Upload.new(@blueprint).run if s3_folder
+    def post_process_templates
+      Lono::Template::PostProcessor.new(@blueprint, @options).run
     end
 
-    # only upload templates if s3_folder configured in settings
+    def upload_templates
+      Lono::Template::Upload.new(@blueprint).run
+    end
+
     def upload_scripts
-      return unless s3_folder
       Lono::Script::Upload.new(@blueprint).run
     end
 
     def upload_files
-      return unless s3_folder
-      Lono::FileUploader.new(@blueprint).upload_all
+      Lono::AppFile::Upload.new(@blueprint).upload
     end
 
     # Maps to CloudFormation format.  Example:
@@ -200,7 +254,7 @@ class Lono::Cfn
       return true if testing_update?
       return false if @options[:noop]
 
-      unless status =~ /_COMPLETE$/
+      unless status =~ /_COMPLETE$/ || status == "UPDATE_ROLLBACK_FAILED"
         puts "Cannot create a change set for the stack because the #{@stack_name} is not in an updatable state.  Stack status: #{status}".color(:red)
         quit(1)
       end
@@ -226,31 +280,17 @@ class Lono::Cfn
       puts YAML.dump(params.deep_stringify_keys)
     end
 
-    def s3_folder
-      setting = Lono::Setting.new
-      setting.s3_folder
-    end
-
-    # Either set the templmate_body or template_url attribute based on
-    # if template was uploaded to s3.
-    # Nice to reference s3 url because the max size of the template body is
-    # greater if the template body is on s3. Limits:
+    # Lono always uploads the template to s3 so we can use much larger templates.
     #
-    #   template_body: 51,200 bytes
-    #   template_url: 460,800 bytes
+    #   template_body: 51,200 bytes - filesystem limit
+    #   template_url: 460,800 bytes - s3 limit
     #
     # Reference: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html
     def set_template_body!(params)
-      # if s3_folder is set this means s3 upload is enabled
-      if s3_folder # s3_folder defined in cfn/base.rb
-        upload = Lono::Template::Upload.new(@blueprint)
-        url_path = @template_path.sub("#{Lono.root}/",'')
-        url = upload.s3_presigned_url(url_path)
-        params[:template_url] = url
-      else
-        params[:template_body] = IO.read(@template_path)
-      end
-
+      upload = Lono::Template::Upload.new(@blueprint)
+      url_path = @template_path.sub("#{Lono.root}/",'')
+      url = upload.s3_presigned_url(url_path)
+      params[:template_url] = url
       params
     end
 

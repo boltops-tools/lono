@@ -5,7 +5,8 @@ class Lono::Blueprint
         puts "Current available blueprints:"
         Find.all_blueprints.each do |b|
           full_path = Find.find(b)
-          puts "  #{b}: #{full_path}"
+          path = full_path.sub("#{Lono.root}/", "")
+          puts "  #{b}: #{path}"
         end
       end
     end

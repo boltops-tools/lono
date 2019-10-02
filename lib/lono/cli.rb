@@ -104,5 +104,9 @@ module Lono
     desc "upgrade SUBCOMMAND", "upgrade subcommands"
     long_desc Help.text(:upgrade)
     subcommand "upgrade", Upgrade
+
+    desc "s3 SUBCOMMAND", "s3 subcommands"
+    long_desc Help.text(:s3)
+    subcommand "s3", S3
   end
 end

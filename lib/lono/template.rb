@@ -3,20 +3,6 @@ require_relative "command"
 
 module Lono
   class Template < Lono::Command
-    autoload :AwsService, 'lono/template/aws_service'
-    autoload :Base, 'lono/template/base'
-    autoload :Bashify, 'lono/template/bashify'
-    autoload :Context, 'lono/template/context'
-    autoload :Dsl, 'lono/template/dsl'
-    autoload :Erb, 'lono/template/erb'
-    autoload :Evaluate, 'lono/template/evaluate'
-    autoload :Generator, 'lono/template/generator'
-    autoload :Helper, 'lono/template/helper'
-    autoload :Stack, 'lono/template/stack'
-    autoload :Template, 'lono/template/template'
-    autoload :Upload, 'lono/template/upload'
-    autoload :Util, 'lono/template/util'
-
     class_option :quiet, type: :boolean, desc: "silence the output"
     class_option :noop, type: :boolean, desc: "noop mode, do nothing destructive"
 

@@ -1,6 +1,6 @@
 ---
 title: Params Layering Support
-nav_order: 13
+nav_order: 14
 ---
 
 ## Params Layering
@@ -27,11 +27,11 @@ Lono will use the `InstanceType=m5.large` parameter value when launching the sta
     $ lono cfn deploy demo # InstanceType=t3.micro
     $ LONO_ENV=production lono cfn deploy demo # InstanceType=m5.large
 
-Remember params can be used to affect templates at run-time. Here's the lifecycle flow to see when the run-time phase happens.
+Remember params can be used to affect templates at run-time. Here's the lifecycle flow to see when the run-time phase happens. 
 
 <img src="/img/tutorial/lono-flowchart.png" alt="Stack Created" class="doc-photo lono-flowchart">
 
-Depending on how you use params with layering, you can dramatically simpify your code.
+Depending on how you use params with layering, you can dramatically simpify your code. 
 
 Note: The parameters layering works similiarly for all location lookups: [Params Lookup Locations]({% link _docs/lookup-locations/params.md %}).
 

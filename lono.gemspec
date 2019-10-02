@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.authors       = ["Tung Nguyen"]
   gem.email         = ["tongueroo@gmail.com"]
   gem.summary       = "Powerful CloudFormation Framework"
-  gem.homepage      = "http://github.com/tongueroo/lono"
+  gem.homepage      = "https://lono.cloud"
 
   vendor_files       = Dir.glob("vendor/**/*")
   gem_files          = `git ls-files -z`.split("\x0").reject do |f|
@@ -26,12 +26,12 @@ Gem::Specification.new do |gem|
   gem.add_dependency "aws-sdk-ec2" # lono configure
   gem.add_dependency "aws-sdk-iam" # lono configure
   gem.add_dependency "aws-sdk-s3"
-  gem.add_dependency "cfn_camelizer"
+  # gem.add_dependency "cfn_camelizer" # use vendor/cfn_camelizer instead for now
   gem.add_dependency "filesize"
   gem.add_dependency "graph" # lono xgraph command dependency
   gem.add_dependency "guard"
   gem.add_dependency "guard-cloudformation"
-  gem.add_dependency "guard-lono"
+  # gem.add_dependency "guard-lono" # TODO: create guard gem
   gem.add_dependency "hashie"
   gem.add_dependency "json"
   gem.add_dependency "memoist"
@@ -41,6 +41,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "rb-fsevent"
   gem.add_dependency "render_me_pretty"
   gem.add_dependency "thor"
+  gem.add_dependency "zeitwerk"
 
   gem.add_development_dependency "byebug"
   gem.add_development_dependency "cli_markdown"

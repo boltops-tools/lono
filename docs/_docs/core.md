@@ -1,6 +1,6 @@
 ---
 title: Core Concepts
-nav_order: 6
+nav_order: 7
 ---
 
 Here are the main Lono concepts:

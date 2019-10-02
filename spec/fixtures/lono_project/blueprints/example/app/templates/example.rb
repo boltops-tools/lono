@@ -5,7 +5,6 @@ metadata(
   authors: {
     description: "Tung Nguyen (tung@boltops.com)"
   },
-  license: "MIT"
 )
 
 parameter :key_name

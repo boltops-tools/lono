@@ -2,7 +2,7 @@
 title: Blueprint Structure
 link_text: ERB Blueprint Structure
 categories: erb blueprint-structure
-nav_order: 60
+nav_order: 62
 ---
 
 A ERB blueprint structure can look like this:
@@ -21,7 +21,7 @@ A ERB blueprint structure can look like this:
     │   └── user_data
     ├── demo.gemspec
     ├── Gemfile
-    ├── .lono
+    ├── .meta
     │   └── config.yml
     └── setup
         └── configs.rb
@@ -36,7 +36,7 @@ app/partials | Where templates partials go. You can split up the CloudFormation 
 app/scripts | Where your custom scripts go. Scripts in this folder get uploaded to s3 as a tarball during the `lono cfn deploy` command. Details are in the [App Scripts docs]({% link _docs/erb/app-scripts.md %})
 app/user_data | Where you place your scripts meant to be used for user-data. Include them in your templates with the `user_data` helper method.
 demo.gemspec | Where the gem specs and dependencies are defined.  Blueprints make use of the gem structure to handle dependencies.
-.lono/config.yml | Where the blueprint_name and blueprint_type.  The blueprint name is determined here; not the gem name.
+.meta/config.yml | Where the blueprint_name and blueprint_type is set.  The blueprint name is determined here; not the gem name.
 setup/configs.rb | Where a setup script can be defined to work with `lono configure`.
 
 That hopefully gives you a basic idea of the blueprint directory structure.

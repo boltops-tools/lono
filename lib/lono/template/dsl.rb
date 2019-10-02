@@ -1,7 +1,5 @@
 class Lono::Template
   class Dsl < Base
-    autoload :Builder, "lono/template/dsl/builder"
-
     attr_reader :results
     def initialize(blueprint, options={})
       super

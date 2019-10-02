@@ -1,6 +1,6 @@
 ---
 title: Stack Name Suffix
-nav_order: 52
+nav_order: 53
 ---
 
 The `stack_name_suffix` is an option to help with a development workflow. When working with CloudFormation templates and developing the source code, we must often launch stacks repeatedly as we fine tune the stack. Since we cannot launch a stack with a duplicate name it is useful to use a command like this:
@@ -25,6 +25,6 @@ For non-random suffixes the a natural flow might be to use lono current so you d
     lono cfn create demo
     lono cfn update demo-2
 
-More info about lono current is available at the [Lono Current docs]({% link _docs/lono-current.md %})
+More info about lono current is available at the [Lono Current docs]({% link _docs/extras/lono-current.md %})
 
 {% include prev_next.md %}

@@ -1,7 +1,7 @@
 ---
 title: Select
 categories: intrinsic-function
-nav_order: 41
+nav_order: 42
 ---
 
 The `select` method is the CloudFormation [Fn::Select](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-select.html) equivalent.

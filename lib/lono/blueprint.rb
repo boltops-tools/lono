@@ -1,12 +1,5 @@
 module Lono
   class Blueprint < Sequence
-    autoload :Blueprint, 'lono/blueprint/blueprint'
-    autoload :Find, 'lono/blueprint/find'
-    autoload :Helper, 'lono/blueprint/helper'
-    autoload :Info, 'lono/blueprint/info'
-    autoload :List, 'lono/blueprint/list'
-    autoload :Root, 'lono/blueprint/root'
-
     include Helper
 
     argument :blueprint_name
@@ -99,7 +92,7 @@ module Lono
 
           cd #{blueprint_name}
 
-        More info: http://lono.cloud/docs/blueprints
+        More info: https://lono.cloud/docs/core/blueprints
 
       EOL
     end
@@ -111,8 +104,9 @@ module Lono
 
       structure = `tree .`
       puts <<~EOL
-        Here's the structure your blueprint:
+        Here's the structure of your blueprint:
 
+        #{structure}
       EOL
     end
   end

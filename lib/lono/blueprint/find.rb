@@ -14,7 +14,7 @@ class Lono::Blueprint
         project_blueprints = all_project_blueprint_infos.map { |info| info.name }
 
         gem_blueprints = specs.map do |spec|
-          dot_lono = dot_lono_path(spec)
+          dot_lono = dot_meta_path(spec)
           config = YAML.load_file(dot_lono)
           config["blueprint_name"]
         end
@@ -35,7 +35,7 @@ class Lono::Blueprint
 
         # Check gem specs
         result = specs.find do |spec|
-          dot_lono = dot_lono_path(spec)
+          dot_lono = dot_meta_path(spec)
           config = YAML.load_file(dot_lono)
           config["blueprint_name"] == blueprint
         end
@@ -53,7 +53,7 @@ class Lono::Blueprint
       def all_project_blueprint_infos
         infos = []
         Dir.glob("#{Lono.root}/blueprints/*").select do |p|
-          dot_lono = dot_lono_path(p)
+          dot_lono = dot_meta_path(p)
           next unless File.exist?(dot_lono)
           config = YAML.load_file(dot_lono)
           infos << Info.new(config["blueprint_name"], p)
@@ -65,16 +65,16 @@ class Lono::Blueprint
       def specs
         specs = Bundler.load.specs
         specs.select do |spec|
-          File.exist?(dot_lono_path(spec))
+          File.exist?(dot_meta_path(spec))
         end
       end
       memoize :specs
 
-      def dot_lono_path(source)
+      def dot_meta_path(source)
         if source.is_a?(String) # path to folder
-          "#{source}/.lono/config.yml"
+          "#{source}/.meta/config.yml"
         else # spec
-          "#{source.full_gem_path}/.lono/config.yml"
+          "#{source.full_gem_path}/.meta/config.yml"
         end
       end
 

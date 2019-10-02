@@ -74,9 +74,9 @@ class Lono::Cfn::Preview < Lono::Cfn::Base
         display_change(change)
       end
     when "FAILED"
-      puts "Fail to create a CloudFormation preview for '#{@stack_name}' stack update. Reason:".color(:red)
+      puts "WARN: Fail to create a CloudFormation preview for '#{@stack_name}' stack update. Reason:".color(:yellow)
       puts change_set.status_reason
-      quit(1)
+      quit(0)
     else
       raise "hell: never come here"
     end

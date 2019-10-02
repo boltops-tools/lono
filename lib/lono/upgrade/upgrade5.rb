@@ -49,7 +49,7 @@ class Lono::Upgrade
       ]
       files.each { |f | template(f) }
 
-      template("../upgrade5/blueprints/main/.lono/config.yml", "blueprints/main/.lono/config.yml")
+      template("../upgrade5/blueprints/main/.meta/config.yml", "blueprints/main/.meta/config.yml")
     end
   end
 end

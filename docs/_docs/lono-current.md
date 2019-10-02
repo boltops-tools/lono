@@ -1,6 +1,5 @@
 ---
 title: Lono Current
-nav_order: 55
 ---
 
 Sets current values so you do not have to provide the options repeatedly.  This shortens the commands.
@@ -55,5 +54,3 @@ To remove all current settings.
 
 * The current name setting does not apply to the `lono create` method. The create method requires that you explicitly specify the name: `lono create STACK_NAME`. The create command uses the `--suffix` option only.
 * The current name setting applies on commands that refer to existing stacks like update, delete, preview, diff and download.
-
-{% include prev_next.md %}

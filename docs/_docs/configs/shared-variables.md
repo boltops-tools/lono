@@ -1,7 +1,7 @@
 ---
 title: Shared Variables
 order: 4
-nav_order: 11
+nav_order: 12
 ---
 
 Shared Variables are configs that you define to affect how the templates are generated at compile-time.  Shared variables are available to all templates, helpers, and parameters.  The variables are defined in the `configs/BLUEPRINT/variables` folder.  The variables files are merely Ruby scripts where instance variables (variables with an @ sign in front) are made available.

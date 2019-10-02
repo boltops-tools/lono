@@ -6,6 +6,7 @@
                 <li><a href="{% link _docs/walkthrough.md %}">Walkthrough</a></li>
                 <li><a href="{% link _docs/project-structure.md %}">Project Structure</a></li>
                 <li><a href="{% link _docs/install.md %}">Installation</a></li>
+                <li><a href="{% link _docs/pro-vs-ce.md %}">Pro vs CE</a></li>
             </ul>
         </li>
         <li><a href="{% link _docs/core.md %}">Core Concepts</a>
@@ -40,7 +41,7 @@
               {% endfor %}
             </ul>
         </li>
-        <li><a href="{% link _docs/dsl/components.md %}">DSL Extras</a>
+        <li><a href="{% link _docs/dsl/components.md %}">DSL Components</a>
             <ul>
               {% assign docs = site.docs | where: "categories","dsl-components" %}
               {% for doc in docs -%}
@@ -80,10 +81,10 @@
         </li>
         <li>Extras
             <ul>
-                <li><a href="{% link _docs/extras/upgrading.md %}">Upgrading Guide</a>
-                <li><a href="{% link _docs/extras/guard.md %}">Guard</a></li>
-                <li><a href="{% link _docs/lono-current.md %}">Lono Current</a></li>
-                <li><a href="{% link _docs/lono-suffix.md %}">Lono Suffix</a></li>
+              {% assign docs = site.docs | where: "categories","extras" | sort: "order" %}
+              {% for doc in docs -%}
+                <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
+              {% endfor %}
             </ul>
         </li>
         <li><a href="{% link _docs/erb.md %}">ERB</a>

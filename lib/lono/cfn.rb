@@ -1,22 +1,7 @@
 require "thor"
+require "cfn/status"
 
 class Lono::Cfn < Lono::Command
-  autoload :AwsService, 'lono/cfn/aws_service'
-  autoload :Base, 'lono/cfn/base'
-  autoload :CLI, 'lono/cfn/cli'
-  autoload :Create, 'lono/cfn/create'
-  autoload :Current, 'lono/cfn/current'
-  autoload :Delete, 'lono/cfn/delete'
-  autoload :Deploy, 'lono/cfn/deploy'
-  autoload :Rollback, 'lono/cfn/rollback'
-  autoload :Diff, 'lono/cfn/diff'
-  autoload :Download, 'lono/cfn/download'
-  autoload :Preview, 'lono/cfn/preview'
-  autoload :Status, 'lono/cfn/status'
-  autoload :Suffix, 'lono/cfn/suffix'
-  autoload :Update, 'lono/cfn/update'
-  autoload :Util, 'lono/cfn/util'
-
   class_option :verbose, type: :boolean
   class_option :noop, type: :boolean
 
@@ -122,6 +107,8 @@ class Lono::Cfn < Lono::Command
   long_desc Lono::Help.text("cfn/status")
   suffix_option.call
   def status(stack_name=:current)
-    Status.new(stack_name, options).run
+    status = Lono::Cfn::Status.new(stack_name, options)
+    success = status.run
+    exit 3 unless success
   end
 end

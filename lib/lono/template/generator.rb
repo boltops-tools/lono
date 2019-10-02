@@ -21,8 +21,8 @@ class Lono::Template
     end
 
     def template_type
-      dot_lono = "#{Lono.blueprint_root}/.lono/config.yml"
-      data = YAML.load_file(dot_lono)
+      meta_config = "#{Lono.blueprint_root}/.meta/config.yml"
+      data = YAML.load_file(meta_config)
       data["template_type"] || "dsl"
     end
   end

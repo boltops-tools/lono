@@ -2,7 +2,7 @@
 title: Blueprints
 categories: core
 order: 1
-nav_order: 7
+nav_order: 8
 ---
 
 A blueprint is one of the core components of a Lono project.  Blueprints can have many [Templates]({% link _docs/core/templates.md %}).

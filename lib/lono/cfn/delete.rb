@@ -1,5 +1,5 @@
 class Lono::Cfn::Delete
-  include Lono::Cfn::AwsService
+  include Lono::AwsServices
   include Lono::Cfn::Util
 
   def initialize(stack_name, options={})
@@ -30,7 +30,7 @@ class Lono::Cfn::Delete
   end
 
   def status
-    @status ||= Lono::Cfn::Status.new(@stack_name)
+    @status ||= Cfn::Status.new(@stack_name)
   end
 
   def switch_current(stack_name)

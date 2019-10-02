@@ -3,9 +3,12 @@ title: Quick Start
 nav_order: 1
 ---
 
-In a hurry? No problem!  Here's a quick start to using lono that takes only a few minutes.  The commands below launches a CloudFormation stack with an EC2 Instance and Security Group.
+In a hurry? No problem!  Here's a quick start to using lono that takes only a few minutes.
 
     gem install lono
+
+Now we're ready to create and launch some infrastructure. The commands below launches a CloudFormation stack with an EC2 Instance and Security Group.
+
     lono new infra
     cd infra
     lono cfn deploy demo
@@ -16,7 +19,6 @@ Congratulations!  You have successfully created a CloudFormation stack with lono
 
 Here's a little more details to help understand what happened. We first installed lono and generated a new lono project called `infra`:
 
-    $ gem install lono
     $ lono new infra
     => Creating new project called infra.
     => Creating new blueprint called demo.
@@ -41,7 +43,7 @@ Here's a little more details to help understand what happened. We first installe
 
       lono cfn deploy demo
 
-    To list and create additional blueprints refer to http://lono.cloud/docs/blueprints
+    To list and create additional blueprints refer to https://lono.cloud/docs/core/blueprints
 
     More info: http://lono.cloud/
 

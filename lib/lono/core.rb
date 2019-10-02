@@ -3,7 +3,6 @@ require 'pathname'
 module Lono
   module Core
     extend Memoist
-    autoload :Config, 'lono/core/config'
 
     def config
       Config.new
@@ -23,9 +22,9 @@ module Lono
 
     def env
       # 2-way binding
-      ufo_env = env_from_profile(ENV['AWS_PROFILE']) || 'development'
-      ufo_env = ENV['LONO_ENV'] if ENV['LONO_ENV'] # highest precedence
-      ufo_env
+      env = env_from_profile(ENV['AWS_PROFILE']) || 'development'
+      env = ENV['LONO_ENV'] if ENV['LONO_ENV'] # highest precedence
+      env
     end
     memoize :env
 
@@ -35,7 +34,7 @@ module Lono
       return unless settings # Only load if within lono project and there's a settings.yml
       data = settings[Lono.env] || {}
       if data["aws_profile"]
-        puts "Using AWS_PROFILE=#{data["aws_profile"]} from LONO_ENV=#{Lono.env} in configs/settings.yml"
+        # puts "Using AWS_PROFILE=#{data["aws_profile"]} from LONO_ENV=#{Lono.env} in configs/settings.yml"
         ENV['AWS_PROFILE'] = data["aws_profile"]
       end
     end

@@ -1,7 +1,7 @@
 class Lono::Cfn
   class Rollback
     extend Memoist
-    include AwsService
+    include Lono::AwsServices
 
     def initialize(stack_name)
       @stack_name = stack_name
@@ -19,7 +19,7 @@ class Lono::Cfn
     end
 
     def status
-      Lono::Cfn::Status.new(@stack_name)
+      Cfn::Status.new(@stack_name)
     end
     memoize :status
   end

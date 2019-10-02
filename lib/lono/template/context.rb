@@ -1,9 +1,6 @@
-# Encapsulates helper methods and instance variables to be rendered in the ERB
-# templates.
+# Encapsulates helper methods and instance variables to be rendered in the ERB templates.
 class Lono::Template
   class Context
-    autoload :Loader, "lono/template/context/loader"
-
     include Lono::Template::Helper
     include Loader
 

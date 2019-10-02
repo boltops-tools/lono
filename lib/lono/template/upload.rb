@@ -6,7 +6,7 @@ require 'digest'
 class Lono::Template
   class Upload
     include Lono::Blueprint::Root
-    include AwsService
+    include Lono::AwsServices
 
     def initialize(blueprint, options={})
       @blueprint, @options = blueprint, options
@@ -15,11 +15,10 @@ class Lono::Template
       set_blueprint_root(@blueprint)
 
       @checksums = {}
-      @prefix = "#{folder_key}/#{Lono.env}" # s3://s3-bucket/folder/development/templates
+      @prefix = Lono.env # s3://s3-bucket/development
     end
 
     def run
-      ensure_s3_setup!
       load_checksums!
 
       say "Uploading CloudFormation templates..."
@@ -44,12 +43,6 @@ class Lono::Template
 
       resp = s3.list_objects(bucket: s3_bucket, prefix: @prefix)
       resp.contents.each do |object|
-        # key does not include the bucket name
-        #    full path = s3://my-bucket/s3_folder/templates/production/my-template.yml
-        #    key = s3_folder/templates/production/my-template.yml
-        # etag is the checksum as long as the file is not a multi-part file upload
-        # it has extra double quotes wrapped around it.
-        #    etag = "\"9cb437490cee2cc96101baf326e5ca81\""
         @checksums[object.key] = strip_surrounding_quotes(object.etag)
       end
       @checksums
@@ -103,7 +96,6 @@ class Lono::Template
 
     # https://s3.amazonaws.com/mybucket/s3_folder/templates/production/parent.yml
     def s3_https_url(template_path)
-      ensure_s3_setup!
       "https://s3.amazonaws.com/#{s3_bucket}/#{@prefix}/#{template_path}"
     end
 
@@ -114,45 +106,13 @@ class Lono::Template
       s3_presigner.presigned_url(:get_object, bucket: s3_bucket, key: key)
     end
 
-    def s3_presigner
-      @signer ||= Aws::S3::Presigner.new
-    end
-
     # Parse the s3_folder setting and remove the folder portion to leave the
     # "s3_bucket" portion
     # Example:
     #    s3_bucket('s3://mybucket/templates/storage/path')
     #    => mybucket
     def s3_bucket
-      return nil if @options[:noop] # to get spec passing
-      return nil unless s3_folder
-      s3_folder.sub('s3://','').split('/').first
-    end
-
-    # The folder_key is the s3_folder setting with the s3 bucket.
-    #
-    # Example:
-    #    s3_bucket('s3://mybucket/templates/storage/path')
-    #    => templates/storage/path
-    def folder_key
-      return nil if @options[:noop] # to get spec passing
-      return nil unless s3_folder
-      s3_folder.sub('s3://','').split('/')[1..-1].join('/')
-    end
-
-    def s3_folder
-      settings = Lono::Setting.new
-      settings.s3_folder
-    end
-
-    # nice warning if the s3 path not found
-    def ensure_s3_setup!
-      return if @options[:noop]
-      return if s3_folder
-
-      say "Unable to upload templates to s3 because you have not configured the s3_folder option in lono settings.yml.".color(:red)
-      say "Please configure settings.yml with s3_folder.  For more help: http://lono.cloud/docs/settings/".color(:red)
-      exit 1
+      Lono::S3::Bucket.name
     end
 
     def say(message)

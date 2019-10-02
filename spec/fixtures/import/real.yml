@@ -4,7 +4,6 @@ Description: Example from BoltOps.
 Metadata:
   Authors:
     Description: Tung Nguyen (tung@boltops.com)
-  License: MIT
 Parameters:
   KeyName:
     Type: String

@@ -1,6 +1,6 @@
 ---
 title: Variables Layering Support
-nav_order: 14
+nav_order: 15
 ---
 
 Variables support layering. Layering is performed on the files in the `configs/demo/variables` folder.  Let's say you have the following variables directory structure:
@@ -31,7 +31,7 @@ Lono will use the `@max_size = 20` parameter value when launching the stack with
     $ lono cfn deploy demo # @max_size = 1
     $ LONO_ENV=production lono cfn deploy demo # @max_size = 20
 
-Remember variables can be used to affect templates at compile-time. Here's the lifecycle flow to see when the compile phase happens.
+Remember variables can be used to affect templates at compile-time. Here's the lifecycle flow to see when the compile phase happens. 
 
 <img src="/img/tutorial/lono-flowchart.png" alt="Stack Created" class="doc-photo lono-flowchart">
 

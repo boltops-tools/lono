@@ -28,7 +28,6 @@ Displays code diff of the generated CloudFormation template locally vs the exist
     <     Default: t2.small
     ---
     >     Default: t2.medium
-    $ subl -a ~/.lono/settings.yml
     $
 
 Here's a screenshot of the output with the colored diff:

@@ -5,7 +5,7 @@ require "yaml"
 # Subclasses must implement: setup, params, variables
 class Lono::Configure
   class Base
-    include AwsServices
+    include Lono::AwsServices
     include Helpers
     include Lono::Conventions
     extend Memoist

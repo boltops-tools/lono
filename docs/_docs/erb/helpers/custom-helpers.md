@@ -1,7 +1,7 @@
 ---
 title: Custom Helpers
 categories: erb
-nav_order: 65
+nav_order: 67
 ---
 
 It is useful be able to call methods in your template views that are not built into lono. Lono allows you to add custom helpers for this case.  The custom helpers are first class citizens and have access to the same context and variables as [built-in lono helpers]({% link _docs/erb/helpers/builtin-helpers.md %}).

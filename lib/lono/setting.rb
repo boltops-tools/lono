@@ -49,28 +49,6 @@ module Lono
       settings_path
     end
 
-    # Special helper method to support multiple formats for s3_folder setting.
-    # Format 1: Simple String
-    #
-    #   development:
-    #     s3_folder: mybucket/path/to/folder
-    #
-    # Format 2: Hash
-    #
-    #   development:
-    #     s3_folder:
-    #       default: mybucket/path/to/folder
-    #       dev_profile1: mybucket/path/to/folder
-    #       dev_profile1: another-bucket/storage/path
-    #
-    def s3_folder
-      s3_folder = data['s3_folder']
-      return s3_folder if s3_folder.nil? or s3_folder.is_a?(String)
-
-      # If reach here then the s3_folder is a Hash
-      s3_folder[ENV['AWS_PROFILE']] || s3_folder["default"]
-    end
-
   private
     def load_file(path)
       return Hash.new({}) unless File.exist?(path)

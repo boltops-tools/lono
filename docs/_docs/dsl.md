@@ -1,6 +1,6 @@
 ---
 title: DSL
-nav_order: 16
+nav_order: 17
 ---
 
 Lono provides the ability write your CloudFormation template with a DSL.  Here's an example of what the DSL looks like.

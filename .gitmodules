@@ -1,0 +1,6 @@
+[submodule "vendor/cfn-status"]
+	path = vendor/cfn-status
+	url = https://github.com/tongueroo/cfn-status
+[submodule "vendor/cfn_camelizer"]
+	path = vendor/cfn_camelizer
+	url = https://github.com/tongueroo/cfn_camelizer

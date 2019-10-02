@@ -4,15 +4,10 @@
 
 # Lono
 
-[![Gem Version](https://badge.fury.io/rb/lono.png)](http://badge.fury.io/rb/lono)
-[![CircleCI](https://circleci.com/gh/tongueroo/lono.svg?style=svg)](https://circleci.com/gh/tongueroo/lono)
-![CodeBuild](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoicUNvajlvaW9xb05YbFFUTlBMWWY5TXZoL0RLN1JFek9nQ3JMUkErWDJhL01GeFRJVnVNaCtheDgwa2RvOXQrZUNVUmpOeFI0U2NPVmV6WFRwK2FGT3VNPSIsIml2UGFyYW1ldGVyU3BlYyI6ImhsVWVqTFd6UUhHR2dIOXIiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
-[![Code Climate](https://codeclimate.com/repos/51d7f1407e00a4042c010ab4/badges/5273fe6cdb5a13e58554/gpa.png)](https://codeclimate.com/repos/51d7f1407e00a4042c010ab4/feed)
-[![Coverage Status](https://coveralls.io/repos/tongueroo/lono/badge.png)](https://coveralls.io/r/tongueroo/lono)
-[![Join the chat at https://gitter.im/tongueroo/lono](https://badges.gitter.im/tongueroo/lono.svg)](https://gitter.im/tongueroo/lono?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+![CodeBuild](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiaHF3Y2pqSVBlZ0JMdXhPL010bTI2cVd6SkpHQWlLRkJ5SHlCcDFueUtHVFNCVFZyWEVZd01yWDZ1VjZCRjNVQ1F4d2JlTlJOWDRtU3R3NkJzVkJKSHJ3PSIsIml2UGFyYW1ldGVyU3BlYyI6IkZIRVZwM00rQzQxcDJWaVMiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 [![Support](https://img.shields.io/badge/get-support-blue.svg)](https://boltops.com?utm_source=badge&utm_medium=badge&utm_campaign=lono)
 
-Lono a CloudFormation Framework. Lono handles the entire CloudFormation lifecyle. It helps you craft the templates and provision the infrastructure.
+Lono is a powerful CloudFormation framework. Lono handles the entire CloudFormation lifecycle. It builds, manages and deploys CloudFormation templates.
 
 * Lono generates CloudFormation templates based on a [DSL](http://lono.cloud/docs/dsl/).
 * Lono takes simple env-like files and generates the CloudFormation parameter files.
@@ -22,7 +17,7 @@ See [lono.cloud](http://lono.cloud) for full lono documentation.
 
 ## Upgrading
 
-If you are on version 4.2 and uppgrade to 5.0.  You can run `lono upgrade v4to5` within your project to upgrade it to version 5.0.  Refer to the [Upgrading Guide](http://lono.cloud/docs/extras/upgrading/).
+If you are on version 4.2 and upgrade to 5.0.  You can run `lono upgrade v4to5` within your project to upgrade it to version 5.0.  Refer to the [Upgrading Guide](http://lono.cloud/docs/extras/upgrading/).
 
 ## Quick Usage
 
@@ -71,8 +66,8 @@ Lono provides a `lono cfn` lifecycle command that allows you to launch stacks qu
 
 The above command will generate files to `output/infra/templates/demo.yml` and `output/infra/params/demo.txt` and use them to create a CloudFormation stack.  Here are some more examples of cfn commands:
 
+    lono cfn deploy demo # shorthand if blueprint, template and params file matches.
     lono cfn deploy demo-$(date +%Y%m%d%H%M%S) --blueprint demo --template demo --param demo
-    lono cfn deploy demo-$(date +%Y%m%d%H%M%S) # shorthand if blueprint, template and params file matches.
     lono cfn diff demo-1493859659
     lono cfn preview demo-1493859659
     lono cfn update demo-1493859659

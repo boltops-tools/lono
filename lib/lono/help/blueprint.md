@@ -20,15 +20,15 @@
     => Installing dependencies with: bundle install
     ================================================================
     Congrats  You have successfully created a lono blueprint.
-
+        
     Cd into your blueprint and check things out.
-
+        
       cd ec2
-
-    More info: http://lono.cloud/docs/blueprints
-
+        
+    More info: https://lono.cloud/docs/core/blueprints
+        
       Here's the structure your blueprint:
-
+        
     .
     ├── app
     │   ├── definitions
@@ -40,7 +40,7 @@
     ├── README.md
     └── setup
         └── configs.rb
-
+        
     4 directories, 6 files
-
+        
     $

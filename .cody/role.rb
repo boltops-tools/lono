@@ -1,0 +1,1 @@
+iam_policy("logs", "ssm", "cloudformation", "ec2")

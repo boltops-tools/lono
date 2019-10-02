@@ -1,6 +1,5 @@
 ---
 title: Lono Suffix
-nav_order: 56
 ---
 
 When working with CloudFormation templates and developing the source code, we must often launch stacks repeatedly as we fine tune the stack. Since we cannot launch a stack with a duplicate name it is useful to use a command like this:
@@ -36,5 +35,3 @@ Random suffixes can help streamlined your development workflow.
     lono cfn update # update again
 
 In this way, you can create multiple stacks continuously and random suffixes will be appended to the stack name. Then set the current stack name to the one are focused on updating and developing.
-
-{% include prev_next.md %}

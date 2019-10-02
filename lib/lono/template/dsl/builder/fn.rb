@@ -29,6 +29,17 @@ class Lono::Template::Dsl::Builder
     # These are also Ruby keywords
     # keywords: and if not or
 
+    # Note, for if function, do not flatten the args. Its arguments can be Arrays.  Example:
+    #
+    #   SecurityGroups:
+    #     Fn::If:
+    #     - ExistingSecurityGroupIsBlank
+    #     - - GroupId:
+    #           Ref: SecurityGroup
+    #     - - GroupId:
+    #           Ref: SecurityGroup
+    #       - GroupId:
+    #           Ref: ExistingSecurityGroup
     FUNCTIONS.each do |name, type|
       if type == :simple
         define_method(name) do |arg|
@@ -39,7 +50,9 @@ class Lono::Template::Dsl::Builder
       else # array
         define_method(name) do |*args|
           id = fn_id(name)
-          args = args.flatten.map do |arg|
+          # Note, do not flatten args for if statement as it can have Array as arguments.
+          args = args.flatten unless name == :if
+          args = args.map do |arg|
             arg.is_a?(Symbol) ? CfnCamelizer.camelize(arg) : arg
           end
           { id => args }
@@ -63,13 +76,15 @@ class Lono::Template::Dsl::Builder
     #   get_attr(["logical_id", "attribute"])
     def get_att(*item)
       item = item.flatten
+      options = item.last.is_a?(Hash) ? item.pop : {}
+
       # list is an Array
       list = if item.size == 1
                 item.first.split('.')
               else
                 item
               end
-      list.map!(&:camelize)
+      list.map!(&:camelize) unless options[:autoformat] == false
       { "Fn::GetAtt" => list }
     end
 

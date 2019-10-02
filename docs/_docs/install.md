@@ -7,24 +7,28 @@ nav_order: 5
 
 You can also install lono via RubyGems.
 
-```sh
-gem install lono
-```
+    gem install lono
 
-Or you can add lono to your Gemfile in your project if you are working with a ruby project.  It is not required for your project to be a ruby project to use lono.
+This allows you to use lono as a standalone command.
 
-{% highlight ruby %}
+## Bundler
+
+You can also it to your Gemfile and run `bundle` to install it.
+
+```ruby
 gem "lono"
-{% endhighlight %}
-
-## Bolts Toolbelt
-
-If you want to install lono without having to worry about lono's ruby dependency you can install the Bolts Toolbelt which has lono included.
-
-```sh
-brew cask install boltopslabs/software/bolts
 ```
 
-For more information about the Bolts Toolbelt or to get an installer for another operating system visit: [https://boltops.com/toolbelt](https://boltops.com/toolbelt)
+## Lono Pro Addon
+
+If you are a [BoltOps Pro Customer](https://www.boltops.com/pro), you'll have access to the private repo with the [lono-pro](https://github.com/boltopspro/lono-pro) addon.  Add the repo to your Gemfile.
+
+```ruby
+gem "lono-pro", git: "git@github.com:boltopspro/lono-pro.git"
+```
+
+And then use bundler:
+
+    bundle install
 
 {% include prev_next.md %}

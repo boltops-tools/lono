@@ -3,7 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
-## [5.0.0]
+## [UNRELEASED]
+- auto-create lono managed s3 bucket
+- zeitwerk autoloader
+
+## [UNRELEASED]
 - Introduce lono DSL and set as default mode
 - Introduce blueprints concept
 - Restructure project structure

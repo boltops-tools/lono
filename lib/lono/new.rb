@@ -1,6 +1,5 @@
 module Lono
   class New < Sequence
-    autoload :Helper, 'lono/new/helper'
     include Helper
 
     argument :project_name
@@ -88,7 +87,7 @@ module Lono
 
           lono cfn deploy demo
 
-        To list and create additional blueprints refer to http://lono.cloud/docs/blueprints
+        To list and create additional blueprints refer to https://lono.cloud/docs/core/blueprints
 
         More info: http://lono.cloud/
       EOL

@@ -1,6 +1,6 @@
 ---
 title: Lono Configure
-nav_order: 51
+nav_order: 52
 ---
 
 You usually need to setup and configure some parameter values to use each CloudFormation template. Lono introduces a configure concept to help wih this.  If the blueprint has provided a `setup/configs.rb` file then you can use `lono configure` to quickly set up some default [params]({% link _docs/configs/params.md %}) and [variables]({% link _docs/configs/shared-variables.md %}) files.

@@ -9,8 +9,6 @@ require "aws-sdk-core"
 module Lono::Template::Helper
   # Bash code that is meant to included in user-data
   def extract_scripts(options={})
-    check_s3_folder_settings!
-
     settings = setting.data["extract_scripts"] || {}
     options = settings.merge(options)
     # defaults also here in case they are removed from settings
@@ -38,18 +36,6 @@ aws s3 cp #{scripts_s3_path} #{to}/
 BASH_CODE
   end
 
-  def check_s3_folder_settings!
-    return if setting.s3_folder
-
-    puts "Helper method called that requires the s3_folder to be set at:"
-    lines = caller.reject { |l| l =~ %r{lib/lono} } # hide internal lono trace
-    puts "  #{lines[0]}"
-
-    puts "Please configure your settings.yml with an s3_folder.".color(:red)
-    puts "Detected AWS_PROFILE #{ENV['AWS_PROFILE'].inspect}"
-    exit 1
-  end
-
   def scripts_name
     File.basename(scripts_s3_path)
   end
@@ -60,7 +46,6 @@ BASH_CODE
   end
 
   def template_s3_path(template_name)
-    check_s3_folder_settings!
     # high jacking Upload for useful s3_https_url method
     template_path = "output/#{@blueprint}/templates/#{template_name}.yml"
     upload = Lono::Template::Upload.new(@blueprint, @options)
@@ -121,14 +106,6 @@ BASH_CODE
     path = partial_path_for(path)
     path = auto_add_format(path)
     path && File.exist?(path)
-  end
-
-  def file_s3_key(name)
-    s3_folder = setting.s3_folder
-    return nil unless s3_folder
-
-    uploader = Lono::FileUploader.new(@blueprint)
-    uploader.md5_key("#{Lono.blueprint_root}/app/files/#{name}")
   end
 
   def current_region

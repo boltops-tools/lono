@@ -3,17 +3,6 @@ class Lono::Template::Dsl
     include Lono::Template::Util
     include Lono::Template::Context::Loader
 
-    autoload :Base, "lono/template/dsl/builder/base"
-    autoload :Condition, "lono/template/dsl/builder/condition"
-    autoload :Fn, "lono/template/dsl/builder/fn"
-    autoload :Helper, "lono/template/dsl/builder/helper"
-    autoload :Mapping, "lono/template/dsl/builder/mapping"
-    autoload :Output, "lono/template/dsl/builder/output"
-    autoload :Parameter, "lono/template/dsl/builder/parameter"
-    autoload :Resource, "lono/template/dsl/builder/resource"
-    autoload :Section, "lono/template/dsl/builder/section"
-    autoload :Syntax, "lono/template/dsl/builder/syntax"
-
     include Fn
     include Helper # built-in helpers
     include Lono::Template::Evaluate

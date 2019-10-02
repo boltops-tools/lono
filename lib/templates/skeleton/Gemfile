@@ -1,3 +1,3 @@
 source "https://rubygems.org"
 
-gem 'lono'
+# gem "lono-pro", git: "git@github.com:boltopspro/lono-pro.git" # optional
