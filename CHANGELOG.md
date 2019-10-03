@@ -12,6 +12,7 @@ This project *tries* to adhere to [Semantic Versioning](http://semver.org/), eve
 - Restructure project structure
 - Remove aws\_profiles settings.yml in favor of aws_profile
 - lono upgrade v4to5 command
+- License update: https://www.boltops.com/boltops-community-license
 
 ## [4.2.7]
 - retain tag values on cfn update operations
