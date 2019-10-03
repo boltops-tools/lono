@@ -7,7 +7,7 @@ describe Lono::Template::PostProcessor do
     processor
   end
   let(:template) do
-    YAML.load_file("spec/fixtures/lono_project/output/example/templates/example.yml")
+    YAML.load_file("spec/fixtures/raw_templates/example.yml")
   end
   let(:registry_items) do
     [

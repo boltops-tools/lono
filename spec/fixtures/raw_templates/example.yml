@@ -1,0 +1,13 @@
+Resources:
+  FolderFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: my-bucket
+        S3Key: development/example/files/folder-a328be46.zip
+  FileFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: my-bucket
+        S3Key: development/example/files/folder1/folder2/c.rb-d41d8cd9.zip
