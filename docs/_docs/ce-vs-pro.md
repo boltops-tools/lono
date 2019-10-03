@@ -28,7 +28,7 @@ A list of the blueprints is available at: [boltopspro-docs](https://github.com/b
 
 Lono features a powerful DSL to build CloudFormation templates. It is recommended to use the Lono DSL because it results in more maintainable code. Most CloudFormation templates in the wild are written in JSON or YAML.
 
-The `lono  convert` and `lono import` commands allow you to take JSON or YAML templates and convert it to the Lono DSL code.  It is a beta feature. The conversion process should get you 60%-80% of way there.
+The `lono  convert` and `lono import` commands allow you to take JSON or YAML templates and convert it to the Lono DSL code.  It is a beta feature. The conversion process should get you 60%-80% of the way there.
 
 ## Docs
 
