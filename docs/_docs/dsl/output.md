@@ -14,17 +14,17 @@ There are 3 forms for conditions.  Here are example snippets:
 
 ```ruby
 # short form
-output(:elb)  # same as output(:elb, "!Ref Elb")
-output(:elb2) # same as output(:elb2, "!Ref Elb2")
+output(:elb)  # same as output(:elb, ref(:elb))
+output(:elb2) # same as output(:elb2, ref(:elb2))
 output(:security_group, get_att("security_group.group_id"))
 
 # medium form
-output(:stack_name, value: "!Ref AWS::StackName")
+output(:stack_name, value: ref("AWS::StackName"))
 
 # long form
 output(vpc_id: {
   description: "vpc id",
-  value: ref("vpc_id"), # same as: value: "!Ref VpcId"
+  value: ref(:vpc_id),
 })
 ```
 
@@ -44,7 +44,8 @@ Outputs:
       - SecurityGroup
       - GroupId
   StackName:
-    Value: "!Ref AWS::StackName"
+    Value:
+      Ref: AWS::StackName
   VpcId:
     Description: vpc id
     Value:

@@ -5,7 +5,7 @@ nav_order: 6
 
 Lono Community Edition is a free version of Lono.  It is available for anyone to use under a [Source Available license](https://www.boltops.com/boltops-community-license).
 
-Lono Pro Addon is a paid addition. It is available with a [BoltOps Pro subscription](https://boltops.com/pro) and to select BoltOps customers.
+The Lono Pro Addon is a paid addition. It is available with a [BoltOps Pro subscription](https://boltops.com/pro) and to select BoltOps customers.
 
 ## What's the Difference Between the Community Edition vs Pro?
 
