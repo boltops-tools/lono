@@ -5,7 +5,7 @@ class Lono::Blueprint
     argument :blueprint_name
 
     def self.source_root
-      templates = File.expand_path("../templates", File.dirname(__FILE__))
+      templates = File.expand_path("../../templates", File.dirname(__FILE__))
       "#{templates}/blueprint"
     end
 

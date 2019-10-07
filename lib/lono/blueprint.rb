@@ -11,11 +11,5 @@ module Lono
     def list
       List.available
     end
-
-    desc "show", "show blueprint path"
-    long_desc Help.text("blueprint/show")
-    def show
-      Show.new(options).run
-    end
   end
 end
