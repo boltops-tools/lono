@@ -7,13 +7,7 @@ module Lono
     end
     register(New, "new", "new NAME", "Generates new lono project.")
 
-    long_desc Help.text(:blueprint)
-    Blueprint.cli_options.each do |args|
-      option(*args)
-    end
-    register(Blueprint, "blueprint", "blueprint NAME", "Generates new lono blueprint.")
-
-    desc "blueprints", "Lists available blueprints in the project."
+    desc "list", "Lists project blueprints"
     long_desc Help.text(:blueprints)
     def blueprints
       Blueprint::List.available
@@ -109,5 +103,9 @@ module Lono
     desc "s3 SUBCOMMAND", "s3 subcommands"
     long_desc Help.text(:s3)
     subcommand "s3", S3
+
+    desc "blueprint SUBCOMMAND", "blueprint subcommands"
+    long_desc Help.text(:blueprint)
+    subcommand "blueprint", Blueprint
   end
 end
