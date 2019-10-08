@@ -9,13 +9,13 @@
 
 First you want to configure the `configs/BLUEPRINT/params` and `configs/BLUEPRINT/variables` files.
 
-If the blueprint has implemented it, you can use `lono configure` to quickly configure starter values for these `config/BLUEPRINT` files.
+If the blueprint has implemented it, you can use `lono seed` to quickly configure starter values for these `config/BLUEPRINT` files.
 
-    LONO_ENV=development lono configure BLUEPRINT --args key1:value1 key2:value2
+    LONO_ENV=development lono seed BLUEPRINT --args key1:value1 key2:value2
 
 To additional environments:
 
-    LONO_ENV=production lono configure BLUEPRINT --args key1:value1 key2:value2
+    LONO_ENV=production lono seed BLUEPRINT --args key1:value1 key2:value2
 
 The generated files in `config/BLUEPRINT` folder look something like this:
 

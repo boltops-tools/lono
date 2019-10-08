@@ -1,15 +1,12 @@
 ---
-title: lono blueprints
+title: lono blueprint list
 reference: true
 ---
 
 ## Usage
 
-    lono list
+    lono blueprint list
 
 ## Description
 
 Lists project blueprints
-
-
-

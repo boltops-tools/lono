@@ -37,7 +37,7 @@ app/scripts | Where your custom scripts go. Scripts in this folder get uploaded 
 app/user_data | Where you place your scripts meant to be used for user-data. Include them in your templates with the `user_data` helper method.
 demo.gemspec | Where the gem specs and dependencies are defined.  Blueprints make use of the gem structure to handle dependencies.
 .meta/config.yml | Where the blueprint_name and blueprint_type is set.  The blueprint name is determined here; not the gem name.
-setup/configs.rb | Where a setup script can be defined to work with `lono configure`.
+setup/configs.rb | Where a setup script can be defined to work with `lono seed`.
 
 That hopefully gives you a basic idea of the blueprint directory structure.
 
