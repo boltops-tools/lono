@@ -1,7 +1,7 @@
 require "fileutils"
 
 module Lono
-  class Configure
+  class Seed
     include Blueprint::Root
 
     def initialize(blueprint, options)
@@ -18,7 +18,7 @@ module Lono
         exit 1
       end
 
-      configs_path = "#{blueprint_root}/setup/configs.rb"
+      configs_path = "#{blueprint_root}/seed/configs.rb"
       unless File.exist?(configs_path)
         puts "No #{configs_path} file found.  Nothing to configure."
         exit
@@ -30,7 +30,7 @@ module Lono
         exit 1
       end
       configs = Configs.new(@blueprint, @options)
-      # The Configs class implements: setup, params, and variables
+      # The Configs class implements: seed, params, and variables
       configs.run # setup the instance variables
     end
   end
