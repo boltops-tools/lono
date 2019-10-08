@@ -17,8 +17,8 @@ Examples follow:
 ## Example: equals
 
 ```ruby
-condition(:use_prod_condition,
-  equals(ref(:environment_type), "prod")
+condition("UseProdCondition",
+  equals(ref("EnvironmentType"), "prod")
 )
 ```
 
@@ -35,8 +35,8 @@ Conditions:
 ## Example: fn::and
 
 ```ruby
-condition(:my_and_condition,
-  fn::and(equals("sg-mysggroup", ref(:a_security_group)), {condition: "SomeOtherCondition"})
+condition("MyAndCondition",
+  fn::and(equals("sg-mysggroup", ref("ASecurityGroup")), {condition: "SomeOtherCondition"})
 )
 ```
 
@@ -55,8 +55,8 @@ Conditions:
 ## Example: fn:if
 
 ```ruby
-condition(:security_groups,
-  fn::if(:create_new_security_group, ref(:new_security_group), ref(:existing_security_group))
+condition("SecurityGroups",
+  fn::if("CreateNewSecurityGroup", ref("NewSecurityGroup"), ref("ExistingSecurityGroup"))
 )
 ```
 
@@ -74,8 +74,8 @@ Conditions:
 ## Example: fn:not
 
 ```ruby
-condition(:my_not_condition,
-  fn::not(equals(ref(:environment_type), "prod"))
+condition("MyNotCondition",
+  fn::not(equals(ref("EnvironmentType"), "prod"))
 )
 ```
 
@@ -93,8 +93,8 @@ Conditions:
 ## Example: fn::or
 
 ```ruby
-condition(:my_or_condition,
-  fn::or(equals("sg-mysggroup", ref(:a_security_group)), {condition: "SomeOtherCondition"})
+condition("MyOrCondition",
+  fn::or(equals("sg-mysggroup", ref("ASecurityGroup")), {condition: "SomeOtherCondition"})
 )
 ```
 

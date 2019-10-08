@@ -14,23 +14,23 @@ There are 2 forms for conditions.  Here are example snippets:
 
 ```ruby
 # medium form
-condition :create_prod_resources, equals(ref(:env_type), "prod")
+condition "CreateProdResources", equals(ref("EnvType"), "prod")
 
 # medium form with a Fn::Equals example
-condition(:create_dev_resources,
+condition("CreateDevResources",
   "Fn::Equals": [
-    ref(:env_type),
+    ref("EnvType"),
     "dev"
   ]
 )
 
 # long form
-condition create_stag_resources: {
+condition("CreateStagResources",
   "Fn::Equals": [
-    {"Ref": "env_type"},
+    {"Ref": "EnvType"},
     "stag"
   ]
-}
+)
 ```
 
 ## Output
@@ -47,7 +47,7 @@ Conditions:
     - dev
   CreateStagResources:
     Fn::Equals:
-    - Ref: env_type
+    - Ref: EnvType
     - stag
 ```
 

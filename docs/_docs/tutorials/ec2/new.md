@@ -38,7 +38,7 @@ Add and edit templates for your project.  When you are ready to launch a CloudFo
 
 You can also get started quickly by importing other CloudFormation templates into lono.  For example:
 
-  lono import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/EC2InstanceWithSecurityGroupSample.template --name ec2
+  lono code import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/EC2InstanceWithSecurityGroupSample.template --name ec2
 
 To re-generate your templates without launching a stack, you can run:
 

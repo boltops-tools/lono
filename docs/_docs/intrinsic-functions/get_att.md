@@ -9,7 +9,7 @@ The `get_att` method is the CloudFormation [Fn::GetAtt](https://docs.aws.amazon.
 ## Example Snippet
 
 ```ruby
-resource(:my_elb, "AWS::ElasticLoadBalancing::LoadBalancer",
+resource("MyElb", "AWS::ElasticLoadBalancing::LoadBalancer",
   availability_zones: ["eu-west-1a"],
   listeners: [{
     load_balancer_port: "80",
@@ -17,14 +17,14 @@ resource(:my_elb, "AWS::ElasticLoadBalancing::LoadBalancer",
     protocol: "HTTP"
   }]
 )
-resource(:my_elb_ingress_group, "AWS::EC2::SecurityGroup",
+resource("MyElbIngressGroup", "AWS::EC2::SecurityGroup",
   group_description: "ELB ingress group",
   security_group_ingress: [{
     ip_protocol: "tcp",
     from_port: "80",
     to_port: "80",
-    source_security_group_owner_id: get_att("my_elb.source_security_group.owner_alias"),
-    source_security_group_name: get_att("my_elb.source_security_group.group_name")
+    source_security_group_owner_id: get_att("MyElb.SourceSecurityGroup.OwnerAlias"),
+    source_security_group_name: get_att("MyElb.SourceSecurityGroup.GroupName")
   }]
 )
 ```

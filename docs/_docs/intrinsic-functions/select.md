@@ -9,9 +9,9 @@ The `select` method is the CloudFormation [Fn::Select](https://docs.aws.amazon.c
 ## Example Snippet
 
 ```ruby
-resource(:subnet0, "AWS::EC2::Subnet",
-  vpc_id: ref(:vpc),
-  cidr_block: select("0", ref(:db_subnet_ip_blocks))
+resource("Subnet0", "AWS::EC2::Subnet",
+  vpc_id: ref("Vpc"),
+  cidr_block: select("0", ref("DbSubnetIpBlocks"))
 )
 ```
 

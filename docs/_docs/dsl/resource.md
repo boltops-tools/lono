@@ -12,13 +12,13 @@ The `resource` method maps to the CloudFormation Template Anatomy [Resources](ht
 
 ```ruby
 # short form
-resource(:instance, "AWS::EC2::Instance",
-  instance_type: ref(:instance_type),
-  image_id: ref(:image_id),
+resource("Instance", "AWS::EC2::Instance",
+  instance_type: ref("InstanceType"),
+  image_id: ref("ImageId"),
 )
 
 # medium form
-resource(:security_group,
+resource("SecurityGroup",
   type: "AWS::EC2::SecurityGroup",
   properties: {
     group_description: "demo security group"
@@ -26,7 +26,7 @@ resource(:security_group,
 )
 
 # long form
-resource(sns_topic: {
+resource("SnsTopic" => {
   type: "AWS::SNS::Topic",
   properties: {
     description: "my topic desc",

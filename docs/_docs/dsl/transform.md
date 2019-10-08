@@ -11,7 +11,7 @@ The `transform` method maps to the CloudFormation Template Anatomy [Transform](h
 ## Example Snippet 1
 
 ```ruby
-transform(:my_macro, "Aws::Serverless")
+transform("MyMacro", "Aws::Serverless")
 ```
 
 ## Outputs
@@ -25,7 +25,7 @@ Transform:
 ## Example Snippet 2
 
 ```ruby
-transform(:my_macro)
+transform("MyMacro")
 ```
 
 ## Outputs

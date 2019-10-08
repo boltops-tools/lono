@@ -15,14 +15,14 @@ There are 3 forms for conditions.  Here are example snippets:
 
 ```ruby
 # short form
-parameter(:ami_id)            # no default, so this is a required parameter
-parameter(:image_id, "ami-123") # default is ami-123
+parameter("AmiId")            # no default, so this is a required parameter
+parameter("ImageId", "ami-123") # default is ami-123
 
 # medium form
-parameter(:company, default: "boltops", description: "instance type")
+parameter("Company", default: "boltops", description: "instance type")
 
 # long form
-parameter(instance_type: {
+parameter("InstanceType" => {
   default: "t2.micro" ,
   description: "instance type" ,
 })

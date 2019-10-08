@@ -9,8 +9,8 @@ The `ref` method is the CloudFormation [Ref](https://docs.aws.amazon.com/AWSClou
 ## Example Snippet
 
 ```ruby
-resource(:my_eip, "AWS::EC2::EIP",
-  instance_id: ref(:my_ec2_instance)
+resource("MyEip", "AWS::EC2::EIP",
+  instance_id: ref("MyEc2Instance")
 )
 ```
 

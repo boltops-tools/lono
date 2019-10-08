@@ -7,14 +7,13 @@ nav_order: 46
 
 Lono generates CloudFormation templates from a [DSL]({% link _docs/dsl.md %}).  As a part of the generation process, Lono camelizes the template keys.  For example this lono DSL code:
 
-
 ```ruby
-parameter(:instance_type, "t3.micro")
-resource(:my_instance, "AWS::EC2::Instance",
-  instance_type: ref(:instance_type),
-  image_id: find_in_map(:ami_map, ref("AWS::Region"), :ami),
+parameter("InstanceType", "t3.micro")
+resource("MyInstance", "AWS::EC2::Instance",
+  instance_type: ref("InstanceType"),
+  image_id: find_in_map("AmiMap", ref("AWS::Region"), :ami),
 )
-resource(:security_group, "AWS::EC2::SecurityGroup",
+resource("SecurityGroup", "AWS::EC2::SecurityGroup",
   group_description: "demo security group",
 )
 ```
@@ -48,10 +47,11 @@ Notice how the keys are camelized. Here are some examples:
 Key in Code | Output Key
 --- | ---
 instance_type | InstanceType
-my_instance | MyInstance
-security_group | SecurityGroup
+image_id | ImageId
 
-Methods like [ref]({% link _docs/intrinsic-functions/ref.md %}) and [find_in_map]({% link _docs/intrinsic-functions/ref.md %}) will also camelize the arguments.  For example:
+## Methods Camelization
+
+Methods like [ref]({% link _docs/intrinsic-functions/ref.md %}) and [find_in_map]({% link _docs/intrinsic-functions/ref.md %}) will also camelize the arguments when they are symbols.  For example:
 
 ```ruby
 instance_type: ref(:instance_type)
@@ -64,7 +64,9 @@ InstanceType:
   Ref: InstanceType
 ```
 
-The convention keeps code looking more natural to Ruby.
+When the argument values are Strings, then they are left alone.
+
+Note: Method argument camelization may be removed in the future. This is because it makes it harder to search code if you have to search for both underscore and CamelCase formats.
 
 ## Special Cases: Exceptions and Overrides
 

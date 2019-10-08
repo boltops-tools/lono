@@ -9,7 +9,7 @@ The `base64` method is the CloudFormation [Fn::Base64](https://docs.aws.amazon.c
 ## Example Snippet
 
 ```ruby
-resource(:instance, "AWS::EC2::Instance",
+resource("Instance", "AWS::EC2::Instance",
   instance_type: "t3.micro",
   image_id: "ami-0de53d8956e8dcf80",
   user_data: base64("#!/bin/bash\necho hi")

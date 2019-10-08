@@ -9,8 +9,8 @@ The `import_value` method is the CloudFormation [Fn::ImportValue](https://docs.a
 ## Example Snippet
 
 ```ruby
-resource(:instance, "AWS::EC2::Instance",
-  instance_type: ref(:instance_type),
+resource("Instance", "AWS::EC2::Instance",
+  instance_type: ref("InstanceType"),
   image_id: "ami-0de53d8956e8dcf80",
   network_interfaces: {
     group_set: [import_value(sub("${NetworkStack}-SecurityGroupID"))],

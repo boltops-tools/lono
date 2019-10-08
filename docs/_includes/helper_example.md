@@ -9,15 +9,15 @@ module Ec2Helper
   def ec2_instance(logical_id, props={})
     default = {
       instance_type: "t3.micro",
-      image_id: ref(:ami_id),
+      image_id: ref("AmiId"),
     }
     props.reverse_merge!(default)
 
-    resource(:instance, "AWS::EC2::Instance", props)
+    resource("Instance", "AWS::EC2::Instance", props)
   end
 
   def security_group(logical_id, props={})
-    resource(:security_group, "AWS::EC2::SecurityGroup", props)
+    resource("SecurityGroup", "AWS::EC2::SecurityGroup", props)
   end
 end
 ```
@@ -27,10 +27,10 @@ You can use the helper in your templates:
 app/templates/demo.rb:
 
 ```ruby
-ec2_instance(:instance,
-  security_group_ids: [get_att("security_group.group_id")]
+ec2_instance("Instance",
+  security_group_ids: [get_att("SecurityGroup.GroupId")]
 )
-security_group(:security_group,
+security_group("SecurityGroup",
   group_description: "demo security group",
 )
 ```
