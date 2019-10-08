@@ -85,6 +85,8 @@ resource("Instance", "AWS::EC2::Instance",
   image_id: find_in_map("AmiMap", ref("AWS::Region"), :ami),
   key_name: ref("KeyName"),
 )
+
+output("Instance")
 {% endhighlight %}
                                 </div>
                             </div>
