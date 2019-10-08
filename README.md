@@ -68,10 +68,9 @@ The above command will generate files to `output/infra/templates/demo.yml` and `
 
     lono cfn deploy demo # shorthand if blueprint, template and params file matches.
     lono cfn deploy demo-$(date +%Y%m%d%H%M%S) --blueprint demo --template demo --param demo
-    lono cfn diff demo-1493859659
-    lono cfn preview demo-1493859659
-    lono cfn update demo-1493859659
-    lono cfn delete demo-1493859659
+    lono cfn diff demo
+    lono cfn preview demo
+    lono cfn delete demo
     lono cfn deploy -h # getting help
 
 See [lono.cloud](http://lono.cloud) for full lono documentation.
