@@ -7,7 +7,7 @@ module Lono
     end
     register(New, "new", "new NAME", "Generates new lono project.")
 
-    desc "list", "Lists project blueprints"
+    desc "blueprints", "Lists project blueprints"
     long_desc Help.text(:blueprints)
     def blueprints
       Blueprint::List.available
