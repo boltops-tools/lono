@@ -33,7 +33,7 @@ module Lono
 
     def create_starter_blueprint
       # https://github.com/erikhuda/thor/wiki/Invocations
-      Lono::Blueprint.start(["demo", "--from-new", "--type", @options[:type], "--project-name", project_name])
+      Lono::Blueprint::New.start(["demo", "--from-new", "--type", @options[:type], "--project-name", project_name])
     end
 
     # After this commands are executed with the newly created project

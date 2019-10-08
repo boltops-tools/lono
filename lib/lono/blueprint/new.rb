@@ -35,7 +35,7 @@ class Lono::Blueprint
         #
         # Then within the new Thor::Group this is called
         #
-        #   Lono::Blueprint.start(["ec2", "--from-new"])
+        #   Lono::Blueprint::New.start(["ec2", "--from-new"])
         #
         # So @cwd = my-infra/blueprints
         @cwd = "#{options[:project_name]}/blueprints"
