@@ -29,19 +29,19 @@ Generates new lono blueprint.
           create  ec2/app/templates
     => Initialize git repo
              run  git init from "."
-    Initialized empty Git repository in /home/ec2-user/environment/boltopspro/blueprints/ec2/.git/
+    Initialized empty Git repository in /home/ec2-user/environment/infra/blueprints/ec2/.git/
     => Installing dependencies with: bundle install
     ================================================================
     Congrats  You have successfully created a lono blueprint.
-        
+
     Cd into your blueprint and check things out.
-        
+
       cd ec2
-        
+
     More info: https://lono.cloud/docs/core/blueprints
-        
+
       Here's the structure your blueprint:
-        
+
     .
     ├── app
     │   ├── definitions
@@ -53,9 +53,9 @@ Generates new lono blueprint.
     ├── README.md
     └── setup
         └── configs.rb
-        
+
     4 directories, 6 files
-        
+
     $
 
 
