@@ -4,27 +4,27 @@ set -exu
 
 # https://unix.stackexchange.com/questions/1496/why-doesnt-my-bash-script-recognize-aliases
 shopt -s expand_aliases
-alias bolt="$(pwd)/exe/bolt"
+alias lono="$(pwd)/exe/lono"
 
 bundle install --without development test
 
 rm -rf infra
 
-bolt new infra
+lono new infra
 # Very simply template with just a security group
 cp .codebuild/demo.rb infra/blueprints/demo/app/templates/demo.rb
 cd infra
 
-# Rewrite the Gemfile to use the local bolt gem for testing
+# Rewrite the Gemfile to use the local lono gem for testing
 cat << EOF > Gemfile
 source "https://rubygems.org"
-gem "bolt", path: "$CODEBUILD_SRC_DIR", submodules: true
+gem "lono", path: "$CODEBUILD_SRC_DIR", submodules: true
 EOF
 
-bundle # install bolt gem in the infra project
+bundle # install lono gem in the infra project
 
 STACK_NAME="demo-$(date +%Y%m%d%H%M%S)"
 
-bolt cfn deploy $STACK_NAME --blueprint demo
-bolt cfn status $STACK_NAME
-bolt cfn delete $STACK_NAME --sure
+lono cfn deploy $STACK_NAME --blueprint demo
+lono cfn status $STACK_NAME
+lono cfn delete $STACK_NAME --sure

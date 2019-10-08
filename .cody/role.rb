@@ -1,1 +1,6 @@
-iam_policy("logs", "ssm", "cloudformation", "ec2")
+iam_policy(
+  "cloudformation",
+  "ec2",
+  "logs",
+  "ssm",
+)
