@@ -42,8 +42,8 @@ Resources:
   Instance:
     Type: AWS::EC2::Instance
     Properties:
-      instanceType:
-        Ref: instanceType
+      InstanceType:
+        Ref: InstanceType
       ImageId:
         Ref: ImageId
   SecurityGroup:
