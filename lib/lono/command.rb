@@ -11,6 +11,21 @@ class Thor
       end
     end
   end
+
+  module Util
+    # Hack to fix issue when -h produces extra lono command in help.  IE:
+    #
+    # $ bundle exec lono blueprint -h
+    # Commands:
+    #   ...
+    #   lono lono:blueprint:new BLUEPRINT_NAME  <= weird
+    #
+    # It looks like thor_classes_in is only used to generate the help menu.
+    #
+    def self.thor_classes_in(*)
+      []
+    end
+  end
 end
 
 module Lono
