@@ -25,7 +25,7 @@ blueprint subcommands
           create  ec2/Gemfile
           create  ec2/README.md
           create  ec2/app/definitions/base.rb
-          create  ec2/setup/configs.rb
+          create  ec2/seed/configs.rb
           create  ec2/app/templates
     => Initialize git repo
              run  git init from "."

@@ -3,7 +3,11 @@ title: Lono Seed
 nav_order: 52
 ---
 
-You usually need to setup and configure some parameter values to use each CloudFormation template. Lono introduces a configure concept to help wih this.  If the blueprint has provided a `setup/configs.rb` file then you can use `lono seed` to quickly set up some default [params]({% link _docs/configs/params.md %}) and [variables]({% link _docs/configs/shared-variables.md %}) files.
+You usually need to configure parameter values to use each CloudFormation template. Lono has a seed concept to help wih this.
+
+If the blueprint has provided a `seed/configs.rb` file then you can use `lono seed` to quickly set up [params]({% link _docs/configs/params.md %}) and [variables]({% link _docs/configs/shared-variables.md %}) configs.
+
+The `lono seed` command generates the full configs from a simpler seed config.
 
 ## Usage
 
@@ -13,7 +17,7 @@ The general form is:
 
 ## Seeds
 
-Depending on how the `setup/configs.rb` was authored, if the author used the `get_input` method then prompts can bypassed and seeded with values.  Here's an example of a seed file:
+Depending on how the `seed/configs.rb` was authored, if the author used the `get_input` method then prompts can bypassed and seeded with values.  Here's an example of a seed file:
 
 seeds/vpc-peer/development.yml:
 
@@ -72,7 +76,7 @@ Above, the user gets prompted for input for the subnet_id value.
 
 ## Authoring
 
-Here are suggestions if you are authoring your own `setup/configs.rb` the general structure looks like this:
+Here are suggestions if you are authoring your own `seed/configs.rb` the general structure looks like this:
 
 ```ruby
 class Configs < Lono::Configure::Base
