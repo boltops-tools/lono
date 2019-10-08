@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [5.1.0]
+- change `lono blueprint` to subcommand: `lono blueprint new` and `lono blueprint list` commands
+- change `lono configure` to `lono seed`. Seed interface is the same but the path is different: `seed/configs.rb`
+
 ## [5.0.1]
 - Introduce lono DSL and set as default mode
 - Introduce blueprints concept
