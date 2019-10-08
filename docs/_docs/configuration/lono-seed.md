@@ -3,11 +3,10 @@ title: Lono Seed
 nav_order: 52
 ---
 
-You usually need to configure parameter values to use each CloudFormation template. Lono has a seed concept to help wih this.
+You usually need to configure parameter values to use each CloudFormation template. Lono has a seed concept to help wih this. The `lono seed` command generates the full configs from a simpler seed config.
 
 If the blueprint has provided a `seed/configs.rb` file then you can use `lono seed` to quickly set up [params]({% link _docs/configs/params.md %}) and [variables]({% link _docs/configs/shared-variables.md %}) configs.
 
-The `lono seed` command generates the full configs from a simpler seed config.
 
 ## Usage
 
