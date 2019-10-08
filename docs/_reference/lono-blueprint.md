@@ -5,11 +5,11 @@ reference: true
 
 ## Usage
 
-    lono blueprint NAME
+    lono blueprint SUBCOMMAND
 
 ## Description
 
-Generates new lono blueprint.
+blueprint subcommands
 
 ## Examples
 
@@ -25,7 +25,7 @@ Generates new lono blueprint.
           create  ec2/Gemfile
           create  ec2/README.md
           create  ec2/app/definitions/base.rb
-          create  ec2/setup/configs.rb
+          create  ec2/seed/configs.rb
           create  ec2/app/templates
     => Initialize git repo
              run  git init from "."
@@ -58,16 +58,9 @@ Generates new lono blueprint.
 
     $
 
+## Subcommands
 
-## Options
+* [lono blueprint list]({% link _reference/lono-blueprint-list.md %}) - Lists project blueprints
+* [lono blueprint new]({% link _reference/lono-blueprint-new.md %}) - Generates new lono blueprint.
 
-```
-[--bundle], [--no-bundle]      # Runs bundle install on the project
-                               # Default: true
-[--force]                      # Bypass overwrite are you sure prompt for existing files.
-[--from-new], [--no-from-new]  # Called from `lono new` command.
-[--project-name=PROJECT_NAME]  # Only used with from_new internally
-[--type=TYPE]                  # Blueprint type: dsl or erb
-                               # Default: dsl
-```
 

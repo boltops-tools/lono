@@ -7,7 +7,7 @@ module Lono
     end
     register(New, "new", "new NAME", "Generates new lono project.")
 
-    desc "list", "Lists project blueprints"
+    desc "blueprints", "Lists project blueprints"
     long_desc Help.text(:blueprints)
     def blueprints
       Blueprint::List.available
@@ -48,13 +48,13 @@ module Lono
       Lono::Inspector::Graph.new(blueprint, template, options).run
     end
 
-    desc "configure", "Configure blueprint with starter values."
+    desc "seed", "Seed blueprint configs with starter values."
     option :defaults, type: :boolean, desc: "Bypass prompt and use the blueprints configure default values."
     option :param, desc: "override convention and specify the param file to use"
     option :seed, default: :convention, desc: "path to seed file to allow prompts bypass. yaml format."
     option :template, desc: "override convention and specify the template file to use"
-    def configure(blueprint)
-      Configure.new(blueprint, options).run
+    def seed(blueprint)
+      Seed.new(blueprint, options).run
     end
 
     desc "clean", "Removes `output` folder."

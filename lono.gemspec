@@ -23,8 +23,8 @@ Gem::Specification.new do |gem|
   gem.add_dependency "activesupport"
   gem.add_dependency "awesome_print"
   gem.add_dependency "aws-sdk-cloudformation"
-  gem.add_dependency "aws-sdk-ec2" # lono configure
-  gem.add_dependency "aws-sdk-iam" # lono configure
+  gem.add_dependency "aws-sdk-ec2" # lono seed
+  gem.add_dependency "aws-sdk-iam" # lono seed
   gem.add_dependency "aws-sdk-s3"
   # gem.add_dependency "cfn_camelizer" # use vendor/cfn_camelizer instead for now
   gem.add_dependency "filesize"

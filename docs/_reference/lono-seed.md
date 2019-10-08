@@ -1,15 +1,15 @@
 ---
-title: lono configure
+title: lono seed
 reference: true
 ---
 
 ## Usage
 
-    lono configure
+    lono seed
 
 ## Description
 
-Configure blueprint with starter values.
+Seed blueprint configs with starter values.
 
 
 ## Options
@@ -21,4 +21,3 @@ Configure blueprint with starter values.
                                # Default: convention
 [--template=TEMPLATE]          # override convention and specify the template file to use
 ```
-

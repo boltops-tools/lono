@@ -1,4 +1,4 @@
-# This class is used by `lono configure [blueprint]` to create starter config files.
+# This class is used by `lono seed [blueprint]` to create starter config files.
 # Example files that get created:
 #
 # Variables:

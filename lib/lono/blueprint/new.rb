@@ -60,7 +60,7 @@ class Lono::Blueprint
     def create_starter_configs
       if options[:from_new] # lono new command
         directory "../blueprint_configs", options[:project_name]
-      else # lono blueprint command
+      else # lono blueprint new command
         directory "../blueprint_configs", "."
       end
     end

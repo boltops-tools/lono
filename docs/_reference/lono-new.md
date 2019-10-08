@@ -34,7 +34,7 @@ By default, `lono new` generates a skeleton project. Use `TEMPLATE` to generate 
           create  infra/blueprints/demo/.meta/config.yml
           create  infra/blueprints/demo/Gemfile
           create  infra/blueprints/demo/README.md
-          create  infra/blueprints/demo/setup/configs.rb
+          create  infra/blueprints/demo/seed/configs.rb
            exist  infra/blueprints/demo
           create  infra/blueprints/demo/app/templates/demo.rb
           create  infra/blueprints/demo/app/user_data/bootstrap.sh

@@ -19,7 +19,7 @@ Hopefully that gives you a basic idea of a lono blueprint structure.
 
 To create a new blueprint you can use:
 
-    lono blueprint myblueprint
+    lono blueprint new myblueprint
 
 This creates a `blueprint/myblueprint` folder in your lono project with a starter structure.
 
