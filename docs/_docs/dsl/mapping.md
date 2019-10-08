@@ -14,13 +14,13 @@ There are 2 forms for mapping.  Here are example snippets:
 
 ```ruby
 # medium form
-mapping(:ami_map,
+mapping("AmiMap",
   "ap-northeast-1": {ami: "ami-084cb340923dc7101"},
   "ap-south-1":     {ami: "ami-0d7805fed18723d71"},
 )
 
 # long form
-mapping(image_map: {
+mapping("ImageMap" => {
   "ap-northeast-1": {ami: "ami-084cb340923dc7101"},
   "ap-south-1":     {ami: "ami-0d7805fed18723d71"},
 })

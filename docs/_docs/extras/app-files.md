@@ -11,13 +11,13 @@ As part of `lono cfn deploy`, the in the `app/files` folder can get zipped and u
 The `app/files` are particularly useful for Lambda function resources.   Example:
 
 ```ruby
-resource("function", "AWS::Lambda::Function",
+resource("Function", "AWS::Lambda::Function",
   code: {
     s3_bucket: s3_bucket,
     s3_key: file_s3_key("index.rb"),
   },
   handler: "index.lambda_handler",
-  role: get_att("lambda_execution_role.arn"),
+  role: get_att("LambdaExecutionRole.Arn"),
   runtime: "ruby2.5",
   timeout: "300"
 )

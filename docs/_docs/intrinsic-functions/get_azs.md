@@ -9,8 +9,8 @@ The `get_azs` method is the CloudFormation [Fn::GetAZs](https://docs.aws.amazon.
 ## Example Snippet
 
 ```ruby
-resource(:my_subnet, "AWS::EC2::Subnet",
-  vpc_id: ref(:vpc),
+resource("MySubnet", "AWS::EC2::Subnet",
+  vpc_id: ref("Vpc"),
   cidr_block: "10.0.0.0/24",
   availability_zone: select("0", get_azs(''))
 )

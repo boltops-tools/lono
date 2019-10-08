@@ -7,11 +7,11 @@ metadata(
   },
 )
 
-parameter :key_name
-parameter :ecs_cluster, "development"
-parameter(:subnets, description: "Comma separated list of subnets")
+parameter "KeyName"
+parameter "EcsCluster", "development"
+parameter("Subnets", description: "Comma separated list of subnets")
 
-mapping(:ami_map,
+mapping("AmiMap",
   "us-east-1": {
     ami: "ami-0a6a36557ea3b9859"
   },
@@ -20,28 +20,28 @@ mapping(:ami_map,
   }
 )
 
-resource(:vpc, "AWS::EC2::VPC",
+resource("Vpc", "AWS::EC2::VPC",
   cidr_block: "10.30.0.0/16",
   enable_dns_support: "True",
   enable_dns_hostnames: "True",
   tags: [
     {
       key: "Name",
-      value: ref(:vpc_name)
+      value: ref("VpcName")
     }
   ]
 )
-resource(:internet_gateway, "AWS::EC2::InternetGateway",
+resource("InternetGateway", "AWS::EC2::InternetGateway",
   tags: [
     {
       key: "Name",
-      value: ref(:vpc_name)
+      value: ref("VpcName")
     }
   ]
 )
-resource(:gateway_to_internet, "AWS::EC2::VPCGatewayAttachment",
-  vpc_id: ref(:vpc),
-  internet_gateway_id: ref(:internet_gateway)
+resource("GatewayToInternet", "AWS::EC2::VPCGatewayAttachment",
+  vpc_id: ref("Vpc"),
+  internet_gateway_id: ref("InternetGateway")
 )
 
-# tags(name: ref(:vpc_name))
+# tags(name: ref("VpcName"))

@@ -36,6 +36,6 @@ Variables also support layering. Layering support is covered in [Layering Suppor
 
 ## Variable Lookup Locations
 
-The LONO_ENV value is used to look up different possible variable file locations. This is covered in more details here: [Variable Lookup Locations]({% link _docs/lookup-locations/variables.md %}).
+The `LONO_ENV` value is used to look up different possible variable file locations. This is covered in more details here: [Variable Lookup Locations]({% link _docs/lookup-locations/variables.md %}).
 
 {% include prev_next.md %}

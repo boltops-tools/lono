@@ -4,11 +4,11 @@ title: 'Tutorial EC2: Import EC2 Template'
 
 ## Import Template
 
-Let's grab an AutoScaling template from [Amazon EC2 instance in a security group  ](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sample-templates-services-us-west-2.html#w2ab2c23c48c13c15).  We'll grab the "Amazon EC2 instance in a security group" example and run the `lono import` command with it.  We'll use the `--name ec2` option to set the imported template name.
+Let's grab an AutoScaling template from [Amazon EC2 instance in a security group  ](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sample-templates-services-us-west-2.html#w2ab2c23c48c13c15).  We'll grab the "Amazon EC2 instance in a security group" example and run the `lono code import` command with it.  We'll use the `--name ec2` option to set the imported template name.
 
 ```
 $ cd ec2 # cd into the newly created project if you haven't already
-$ lono import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/EC2InstanceWithSecurityGroupSample.template --name ec2
+$ lono code import https://s3-us-west-2.amazonaws.com/cloudformation-templates-us-west-2/EC2InstanceWithSecurityGroupSample.template --name ec2
 => Imported CloudFormation template and lono-fied it.
 Template definition added to app/definitions/base.rb
 Params file created to config/params/base/ec2.txt
@@ -30,7 +30,7 @@ KeyName=
 #SSHLocation=         # optional
 ```
 
-The output tells you what happened, but here's additional explanation of what `lono import` did:
+The output tells you what happened, but here's additional explanation of what `lono code import` did:
 
 * A template definition was added to the `app/definitions/base.rb`.
 * A lono env-like params file was created at `config/params/base/ec2.txt`.
@@ -40,11 +40,11 @@ The output tells you what happened, but here's additional explanation of what `l
 
 ## Looking at the Generated Files
 
-Let's look at the files that were created by `lono import`.
+Let's look at the files that were created by `lono code import`.
 
 ### app/templates/ec2.yml
 
-The `app/templates/ec2.yml` is simply the template that was imported into the lono project. If the original template's format was JSON, lono converts the template into YAML.  If the original format was YAML, lono imports the template as is.
+The `app/templates/ec2.yml` is simply the template that was imported into the lono project. If the original template's format was JSON, lono code converts the template into YAML.  If the original format was YAML, lono code imports the template as is.
 
 ### app/definitions/base.rb
 
@@ -54,7 +54,7 @@ Even though the template exists in the `app/templates` folder, a template defini
 template "ec2"
 ```
 
-It's just simple one line template definition.  `lono import` added the template definition.
+It's just simple one line template definition.  `lono code import` added the template definition.
 
 ### config/params/base/ec2.txt
 

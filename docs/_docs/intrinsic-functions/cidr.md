@@ -9,10 +9,10 @@ The `cidr` method is the CloudFormation [Fn::Cidr](https://docs.aws.amazon.com/A
 ## Example Snippet
 
 ```ruby
-resource(:example_subnet, "AWS::EC2::Subnet",
+resource("ExampleSubnet", "AWS::EC2::Subnet",
   assign_ipv6_address_on_creation: "true",
-  cidr_block: select("0", cidr(get_att("example_vpc.cidr_block"), "1", "8")),
-  vpc_id: ref(:example_vpc)}
+  cidr_block: select("0", cidr(get_att("ExampleVpc.CidrBlock"), "1", "8")),
+  vpc_id: ref("ExampleVpc")}
 )
 ```
 

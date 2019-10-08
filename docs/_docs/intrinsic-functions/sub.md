@@ -9,8 +9,8 @@ The `sub` method is the CloudFormation [Fn::Sub](https://docs.aws.amazon.com/AWS
 ## Example Snippet
 
 ```ruby
-resource(:instance, "AWS::EC2::Instance",
-  instance_type: ref(:instance_type),
+resource("Instance", "AWS::EC2::Instance",
+  instance_type: ref("InstanceType"),
   image_id: "ami-0de53d8956e8dcf80",
   user_data: sub("hello ${k1} ${k2}", k1: "v1", k2: "v2")
 )
