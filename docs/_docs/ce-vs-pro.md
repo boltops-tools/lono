@@ -14,7 +14,7 @@ Lono Pro refers to additional features added to lono. It is available with a [Bo
 CFN Lifecycle commands | ![](/img/features/yes.svg) | ![](/img/features/yes.svg)
 ERB Template Generator | ![](/img/features/yes.svg) | ![](/img/features/yes.svg)
 DSL Generator | ![](/img/features/yes.svg) | ![](/img/features/yes.svg)
-Reusable Blueprints | ![](/img/features/yes.svg) | ![](/img/features/yes.svg)
+Reusable Blueprints Structure | ![](/img/features/yes.svg) | ![](/img/features/yes.svg)
 Lono Pro Addon: Import and Convert commands | ![](/img/features/no.svg) | ![](/img/features/yes.svg)
 Access to BoltOps Pro Blueprints | ![](/img/features/no.svg) | ![](/img/features/yes.svg)
 
