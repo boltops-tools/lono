@@ -1,4 +1,8 @@
-# Cody Files
+# Overview
+
+CodeBuild is used to run **acceptance-level tests**.
+
+## Cody Files
 
 The files in folder are used by cody to build AWS CodeBuild projects.  For more info, check out the [cody docs](https://cody.run). Here's a quick start.
 
