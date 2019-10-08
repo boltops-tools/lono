@@ -12,7 +12,7 @@ rm -rf infra
 
 lono new infra
 # Very simply template with just a security group
-cp .codebuild/demo.rb infra/blueprints/demo/app/templates/demo.rb
+cp .cody/demo.rb infra/blueprints/demo/app/templates/demo.rb
 cd infra
 
 # Rewrite the Gemfile to use the local lono gem for testing
