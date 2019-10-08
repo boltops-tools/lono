@@ -46,16 +46,6 @@ jobs:
       - run:
           name: run tests
           command: |
-            mkdir /tmp/test-results
-
-            cat >.rspec <<EOL
-            --format documentation
-            --exclude-pattern spec/fixtures/apps/**/*
-            --format RspecJunitFormatter \
-            --out /tmp/test-results/rspec.xml \
-            --require spec_helper
-            EOL
-
             bundle exec rspec
 
       # collect reports
