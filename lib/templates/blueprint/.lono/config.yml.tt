@@ -1,3 +1,0 @@
----
-blueprint_name: <%= blueprint_name %>
-template_type: dsl
