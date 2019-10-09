@@ -9,6 +9,7 @@ require 'plissken'
 require 'rainbow/ext/string'
 require 'render_me_pretty'
 require 'yaml'
+require 'cfn_camelizer'
 
 gem_root = File.dirname(__dir__)
 $:.unshift("#{gem_root}/lib")
