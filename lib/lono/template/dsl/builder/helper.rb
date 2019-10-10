@@ -28,19 +28,27 @@ class Lono::Template::Dsl::Builder
       }
     end
 
+    def include(path)
+      render_file(Lono.config.includes_path, path)
+    end
+
     def user_data(path)
-      path = "#{Lono.config.user_data_path}/#{path}"
+      render_file(Lono.config.user_data_path, path)
+    end
+
+    def render_file(folder, path)
+      path = "#{folder}/#{path}"
       if File.exist?(path)
         render_path(path)
       else
-        message = "WARNING: user-data path #{path} not found"
+        message = "WARNING: path #{path} not found"
         puts message.color(:yellow)
         puts "Called from:"
-        puts caller[1]
+        puts caller[2]
         message
       end
     end
-    memoize :user_data
+    memoize :render_file
 
     def render_path(path)
       RenderMePretty.result(path, context: self)
