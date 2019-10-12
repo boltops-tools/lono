@@ -1,4 +1,4 @@
-class Lono::Configure
+class Lono::Seed
   module Helpers
     extend Memoist
 

@@ -11,7 +11,7 @@
 #    configs/[blueprint]/params/[Lono.env]/[param].txt - medium form
 #    configs/[blueprint]/params/[Lono.env]/[template]/[param].txt - large form
 #
-# Subclasses of `Lono::Configure::Base` should implement:
+# Subclasses of `Lono::Seed::Base` should implement:
 #
 #   setup: Hook to perform logic at the beginning. Examples:
 #     * Setting instance variables used in the params or variables template methods.
@@ -21,7 +21,7 @@
 #   variables: Template for generated variables file. Contents of what gets created at
 #     configs/[blueprint]/variables/development.rb
 #
-class Configs < Lono::Configure::Base
+class Configs < Lono::Seed::Base
   # Setup hook
   def setup
     # Custom setup logic

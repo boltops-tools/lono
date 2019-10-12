@@ -3,7 +3,7 @@ require "memoist"
 require "yaml"
 
 # Subclasses must implement: setup, params, variables
-class Lono::Configure
+class Lono::Seed
   class Base
     include Lono::AwsServices
     include Helpers

@@ -1,7 +1,7 @@
 require "aws-sdk-ec2"
 require "aws-sdk-iam"
 
-class Lono::Configure
+class Lono::Seed
   module AwsServices
     def ec2
       @ec2 ||= Aws::EC2::Client.new
