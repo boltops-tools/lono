@@ -54,7 +54,7 @@ module Lono
     option :seed, default: :convention, desc: "path to seed file to allow prompts bypass. yaml format."
     option :template, desc: "override convention and specify the template file to use"
     def seed(blueprint)
-      Seed.new(blueprint, options).run
+      Seed.new(blueprint, options).create
     end
 
     desc "clean", "Removes `output` folder."
@@ -107,9 +107,5 @@ module Lono
     desc "blueprint SUBCOMMAND", "blueprint subcommands"
     long_desc Help.text(:blueprint)
     subcommand "blueprint", Blueprint
-
-    desc "starter SUBCOMMAND", "starter subcommands"
-    long_desc Help.text(:starter)
-    subcommand "starter", Starter
   end
 end
