@@ -3,7 +3,7 @@ module Lono::Core
     PATHS = {
       definitions_path: "app/definitions",
       helpers_path: "app/helpers",
-      includes_path: "app/includes",
+      content_path: "app/content",
       partials_path: "app/partials",
       scripts_path: "app/scripts",
       templates_path: "app/templates",

@@ -28,8 +28,8 @@ class Lono::Template::Dsl::Builder
       }
     end
 
-    def include(path)
-      render_file(Lono.config.includes_path, path)
+    def content(path)
+      render_file(Lono.config.content_path, path)
     end
 
     def user_data(path)
