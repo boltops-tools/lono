@@ -12,6 +12,7 @@ require "yaml"
 #
 class Lono::Seed
   class Base
+    include Lono::Blueprint::Root
     include Lono::AwsServices
     include Lono::Conventions
     extend Memoist
@@ -44,8 +45,21 @@ class Lono::Seed
     end
 
     def check_dsl_type!
-      puts "@blueprint #{@blueprint}"
-      # TODO: only support DSL type right now
+      dsl_type = template_type == 'dsl'
+      unless dsl_type
+        puts "Detected template_type: #{template_type}"
+        puts "lono seed only supports dsl template types currently."
+        exit 1
+      end
+    end
+
+    def template_type
+      blueprint_root = find_blueprint_root(@blueprint)
+      meta_config = "#{blueprint_root}/.meta/config.yml"
+      return false unless File.exist?(meta_config)
+
+      meta = YAML.load_file(meta_config)
+      meta['template_type']
     end
 
     def setup; end
