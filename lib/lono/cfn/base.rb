@@ -170,7 +170,7 @@ class Lono::Cfn
     def ensure_s3_bucket_exist
       bucket = Lono::S3::Bucket.new
       return if bucket.exist?
-      bucket.create
+      bucket.deploy
     end
 
     def build_scripts
