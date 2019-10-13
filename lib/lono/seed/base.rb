@@ -53,7 +53,8 @@ class Lono::Seed
     # meant to be overriden by subclass
     def variables
       <<~EOL
-      # This is an empty starter variables file. Please refer to the blueprint's README for variables to set.
+      # This is an empty starter variables file.
+      # Please refer to the blueprint's README for variables to set.
       # Note some blueprints may not use variables.
       EOL
     end
