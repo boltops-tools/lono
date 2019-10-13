@@ -4,7 +4,7 @@ module Lono::AppFile
     include Lono::Blueprint::Root
     extend Memoist
 
-    def initialize(blueprint, options = {})
+    def initialize(blueprint, options={})
       @blueprint, @options = blueprint, options
       @template = @options[:template] || @blueprint
       Lono::ProjectChecker.check

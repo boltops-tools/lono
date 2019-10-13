@@ -107,5 +107,9 @@ module Lono
     desc "blueprint SUBCOMMAND", "blueprint subcommands"
     long_desc Help.text(:blueprint)
     subcommand "blueprint", Blueprint
+
+    desc "starter SUBCOMMAND", "starter subcommands"
+    long_desc Help.text(:starter)
+    subcommand "starter", Starter
   end
 end

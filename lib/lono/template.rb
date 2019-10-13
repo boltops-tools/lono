@@ -1,8 +1,5 @@
-require "thor"
-require_relative "command"
-
 module Lono
-  class Template < Lono::Command
+  class Template < Command
     class_option :quiet, type: :boolean, desc: "silence the output"
     class_option :noop, type: :boolean, desc: "noop mode, do nothing destructive"
 
