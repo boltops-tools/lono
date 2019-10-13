@@ -29,8 +29,8 @@ module Lono
       end
 
       if loaded
-        if defined?(::Configs)
-          configs_class = ::Configs # blueprint specific Configs
+        if defined?(Lono::Seed::Configs)
+          configs_class = Lono::Seed::Configs # blueprint specific Configs
         else
           puts "Configs class not found.\nAre you sure #{configs_path} contains a Configs class?"
           exit 1

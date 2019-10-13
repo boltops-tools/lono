@@ -44,6 +44,7 @@ class Lono::Seed
     end
 
     def check_dsl_type!
+      puts "@blueprint #{@blueprint}"
       # TODO: only support DSL type right now
     end
 
@@ -97,6 +98,7 @@ class Lono::Seed
       template = builder.template
       template["Parameters"]
     end
+    memoize :parameters
 
     def required(parameters)
       parameters.reject { |logical_id, p| p["Default"] }
