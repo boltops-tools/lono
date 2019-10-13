@@ -18,7 +18,7 @@ class Lono::Seed
       @args.symbolize_keys!
 
       @written_files = []
-      puts "Setting up starter values for #{@blueprint.color(:green)} blueprint"
+      puts "Seeding starter values for #{@blueprint.color(:green)} blueprint configs"
     end
 
     def run

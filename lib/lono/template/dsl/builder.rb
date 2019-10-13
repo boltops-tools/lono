@@ -7,6 +7,7 @@ class Lono::Template::Dsl
     include Helper # built-in helpers
     include Lono::Template::Evaluate
     include Syntax
+    extend Memoist
 
     def initialize(path, blueprint, options={})
       @path, @blueprint, @options = path, blueprint, options
@@ -16,10 +17,18 @@ class Lono::Template::Dsl
 
     def build
       load_context
-      evaluate_template_path(@path)
+      evaluate_template_path(@path) # modifies @cfn
       build_template
       write_output
+      template
     end
+
+    def template
+      load_context
+      evaluate_template_path(@path) # modifies @cfn
+      camelize(@cfn)
+    end
+    memoize :template
 
     def build_template
       @results = YAML.dump(camelize(@cfn))
