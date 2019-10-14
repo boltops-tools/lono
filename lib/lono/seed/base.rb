@@ -75,18 +75,25 @@ class Lono::Seed
       parameters = parameters(app_template_path)
 
       lines = []
-      lines << "# Required parameters:"
-      required(parameters).each do |name, data|
+      required = required(parameters)
+      lines << "# Required parameters:" unless required.empty?
+      required.each do |name, data|
         example = description_example(data["Description"])
         lines << "#{name}=#{example}"
       end
-      lines << "# Optional parameters:"
-      optional(parameters).each do |name, data|
+      optional = optional(parameters)
+      lines << "# Optional parameters:" unless optional.empty?
+      optional.each do |name, data|
         value = default_value(data)
         lines << "# #{name}=#{value}"
       end
-      content = lines.join("\n") + "\n"
 
+      if lines.empty?
+        puts "Template has no parameters."
+        return
+      end
+
+      content = lines.join("\n") + "\n"
       dest_path = "configs/#{@blueprint}/params/#{Lono.env}.txt" # only support environment level parameters for now
       write(dest_path, content)
       puts "Starter params created:    #{dest_path}"
@@ -117,7 +124,7 @@ class Lono::Seed
     def parameters(app_template_path)
       builder = Lono::Template::Dsl::Builder.new(app_template_path, @blueprint, quiet: false)
       template = builder.template
-      template["Parameters"]
+      template["Parameters"] || []
     end
     memoize :parameters
 
