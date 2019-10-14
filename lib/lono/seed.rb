@@ -32,7 +32,10 @@ module Lono
         if defined?(Lono::Seed::Configs)
           configs_class = Lono::Seed::Configs # blueprint specific Configs
         else
-          puts "Configs class not found.\nAre you sure #{configs_path} contains a Configs class?"
+          puts <<~EOL
+            Lono::Seed::Configs class not found.
+            Are you sure #{configs_path} contains a Lono::Seed::Configs class?
+          EOL
           exit 1
         end
       else
