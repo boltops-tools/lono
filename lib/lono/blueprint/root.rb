@@ -13,9 +13,11 @@ class Lono::Blueprint
       if blueprint_root
         Lono.blueprint_root = blueprint_root
       else
-        puts "ERROR: Unable to find the blueprint #{blueprint}.  " \
-            "Are you sure it's in your Gemfile or in the blueprints folder "\
-            "with the correct blueprint_name in .lono/config.yml?".color(:red)
+        puts <<~EOL.color(:red)
+          ERROR: Unable to find the blueprint #{blueprint}.
+          Are you sure its in your Gemfile or in the blueprints folder
+          with the correct blueprint_name in .meta/config.yml?
+        EOL
         List.available
         exit 1
       end

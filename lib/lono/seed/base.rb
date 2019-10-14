@@ -65,13 +65,10 @@ class Lono::Seed
     def setup; end
     def finish; end
 
-    # meant to be overriden by subclass
+    # Meant to be overriden by subclass
+    # Return String with contents of variables file.
     def variables
-      <<~EOL
-      # This is an empty starter variables file.
-      # Please refer to the blueprint's README for variables to set.
-      # Note some blueprints may not use variables.
-      EOL
+      false
     end
 
     def create_param_file(app_template_path)
@@ -85,7 +82,8 @@ class Lono::Seed
       end
       lines << "# Optional parameters:"
       optional(parameters).each do |name, data|
-        lines << "# #{name}=#{data["Default"]}"
+        value = default_value(data)
+        lines << "# #{name}=#{value}"
       end
       content = lines.join("\n") + "\n"
 
@@ -105,6 +103,15 @@ class Lono::Seed
       md = description.match(/(Example|IE): (.*)/)
       return default unless md
       md[2]
+    end
+
+    def default_value(data)
+      value = data["Default"]
+      if value.blank?
+        description_example(data["Description"])
+      else
+        value
+      end
     end
 
     def parameters(app_template_path)
