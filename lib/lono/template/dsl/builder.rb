@@ -23,6 +23,7 @@ class Lono::Template::Dsl
       template
     end
 
+    # Useful for lono seed to get the template in memory
     def template
       load_context
       evaluate_template_path(@path) # modifies @cfn
