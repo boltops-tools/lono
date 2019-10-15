@@ -21,3 +21,7 @@ test/version_tmp
 tmp
 
 /infra
+
+_site
+.sass-cache
+.jekyll-metadata
