@@ -48,7 +48,8 @@ module Lono
       Lono::Inspector::Graph.new(blueprint, template, options).run
     end
 
-    desc "seed", "Seed blueprint configs with starter values."
+    desc "seed", "Generates starter configs for a blueprint."
+    long_desc Help.text("seed")
     option :param, desc: "override convention and specify the param file to use"
     option :template, desc: "override convention and specify the template file to use"
     def seed(blueprint)
