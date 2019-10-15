@@ -3,10 +3,10 @@ title: Lono Seed
 nav_order: 52
 ---
 
-You usually need to configure parameter values to use each CloudFormation template. Lono has a seed concept to help wih this. The `lono seed` command generates the full configs from a simpler seed config.
+For each blueprint and CloudFormation template, you will usually need to setup some configs files. Lono has a `lono seed` command that generates starter configs values.
 
-If the blueprint has provided a `seed/configs.rb` file then you can use `lono seed` to quickly set up [params]({% link _docs/configs/params.md %}) and [variables]({% link _docs/configs/shared-variables.md %}) configs.
-
+* The starter values for params are determined by the template definition itself.
+* The starter values for variables are determined by the bluperint's `seed/configs.rb`, usually written by the author.
 
 ## Usage
 
@@ -14,64 +14,26 @@ The general form is:
 
     lono seed BLUEPRINT
 
-## Seeds
+## Seed Example
 
-Depending on how the `seed/configs.rb` was authored, if the author used the `get_input` method then prompts can bypassed and seeded with values.  Here's an example of a seed file:
+Here's an example of using seed.
 
-seeds/vpc-peer/development.yml:
-
-```yaml
----
-requester_vpc: vpc-111
-accepter_vpc: vpc-222
-```
-
-Running the lono seed vpc-peer produces something like this:
-
-    $ lono seed vpc-peer --seed seeds/vpc-peer/development.yml
-    Setting up starter values for vpc-peer blueprint
-    For requester_vpc, using seed value vpc-111
-    For accepter_vpc, using seed value vpc-222
-    The vpc-peer blueprint configs are in:
-
-      * configs/vpc-peer/params/development.txt
-      * configs/vpc-peer/variables/development.rb
-
-    The starter values are specific to your AWS account. They meant to
-    be starter values. Please take a look, you may want to adjust the values.
+    $ lono seed ecs-asg
+    Creating starter config files for ecs-asg
+    Starter params created:    configs/ecs-asg/params/development.txt
+    $ cat configs/ecs-asg/params/development.txt
+    # Required parameters:
+    VpcId=vpc-111
+    Subnets=subnet-111,subnet-222,subnet-333
+    EcsCluster=development
+    # Optional parameters:
+    # InstanceType=m5.large
+    # KeyName=...
+    # SshLocation=...
+    # TagName=ecs-asg
     $
 
-Additionally, there are the `--seed` option does not require you to specify a path if you have placed the seed file according to the `seeds/BLUEPRINT/LONO_ENV.yml` convention.
-
-These are the same:
-
-    lono seed vpc-peer
-    lono seed vpc-peer --seed seeds/vpc-peer/development.yml
-
-These are also the same:
-
-    LONO_ENV=production lono seed vpc-peer
-    lono seed vpc-peer --seed seeds/vpc-peer/production.yml
-
-## Prompts
-
-If seed values are not provided, then the `lono seed` command will prompt the user for input values.
-
-Here's an example with a ec2 blueprint.
-
-    $ lono seed ec2
-    Setting up starter values for ec2 blueprint
-    Please provide value for subnet_id (default: default_subnet):
-    The ec2 blueprint configs are in:
-
-      * configs/ec2/params/development.txt
-      * configs/ec2/variables/development.rb
-
-    The starter values are specific to your AWS account. They meant to
-    be starter values. Please take a look, you may want to adjust the values.
-    $
-
-Above, the user gets prompted for input for the subnet_id value.
+The ecs-asg blueprint only requires a params config file, so only the params is generated.
 
 ## Authoring
 

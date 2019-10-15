@@ -1,54 +1,28 @@
-# This class is used by `lono seed [blueprint]` to create starter config files.
+# This is an optional class is used by `lono seed [blueprint]` to create starter configs.
 # Example files that get created:
 #
-# Variables:
+#    configs/BLUEPRINT/params/LONO_ENV.txt
+#    configs/BLUEPRINT/variables/LONO_ENV.rb
 #
-#    configs/[blueprint]/variables/[Lono.env].rb
+# The `Lono::Seed::Configs` class should implement:
 #
-# Params:
-#
-#    configs/[blueprint]/params/[Lono.env].txt - short form
-#    configs/[blueprint]/params/[Lono.env]/[param].txt - medium form
-#    configs/[blueprint]/params/[Lono.env]/[template]/[param].txt - large form
-#
-# Subclasses of `Lono::Seed::Base` should implement:
-#
-#   setup: Hook to perform logic at the beginning. Examples:
-#     * Setting instance variables used in the params or variables template methods.
-#     * Creating pre-defined IAM roles required by the template.
-#   params: Template for generated params file. Contents of what gets created at
-#     configs/[blueprint]/params/development/[param].txt
+#   setup: Hook to perform logic at the beginning. A good place to create IAM service roles.
 #   variables: Template for generated variables file. Contents of what gets created at
 #     configs/[blueprint]/variables/development.rb
 #
-class Configs < Lono::Seed::Base
+# Note: There is no need to define a params method. Lono is able to generate a params config starter file by evaluating the template defintion.
+#
+class Lono::Seed::Configs < Lono::Seed::Base
   # Setup hook
-  def setup
-    # Custom setup logic
-    # set_instance_variables
-  end
+  # def setup
+  # end
 
-  # Template for params
-  def params
-    <<~EOL
-      Parameter1=StarterValue1
-      Parameter2=StarterValue1
-      # Optional
-      # Parameter3=OptionalStarterValue1
-    EOL
-  end
-
-  # Template for variables
+  # Template for variables.
+  # Return String with the content of the config/BLUEPRINT/variables file.
   # def variables
   #   <<~EOL
   #     @variable1=starter_value1
   #     @variable2=starter_value2
   #   EOL
-  # end
-
-private
-  # Example:
-  # def set_instance_variables
-  #   @instance_type = "t3.micro"
   # end
 end
