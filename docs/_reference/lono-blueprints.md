@@ -5,7 +5,7 @@ reference: true
 
 ## Usage
 
-    lono list
+    lono blueprints
 
 ## Description
 

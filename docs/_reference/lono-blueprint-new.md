@@ -23,3 +23,4 @@ Generates new lono blueprint.
 [--type=TYPE]                  # Blueprint type: dsl or erb
                                # Default: dsl
 ```
+

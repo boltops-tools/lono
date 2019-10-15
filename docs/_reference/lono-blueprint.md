@@ -13,11 +13,11 @@ blueprint subcommands
 
 ## Examples
 
-    lono blueprint ec2 # skeleton blueprint with barebones structure
+    lono blueprint new ec2 # skeleton blueprint with barebones structure
 
 ## Example Output
 
-    $ lono blueprint ec2
+    $ lono blueprint new ec2
     => Creating new blueprint called ec2.
           create  ec2
           create  ec2/ec2.gemspec
