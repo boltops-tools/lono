@@ -27,10 +27,6 @@ class Lono::Cfn
       @template_path = "#{Lono.config.output_path}/#{@blueprint}/templates/#{@template}.yml"
     end
 
-    def switch_current(stack_name)
-      Current.name!(stack_name)
-    end
-
     def starting_message
       action = self.class.to_s.split('::').last
       puts "#{action} #{@stack_name.color(:green)} stack..."
@@ -170,7 +166,7 @@ class Lono::Cfn
     def ensure_s3_bucket_exist
       bucket = Lono::S3::Bucket.new
       return if bucket.exist?
-      bucket.create
+      bucket.deploy
     end
 
     def build_scripts

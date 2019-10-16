@@ -1,37 +1,48 @@
-require "fileutils"
-
 module Lono
   class Seed
-    include Blueprint::Root
+    include Lono::Blueprint::Root
+    include Lono::Conventions
 
-    def initialize(blueprint, options)
+    def initialize(blueprint, options={})
       @blueprint, @options = blueprint, options
-      @args = options[:args] # hash
+      set_blueprint_root(@blueprint)
+      @template, @param = template_param_convention(options)
     end
 
-    def run
-      blueprint_root = find_blueprint_root(@blueprint)
-      unless blueprint_root
-        puts "ERROR: Did not find blueprint: #{@blueprint}".color(:red)
-        puts "Are you sure you specified the right blueprint?"
-        Blueprint::List.available
-        exit 1
-      end
-
-      configs_path = "#{blueprint_root}/seed/configs.rb"
-      unless File.exist?(configs_path)
-        puts "No #{configs_path} file found.  Nothing to configure."
-        exit
-      end
-
-      require configs_path
-      unless defined?(Configs)
-        puts "Configs class not found.\nAre you sure #{configs_path} contains a Configs class?"
-        exit 1
-      end
-      configs = Configs.new(@blueprint, @options)
-      # The Configs class implements: seed, params, and variables
+    def create
+      puts "Creating starter config files for #{@blueprint}"
+      configs_class = load_configs_class # ::Configs or Lono::Seed::Base
+      configs = configs_class.new(@blueprint, @options)
+      # The Configs class implements: variables
       configs.run # setup the instance variables
+    end
+
+  private
+    def load_configs_class
+      blueprint_root = find_blueprint_root(@blueprint)
+      configs_path = "#{blueprint_root}/seed/configs.rb"
+
+      begin
+        loaded = load configs_path
+      rescue LoadError
+        loaded = false
+      end
+
+      if loaded
+        if defined?(Lono::Seed::Configs)
+          configs_class = Lono::Seed::Configs # blueprint specific Configs
+        else
+          puts <<~EOL
+            Lono::Seed::Configs class not found.
+            Are you sure #{configs_path} contains a Lono::Seed::Configs class?
+          EOL
+          exit 1
+        end
+      else
+        configs_class = Lono::Seed::Base # Generic handling
+      end
+
+      configs_class
     end
   end
 end

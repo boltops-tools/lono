@@ -39,7 +39,7 @@ module Lono::AwsServices
     end
 
     def rollback_complete?(stack)
-      stack.stack_status == 'ROLLBACK_COMPLETE'
+      stack&.stack_status == 'ROLLBACK_COMPLETE'
     end
 
     def testing_update?

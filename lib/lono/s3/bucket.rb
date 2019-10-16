@@ -3,6 +3,7 @@ class Lono::S3
     STACK_NAME = ENV['LONO_STACK_NAME'] || "lono"
     include Lono::AwsServices
     extend Lono::AwsServices
+    extend Memoist
 
     class << self
       @@name = nil
@@ -24,6 +25,14 @@ class Lono::S3
 
     def deploy
       stack = find_stack
+      if rollback_complete?(stack)
+        puts "Existing '#{STACK_NAME}' stack in ROLLBACK_COMPLETE state. Deleting stack before continuing."
+        cfn.delete_stack(stack_name: STACK_NAME)
+        status.wait
+        status.reset
+        stack = nil
+      end
+
       if stack
         update
       else
@@ -50,9 +59,17 @@ class Lono::S3
     # Launches a cloudformation to create an s3 bucket
     def create
       puts "Creating #{STACK_NAME} stack with the s3 bucket"
-      cfn.create_stack(stack_name: STACK_NAME, template_body: template_body)
-      status = ::Cfn::Status.new(STACK_NAME)
-      status.wait
+      cfn.create_stack(
+        stack_name: STACK_NAME,
+        template_body: template_body,
+        enable_termination_protection: true,
+      )
+      success = status.wait
+      status.reset
+      unless success
+        puts "ERROR: Unable to create lono stack with managed s3 bucket".color(:red)
+        exit 1
+      end
     end
 
     def update
@@ -66,8 +83,16 @@ class Lono::S3
       are_you_sure?
 
       puts "Deleting #{STACK_NAME} stack with the s3 bucket"
+      disable_termination_protect
       empty_bucket!
       cfn.delete_stack(stack_name: STACK_NAME)
+    end
+
+    def disable_termination_protect
+      cfn.update_termination_protection(
+        stack_name: STACK_NAME,
+        enable_termination_protection: false,
+      )
     end
 
     def find_stack
@@ -76,6 +101,11 @@ class Lono::S3
     rescue Aws::CloudFormation::Errors::ValidationError
       nil
     end
+
+    def status
+      ::Cfn::Status.new(STACK_NAME)
+    end
+    memoize :status
 
   private
 
@@ -98,6 +128,11 @@ class Lono::S3
 
     def are_you_sure?
       return true if @options[:sure]
+
+      if bucket_name.nil?
+        puts "The lono stack and s3 bucket does not exist."
+        exit
+      end
 
       puts "Are you sure you want the lono bucket #{bucket_name.color(:green)} to be emptied and deleted? (y/N)"
       sure = $stdin.gets.strip

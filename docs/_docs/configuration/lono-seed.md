@@ -3,10 +3,10 @@ title: Lono Seed
 nav_order: 52
 ---
 
-You usually need to configure parameter values to use each CloudFormation template. Lono has a seed concept to help wih this. The `lono seed` command generates the full configs from a simpler seed config.
+For each blueprint and CloudFormation template, you will usually need to setup some [configs]({% link _docs/core/configs.md %}). Lono has a `lono seed` command that generates starter configs values.
 
-If the blueprint has provided a `seed/configs.rb` file then you can use `lono seed` to quickly set up [params]({% link _docs/configs/params.md %}) and [variables]({% link _docs/configs/shared-variables.md %}) configs.
-
+* The starter values for params are determined by the template definition itself.
+* The starter values for variables are determined by the blueprint's `seed/configs.rb`, usually written by the author.
 
 ## Usage
 
@@ -14,108 +14,45 @@ The general form is:
 
     lono seed BLUEPRINT
 
-## Seeds
+## Seed Example
 
-Depending on how the `seed/configs.rb` was authored, if the author used the `get_input` method then prompts can bypassed and seeded with values.  Here's an example of a seed file:
+Here's an example using `lono seed`.
 
-seeds/vpc-peer/development.yml:
-
-```yaml
----
-requester_vpc: vpc-111
-accepter_vpc: vpc-222
-```
-
-Running the lono seed vpc-peer produces something like this:
-
-    $ lono seed vpc-peer --seed seeds/vpc-peer/development.yml
-    Setting up starter values for vpc-peer blueprint
-    For requester_vpc, using seed value vpc-111
-    For accepter_vpc, using seed value vpc-222
-    The vpc-peer blueprint configs are in:
-
-      * configs/vpc-peer/params/development.txt
-      * configs/vpc-peer/variables/development.rb
-
-    The starter values are specific to your AWS account. They meant to
-    be starter values. Please take a look, you may want to adjust the values.
+    $ lono seed ecs-asg
+    Creating starter config files for ecs-asg
+    Starter params created:    configs/ecs-asg/params/development.txt
+    $ cat configs/ecs-asg/params/development.txt
+    # Required parameters:
+    VpcId=vpc-111
+    Subnets=subnet-111,subnet-222,subnet-333
+    EcsCluster=development
+    # Optional parameters:
+    # InstanceType=m5.large
+    # KeyName=...
+    # SshLocation=...
+    # TagName=ecs-asg
     $
 
-Additionally, there are the `--seed` option does not require you to specify a path if you have placed the seed file according to the `seeds/BLUEPRINT/LONO_ENV.yml` convention.
+The `configs/ecs-asg/params/development.txt` file is conveniently generated for you. Depending on the blueprint, a `configs/ecs-asg/variables/development.rb` will also be generated.
 
-These are the same:
-
-    lono seed vpc-peer
-    lono seed vpc-peer --seed seeds/vpc-peer/development.yml
-
-These are also the same:
-
-    LONO_ENV=production lono seed vpc-peer
-    lono seed vpc-peer --seed seeds/vpc-peer/production.yml
-
-## Prompts
-
-If seed values are not provided, then the `lono seed` command will prompt the user for input values.
-
-Here's an example with a ec2 blueprint.
-
-    $ lono seed ec2
-    Setting up starter values for ec2 blueprint
-    Please provide value for subnet_id (default: default_subnet):
-    The ec2 blueprint configs are in:
-
-      * configs/ec2/params/development.txt
-      * configs/ec2/variables/development.rb
-
-    The starter values are specific to your AWS account. They meant to
-    be starter values. Please take a look, you may want to adjust the values.
-    $
-
-Above, the user gets prompted for input for the subnet_id value.
+Also, different `LONO_ENV` will generate corresponding configs. For example, `LONO_ENV=production` will generate  `configs/ecs-asg/params/production.txt`.
 
 ## Authoring
 
-Here are suggestions if you are authoring your own `seed/configs.rb` the general structure looks like this:
+If you are authoring your own `seed/configs.rb`, the general structure looks like this:
 
 ```ruby
-class Configs < Lono::Configure::Base
-  # Setup hook
-  def setup
-    # Custom setup logic
-    # set_instance_variables
-  end
-
-  # Template for params
-  def params
+class Lono::Seed::Configs < Lono::Seed::Base
+  # Template for variables
+  def variables
     <<~EOL
-      Parameter1=StarterValue1
-      Parameter2=StarterValue1
-      # Optional
-      # Parameter3=OptionalStarterValue1
+      @variable1=value1
+      @variable2=value2
     EOL
   end
-
-  # Template for variables
-  # def variables
-  #   <<~EOL
-  #     Variable1=StarterValue1
-  #     Variable2=StarterValue1
-  #   EOL
-  # end
-
-private
-  # Example:
-  # def set_instance_variables
-  #   @instance_type = "t3.micro"
-  # end
 end
 ```
 
-Here are some suggestions:
-
-* Allow the user to simply run `lono seed BLUEPRINT` without any arguments. This keeps interface simple and consistent.
-* Use the helper: `get_input` to gather input from the user. Perform the logic in one spot at the beginning, so the user gets interrupted only at one place.
-* Make use of lono seed helpers to get what data you need to configure the params for the blueprint right.  Here's the source of the [lono seed helpers](https://github.com/tongueroo/lono/blob/master/lib/lono/configure/helpers.rb)
-* Document how to use configure in the README.md of your blueprint. This would be a good place to also show an example of a `seeds/your-blueprint/development.yml` file for your specific blueprint.
+Remember to document how to use `lono seed` in the README.md of your blueprint.
 
 {% include prev_next.md %}

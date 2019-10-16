@@ -48,13 +48,12 @@ module Lono
       Lono::Inspector::Graph.new(blueprint, template, options).run
     end
 
-    desc "seed", "Seed blueprint configs with starter values."
-    option :defaults, type: :boolean, desc: "Bypass prompt and use the blueprints configure default values."
+    desc "seed", "Generates starter configs for a blueprint."
+    long_desc Help.text("seed")
     option :param, desc: "override convention and specify the param file to use"
-    option :seed, default: :convention, desc: "path to seed file to allow prompts bypass. yaml format."
     option :template, desc: "override convention and specify the template file to use"
     def seed(blueprint)
-      Seed.new(blueprint, options).run
+      Seed.new(blueprint, options).create
     end
 
     desc "clean", "Removes `output` folder."
