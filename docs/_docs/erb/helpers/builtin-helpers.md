@@ -1,7 +1,7 @@
 ---
 title: Template Helpers
 categories: erb
-nav_order: 66
+nav_order: 69
 ---
 
 Lono provides a few built-in helper methods that help with template processing.  These methods are available in your template views - the files in the `templates` folder.  Here's a list of the common helper methods:

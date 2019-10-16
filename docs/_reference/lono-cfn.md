@@ -21,6 +21,7 @@ cfn subcommands
 
 ## Subcommands
 
+* [lono cfn cancel]({% link _reference/lono-cfn-cancel.md %}) - Cancel a CloudFormation stack.
 * [lono cfn create]({% link _reference/lono-cfn-create.md %}) - Create a CloudFormation stack using the generated template.
 * [lono cfn current]({% link _reference/lono-cfn-current.md %}) - Current stack that you're working with.
 * [lono cfn delete]({% link _reference/lono-cfn-delete.md %}) - Delete a CloudFormation stack.

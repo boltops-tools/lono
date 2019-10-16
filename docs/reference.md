@@ -7,6 +7,7 @@ title: CLI Reference
 * [lono blueprints]({% link _reference/lono-blueprints.md %})
 * [lono cfn]({% link _reference/lono-cfn.md %})
 * [lono clean]({% link _reference/lono-clean.md %})
+* [lono code]({% link _reference/lono-code.md %})
 * [lono completion]({% link _reference/lono-completion.md %})
 * [lono completion_script]({% link _reference/lono-completion_script.md %})
 * [lono generate]({% link _reference/lono-generate.md %})

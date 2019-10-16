@@ -9,7 +9,7 @@ reference: true
 
 ## Description
 
-Generate all parameter files to `output/params`.
+Generate parameter output files to `output/params`.
 
 ## Example
 
