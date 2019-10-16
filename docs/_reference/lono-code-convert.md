@@ -9,7 +9,7 @@ reference: true
 
 ## Description
 
-Converts snippet of YAML to lono dsl format.
+Converts snippet of JSON or YAML CloudFormation templates to Ruby code.
 
 ## Examples
 

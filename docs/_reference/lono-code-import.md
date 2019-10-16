@@ -9,7 +9,7 @@ reference: true
 
 ## Description
 
-Imports CloudFormation template and converts it to different lono formats.
+Imports CloudFormation template and converts it to Ruby code.
 
 ## Examples
 
