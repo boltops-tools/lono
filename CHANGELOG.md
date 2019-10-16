@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [5.2.0]
+- #5 lono seed command: Lono::Seed::Configs class interface
+- add lono cfn cancel command
+- content helper
+- gracefully handle edge cases with lono s3 bucket
+- cleanup classes and modules
+
 ## [5.1.1]
 - use cfn_camelizer as gem
 
