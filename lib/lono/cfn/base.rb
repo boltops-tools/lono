@@ -27,10 +27,6 @@ class Lono::Cfn
       @template_path = "#{Lono.config.output_path}/#{@blueprint}/templates/#{@template}.yml"
     end
 
-    def switch_current(stack_name)
-      Current.name!(stack_name)
-    end
-
     def starting_message
       action = self.class.to_s.split('::').last
       puts "#{action} #{@stack_name.color(:green)} stack..."

@@ -1,5 +1,7 @@
 class Lono::Cfn
   class Status < ::Cfn::Status
+    include Util
+
     def initialize(stack_name, options={})
       super
       @stack_name = switch_current(stack_name)

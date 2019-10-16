@@ -64,6 +64,14 @@ module Lono
       Delete.new(stack_name, options).run
     end
 
+    desc "cancel STACK", "Cancel a CloudFormation stack."
+    long_desc Lono::Help.text("cfn/cancel")
+    option :sure, type: :boolean, desc: "Skips are you sure prompt"
+    wait_option.call
+    def cancel(stack_name=:current)
+      Cancel.new(stack_name, options).run
+    end
+
     desc "preview STACK", "Preview a CloudFormation stack update.  This is similar to terraform's plan or puppet's dry-run mode."
     long_desc Lono::Help.text("cfn/preview")
     option :keep, type: :boolean, desc: "keep the changeset instead of deleting it afterwards"
