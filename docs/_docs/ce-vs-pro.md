@@ -26,7 +26,7 @@ Most CloudFormation templates in the wild are written in JSON or YAML though.
 
 The `lono code convert` and `lono code import` commands allow you to take JSON or YAML templates and convert it to the Lono DSL code.  The conversion process should get you 80% of the way there. It saves you engineering time.
 
-NOTE: The lono-pro addon gem uses an API to perform the code conversion. Currently, access to this API service is provided at no cost for a limited of time. In the future, API access will be provided to only BoltOps Pro customers.
+Currently, the lono-pro addon is provided at no cost. In the future, access will be provided to only BoltOps Pro customers.
 
 ## What are BoltOps Pro Blueprints?
 
