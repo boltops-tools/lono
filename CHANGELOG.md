@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [5.2.1]
+- improve param lookup
+
 ## [5.2.0]
 - #5 lono seed command: Lono::Seed::Configs class interface
 - add lono cfn cancel command
