@@ -40,7 +40,8 @@ class Lono::Param
       return long_form if File.exist?(long_form) # always consider this first because its so explicit
 
       # All 3 are the same
-      if @blueprint == @template && @template == @param
+      # Also, blueprint and template the same and explicitly specified param
+      if @blueprint == @template
         return medium_form if File.exist?(medium_form) # higher precedence between longer but short form should be encouraged
         return short_form if File.exist?(short_form)
         return # cannot find a param file
