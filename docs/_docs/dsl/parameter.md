@@ -4,7 +4,7 @@ category: dsl
 desc: Use the optional Parameters section to customize your templates. Parameters
   enable you to input custom values to your template each time you create or update
   a stack.
-nav_order: 24
+nav_order: 25
 ---
 
 The `parameter` method maps to the CloudFormation Template Anatomy [Parameters](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html) section.

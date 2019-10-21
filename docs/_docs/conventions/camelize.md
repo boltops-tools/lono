@@ -2,7 +2,7 @@
 title: Camelize
 category: conventions
 desc: Hash key conventions.
-nav_order: 46
+nav_order: 47
 ---
 
 Lono generates CloudFormation templates from a [DSL]({% link _docs/dsl.md %}).  As a part of the generation process, Lono camelizes the template keys.  For example this lono DSL code:

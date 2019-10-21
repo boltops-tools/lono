@@ -1,6 +1,6 @@
 ---
 title: Community Edition vs Pro
-nav_order: 6
+nav_order: 7
 ---
 
 Lono Community Edition is a free version of Lono.  It is available for anyone to use under a [Source Available license](https://www.boltops.com/boltops-community-license).

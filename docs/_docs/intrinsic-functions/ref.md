@@ -1,7 +1,7 @@
 ---
 title: Ref
 categories: intrinsic-function
-nav_order: 41
+nav_order: 42
 ---
 
 The `ref` method is the CloudFormation [Ref](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-ref.html) equivalent.

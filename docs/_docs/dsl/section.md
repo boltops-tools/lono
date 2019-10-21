@@ -2,7 +2,7 @@
 title: Section
 category: dsl
 desc: General way to add a section to the generated CloudFormation template.
-nav_order: 26
+nav_order: 27
 ---
 
 The `section` method provides a general way to add a section to the CloudFormation template.  This is useful in case there's a future CloudFormation section that the lono DSL does not yet support.

@@ -2,7 +2,7 @@
 title: Blueprint Structure
 link_text: DSL Blueprint Structure
 categories: dsl-components blueprint-structure
-nav_order: 29
+nav_order: 30
 ---
 
 A DSL blueprint structure looks like this:

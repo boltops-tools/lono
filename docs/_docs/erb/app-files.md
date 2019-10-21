@@ -1,7 +1,7 @@
 ---
 title: App Files
 categories: erb
-nav_order: 63
+nav_order: 64
 ---
 
 If you already have pre-existing files like zip files that need to be uploaded to s3, you can put them in `app/files`.  When the s3_folder option is configured in [settings.yml]({% link _docs/configuration/settings.md %}) the files in `app/files` automatically get uploaded as part of the `lono cfn` commands. The files get uploaded to `[S3_FOLDER]/[LONO_ENV]/app/files`. For example, given a file in `app/files/lambda-function.zip` and these settings:

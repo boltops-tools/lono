@@ -1,6 +1,6 @@
 ---
 title: Project Structure
-nav_order: 4
+nav_order: 5
 ---
 
 A lono project structure looks something like this:

@@ -1,6 +1,6 @@
 ---
 title: Lono Help
-nav_order: 74
+nav_order: 75
 ---
 
 You can run help for quick help information right at the CLI.  Example:
