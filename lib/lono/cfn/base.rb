@@ -263,7 +263,7 @@ class Lono::Cfn
 
     def capabilities
       return @options[:capabilities] if @options[:capabilities]
-      if @options[:iam]
+      if @options[:sure] || @options[:iam]
         ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
       end
     end
