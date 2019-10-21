@@ -49,15 +49,4 @@ Thanks to [conventions]({% link _docs/conventions.md %}), the deploy command is 
     lono cfn deploy ec2 # the stack is called ec2
     lono cfn deploy myserver --blueprint ec2 # the stack is called myserver
 
-## Project vs Blueprint Configs
-
-Some blueprints contain starter example params.  When lono is able to find a project param file, it will use that instead of any blueprint example params. Here's an example:
-
-    blueprints/ec2/config/params/development.txt # ignored entirely
-    configs/ec2/params/development.txt # will be used
-
-The params in `blueprints` only get used if you have not created one in `configs`.  So the blueprint params will get **ignored**.
-
-If there are no user-defined param `configs`, lono looks through the blueprint's param config folder with the same lookup Locations as detailed above.
-
 {% include prev_next.md %}
