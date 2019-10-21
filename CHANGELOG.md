@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [5.2.3]
+- output dsl: 2nd form allow nil value in case of variables
+
 ## [5.2.2]
 - seed only support params for main conventional template in blueprint
 - set --iam with --sure option also
