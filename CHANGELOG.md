@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [5.2.2]
+- seed only support params for main conventional template in blueprint
+- set --iam with --sure option also
+
 ## [5.2.1]
 - improve param lookup
 
