@@ -32,9 +32,21 @@ class Lono::Seed
 
     # Always create params files
     def create_params
-      with_each_template do |path|
+      return unless params
+      # Only supporting the main blueprint for now
+      path = "#{Lono.config.templates_path}/#{@blueprint}.rb"
+      if File.exist?(path)
         create_param_file(path)
       end
+
+      # TODO: detect and write multiple templates to different paths
+      # with_each_template do |path|
+      #   create_param_file(path)
+      # end
+    end
+
+    def params
+      true
     end
 
     def create_variables
