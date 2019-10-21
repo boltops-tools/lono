@@ -14,16 +14,17 @@ A lono project structure looks something like this:
     ├── configs
     │   ├── demo
     │   │   ├── params
-    │   │   │   └── development.txt
+    │   │   │   │── development.txt
+    │   │   │   └── production.txt
     │   │   └── variables
-    │   │       ├── base.rb
-    │   │       └── development.rb
+    │   │       ├── development.rb
+    │   │       └── production.rb
     │   └── settings.yml
-    ├── Gemfile
     └── output
         └── demo
             ├── params
-            │   └── development.txt
+            │   │── development.json
+            │   └── production.json
             └── templates
                 └── demo.yml
 
