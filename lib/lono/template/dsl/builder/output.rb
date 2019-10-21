@@ -21,7 +21,7 @@ class Lono::Template::Dsl::Builder
           properties = {value: second}
         end
         { logical_id => properties }
-      elsif definition.size == 2 && second.is_a?(String) # short form
+      elsif definition.size == 2 && (second.is_a?(String) || second.nil?) # short form
         logical_id = first
         properties = second.is_a?(String) ? { value: second } : {}
         { logical_id => properties }
