@@ -36,13 +36,13 @@ gem "ec2", git: "git@github.com:boltopspro/ec2"
 gem "vpc", git: "git@github.com:boltopspro/vpc"
 ```
 
-Interestingly, this means the blueprints folder could be empty. You can just use pre-built blueprints. [BoltOps Pro blueprints](https://github.com/boltopspro-docs) are actually gems. All you have to do is configure them.
+Interestingly, this means the blueprints folder could be empty. You can just use pre-built blueprint gems. [BoltOps Pro blueprints](https://github.com/boltopspro-docs) are actually gems. All you have to do is configure them.
 
 Learn more: [Blueprint docs]({% link _docs/core/blueprints.md %}).
 
 ## Summary
 
-With this structure, it DRYs up your code by allowing you to reuse the same CloudFormation templates in different projects.  You simply:
+With this structure, it DRYs up your code by allowing you to reuse the same CloudFormation templates.  You simply:
 
 1. Configure
 2. Deploy
