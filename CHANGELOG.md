@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [5.2.4]
+- add description to lono managed stack
+
 ## [5.2.3]
 - output dsl: 2nd form allow nil value in case of variables
 
