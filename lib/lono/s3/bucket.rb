@@ -145,6 +145,7 @@ class Lono::S3
 
     def template_body
       <<~YAML
+        Description: Lono managed s3 bucket
         Resources:
           Bucket:
             Type: AWS::S3::Bucket
