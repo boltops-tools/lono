@@ -8,7 +8,7 @@
     ├── demo.gemspec
     ├── .meta
     │   └── config.yml
-    └── setup
+    └── seed
         └── configs.rb
 
 Lono uses the files under the `app` folder and combines them with your your projects `configs` files to generate CloudFormation templates and launch stacks.  The template is the component you'll usually work mostly with, IE: `app/templates/demo.rb`.
