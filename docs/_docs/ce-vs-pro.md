@@ -20,11 +20,11 @@ Access to BoltOps Pro Blueprints | ![](/img/features/no.svg) | ![](/img/features
 
 ## Lono Pro Addon: Code Import and Convert Commands
 
-Lono features a powerful DSL to build CloudFormation templates. The Lono DSL builds on top of the CloudFormation declarative nature and allows you to write **Infrastructure as Code, not Infrastructure as configuration**. The Lono DSL results in more maintainable code.
+Lono features a powerful DSL to build CloudFormation templates. The Lono DSL builds on top of the CloudFormation declarative nature and allows you to write **Infrastructure as Code**. The Lono DSL results in more maintainable code.
 
 Most CloudFormation templates in the wild are written in JSON or YAML though.
 
-The `lono code convert` and `lono code import` commands allow you to take JSON or YAML templates and convert it to the Lono DSL code.  The conversion process should get you 80% of the way there. It saves you engineering time.
+The [lono code convert](https://lono.cloud/reference/lono-code-convert/) and [lono code import](https://lono.cloud/reference/lono-code-import/) commands allow you to take JSON or YAML templates and convert it to the Lono DSL code. The conversion process saves you engineering time writing it yourself.
 
 Currently, the lono-pro addon is provided at no cost. In the future, access will be provided to only BoltOps Pro customers.
 
