@@ -8,7 +8,7 @@ Most CloudFormation templates in the wild are written in JSON or YAML though.
 
 The [lono code convert](https://lono.cloud/reference/lono-code-convert/) and [lono code import](https://lono.cloud/reference/lono-code-import/) commands allow you to take JSON or YAML templates and convert it to the Lono DSL code. The conversion process saves you engineering time writing it yourself.
 
-Currently, the lono-pro addon is available at no cost. In the future, access will be provided to only BoltOps Pro customers.
+Currently, for a limited of time, the lono-pro addon is available at no cost.
 
 ## Installation
 
