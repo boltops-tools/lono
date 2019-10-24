@@ -1,5 +1,6 @@
 ---
 title: Lono Code Convert
+nav_order: 8
 ---
 
 Lono features a [powerful DSL]({% link _docs/dsl.md %}) to build CloudFormation templates. The Lono DSL builds on top of the CloudFormation declarative nature and allows you to deliver Infrastructure as Code. The Lono DSL results in more maintainable code.

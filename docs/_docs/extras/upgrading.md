@@ -1,7 +1,7 @@
 ---
 title: Upgrading Guide
 categories: extras
-nav_order: 62
+nav_order: 63
 ---
 
 Upgrading Lono to some releases may require some extra changes. For example, the Lono project structure can change between major versions. This page provides a summary of the releases requiring some upgrade work.

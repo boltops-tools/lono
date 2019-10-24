@@ -1,6 +1,6 @@
 ---
 title: LONO_ENV
-nav_order: 52
+nav_order: 53
 ---
 
 Lono's behavior is controlled by the `LONO_ENV` environment variable.  For example, the `LONO_ENV` variable is used to layer different lono files together to make it easy to define multiple environments like production and development.  This is covered thoroughly in the [Layering docs]({% link _docs/core/layering.md %}).  `LONO_ENV` defaults to `development` when not set.

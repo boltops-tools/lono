@@ -3,7 +3,7 @@ title: Resource
 category: dsl
 desc: The **required** Resources section declares the AWS resources that you want
   to include in the stack, such as an Amazon EC2 instance or an Amazon S3 bucket.
-nav_order: 26
+nav_order: 27
 ---
 
 The `resource` method maps to the CloudFormation Template Anatomy [Resources](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html) section.

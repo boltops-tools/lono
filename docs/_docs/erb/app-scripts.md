@@ -1,7 +1,7 @@
 ---
 title: App Scripts
 categories: erb
-nav_order: 65
+nav_order: 66
 ---
 
 Often it is useful to be able to upload custom scripts to the server and run them. One way to do this is first to upload the scripts to s3 and then download them down to the server as part of the user-data script.  Lono supports this deployment flow with the `app/scripts` folder.

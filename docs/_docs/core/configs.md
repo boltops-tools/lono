@@ -2,7 +2,7 @@
 title: Configs
 categories: core
 order: 3
-nav_order: 11
+nav_order: 12
 ---
 
 {% include core-configs.md %}

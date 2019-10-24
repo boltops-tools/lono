@@ -1,6 +1,6 @@
 ---
 title: Stack Name Suffix
-nav_order: 54
+nav_order: 55
 ---
 
 The `stack_name_suffix` is an option to help with a development workflow. When working with CloudFormation templates and developing the source code, we must often launch stacks repeatedly as we fine tune the stack. Since we cannot launch a stack with a duplicate name it is useful to use a command like this:

@@ -1,6 +1,6 @@
 ---
 title: Variables Lookup Locations
-nav_order: 50
+nav_order: 51
 ---
 
 ## Simple Locations

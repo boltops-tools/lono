@@ -2,7 +2,7 @@
 title: Templates
 categories: core
 order: 2
-nav_order: 10
+nav_order: 11
 ---
 
 Templates are what you'll be working with mostly.  Templates belong to a [Blueprint]({% link _docs/core/blueprints.md %}) and allow you to write CloudFormation templates with the [Lono DSL]({% link _docs/dsl.md %}).  Templates live in the `BLUEPRINT/app/templates` folder.
