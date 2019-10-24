@@ -22,6 +22,6 @@ To delete the lono stack, you must:
 2. Empty the S3 bucket
 3. Delete the Stack
 
-For convenience, you can also use the `lono s3 delete` command perform all of these steps.
+For convenience, you can also use the `lono s3 delete` command to perform all of these steps.
 
 {% include prev_next.md %}
