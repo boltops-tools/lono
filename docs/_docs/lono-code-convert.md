@@ -32,7 +32,7 @@ To check the installed version run `lono -v`:
 
 ## Usage: lono code convert
 
-The `convert` commmand will convert snippets of template code to Ruby code. Here's an example:
+The [lono code convert](https://lono.cloud/reference/lono-code-convert/) commmand will convert snippets of template code to Ruby code. Here's an example:
 
 template.yml:
 
