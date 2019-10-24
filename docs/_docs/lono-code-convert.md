@@ -71,7 +71,7 @@ Here's an example running convert on the `template.yml`:
     Syntax OK
     $
 
-The INFO messages are written to stderr and the Ruby code output is written to stdout. We're using bash direction write to `template.rb`. Here's what `template.rb` looks like
+The INFO messages are written to stderr and the Ruby code output is written to stdout. We're using bash redirection write to `template.rb`. Here's what `template.rb` looks like
 
 ```ruby
 resource("Instance", "AWS::EC2::Instance",
