@@ -88,6 +88,6 @@ resource("SecurityGroup", "AWS::EC2::SecurityGroup",
 )
 ```
 
-The convert command is useful for snippets of code.
+The convert command saves a ton of time.
 
 {% include prev_next.md %}
