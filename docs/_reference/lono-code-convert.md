@@ -20,7 +20,7 @@ Converts snippet of JSON or YAML CloudFormation templates to Ruby code.
 ## Example with Output
 
     $ lono code convert https://s3-us-east-2.amazonaws.com/cloudformation-templates-us-east-2/AutoScalingMultiAZWithNotifications.template
-    INFO: The ruby syntax is invalid
+    INFO: The ruby syntax is valid
     INFO: Translated ruby code below:
 
     aws_template_format_version "2010-09-09"
