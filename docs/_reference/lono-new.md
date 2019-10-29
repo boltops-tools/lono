@@ -51,30 +51,32 @@ By default, `lono new` generates a skeleton project. Use `TEMPLATE` to generate 
     Congrats  You have successfully created a lono project.  A starter demo blueprint was created
     and is at blueprints/demo.  Check things out by going into the created infra folder.
 
-        cd infra
+      cd infra
 
-    To create a new blueprint run:
+      To create a new blueprint run:
 
-        lono blueprint new demo
+          lono blueprint new demo
 
-    To deploy the blueprint:
+      To deploy the blueprint:
 
-        lono cfn deploy my-demo --blueprint demo
+          lono cfn deploy my-demo --blueprint demo
 
-    If you name the stack according to conventions, you can simply run:
+      If you name the stack according to conventions, you can simply run:
 
-        lono cfn deploy demo
+          lono cfn deploy demo
 
-    To list and create additional blueprints refer to https://lono.cloud/docs/core/blueprints
+      To list and create additional blueprints refer to https://lono.cloud/docs/core/blueprints
 
     More info: http://lono.cloud/
     $
+
 
 ## Options
 
 ```
 [--bundle], [--no-bundle]  # Runs bundle install on the project
                            # Default: true
+[--demo], [--no-demo]      # Also generate demo blueprint
 [--force]                  # Bypass overwrite are you sure prompt for existing files.
 [--git], [--no-git]        # Git initialize the project
                            # Default: true

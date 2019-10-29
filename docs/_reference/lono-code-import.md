@@ -19,7 +19,8 @@ Imports CloudFormation template and converts it to Ruby code.
 
 ## Example with Output
 
-    $ lono code import https://s3-us-east-2.amazonaws.com/cloudformation-templates-us-east-2/AutoScalingMultiAZWithNotifications.template --blueprint asg
+    $ URL=https://s3-us-east-2.amazonaws.com/cloudformation-templates-us-east-2/AutoScalingMultiAZWithNotifications.template
+    $ lono code import $URL --blueprint asg
     Template imported to: blueprints/asg/app/templates/asg.rb
     Params file created at configs/asg/development.txt
     $
