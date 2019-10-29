@@ -34,7 +34,7 @@ Here's a little more details to help understand what happened. We first installe
 
         lono blueprint new demo
 
-    To deploy the CloudFormation stack:
+    To deploy the blueprint:
 
         lono cfn deploy my-demo --blueprint demo
 

@@ -44,7 +44,7 @@ By default, `lono new` generates a skeleton project. Use `TEMPLATE` to generate 
 
           lono blueprint new demo
 
-      To deploy the CloudFormation stack:
+      To deploy the blueprint:
 
           lono cfn deploy my-demo --blueprint demo
 

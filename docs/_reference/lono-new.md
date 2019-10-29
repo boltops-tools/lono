@@ -51,27 +51,24 @@ By default, `lono new` generates a skeleton project. Use `TEMPLATE` to generate 
     Congrats  You have successfully created a lono project.  A starter demo blueprint was created
     and is at blueprints/demo.  Check things out by going into the created infra folder.
 
-      cd infra
+        cd infra
 
-    To generate the blueprint templates without launching a stack, you can run:
+    To create a new blueprint run:
 
-      lono generate demo
+        lono blueprint new demo
 
-    The generated files are created at `output/demo/templates` and `output/demo/params`.
+    To deploy the blueprint:
 
-    To deploy the CloudFormation stack:
-
-      lono cfn deploy my-demo --blueprint demo
+        lono cfn deploy my-demo --blueprint demo
 
     If you name the stack according to conventions, you can simply run:
 
-      lono cfn deploy demo
+        lono cfn deploy demo
 
     To list and create additional blueprints refer to https://lono.cloud/docs/core/blueprints
 
     More info: http://lono.cloud/
     $
-
 
 ## Options
 
