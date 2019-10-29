@@ -31,11 +31,6 @@ module Lono
       directory ".", "#{@cwd}/#{project_name}"
     end
 
-    def create_starter_blueprint
-      # https://github.com/erikhuda/thor/wiki/Invocations
-      Lono::Blueprint::New.start(["demo", "--from-new", "--type", @options[:type], "--project-name", project_name])
-    end
-
     # After this commands are executed with the newly created project
     def set_destination_root
       destination_root = "#{@cwd}/#{project_name}"
