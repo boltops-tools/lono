@@ -11,6 +11,7 @@ module Lono
     def self.cli_options
       [
         [:bundle, type: :boolean, default: true, desc: "Runs bundle install on the project"],
+        [:demo, type: :boolean, default: false, desc: "Also generate demo blueprint"],
         [:force, type: :boolean, desc: "Bypass overwrite are you sure prompt for existing files."],
         [:git, type: :boolean, default: true, desc: "Git initialize the project"],
         [:type, default: "dsl", desc: "Blueprint type: dsl or erb"],
@@ -29,6 +30,12 @@ module Lono
     def create_project
       puts "=> Creating new project called #{project_name}."
       directory ".", "#{@cwd}/#{project_name}"
+    end
+
+    def create_starter_blueprint
+      return unless @options[:demo]
+      # https://github.com/erikhuda/thor/wiki/Invocations
+      Lono::Blueprint::New.start(["demo", "--from-new", "--type", @options[:type], "--project-name", project_name])
     end
 
     # After this commands are executed with the newly created project
