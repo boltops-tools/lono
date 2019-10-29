@@ -11,6 +11,7 @@ Now we're ready to create and launch some infrastructure. The commands below lau
 
     lono new infra
     cd infra
+    lono blueprint new demo
     lono cfn deploy demo
 
 Congratulations!  You have successfully created a CloudFormation stack with lono. It's that simple. 😁
@@ -46,10 +47,10 @@ Here's a little more details to help understand what happened. We first installe
     More info: http://lono.cloud/
     $
 
-Then we went into the `infra` project folder and deployed the demo stack:
+Then we went into the `infra` project folder, created a blueprint, and deployed the demo stack:
 
-    $ cd infra
-    $ lono cfn deploy demo
+    lono blueprint new demo
+    lono cfn deploy demo
 
 The command `lono cfn deploy demo` does a few things:
 
