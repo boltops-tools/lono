@@ -90,7 +90,7 @@ class Lono::Blueprint
 
         Cd into your blueprint and check things out.
 
-          cd #{blueprint_name}
+            cd #{blueprint_name}
 
         More info: https://lono.cloud/docs/core/blueprints
 
