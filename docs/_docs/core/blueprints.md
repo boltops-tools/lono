@@ -5,7 +5,18 @@ order: 1
 nav_order: 10
 ---
 
-A blueprint is one of the core components of a Lono project.  Blueprints can have many [Templates]({% link _docs/core/templates.md %}).
+A blueprint is one of the core components of a Lono project.  Blueprints are essentially CloudFormation templates packaged up in a convenient and reusable way.   The CloudFormation code itself lives in the blueprints folder. Exampe:
+
+    blueprints
+    ├── demo
+    └── ec2
+
+Additionally, blueprints can also be gems.  Example:
+
+```ruby
+gem "ec2", git: "git@github.com:boltopspro/ec2"
+gem "vpc", git: "git@github.com:boltopspro/vpc"
+```
 
 Here's an example demo blueprint structure:
 

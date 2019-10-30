@@ -1,4 +1,4 @@
-    demo
+    blueprints/demo
     ├── app
     │   ├── helpers
     │   ├── templates
@@ -11,7 +11,7 @@
     └── seed
         └── configs.rb
 
-Lono uses the files under the `app` folder and combines them with your your projects `configs` files to generate CloudFormation templates and launch stacks.  The template is the component you'll usually work mostly with, IE: `app/templates/demo.rb`.
+Lono uses the files under the `app` folder and your projects [configs]({% link _docs/core/configs.md %}) files to generate CloudFormation templates and launch stacks.  The template is the component you'll usually work mostly with, IE: `app/templates/demo.rb`.
 
 ## Files and Folders
 

@@ -4,7 +4,25 @@ order: 3
 nav_order: 13
 ---
 
-Params are configs that you define to affect how the templates behave at runtime when the CloudFormation stack is launched.  Lono provides a way to specify the parameters in a simple `key=value` format commonly found in env files.  This format is less prone to human error than the AWS verbose parameter file format.  When `lono generate` is ran it processes the files in `configs/BLUEPRINT/params` folders and outputs the AWS JSON format file in `output/BLUEPRINT/params` folder.  Here's an example:
+Params are configs that you define to affect how the templates behave at runtime when the CloudFormation stack is launched.
+
+## Location
+
+The `configs` files are located at `configs/BLUEPRINT/params`.  Example:
+
+    configs/
+    ├── ec2
+    │   └── params
+    │       ├── development.txt
+    │       └── production.txt
+    └── ecs-asg
+        └── params
+            ├── development.txt
+            └── production.txt
+
+## Examples
+
+Lono provides a way to specify the parameters in a simple `key=value` format commonly found in env files.  This format is less prone to human error than the AWS verbose parameter file format.  When `lono generate` is ran it processes the files in `configs/BLUEPRINT/params` folders and outputs the AWS JSON format file in `output/BLUEPRINT/params` folder.  Here's an example:
 
 configs/demo/params/development.txt:
 
