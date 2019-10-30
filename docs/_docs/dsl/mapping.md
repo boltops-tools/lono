@@ -3,7 +3,7 @@ title: Mapping
 category: dsl
 desc: The optional Mappings section matches a key to a corresponding set of named
   values.
-nav_order: 23
+nav_order: 24
 ---
 
 The `mapping` method maps to the CloudFormation Template Anatomy [Mappings](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/mappings-section-structure.html) section.

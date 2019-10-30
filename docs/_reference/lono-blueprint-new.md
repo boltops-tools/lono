@@ -20,6 +20,7 @@ Generates new lono blueprint.
 [--force]                      # Bypass overwrite are you sure prompt for existing files.
 [--from-new], [--no-from-new]  # Called from `lono new` command.
 [--project-name=PROJECT_NAME]  # Only used with from_new internally
+[--import], [--no-import]      # Flag for lono code import
 [--type=TYPE]                  # Blueprint type: dsl or erb
                                # Default: dsl
 ```

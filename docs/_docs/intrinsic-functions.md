@@ -1,6 +1,6 @@
 ---
 title: Intrinsic Functions
-nav_order: 34
+nav_order: 35
 ---
 
 Lono provides helper methods that map to [CloudFormation Intrinsic Functions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html).

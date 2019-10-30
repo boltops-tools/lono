@@ -1,7 +1,7 @@
 ---
 title: Params
 order: 3
-nav_order: 13
+nav_order: 14
 ---
 
 Params are configs that you define to affect how the templates behave at runtime when the CloudFormation stack is launched.

@@ -32,4 +32,12 @@ cfn subcommands
 * [lono cfn status]({% link _reference/lono-cfn-status.md %}) - Shows the current status for the stack.
 * [lono cfn update]({% link _reference/lono-cfn-update.md %}) - Update a CloudFormation stack using the generated template.
 
+## Options
+
+```
+-f, [--force]                    # Overwrite files that already exist
+-p, [--pretend], [--no-pretend]  # Run but do not make any changes
+-q, [--quiet], [--no-quiet]      # Suppress status output
+-s, [--skip], [--no-skip]        # Skip files that already exist
+```
 

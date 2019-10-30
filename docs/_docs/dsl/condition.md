@@ -3,7 +3,7 @@ title: Condition
 category: dsl
 desc: The optional Conditions section contains statements that define the circumstances
   under which entities are created or configured.
-nav_order: 21
+nav_order: 22
 ---
 
 The `condition` method maps to the CloudFormation Template Anatomy [Conditions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/conditions-section-structure.html) section.

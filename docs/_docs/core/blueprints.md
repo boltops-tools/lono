@@ -2,7 +2,7 @@
 title: Blueprints
 categories: core
 order: 1
-nav_order: 10
+nav_order: 11
 ---
 
 A blueprint is one of the core components of a Lono project.  Blueprints are essentially CloudFormation templates packaged up in a convenient and reusable way.   The CloudFormation code itself lives in the blueprints folder. Exampe:

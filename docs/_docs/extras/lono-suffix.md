@@ -1,7 +1,7 @@
 ---
 title: Lono Suffix
 categories: extras
-nav_order: 60
+nav_order: 61
 ---
 
 When working with CloudFormation templates and developing the source code, we must often launch stacks repeatedly as we fine tune the stack. Since we cannot launch a stack with a duplicate name it is useful to use a command like this:

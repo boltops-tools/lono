@@ -1,7 +1,7 @@
 ---
 title: Sub
 categories: intrinsic-function
-nav_order: 46
+nav_order: 47
 ---
 
 The `sub` method is the CloudFormation [Fn::Sub](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-sub.html) equivalent.

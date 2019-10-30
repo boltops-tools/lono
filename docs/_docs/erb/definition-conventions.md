@@ -2,7 +2,7 @@
 title: Definition Conventions
 desc: Conventions for template definition declartion
 categories: erb
-nav_order: 69
+nav_order: 70
 ---
 
 ## Template Output and Source Name Convention

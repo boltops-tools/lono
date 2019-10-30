@@ -32,4 +32,12 @@ The `lono summary` command helps you quickly understand a CloudFormation templat
 Blog Post also covers this: [lono summary Tutorial Introduction](https://blog.boltops.com/2017/09/18/lono-inspect-summary-tutorial-introduction)
 
 
+## Options
+
+```
+-f, [--force]                    # Overwrite files that already exist
+-p, [--pretend], [--no-pretend]  # Run but do not make any changes
+-q, [--quiet], [--no-quiet]      # Suppress status output
+-s, [--skip], [--no-skip]        # Skip files that already exist
+```
 
