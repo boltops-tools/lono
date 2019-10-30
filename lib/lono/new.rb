@@ -11,6 +11,7 @@ module Lono
     def self.cli_options
       [
         [:bundle, type: :boolean, default: true, desc: "Runs bundle install on the project"],
+        [:demo, type: :boolean, default: false, desc: "Also generate demo blueprint"],
         [:force, type: :boolean, desc: "Bypass overwrite are you sure prompt for existing files."],
         [:git, type: :boolean, default: true, desc: "Git initialize the project"],
         [:type, default: "dsl", desc: "Blueprint type: dsl or erb"],
@@ -32,6 +33,7 @@ module Lono
     end
 
     def create_starter_blueprint
+      return unless @options[:demo]
       # https://github.com/erikhuda/thor/wiki/Invocations
       Lono::Blueprint::New.start(["demo", "--from-new", "--type", @options[:type], "--project-name", project_name])
     end
@@ -71,21 +73,19 @@ module Lono
         Congrats 🎉 You have successfully created a lono project.  A starter demo blueprint was created
         and is at blueprints/demo.  Check things out by going into the created infra folder.
 
-          cd #{project_name}
+            cd #{project_name}
 
-        To generate the blueprint templates without launching a stack, you can run:
+        To create a new blueprint run:
 
-          lono generate demo
+            lono blueprint new demo
 
-        The generated files are created at `output/demo/templates` and `output/demo/params`.
+        To deploy the blueprint:
 
-        To deploy the CloudFormation stack:
-
-          lono cfn deploy my-demo --blueprint demo
+            lono cfn deploy my-demo --blueprint demo
 
         If you name the stack according to conventions, you can simply run:
 
-          lono cfn deploy demo
+            lono cfn deploy demo
 
         To list and create additional blueprints refer to https://lono.cloud/docs/core/blueprints
 

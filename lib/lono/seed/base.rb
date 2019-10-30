@@ -1,5 +1,6 @@
 require "fileutils"
 require "memoist"
+require "thor"
 require "yaml"
 
 # Subclasses should implement:
@@ -15,8 +16,15 @@ class Lono::Seed
     include Lono::Blueprint::Root
     include Lono::AwsServices
     include Lono::Conventions
+
+    # What's needed for a Thor::Group or "Sequence"
+    # Gives us Thor::Actions commands like create_file
+    include Thor::Actions
+    include Thor::Base
+
     extend Memoist
 
+    # attr_reader :options
     def initialize(blueprint, options)
       @blueprint, @options = blueprint, options
       @template, @param = template_param_convention(options)
@@ -25,14 +33,15 @@ class Lono::Seed
     def run
       check_dsl_type!
       setup
+      self.destination_root = Dir.pwd # Thor::Actions require destination_root to be set
       create_params
       create_variables
       finish
     end
 
-    # Always create params files
     def create_params
       return unless params
+
       # Only supporting the main blueprint for now
       path = "#{Lono.config.templates_path}/#{@blueprint}.rb"
       if File.exist?(path)
@@ -49,11 +58,37 @@ class Lono::Seed
       true
     end
 
+    def create_param_file(app_template_path)
+      parameters = parameters(app_template_path)
+
+      lines = []
+      required = required(parameters)
+      lines << "# Required parameters:" unless required.empty?
+      required.each do |name, data|
+        example = description_example(data["Description"])
+        lines << "#{name}=#{example}"
+      end
+      optional = optional(parameters)
+      lines << "# Optional parameters:" unless optional.empty?
+      optional.each do |name, data|
+        value = default_value(data)
+        lines << "# #{name}=#{value}"
+      end
+
+      if lines.empty?
+        puts "Template has no parameters."
+        return
+      end
+
+      content = lines.join("\n") + "\n"
+      dest_path = "configs/#{@blueprint}/params/#{Lono.env}.txt" # only support environment level parameters for now
+      create_file(dest_path, content) # Thor::Action
+    end
+
     def create_variables
       return unless variables
       dest_path = "configs/#{@blueprint}/variables/#{Lono.env}.rb"
-      write(dest_path, variables)
-      puts "Starter variables created: #{dest_path}"
+      create_file(dest_path, variables) # Thor::Action
     end
 
     def check_dsl_type!
@@ -81,34 +116,6 @@ class Lono::Seed
     # Return String with contents of variables file.
     def variables
       false
-    end
-
-    def create_param_file(app_template_path)
-      parameters = parameters(app_template_path)
-
-      lines = []
-      required = required(parameters)
-      lines << "# Required parameters:" unless required.empty?
-      required.each do |name, data|
-        example = description_example(data["Description"])
-        lines << "#{name}=#{example}"
-      end
-      optional = optional(parameters)
-      lines << "# Optional parameters:" unless optional.empty?
-      optional.each do |name, data|
-        value = default_value(data)
-        lines << "# #{name}=#{value}"
-      end
-
-      if lines.empty?
-        puts "Template has no parameters."
-        return
-      end
-
-      content = lines.join("\n") + "\n"
-      dest_path = "configs/#{@blueprint}/params/#{Lono.env}.txt" # only support environment level parameters for now
-      write(dest_path, content)
-      puts "Starter params created:    #{dest_path}"
     end
 
     def write(path, content)

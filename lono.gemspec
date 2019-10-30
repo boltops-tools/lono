@@ -21,7 +21,6 @@ Gem::Specification.new do |gem|
   gem.license       = "https://boltops.com/boltops-community-license"
 
   gem.add_dependency "activesupport"
-  gem.add_dependency "awesome_print"
   gem.add_dependency "aws-sdk-cloudformation"
   gem.add_dependency "aws-sdk-ec2" # lono seed
   gem.add_dependency "aws-sdk-iam" # lono seed

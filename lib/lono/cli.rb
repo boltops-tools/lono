@@ -1,5 +1,6 @@
 module Lono
   class CLI < Command
+    include Thor::Actions # for add_runtime_options
 
     long_desc Help.text(:new)
     New.cli_options.each do |args|
@@ -52,6 +53,7 @@ module Lono
     long_desc Help.text("seed")
     option :param, desc: "override convention and specify the param file to use"
     option :template, desc: "override convention and specify the template file to use"
+    add_runtime_options!
     def seed(blueprint)
       Seed.new(blueprint, options).create
     end

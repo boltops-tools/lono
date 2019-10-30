@@ -15,6 +15,7 @@ class Lono::Blueprint
         [:force, type: :boolean, desc: "Bypass overwrite are you sure prompt for existing files."],
         [:from_new, type: :boolean, desc: "Called from `lono new` command."],
         [:project_name, default: '', desc: "Only used with from_new internally"],
+        [:import, type: :boolean, desc: "Flag for lono code import"],
         [:type, default: "dsl", desc: "Blueprint type: dsl or erb"],
       ]
     end
@@ -48,6 +49,7 @@ class Lono::Blueprint
     end
 
     def create_app_folder
+      return if @options[:import]
       directory "../blueprint_types/#{@options[:type]}", "#{@cwd}/#{blueprint_name}"
     end
 
@@ -58,6 +60,8 @@ class Lono::Blueprint
     end
 
     def create_starter_configs
+      return if @options[:import]
+
       if options[:from_new] # lono new command
         directory "../blueprint_configs", options[:project_name]
       else # lono blueprint new command
@@ -73,7 +77,8 @@ class Lono::Blueprint
     end
 
     def bundle_install
-      return if options[:from_new]
+      return if options[:from_new] || options[:import]
+
       return unless options[:bundle]
 
       puts "=> Installing dependencies with: bundle install"
@@ -90,7 +95,7 @@ class Lono::Blueprint
 
         Cd into your blueprint and check things out.
 
-          cd #{blueprint_name}
+            cd #{blueprint_name}
 
         More info: https://lono.cloud/docs/core/blueprints
 
@@ -98,7 +103,8 @@ class Lono::Blueprint
     end
 
     def tree
-      return if options[:from_new]
+      return if options[:from_new] || options[:import]
+
       tree_installed = system("type tree > /dev/null")
       return unless tree_installed
 
