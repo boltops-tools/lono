@@ -70,8 +70,7 @@ module Lono
     def welcome_message
       puts <<~EOL
         #{"="*64}
-        Congrats 🎉 You have successfully created a lono project.  A starter demo blueprint was created
-        and is at blueprints/demo.  Check things out by going into the created infra folder.
+        Congrats 🎉 You have successfully created a lono project.  Check things out by going into the created infra folder.
 
             cd #{project_name}
 
@@ -83,7 +82,7 @@ module Lono
 
             lono cfn deploy my-demo --blueprint demo
 
-        If you name the stack according to conventions, you can simply run:
+        If you name the stack according to conventions, you can run:
 
             lono cfn deploy demo
 
