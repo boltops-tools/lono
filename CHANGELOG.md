@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [5.2.7]
+- hide query string from template_url on display
+- update skeleton starter files: Gemfile, starter message, simplify skeleton settings.yml
+
 ## [5.2.6]
 - reset current dir after lono blueprint new for lono code import command
 
