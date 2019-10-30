@@ -11,9 +11,10 @@ bundle install --without development test
 rm -rf infra
 
 lono new infra
-# Very simply template with just a security group
-cp .cody/demo.rb infra/blueprints/demo/app/templates/demo.rb
 cd infra
+lono blueprint new demo
+# Very simply template with just a security group
+cp ../.cody/demo.rb blueprints/demo/app/templates/demo.rb
 
 # Rewrite the Gemfile to use the local lono gem for testing
 cat << EOF > Gemfile
