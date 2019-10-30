@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [5.2.5]
+* #6 updates
+* changes so `lono code import` can create full blueprint structure
+* improve `lono seed` to prompt before overwriting
+* improve starter configs params
+* improve started Gemfile
+- lono new --demo option to include starter demo blueprint
+- lono seed: use Thor::Actions to prompt before overwriting
+
 ## [5.2.4]
 - add description to lono managed stack
 
