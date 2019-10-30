@@ -73,6 +73,7 @@ class Lono::Blueprint
     def set_destination_root
       destination_root = "#{@cwd}/#{blueprint_name}"
       self.destination_root = destination_root
+      @old_dir = Dir.pwd # for reset_current_dir
       FileUtils.cd(self.destination_root)
     end
 
@@ -88,7 +89,7 @@ class Lono::Blueprint
     end
 
     def welcome_message
-      return if options[:from_new]
+      return if options[:from_new] || options[:import]
       puts <<~EOL
         #{"="*64}
         Congrats 🎉 You have successfully created a lono blueprint.
@@ -110,10 +111,16 @@ class Lono::Blueprint
 
       structure = `tree .`
       puts <<~EOL
-        Here's the structure of your blueprint:
+        Here is the structure of your blueprint:
 
         #{structure}
       EOL
+    end
+
+    # Reason: So `lono code import` prints out the params values with relative paths
+    # when the config files are generated.
+    def reset_current_dir
+      FileUtils.cd(@old_dir)
     end
   end
 end
