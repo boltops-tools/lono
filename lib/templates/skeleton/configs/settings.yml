@@ -3,15 +3,11 @@
 # Yaml also directly supports merging with & and <<* syntax but doing it automatically
 # for a cleaner syntax.
 base:
-  # http://lono.cloud/docs/app-scripts/
-  # extract_scripts:
-  #   to: "/opt"
-  #   as: "ec2-user"
 
 development:
   # The aws_profile tightly binds LONO_ENV to AWS_PROFILE and vice-versa.
-  # aws_profile: dev_profile
+  # aws_profile: dev
 
 production:
   # The aws_profile tightly binds LONO_ENV to AWS_PROFILE and vice-versa.
-  # aws_profile: prod_profile
+  # aws_profile: prd
