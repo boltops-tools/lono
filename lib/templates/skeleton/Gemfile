@@ -1,4 +1,4 @@
 source "https://rubygems.org"
 
-gem "lono" # optional
-gem "lono-pro" # optional
+gem "lono"
+gem "lono-pro"
