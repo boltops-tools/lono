@@ -3,32 +3,9 @@ title: Lono Code Convert
 nav_order: 8
 ---
 
-Lono features a [powerful DSL]({% link _docs/dsl.md %}) to build CloudFormation templates. The Lono DSL builds on top of the CloudFormation declarative nature and allows you to deliver Infrastructure as Code. The Lono DSL results in more maintainable code.
+{% include lono-code-excerpt.md %}
 
-Most CloudFormation templates in the wild are written in JSON or YAML though.
-
-The [lono code convert](https://lono.cloud/reference/lono-code-convert/) and [lono code import](https://lono.cloud/reference/lono-code-import/) commands allow you to take JSON or YAML templates and convert it to the Lono DSL code. The conversion process saves you engineering time writing it yourself.
-
-Currently, the lono-pro addon is available at no cost.
-
-## Installation
-
-The lono-pro addon gem provides extra commands like `lono code convert`. To install it, you can add it to your Gemfile.
-
-```ruby
-gem "lono-pro"
-```
-
-Or you can install it with the gem command.
-
-    gem install lono-pro
-
-To check the installed version run `lono -v`:
-
-    $ lono -v
-    Lono: 5.2.4
-    Lono Pro Addon: 0.4.5
-    $
+The [lono code convert](https://lono.cloud/reference/lono-code-convert/) command allows you to take JSON or YAML templates and convert it to the Lono Ruby DSL code. The conversion process saves you engineering time writing it yourself.
 
 ## Usage: lono code convert
 
