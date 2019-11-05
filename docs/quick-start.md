@@ -3,6 +3,8 @@ title: Quick Start
 nav_order: 1
 ---
 
+<div class="video-box"><div class="video-container"><iframe src="https://www.youtube.com/embed/hOx6NrBzNnY" frameborder="0" allowfullscreen=""></iframe></div></div>
+
 In a hurry? No problem!  Here's a quick start to using lono that takes only a few minutes.
 
     gem install lono
