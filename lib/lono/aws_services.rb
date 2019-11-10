@@ -3,6 +3,8 @@ require "aws-sdk-ec2"
 require "aws-sdk-iam"
 require "aws-sdk-s3"
 
+require "aws_mfa_secure/ext/aws" # add MFA support
+
 module Lono
   module AwsServices
     extend Memoist
