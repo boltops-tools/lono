@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [5.2.8]
+- add mfa support for normal IAM user
+
 ## [5.2.7]
 - hide query string from template_url on display
 - update skeleton starter files: Gemfile, starter message, simplify skeleton settings.yml
