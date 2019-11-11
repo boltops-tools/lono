@@ -79,6 +79,7 @@ module Lono
     base_options.call
     suffix_option.call
     def preview(stack_name=:current)
+      ParamPreview.new(stack_name, options).run if options[:param_preview]
       Diff.new(stack_name, options).run if options[:diff]
       Preview.new(stack_name, options).run
     end
