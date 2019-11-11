@@ -4,11 +4,12 @@ class Lono::Cfn
     def run
       if @options[:noop]
         puts "NOOP CloudFormation preview for #{@stack_name} update"
-      else
-        params = generate_all
-        success = preview_change_set(params)
-        delete_change_set if success && !@options[:keep] # Clean up and delete the change set
+        return
       end
+
+      params = generate_all
+      success = preview_change_set(params)
+      delete_change_set if success && !@options[:keep] # Clean up and delete the change set
     end
 
     def preview_change_set(params)

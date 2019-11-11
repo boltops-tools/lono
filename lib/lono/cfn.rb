@@ -76,12 +76,13 @@ module Lono
     long_desc Lono::Help.text("cfn/preview")
     option :keep, type: :boolean, desc: "keep the changeset instead of deleting it afterwards"
     option :diff, type: :boolean, default: true, desc: "Show diff of the source code template changes also."
+    option :param_preview, type: :boolean, default: true, desc: "Show changes in parameters also."
     base_options.call
     suffix_option.call
     def preview(stack_name=:current)
       ParamPreview.new(stack_name, options).run if options[:param_preview]
-      Diff.new(stack_name, options).run if options[:diff]
-      Preview.new(stack_name, options).run
+      # Diff.new(stack_name, options).run if options[:diff]
+      # Preview.new(stack_name, options).run
     end
 
     desc "diff STACK", "Diff newly generated template vs existing template."
