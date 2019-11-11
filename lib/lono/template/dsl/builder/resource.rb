@@ -17,22 +17,33 @@ class Lono::Template::Dsl::Builder
         logical_id, attributes = first, second
         attributes.delete(:properties) if attributes[:properties].nil? || attributes[:properties].empty?
         { logical_id => attributes }
-      elsif definition.size == 2 && second.is_a?(String) # short form
+      elsif definition.size == 2 && second.is_a?(String) # short form with no properties
         logical_id, type = first, second
         { logical_id => {
             type: type
         }}
-      elsif definition.size == 3 && (second.is_a?(String) || second.is_a?(NilClass))# short form
+      elsif definition.size == 3 && (second.is_a?(String) || second.is_a?(NilClass)) # short form
         logical_id, type, properties = first, second, third
         template = { logical_id => {
                        type: type
                     }}
+
         attributes = template.values.first
+
+        # special rules that allow some attributes to be passed as part of properties
+        property_to_attribute(logical_id, properties, :depends_on)
+        property_to_attribute(logical_id, properties, :condition)
+
         attributes[:properties] = properties unless properties.empty?
         template
       else # Dont understand this form
         raise "Invalid form provided. definition #{definition.inspect}"
       end
+    end
+
+    def property_to_attribute(logical_id, properties, attribute_name)
+      attribute_value = properties.delete(attribute_name)
+      template[logical_id][attribute_name] = attribute_value if attribute_value
     end
   end
 end

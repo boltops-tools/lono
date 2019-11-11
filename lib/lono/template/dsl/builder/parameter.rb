@@ -16,10 +16,10 @@ class Lono::Template::Dsl::Builder
       elsif definition.size == 2 && second.is_a?(Hash) # medium form
         logical_id, properties = first, second
         { logical_id => properties }
-      elsif (definition.size == 2 && num_or_str?(second)) || # short form
+      elsif (definition.size == 2 && valid_value?(second)) || # short form
             definition.size == 1
         logical_id = first
-        properties = num_or_str?(second) ? { default: second } : {}
+        properties = valid_value?(second) ? { default: second } : {}
         { logical_id => properties }
       else # I dont know what form
         raise "Invalid form provided. definition #{definition.inspect}"
@@ -32,8 +32,8 @@ class Lono::Template::Dsl::Builder
       attributes
     end
 
-    def num_or_str?(o)
-      o.is_a?(Float) || o.is_a?(Integer) || o.is_a?(String)
+    def valid_value?(o)
+      o.is_a?(Float) || o.is_a?(Integer) || o.is_a?(String) || o.is_a?(TrueClass) || o.is_a?(FalseClass)
     end
   end
 end

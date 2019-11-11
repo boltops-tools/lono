@@ -133,7 +133,9 @@ class Lono::Seed
 
     def default_value(data)
       value = data["Default"]
-      if value.blank?
+      # Dont use !blank? since there can be false optional values
+      # Also dont use .empty? since value can be an Integer
+      if value.nil? || value == ''
         description_example(data["Description"])
       else
         value
@@ -148,11 +150,11 @@ class Lono::Seed
     memoize :parameters
 
     def required(parameters)
-      parameters.reject { |logical_id, p| p["Default"] }
+      parameters.select { |logical_id, p| p["Default"].nil? } # allow for false
     end
 
     def optional(parameters)
-      parameters.select { |logical_id, p| p["Default"] }
+      parameters.select { |logical_id, p| !p["Default"].nil? } # allow for false
     end
 
   private
