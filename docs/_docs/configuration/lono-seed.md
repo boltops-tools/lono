@@ -3,7 +3,7 @@ title: Lono Seed
 nav_order: 55
 ---
 
-For each blueprint and CloudFormation template, you will usually need to setup some [configs]({% link _docs/core/configs.md %}). Lono has a `lono seed` command that generates starter configs values.
+For each blueprint and CloudFormation template, you will usually need to set up some [configs]({% link _docs/core/configs.md %}). To help with this, Lono has a `lono seed` command that generates starter configs values.
 
 * The starter values for params are determined by the template definition itself.
 * The starter values for variables are determined by the blueprint's `seed/configs.rb`, usually written by the author.
