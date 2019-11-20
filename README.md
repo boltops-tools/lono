@@ -8,6 +8,8 @@
 [![CircleCI](https://circleci.com/gh/tongueroo/lono.svg?style=svg)](https://circleci.com/gh/tongueroo/lono)
 [![Support](https://img.shields.io/badge/get-support-blue.svg)](https://boltops.com?utm_source=badge&utm_medium=badge&utm_campaign=lono)
 
+[![BoltOps Badge](https://img.boltops.com/boltops/badges/boltops-badge.png)](https://www.boltops.com)
+
 Lono is a powerful CloudFormation framework. Lono handles the entire CloudFormation lifecycle. It builds, manages and deploys CloudFormation templates.
 
 * Lono generates CloudFormation templates based on a [DSL](http://lono.cloud/docs/dsl/).
