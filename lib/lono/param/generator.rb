@@ -70,12 +70,13 @@ class Lono::Param
     # Allows user to specify the .txt extension or not to.
     # Also allows user to use other extensions like .sh if they are explicit about it.
     def param_file?(path)
-      File.file?(path) || File.file?("#{path}.txt")
+      File.file?(path) || File.file?("#{path}.txt") || File.file?("#{path}.sh")
     end
 
     def param_file(path)
       return path if File.file?(path)
       return "#{path}.txt" if File.file?("#{path}.txt")
+      return "#{path}.sh" if File.file?("#{path}.sh")
     end
 
     def lookup_paths
