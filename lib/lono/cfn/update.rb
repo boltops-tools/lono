@@ -27,7 +27,7 @@ class Lono::Cfn
 
       options = @options.merge(mute_params: true, mute_using: true, keep: true)
       # create new copy of preview when update_stack is called because of IAM retry logic
-      changeset_preview = Lono::Cfn::ChangesetPreview.new(@stack_name, options)
+      changeset_preview = Lono::Cfn::Preview::Changeset.new(@stack_name, options)
 
       error = nil
       param_preview.run if @options[:param_preview]
@@ -63,8 +63,13 @@ class Lono::Cfn
     end
 
     def codediff_preview
-      Lono::Cfn::CodediffPreview.new(@stack_name, @options.merge(mute_params: true, mute_using: true))
+      Lono::Cfn::Preview::Codediff.new(@stack_name, @options.merge(mute_params: true, mute_using: true))
     end
     memoize :codediff_preview
+
+    def param_preview
+      Lono::Cfn::Preview::Param.new(@stack_name, @options)
+    end
+    memoize :param_preview
   end
 end

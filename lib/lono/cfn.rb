@@ -82,9 +82,9 @@ module Lono
     base_options.call
     suffix_option.call
     def preview(stack_name=:current)
-      ParamPreview.new(stack_name, options).run if options[:param_preview]
-      CodediffPreview.new(stack_name, options).run if options[:codediff_preview]
-      ChangesetPreview.new(stack_name, options).run if options[:changeset_preview]
+      Preview::Param.new(stack_name, options).run if options[:param_preview]
+      Preview::Codediff.new(stack_name, options).run if options[:codediff_preview]
+      Preview::Changeset.new(stack_name, options).run if options[:changeset_preview]
     end
 
     desc "download STACK", "Download CloudFormation template from existing stack."

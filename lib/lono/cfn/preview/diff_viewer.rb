@@ -1,4 +1,4 @@
-class Lono::Cfn
+module Lono::Cfn::Preview
   module DiffViewer
     def show_diff(existing_path, new_path)
       command = "#{diff_viewer} #{existing_path} #{new_path}"
