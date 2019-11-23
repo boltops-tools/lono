@@ -26,6 +26,7 @@ class Lono::Param
     #   configs/BLUEPRINT/params/development.txt
     #
     def lookup_param_file(root: Lono.root, env: Lono.env)
+      # The docs conver direct_absolute_form and direct_relative_form as the "Direct Form"
       direct_absolute_form = @param # user provided the absolute full path
       direct_relative_form = "#{root}/#{@param}" # user provided the full path within the lono project
       direct_env_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}" # direct lookup is simple
