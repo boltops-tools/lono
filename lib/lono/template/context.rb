@@ -1,8 +1,10 @@
 # Encapsulates helper methods and instance variables to be rendered in the ERB templates.
 class Lono::Template
   class Context
+    extend Memoist
     include Lono::Template::Helper
     include Loader
+    include Helpers
 
     def initialize(blueprint, options={})
       @blueprint, @options = blueprint, options

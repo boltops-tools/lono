@@ -46,6 +46,23 @@ This results in:
 
 These files can be used to launch the CloudFormation stack with the `aws cloudformation` CLI tool manually if you like. Though the `lono cfn` lifecycle commands handle this automatically for you. For example, running `lono cfn deploy STACK_NAME` will automatically generate the param files and use it when launching the stack.
 
+## ERB Support and SSM Helper
+
+Parameters files support ERB evaluation.  One interesting use of ERB is to use the [ssm helper method](https://github.com/tongueroo/lono/blob/master/lib/lono/template/context/helpers.rb) to substitute secrets from SSM parameter store.  Example:
+
+configs/demo/params/development.txt:
+
+    KeyName=<%= ssm("/#{Lono.env}/key_name") %>
+    InstanceType=t2.micro
+
+Here's an example of storing an SSM parameter:
+
+    aws ssm put-parameter --name /development/key_name --value main-2019-11-23 --type SecureString
+
+To confirm that parameter is stored:
+
+     aws ssm get-parameter --name /development/key_name --with-decryption
+
 ## Shared Variables Substitution
 
 Shared variables substitution is supported in params file.  Here's an example:
