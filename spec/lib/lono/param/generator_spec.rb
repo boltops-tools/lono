@@ -157,4 +157,15 @@ describe Lono::Param::Generator do
     end
   end
 
+  context "simple and direct lookup with direct simple lookup with .sh extensions" do
+    let(:generator) { Lono::Param::Generator.new("ec2", template: "doesnt-matter", param: param) } # direct param
+    let(:root) { "spec/fixtures/lookup_param_file/root11" }
+    context "param with sh added" do
+      let(:param) { "baz.sh" }
+      it "root11 direct lookup with a subfolder" do
+        param_file = generator.lookup_param_file(root: root)
+        expect(param_file).to include("configs/ec2/params/baz.sh")
+      end
+    end
+  end
 end

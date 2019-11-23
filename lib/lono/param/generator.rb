@@ -60,6 +60,8 @@ class Lono::Param
       end
     end
 
+    # Allows user to specify the .txt extension or not to.
+    # Also allows user to use other extensions like .sh if they are explicit about it.
     def param_file?(path)
       File.file?(path) || File.file?("#{path}.txt")
     end
