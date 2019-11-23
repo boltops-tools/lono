@@ -13,7 +13,7 @@ class Lono::Param
     def puts_param_message(type)
       path = send("#{type}_path")
       return unless path
-      if File.exist?(path)
+      if param_file?(path)
         pretty_path = path.sub("#{Lono.root}/",'')
         puts "Using param: #{pretty_path}".color(:yellow)
       end
