@@ -4,9 +4,12 @@ class Lono::Cfn
              to: :output_template
 
     include DiffViewer
+    include Lono::AwsServices
 
     def run
-      puts "Parameter Diff Preview:"
+      return unless stack_exists?(@stack_name)
+
+      puts "Parameter Diff Preview:".color(:green)
       if @options[:noop]
         puts "NOOP CloudFormation parameters preview for #{@stack_name} update"
         return
@@ -14,12 +17,6 @@ class Lono::Cfn
 
       params = generate_all
       write_to_tmp(new_path, params)
-
-      # TODO:
-      # * if stack doesnt exist yet, dont generate any param preview
-      # * if stack not found, handle gracefully
-      # * convert to CloudFormation JSON format for diffing
-      #
       write_to_tmp(existing_path, existing_parameters)
 
       show_diff(existing_path, new_path)

@@ -1,9 +1,11 @@
 class Lono::Cfn
-  class Diff < Base
+  class CodediffPreview < Base
     include DiffViewer
     include Lono::AwsServices
 
     def run
+      puts "Code Diff Preview:".color(:green)
+
       unless stack_exists?(@stack_name)
         puts "WARN: Cannot create a diff for the stack because the #{@stack_name} does not exists.".color(:yellow)
         return

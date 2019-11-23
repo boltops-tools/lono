@@ -22,8 +22,9 @@ module Lono
     end
     update_options = Proc.new do
       option :change_set, type: :boolean, default: true, desc: "Uses generated change set to update the stack.  If false, will perform normal update-stack."
-      option :diff, type: :boolean, default: true, desc: "Show diff of the source code template changes before continuing."
-      option :preview, type: :boolean, default: true, desc: "Show preview of the stack changes before continuing."
+      option :codediff_preview, type: :boolean, default: true, desc: "Show codediff changes preview."
+      option :changeset_preview, type: :boolean, default: true, desc: "Show ChangeSet changes preview."
+      option :param_preview, type: :boolean, default: true, desc: "Show parameter diff preview."
       option :sure, type: :boolean, desc: "Skips are you sure prompt"
     end
 
@@ -75,22 +76,15 @@ module Lono
     desc "preview STACK", "Preview a CloudFormation stack update.  This is similar to terraform's plan or puppet's dry-run mode."
     long_desc Lono::Help.text("cfn/preview")
     option :keep, type: :boolean, desc: "keep the changeset instead of deleting it afterwards"
-    option :diff, type: :boolean, default: true, desc: "Show diff of the source code template changes also."
-    option :param_preview, type: :boolean, default: true, desc: "Show changes in parameters also."
+    option :param_preview, type: :boolean, default: true, desc: "Show parameter diff preview."
+    option :codediff_preview, type: :boolean, default: true, desc: "Show codediff changes preview."
+    option :changeset_preview, type: :boolean, default: true, desc: "Show ChangeSet changes preview."
     base_options.call
     suffix_option.call
     def preview(stack_name=:current)
       ParamPreview.new(stack_name, options).run if options[:param_preview]
-      # Diff.new(stack_name, options).run if options[:diff]
-      # Preview.new(stack_name, options).run
-    end
-
-    desc "diff STACK", "Diff newly generated template vs existing template."
-    long_desc Lono::Help.text("cfn/diff")
-    base_options.call
-    suffix_option.call
-    def diff(stack_name=:current)
-      Diff.new(stack_name, options).run
+      CodediffPreview.new(stack_name, options).run if options[:codediff_preview]
+      ChangesetPreview.new(stack_name, options).run if options[:changeset_preview]
     end
 
     desc "download STACK", "Download CloudFormation template from existing stack."

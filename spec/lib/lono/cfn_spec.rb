@@ -24,11 +24,6 @@ describe Lono::Cfn do
       expect(out).to include("CloudFormation preview")
     end
 
-    it "diff stack" do
-      out = execute("#{@env} exe/lono cfn diff example #{@args}")
-      expect(out).to include("diff")
-    end
-
     it "download stack" do
       out = execute("#{@env} exe/lono cfn download example #{@args}")
       expect(out).to include("Download")

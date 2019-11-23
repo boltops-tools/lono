@@ -1,7 +1,9 @@
 class Lono::Cfn
-  class Preview < Base
+  class ChangesetPreview < Base
     # Override run from Base superclass, the run method is different enough with Preview
     def run
+      puts "Changeset Preview:".color(:green)
+
       if @options[:noop]
         puts "NOOP CloudFormation preview for #{@stack_name} update"
         return
