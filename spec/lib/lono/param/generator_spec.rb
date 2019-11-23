@@ -51,7 +51,7 @@ describe Lono::Param::Generator do
   context "shared variables access" do
     it "should have access to shared variables" do
       # quickest to write test by shelling out
-      out = execute("LONO_PARAM_DEBUG=1 exe/lono generate ec2")
+      execute("LONO_PARAM_DEBUG=1 exe/lono generate ec2")
       text = IO.read("#{Lono.root}/output/ec2/params/development.json")
       data = JSON.load(text)
       param = data.select { |i| i["ParameterKey"] == "Ami" }.first
