@@ -3,7 +3,12 @@ module Lono::Cfn::Preview
     def show_diff(existing_path, new_path)
       command = "#{diff_viewer} #{existing_path} #{new_path}"
       puts "Running: #{command}"
-      system(command)
+      out = `#{command}`
+      if out.strip == ''
+        puts "There were no differences."
+      else
+        puts out
+      end
     end
 
     def diff_viewer
