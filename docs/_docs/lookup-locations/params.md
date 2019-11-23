@@ -17,9 +17,9 @@ You can define params files in different locations. Lono lookups up each of thes
 5. configs/**blueprint**/params/development/**template**.txt - Conventional Template
 6. configs/**blueprint**/params/development.txt - Conventional Env
 
-Depending on how you name your blueprint, templates, and params files, it can greatly simply the configs structure.  Generally, recommend using form #1, #2 and #5.
+Depending on how you name your blueprint, templates, and params files, it can greatly simply the configs structure.  The general recommendation is to use forms #1, #2, #3 and #6.
 
-Here are somme examples to help explain:
+Here are some examples to help explain:
 
 ### Example 1: Direct Form
 
@@ -49,7 +49,7 @@ You do not need to scope the environment, it's automatically considered.
 
 ### Example 3: Direct Simple Param
 
-The **Direct Simple Param***= lookup is also simple. Let's say you have this configs params file:
+The **Direct Simple Param** lookup is also simple. Let's say you have this configs params file:
 
     configs/ec2/params/my-params/jenkins/large.txt
 
