@@ -15,7 +15,7 @@ class Lono::Param
       return unless path
       if param_file?(path)
         pretty_path = path.sub("#{Lono.root}/",'')
-        puts "Using param: #{pretty_path}".color(:yellow)
+        puts "Using param for #{type}: #{pretty_path}".color(:yellow)
       end
     end
 
@@ -27,10 +27,12 @@ class Lono::Param
     #
     def lookup_param_file(root: Lono.root, env: Lono.env)
       # The docs conver direct_absolute_form and direct_relative_form as the "Direct Form"
-      direct_absolute_form = @param # user provided the absolute full path
-      direct_relative_form = "#{root}/#{@param}" # user provided the full path within the lono project
-      direct_env_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}" # direct lookup is simple
-      direct_simple_form = "#{root}/configs/#{@blueprint}/params/#{@param}" # direct lookup is simple
+      unless env == "base"
+        direct_absolute_form = @param # user provided the absolute full path
+        direct_relative_form = "#{root}/#{@param}" # user provided the full path within the lono project
+        direct_env_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}" # direct lookup is simple
+        direct_simple_form = "#{root}/configs/#{@blueprint}/params/#{@param}" # direct lookup is simple
+      end
       long_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@template}/#{@param}"
       medium_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}"
       short_form = "#{root}/configs/#{@blueprint}/params/#{env}"
@@ -46,10 +48,12 @@ class Lono::Param
         puts "short_form #{short_form}"
       end
 
-      return param_file(direct_absolute_form) if param_file?(direct_absolute_form)
-      return param_file(direct_relative_form) if param_file?(direct_relative_form)
-      return param_file(direct_env_form) if param_file?(direct_env_form) # consider this first its simple and direct but is scope to env so it's more specific
-      return param_file(direct_simple_form) if param_file?(direct_simple_form) # consider this first its simple and direct but is scope to env so it's more specific
+      unless env == "base"
+        return param_file(direct_absolute_form) if param_file?(direct_absolute_form)
+        return param_file(direct_relative_form) if param_file?(direct_relative_form)
+        return param_file(direct_env_form) if param_file?(direct_env_form) # consider this first its simple and direct but is scope to env so it's more specific
+        return param_file(direct_simple_form) if param_file?(direct_simple_form) # consider this first its simple and direct but is scope to env so it's more specific
+      end
       return param_file(long_form) if param_file?(long_form) # consider this first because its more explicit
 
       # All 3 are the same
