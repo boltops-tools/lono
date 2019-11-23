@@ -26,11 +26,11 @@ class Lono::Param
     #   configs/BLUEPRINT/params/development.txt
     #
     def lookup_param_file(root: Lono.root, env: Lono.env)
-      direct_env_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}.txt" # direct lookup is simple
-      direct_simple_form = "#{root}/configs/#{@blueprint}/params/#{@param}.txt" # direct lookup is simple
-      long_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@template}/#{@param}.txt"
-      medium_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}.txt"
-      short_form = "#{root}/configs/#{@blueprint}/params/#{env}.txt"
+      direct_env_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}" # direct lookup is simple
+      direct_simple_form = "#{root}/configs/#{@blueprint}/params/#{@param}" # direct lookup is simple
+      long_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@template}/#{@param}"
+      medium_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}"
+      short_form = "#{root}/configs/#{@blueprint}/params/#{env}"
 
       if ENV['LONO_PARAM_DEBUG']
         puts "Lono.blueprint_root #{Lono.blueprint_root}"
@@ -41,23 +41,32 @@ class Lono::Param
         puts "short_form #{short_form}"
       end
 
-      return direct_env_form if File.exist?(direct_env_form) # always consider this first its simple and direct but is scope to env so it's more specific
-      return direct_simple_form if File.exist?(direct_simple_form) # always consider this first its simple and direct but is scope to env so it's more specific
-      return long_form if File.exist?(long_form) # consider this first because its more explicit
+      return param_file(direct_env_form) if param_file?(direct_env_form) # always consider this first its simple and direct but is scope to env so it's more specific
+      return param_file(direct_simple_form) if param_file?(direct_simple_form) # always consider this first its simple and direct but is scope to env so it's more specific
+      return param_file(long_form) if param_file?(long_form) # consider this first because its more explicit
 
       # All 3 are the same
       # Also, blueprint and template the same and explicitly specified param
       if @blueprint == @template
-        return medium_form if File.exist?(medium_form) # higher precedence between longer but short form should be encouraged
-        return short_form if File.exist?(short_form)
+        return param_file(medium_form) if param_file?(medium_form) # higher precedence between longer but short form should be encouraged
+        return param_file(short_form) if param_file?(short_form)
         return # cannot find a param file
       end
 
       # Only template and param are the same
       if @template == @param
-        return medium_form if File.exist?(medium_form) # only consider medium form
+        return param_file(medium_form) if param_file?(medium_form) # only consider medium form
         return # cannot find a param file
       end
+    end
+
+    def param_file?(path)
+      File.file?(path) || File.file?("#{path}.txt")
+    end
+
+    def param_file(path)
+      return path if File.file?(path)
+      return "#{path}.txt" if File.file?("#{path}.txt")
     end
 
     def lookup_paths

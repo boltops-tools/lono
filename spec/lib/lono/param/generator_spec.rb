@@ -120,7 +120,7 @@ describe Lono::Param::Generator do
       end
     end
 
-    context "param with subfolder" do
+    context "param without subfolder" do
       let(:param) { "another-test-param" }
       it "root9 direct lookup with a subfolder" do
         param_file = generator.lookup_param_file(root: root)
@@ -134,18 +134,27 @@ describe Lono::Param::Generator do
     let(:root) { "spec/fixtures/lookup_param_file/root10" }
     context "param with subfolder" do
       let(:param) { "foo/bar" }
-      it "root9 direct lookup with a subfolder" do
+      it "root10 direct lookup with a subfolder" do
         param_file = generator.lookup_param_file(root: root)
         expect(param_file).to include("configs/ec2/params/foo/bar.txt")
       end
     end
 
-    context "param with subfolder" do
+    context "param without subfolder" do
       let(:param) { "baz" }
-      it "root9 direct lookup with a subfolder" do
+      it "root10 direct lookup with a subfolder" do
+        param_file = generator.lookup_param_file(root: root)
+        expect(param_file).to include("configs/ec2/params/baz.txt")
+      end
+    end
+
+    context "param with txt added" do
+      let(:param) { "baz.txt" }
+      it "root10 direct lookup with a subfolder" do
         param_file = generator.lookup_param_file(root: root)
         expect(param_file).to include("configs/ec2/params/baz.txt")
       end
     end
   end
+
 end
