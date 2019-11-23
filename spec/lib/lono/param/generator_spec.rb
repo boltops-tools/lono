@@ -168,4 +168,39 @@ describe Lono::Param::Generator do
       end
     end
   end
+
+  context "direct full form" do
+    let(:generator) { Lono::Param::Generator.new("ec2", template: "doesnt-matter", param: param) } # direct param
+    let(:root) { "spec/fixtures/lookup_param_file/root9" }
+    context "param with sh added" do
+      let(:param) { "configs/ec2/params/development/my/test-param.txt" }
+      it "root9 direct_full_form" do
+        param_file = generator.lookup_param_file(root: root)
+        expect(param_file).to include("configs/ec2/params/development/my/test-param.txt")
+      end
+    end
+  end
+
+  context "direct direct_relative_form" do
+    let(:generator) { Lono::Param::Generator.new("ec2", template: "doesnt-matter", param: param) } # direct param
+    let(:root) { "spec/fixtures/lookup_param_file/root9" }
+    context "param as direct_full_form" do
+      let(:param) { "configs/ec2/params/development/my/test-param.txt" }
+      it "root9 direct_relative_form" do
+        param_file = generator.lookup_param_file(root: root)
+        expect(param_file).to include("configs/ec2/params/development/my/test-param.txt")
+      end
+    end
+
+    context "param as direct_absolute_form" do
+      let(:param) do
+        absolute_root = File.expand_path("../../../fixtures/lookup_param_file/root9", __dir__)
+        "#{absolute_root}/configs/ec2/params/development/my/test-param.txt"
+      end
+      it "root9 direct_absolute_form" do
+        param_file = generator.lookup_param_file(root: root)
+        expect(param_file).to include("configs/ec2/params/development/my/test-param.txt")
+      end
+    end
+  end
 end

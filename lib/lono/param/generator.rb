@@ -26,6 +26,8 @@ class Lono::Param
     #   configs/BLUEPRINT/params/development.txt
     #
     def lookup_param_file(root: Lono.root, env: Lono.env)
+      direct_absolute_form = @param # user provided the absolute full path
+      direct_relative_form = "#{root}/#{@param}" # user provided the full path within the lono project
       direct_env_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}" # direct lookup is simple
       direct_simple_form = "#{root}/configs/#{@blueprint}/params/#{@param}" # direct lookup is simple
       long_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@template}/#{@param}"
@@ -34,6 +36,8 @@ class Lono::Param
 
       if ENV['LONO_PARAM_DEBUG']
         puts "Lono.blueprint_root #{Lono.blueprint_root}"
+        puts "direct_absolute_form #{direct_absolute_form}"
+        puts "direct_relative_form #{direct_relative_form}"
         puts "direct_env_form #{direct_env_form}"
         puts "direct_simple_form #{direct_simple_form}"
         puts "long_form #{long_form}"
@@ -41,8 +45,10 @@ class Lono::Param
         puts "short_form #{short_form}"
       end
 
-      return param_file(direct_env_form) if param_file?(direct_env_form) # always consider this first its simple and direct but is scope to env so it's more specific
-      return param_file(direct_simple_form) if param_file?(direct_simple_form) # always consider this first its simple and direct but is scope to env so it's more specific
+      return param_file(direct_absolute_form) if param_file?(direct_absolute_form)
+      return param_file(direct_relative_form) if param_file?(direct_relative_form)
+      return param_file(direct_env_form) if param_file?(direct_env_form) # consider this first its simple and direct but is scope to env so it's more specific
+      return param_file(direct_simple_form) if param_file?(direct_simple_form) # consider this first its simple and direct but is scope to env so it's more specific
       return param_file(long_form) if param_file?(long_form) # consider this first because its more explicit
 
       # All 3 are the same
