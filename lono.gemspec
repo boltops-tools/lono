@@ -26,6 +26,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "aws-sdk-ec2" # lono seed
   gem.add_dependency "aws-sdk-iam" # lono seed
   gem.add_dependency "aws-sdk-s3"
+  gem.add_dependency "aws-sdk-ssm"
   gem.add_dependency "cfn_camelizer"
   gem.add_dependency "filesize"
   gem.add_dependency "graph" # lono xgraph command dependency
