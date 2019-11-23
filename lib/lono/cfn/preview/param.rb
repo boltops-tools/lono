@@ -1,5 +1,5 @@
 module Lono::Cfn::Preview
-  class Param < Base
+  class Param < Lono::Cfn::Base
     delegate :required_parameters, :optional_parameters, :parameters, :data,
              to: :output_template
 

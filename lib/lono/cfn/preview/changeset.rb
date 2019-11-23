@@ -1,5 +1,5 @@
 module Lono::Cfn::Preview
-  class Changeset < Base
+  class Changeset < Lono::Cfn::Base
     # Override run from Base superclass, the run method is different enough with Preview
     def run
       puts "Changeset Preview:".color(:green)

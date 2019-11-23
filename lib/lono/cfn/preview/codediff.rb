@@ -1,5 +1,5 @@
 module Lono::Cfn::Preview
-  class Codediff < Base
+  class Codediff < Lono::Cfn::Base
     include DiffViewer
     include Lono::AwsServices
 
