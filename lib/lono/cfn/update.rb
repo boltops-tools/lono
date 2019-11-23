@@ -27,16 +27,17 @@ class Lono::Cfn
 
       options = @options.merge(mute_params: true, mute_using: true, keep: true)
       # create new copy of preview when update_stack is called because of IAM retry logic
-      preview = Lono::Cfn::Preview.new(@stack_name, options)
+      changeset_preview = Lono::Cfn::Preview::Changeset.new(@stack_name, options)
 
       error = nil
-      diff.run if @options[:diff]
-      preview.run if @options[:preview]
+      param_preview.run if @options[:param_preview]
+      codediff_preview.run if @options[:codediff_preview]
+      changeset_preview.run if @options[:changeset_preview]
       are_you_sure?(@stack_name, :update)
 
       if @options[:change_set] # defaults to this
-        message << " via change set: #{preview.change_set_name}"
-        preview.execute_change_set
+        message << " via change set: #{changeset_preview.change_set_name}"
+        changeset_preview.execute_change_set
       else
         standard_update(params)
       end
@@ -57,12 +58,18 @@ class Lono::Cfn
         cfn.update_stack(params)
       rescue Aws::CloudFormation::Errors::ValidationError => e
         puts "ERROR: #{e.message}".red
-        error = true
+        false
       end
     end
 
-    def diff
-      @diff ||= Lono::Cfn::Diff.new(@stack_name, @options.merge(mute_params: true, mute_using: true))
+    def codediff_preview
+      Lono::Cfn::Preview::Codediff.new(@stack_name, @options.merge(mute_params: true, mute_using: true))
     end
+    memoize :codediff_preview
+
+    def param_preview
+      Lono::Cfn::Preview::Param.new(@stack_name, @options)
+    end
+    memoize :param_preview
   end
 end

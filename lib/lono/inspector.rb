@@ -1,4 +1,4 @@
 module Lono
-  class Inspector
+  module Inspector
   end
 end

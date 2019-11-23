@@ -13,9 +13,9 @@ class Lono::Param
     def puts_param_message(type)
       path = send("#{type}_path")
       return unless path
-      if File.exist?(path)
+      if param_file?(path)
         pretty_path = path.sub("#{Lono.root}/",'')
-        puts "Using param: #{pretty_path}".color(:yellow)
+        puts "Using param for #{type}: #{pretty_path}".color(:yellow)
       end
     end
 
@@ -26,32 +26,61 @@ class Lono::Param
     #   configs/BLUEPRINT/params/development.txt
     #
     def lookup_param_file(root: Lono.root, env: Lono.env)
-      long_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@template}/#{@param}.txt"
-      medium_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}.txt"
-      short_form = "#{root}/configs/#{@blueprint}/params/#{env}.txt"
+      # The docs conver direct_absolute_form and direct_relative_form as the "Direct Form"
+      unless env == "base"
+        direct_absolute_form = @param # user provided the absolute full path
+        direct_relative_form = "#{root}/#{@param}" # user provided the full path within the lono project
+        direct_env_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}" # direct lookup is simple
+        direct_simple_form = "#{root}/configs/#{@blueprint}/params/#{@param}" # direct lookup is simple
+      end
+      long_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@template}/#{@param}"
+      medium_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}"
+      short_form = "#{root}/configs/#{@blueprint}/params/#{env}"
 
       if ENV['LONO_PARAM_DEBUG']
         puts "Lono.blueprint_root #{Lono.blueprint_root}"
+        puts "direct_absolute_form #{direct_absolute_form}"
+        puts "direct_relative_form #{direct_relative_form}"
+        puts "direct_env_form #{direct_env_form}"
+        puts "direct_simple_form #{direct_simple_form}"
         puts "long_form #{long_form}"
         puts "medium_form #{medium_form}"
         puts "short_form #{short_form}"
       end
 
-      return long_form if File.exist?(long_form) # always consider this first because its so explicit
+      unless env == "base"
+        return param_file(direct_absolute_form) if param_file?(direct_absolute_form)
+        return param_file(direct_relative_form) if param_file?(direct_relative_form)
+        return param_file(direct_env_form) if param_file?(direct_env_form) # consider this first its simple and direct but is scope to env so it's more specific
+        return param_file(direct_simple_form) if param_file?(direct_simple_form) # consider this first its simple and direct but is scope to env so it's more specific
+      end
+      return param_file(long_form) if param_file?(long_form) # consider this first because its more explicit
 
       # All 3 are the same
       # Also, blueprint and template the same and explicitly specified param
       if @blueprint == @template
-        return medium_form if File.exist?(medium_form) # higher precedence between longer but short form should be encouraged
-        return short_form if File.exist?(short_form)
+        return param_file(medium_form) if param_file?(medium_form) # higher precedence between longer but short form should be encouraged
+        return param_file(short_form) if param_file?(short_form)
         return # cannot find a param file
       end
 
       # Only template and param are the same
       if @template == @param
-        return medium_form if File.exist?(medium_form) # only consider medium form
+        return param_file(medium_form) if param_file?(medium_form) # only consider medium form
         return # cannot find a param file
       end
+    end
+
+    # Allows user to specify the .txt extension or not to.
+    # Also allows user to use other extensions like .sh if they are explicit about it.
+    def param_file?(path)
+      File.file?(path) || File.file?("#{path}.txt") || File.file?("#{path}.sh")
+    end
+
+    def param_file(path)
+      return path if File.file?(path)
+      return "#{path}.txt" if File.file?("#{path}.txt")
+      return "#{path}.sh" if File.file?("#{path}.sh")
     end
 
     def lookup_paths

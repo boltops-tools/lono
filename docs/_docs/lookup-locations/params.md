@@ -10,15 +10,58 @@ Lono supports param files that look like env files as a simple way to define you
 You can define params files in different locations. Lono lookups up each of these locations until it finds a params file.
 
 {:.lookup-locations}
-1. configs/**blueprint**/params/development/**template**/**param**.txt
-2. configs/**blueprint**/params/development/**template**.txt
-3. configs/**blueprint**/params/development.txt
+1. configs/**blueprint**/params/development/**param**.txt - Direct Form
+2. configs/**blueprint**/params/development/**param**.txt - Direct Env Param
+3. configs/**blueprint**/params/**param**.txt -  Direct Simple Param
+4. configs/**blueprint**/params/development/**template**/**param**.txt - Conventional Param
+5. configs/**blueprint**/params/development/**template**.txt - Conventional Template
+6. configs/**blueprint**/params/development.txt - Conventional Env
 
-Depending on how you name your blueprint, templates, and params files, it can greatly simply the configs structure.  Some examples will help explain:
+Depending on how you name your blueprint, templates, and params files, it can greatly simply the configs structure.  The general recommendation is to use forms #1, #2, #3 and #6.
 
-### 1. All Different: blueprint, template, param
+Here are some examples to help explain:
 
-Let's say you had a blueprint that defines a different template and uses a different param. For example, the template could be `jenkins` and params could be `large`.  Then you would need the full 1st form which is fully explicit:
+### Example 1: Direct Form
+
+The **Direct Form** lookup is the simplest to understand. Let's say you have this param file:
+
+    configs/ec2/params/development/my-params/jenkins/large.txt
+
+You simply specify the path to the param file.
+
+    lono cfn deploy ec2 --template jenkins --param configs/ec2/params/development/my-params/jenkins/large.txt
+
+You can also use absolute paths:
+
+    lono cfn deploy ec2 --template jenkins --param `pwd`/configs/ec2/params/development/my-params/jenkins/large.txt
+
+### Example 2: Direct Env Param
+
+The **Direct Env Param** lookup is also simple. Let's say you have this configs params file:
+
+    configs/ec2/params/development/my-params/jenkins/large.txt
+
+You can just specific the param file with or without the `.txt` extension.
+
+    lono cfn deploy ec2 --template jenkins --param my-params/jenkins/large
+
+You do not need to scope the environment, it's automatically considered.
+
+### Example 3: Direct Simple Param
+
+The **Direct Simple Param** lookup is also simple. Let's say you have this configs params file:
+
+    configs/ec2/params/my-params/jenkins/large.txt
+
+You can just specific the param file with or without the `.txt` extension.
+
+    lono cfn deploy ec2 --template jenkins --param my-params/jenkins/large
+
+The config file will be found and used. Note, the **Direct Env Param** lookup takes higher precedence than the **Direct Simple Param** lookup.
+
+### Example 4: Conventional Param: All Different: blueprint, template, param
+
+Let's say you had a blueprint that defines a different template and uses a different param. For example, the template could be `jenkins` and params could be `large`.  The **Conventional Param** lookup can handle this.
 
     configs/ec2/params/development/jenkins/large.txt
 
@@ -27,9 +70,9 @@ In this case, blueprint, template, and param are all different.  So we require a
     lono cfn deploy ec2 --template jenkins --param large
     lono cfn deploy myserver --blueprint ec2 --template jenkins --param large
 
-### 2. Only template and param are the same
+### Example 5: Conventional Template: Only template and param are the same
 
-The 2nd form is when you have the same value for the template and param.  For example, the template and params could both be `jenkins`:
+Let's say you have the same value for the template and param.  For example, the template and params could both be `jenkins`. The **Conventional Template** lookup can handle this.
 
     configs/ec2/params/development/jenkins.txt
 
@@ -38,9 +81,9 @@ In this form the template and param file are the same so can slightly simplify t
     lono cfn deploy ec2 --template jenkins
     lono cfn deploy myserver --blueprint ec2 --template jenkins
 
-### 3. All the Same: blueprint, template, param
+### Example 6. Conventional Env: All the Same: blueprint, template, param
 
-Let's say the blueprint, template, and param have the same value of `ec2`. This allows you to use the 3rd form.
+Let's say the blueprint, template, and param have the same value of `ec2`. This allows you to use the **Conventional Env** form.
 
     configs/ec2/params/development.txt
 
