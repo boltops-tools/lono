@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [5.3.0]
+- #8 param preview feature. 3rd type of preview.
+- #9 ssm helper support in configs
+- Simplify param lookup with direct lookup logic.
+- Allow params files to have different extensions. Both.txt and .sh work are auto-inferred conventionally.
+- Allow condition and depends_on to be a properties level and auto-moved to the attributes level.
+
 ## [5.2.8]
 - add mfa support for normal IAM user
 
