@@ -26,18 +26,24 @@ class Lono::Param
     #   configs/BLUEPRINT/params/development.txt
     #
     def lookup_param_file(root: Lono.root, env: Lono.env)
+      direct_env_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}.txt" # direct lookup is simple
+      direct_simple_form = "#{root}/configs/#{@blueprint}/params/#{@param}.txt" # direct lookup is simple
       long_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@template}/#{@param}.txt"
       medium_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}.txt"
       short_form = "#{root}/configs/#{@blueprint}/params/#{env}.txt"
 
       if ENV['LONO_PARAM_DEBUG']
         puts "Lono.blueprint_root #{Lono.blueprint_root}"
+        puts "direct_env_form #{direct_env_form}"
+        puts "direct_simple_form #{direct_simple_form}"
         puts "long_form #{long_form}"
         puts "medium_form #{medium_form}"
         puts "short_form #{short_form}"
       end
 
-      return long_form if File.exist?(long_form) # always consider this first because its so explicit
+      return direct_env_form if File.exist?(direct_env_form) # always consider this first its simple and direct but is scope to env so it's more specific
+      return direct_simple_form if File.exist?(direct_simple_form) # always consider this first its simple and direct but is scope to env so it's more specific
+      return long_form if File.exist?(long_form) # consider this first because its more explicit
 
       # All 3 are the same
       # Also, blueprint and template the same and explicitly specified param
