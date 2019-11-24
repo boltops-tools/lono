@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [5.3.1]
+- #10 fixes for param diff preview: Ignore noecho parameters
+
 ## [5.3.0]
 - #8 param preview feature. 3rd type of preview.
 - #9 ssm helper support in configs
