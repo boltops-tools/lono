@@ -110,6 +110,8 @@ class Lono::S3
   private
 
     def empty_bucket!
+      return unless bucket_name # in case of lono stack ROLLBACK_COMPLETE from failed bucket creation
+
       resp = s3.list_objects(bucket: bucket_name)
       if resp.contents.size > 0
         # IE: objects = [{key: "objectkey1"}, {key: "objectkey2"}]
@@ -150,6 +152,10 @@ class Lono::S3
           Bucket:
             Type: AWS::S3::Bucket
             Properties:
+              BucketEncryption:
+                 ServerSideEncryptionConfiguration:
+                 - ServerSideEncryptionByDefault:
+                    SSEAlgorithm: AES256
               Tags:
                 - Key: Name
                   Value: lono
