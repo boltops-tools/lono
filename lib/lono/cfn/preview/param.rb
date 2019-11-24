@@ -15,28 +15,38 @@ module Lono::Cfn::Preview
         return
       end
 
-      params = generate_all
-      write_to_tmp(new_path, params)
       write_to_tmp(existing_path, existing_parameters)
+      write_to_tmp(new_path, new_parameters)
 
       show_diff(existing_path, new_path)
     end
 
+    def new_parameters
+      params = generate_all
+      params.reject { |p| ignore_parameters.include?(p[:parameter_key]) }
+    end
+
     def existing_parameters
+      existing = stack_parameters
+      existing = existing.reject { |p| ignore_parameters.include?(p.parameter_key) }
+      convert_to_cfn_format(existing)
+    end
+
+    def ignore_parameters
+      # Remove optional parameters if they match already. Produces better diff.
+      optional = optional_parameters.map { |logical_id, attributes| logical_id }
+      noecho = stack_parameters.select { |p| p.parameter_value == '****' }
+      noecho = noecho.map { |p| p.parameter_key }
+      optional + noecho
+    end
+    memoize :ignore_parameters
+
+    def stack_parameters
       resp = cfn.describe_stacks(stack_name: @stack_name)
       stack = resp.stacks.first
-      parameters = stack.parameters
-
-      # Remove optional parameters if they match already. Produces better diff.
-      optional = optional_parameters.map do |logical_id, attributes|
-        {
-          "ParameterKey" => logical_id,
-          "ParameterValue" => attributes["Default"],
-        }
-      end
-      converted = convert_to_cfn_format(parameters)
-      converted - optional
+      stack.parameters
     end
+    memoize :stack_parameters
 
   private
     def output_template
