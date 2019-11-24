@@ -8,7 +8,8 @@ class Lono::Template::Dsl::Builder
     end
 
     def camelize(attributes)
-      CfnCamelizer.transform(attributes)
+      # CfnCamelizer.transform(attributes)
+      attributes.deep_transform_keys! { |k| k.to_s }
     end
   end
 end

@@ -52,7 +52,8 @@ class Lono::Template::Dsl
     end
 
     def camelize(data)
-      CfnCamelizer.transform(data)
+      # CfnCamelizer.transform(data)
+      data.deep_transform_keys! { |k| k.to_s }
     end
 
     # Not using Lono::Template::Context because that works differently.
