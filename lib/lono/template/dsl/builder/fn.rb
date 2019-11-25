@@ -81,7 +81,8 @@ class Lono::Template::Dsl::Builder
                 item
               end
       list.map!(&:camelize) unless options[:autoformat] == false
-      { "Fn::GetAtt" => list }
+      args = [list[0], list[1..-1].join('.')]
+      { "Fn::GetAtt" => args }
     end
 
     def join(delimiter, *list)
