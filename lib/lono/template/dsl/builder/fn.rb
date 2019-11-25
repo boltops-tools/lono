@@ -80,7 +80,8 @@ class Lono::Template::Dsl::Builder
               else
                 item
               end
-      list.map!(&:camelize) unless options[:autoformat] == false
+      # list.map!(&:camelize) unless options[:autoformat] == false # TODO: maybe add as an option.
+      # feel this may be to destructive since am going with auto_camelize false for resources now.
       args = [list[0], list[1..-1].join('.')]
       { "Fn::GetAtt" => args }
     end

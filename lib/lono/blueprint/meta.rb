@@ -21,9 +21,14 @@ class Lono::Blueprint
       end
     end
 
-    def auto_camelize?
-      data['auto_camelize'].nil? || # for backward compatibility
-      data['auto_camelize']
+    def auto_camelize?(target_section)
+      auto_camelize = data['auto_camelize']
+      # nil? for backward compatibility
+      return true if auto_camelize.nil? || auto_camelize == true
+
+      if auto_camelize.is_a?(Array)
+        auto_camelize.include?(target_section)
+      end
     end
   end
 end

@@ -5,7 +5,7 @@
 class Lono::Template::Dsl::Builder
   class Condition < Base
     def template
-      standarize(@definition)
+      camelize(standarize(@definition))
     end
 
     # There are only 2 forms for condition: long and medium

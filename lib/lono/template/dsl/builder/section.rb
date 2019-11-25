@@ -6,7 +6,7 @@ class Lono::Template::Dsl::Builder
   class Section < Base
     def template
       hash, _ = @definition
-      hash
+      camelize(hash)
     end
   end
 end

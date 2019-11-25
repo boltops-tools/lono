@@ -5,7 +5,7 @@
 class Lono::Template::Dsl::Builder
   class Mapping < Base
     def template
-      standarize(@definition)
+      camelize(standarize(@definition))
     end
 
     # Type is the only required property: https://amzn.to/2x8W5aD

@@ -5,7 +5,7 @@
 class Lono::Template::Dsl::Builder
   class Parameter < Base
     def template
-      add_required(standarize(@definition))
+      camelize(add_required(standarize(@definition)))
     end
 
     # Type is the only required property: https://amzn.to/2x8W5aD

@@ -27,12 +27,12 @@ class Lono::Template::Dsl
     def template
       load_context
       evaluate_template_path(@path) # modifies @cfn
-      camelize(@cfn)
+      @cfn
     end
     memoize :template
 
     def build_template
-      @results = YAML.dump(camelize(@cfn))
+      @results = YAML.dump(@cfn)
     end
 
     def write_output
@@ -48,15 +48,6 @@ class Lono::Template::Dsl
       unless @options[:quiet]
         pretty_path = path.sub("#{Lono.root}/",'')
         puts "  #{pretty_path}"
-      end
-    end
-
-    def camelize(data)
-      blueprint_meta = Lono::Blueprint::Meta.new(@blueprint)
-      if blueprint_meta.auto_camelize?
-        CfnCamelizer.transform(data)
-      else
-        Lono::Stringer.transform(data)
       end
     end
 
