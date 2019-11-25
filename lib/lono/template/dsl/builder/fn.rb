@@ -21,13 +21,18 @@ class Lono::Template::Dsl::Builder
       # so they can also be called via fn::if
       and: :array,
       equals: :array,
-      if: :array, # special case, if is a Ruby keyword , we'll use fn_if instead
+      if: :array, # special case, if is a Ruby keyword
       not: :array,
       or: :array,
       ref: :simple,
     }
     # These are also Ruby keywords
     # keywords: and if not or
+
+    def self.define_methods(name, &block)
+      define_method(name, &block)
+      define_method("#{name}!", &block)
+    end
 
     # Note, for if function, do not flatten the args. Its arguments can be Arrays.  Example:
     #
@@ -42,12 +47,12 @@ class Lono::Template::Dsl::Builder
     #           Ref: ExistingSecurityGroup
     FUNCTIONS.each do |name, type|
       if type == :simple
-        define_method(name) do |arg|
+        define_methods(name) do |arg|
           id = fn_id(name)
           { id => arg }
         end
       else # array
-        define_method(name) do |*args|
+        define_methods(name) do |*args|
           id = fn_id(name)
           # Note, do not flatten args for if statement as it can have Array as arguments.
           args = args.flatten unless name == :if
