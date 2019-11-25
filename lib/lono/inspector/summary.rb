@@ -17,8 +17,8 @@ module Lono::Inspector
       if parameters.empty?
         puts "There are no parameters in this template."
       else
-        print_parameters("Required Parameters", required_parameters)
-        print_parameters("Optional Parameters", optional_parameters)
+        print_parameters("Required Parameters (#{required_parameters.size})", required_parameters)
+        print_parameters("Optional Parameters (#{optional_parameters.size})", optional_parameters)
       end
     end
 
