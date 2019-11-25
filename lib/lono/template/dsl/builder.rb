@@ -53,7 +53,7 @@ class Lono::Template::Dsl
 
     def camelize(data)
       blueprint_meta = Lono::Blueprint::Meta.new(@blueprint)
-      if blueprint_meta.auto_camelize
+      if blueprint_meta.auto_camelize?
         CfnCamelizer.transform(data)
       else
         Lono::Stringer.transform(data)
