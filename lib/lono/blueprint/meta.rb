@@ -21,7 +21,7 @@ class Lono::Blueprint
       end
     end
 
-    def auto_camelize
+    def auto_camelize?
       data['auto_camelize'].nil? || # for backward compatibility
       data['auto_camelize']
     end
