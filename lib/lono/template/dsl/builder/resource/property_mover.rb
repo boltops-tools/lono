@@ -7,7 +7,11 @@ class Lono::Template::Dsl::Builder::Resource
 
     def move!
       %w[depends_on condition].each do |attribute_name|
+        # Account for camelize, underscore, String, and Symbol
         move(attribute_name.to_sym)
+        move(attribute_name.camelize.to_sym)
+        move(attribute_name)
+        move(attribute_name.camelize)
       end
     end
 

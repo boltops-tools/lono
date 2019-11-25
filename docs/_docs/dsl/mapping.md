@@ -42,7 +42,7 @@ Mappings:
       Ami: ami-0d7805fed18723d71
 ```
 
-Note, the second level keys in the mapping structure do not automatically get camelized because they contain dashes.  Lono uses transform the keys of the Hash structure according so some [Camelize Conventions]({% link _docs/conventions/camelize.md %}).
+Note, the second level keys in the mapping structure do not automatically get camelized because they contain dashes.  Lono uses transform the keys of the Hash structure according so some [Camelize Conventions]({% link _docs/conventions/camelizer.md %}).
 
 {% include back_to/dsl.md %}
 
