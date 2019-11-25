@@ -5,7 +5,7 @@
 class Lono::Template::Dsl::Builder
   class Output < Base
     def template
-      camelize(standarize(@definition))
+      standarize(@definition)
     end
 
     # Value is the only required property: https://amzn.to/2xbhmk3

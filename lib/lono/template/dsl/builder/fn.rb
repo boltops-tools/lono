@@ -44,7 +44,6 @@ class Lono::Template::Dsl::Builder
       if type == :simple
         define_method(name) do |arg|
           id = fn_id(name)
-          arg = arg.is_a?(Symbol) ? CfnCamelizer.camelize(arg) : arg
           { id => arg }
         end
       else # array
@@ -52,21 +51,18 @@ class Lono::Template::Dsl::Builder
           id = fn_id(name)
           # Note, do not flatten args for if statement as it can have Array as arguments.
           args = args.flatten unless name == :if
-          args = args.map do |arg|
-            arg.is_a?(Symbol) ? CfnCamelizer.camelize(arg) : arg
-          end
           { id => args }
         end
       end
     end
 
     def fn_id(name)
-      "Fn::#{CfnCamelizer.camelize(name)}"
+      "Fn::#{name.to_s.camelize}"
     end
 
     # special cases
     def ref(name)
-      name = CfnCamelizer.camelize(name)
+      name = name.to_s.camelize
       { "Ref" => name }
     end
 

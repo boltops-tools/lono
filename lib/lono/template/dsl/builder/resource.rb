@@ -5,7 +5,7 @@
 class Lono::Template::Dsl::Builder
   class Resource < Base
     def template
-      camelize(standarize(@definition))
+      standarize(@definition)
     end
 
     # Type is the only required property: https://amzn.to/2x8W5aD

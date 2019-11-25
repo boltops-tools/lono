@@ -15,7 +15,6 @@ class Lono::Template::Dsl::Builder
 
     def transform(*definition)
       definition = definition.flatten
-      definition.map! { |x| CfnCamelizer.camelize(x) }
       @cfn["Transform"] = definition.size == 1 ? definition.first : definition
     end
 

@@ -8,7 +8,7 @@ class Lono::Template::Dsl::Builder
         k = k.to_s
         k = case casing
         when :camelize
-          CfnCamelizer.camelize(k)
+          k.camelize
         when :underscore
           k.underscore
         when :dasherize
