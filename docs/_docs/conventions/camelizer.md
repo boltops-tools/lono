@@ -22,6 +22,7 @@ There are other benefits to disabling auto-camelization:
 * There's no difference from the documentation.
 * There's less mental-overhead. No need to guess and convert back and forth.
 * It is easier to search code. IE: You don't have to worry about searching for both underscore and CamelCase words.
+* Ruby syntax highlighting makes properties stand out and makes it easier to spot them in code.
 
 Even though it is less Ruby-ish, it has resulted in more overall productivity.
 

@@ -16,6 +16,7 @@ class Lono::Seed
     include Lono::Blueprint::Root
     include Lono::AwsServices
     include Lono::Conventions
+    include ServiceRole
 
     # What's needed for a Thor::Group or "Sequence"
     # Gives us Thor::Actions commands like create_file

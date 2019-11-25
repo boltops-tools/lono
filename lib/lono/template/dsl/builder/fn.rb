@@ -29,6 +29,7 @@ class Lono::Template::Dsl::Builder
     # These are also Ruby keywords
     # keywords: and if not or
 
+    # Defines both normal method and bang method. Example: if and if!
     def self.define_methods(name, &block)
       define_method(name, &block)
       define_method("#{name}!", &block)
