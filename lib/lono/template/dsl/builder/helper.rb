@@ -17,13 +17,13 @@ class Lono::Template::Dsl::Builder
           k
         end
 
-        {key: k, value: v}
+        {Key: k, Value: v}
       end
     end
 
     def dimensions(hash, casing: :camelize)
       tags(hash, casing: casing).map { |h|
-        h[:name] = h.delete(:key)
+        h[:Name] = h.delete(:Key) || h.delete(:key)
         h
       }
     end
