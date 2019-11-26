@@ -34,9 +34,10 @@ module Lono::Cfn::Preview
       subtract(params, noecho_params)
     end
 
+    # Remove items with the same key. The value can be different. This removes the noecho params.
     def subtract(h1,h2)
       hash = h1.reject do |k,v|
-        h2[k] == v
+        h2.keys.include?(k)
       end
       Hash[hash.sort_by {|k,v| k}]
     end
