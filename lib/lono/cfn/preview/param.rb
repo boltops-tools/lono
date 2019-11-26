@@ -9,6 +9,7 @@ module Lono::Cfn::Preview
     def run
       return unless stack_exists?(@stack_name)
 
+      generated_params # eager call generated_params so its output is above Parameter Diff Preview
       puts "Parameter Diff Preview:".color(:green)
       if @options[:noop]
         puts "NOOP CloudFormation parameters preview for #{@stack_name} update"
