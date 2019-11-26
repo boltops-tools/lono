@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [5.3.3]
+- #12 fix param preview
+
 ## [5.3.2]
 - #11 enable sse-s3 encryption for lono managed s3 bucket
 
