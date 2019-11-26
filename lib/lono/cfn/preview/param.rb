@@ -15,31 +15,49 @@ module Lono::Cfn::Preview
         return
       end
 
-      write_to_tmp(existing_path, existing_parameters)
-      write_to_tmp(new_path, new_parameters)
+      write_to_tmp(existing_path, existing_params)
+      write_to_tmp(new_path, new_params)
 
       show_diff(existing_path, new_path)
     end
 
-    def new_parameters
-      params = generate_all
-      params.reject { |p| ignore_parameters.include?(p[:parameter_key]) }
-    end
-
-    def existing_parameters
+    def existing_params
       existing = stack_parameters
-      existing = existing.reject { |p| ignore_parameters.include?(p.parameter_key) }
-      convert_to_cfn_format(existing)
+      params = normalize(existing)
+      subtract(params, noecho_params)
+    end
+    memoize :existing_params
+
+    def new_params
+      params = optional_params.merge(generated_params)
+      subtract(params, noecho_params)
     end
 
-    def ignore_parameters
-      # Remove optional parameters if they match already. Produces better diff.
-      optional = optional_parameters.map { |logical_id, attributes| logical_id }
-      noecho = stack_parameters.select { |p| p.parameter_value == '****' }
-      noecho = noecho.map { |p| p.parameter_key }
-      optional + noecho
+    def subtract(h1,h2)
+      hash = h1.reject do |k,v|
+        h2[k] == v
+      end
+      Hash[hash.sort_by {|k,v| k}]
     end
-    memoize :ignore_parameters
+
+    def generated_params
+      params = generate_all
+      normalize(params)
+    end
+    memoize :generated_params
+
+    def optional_params
+      # normalizing to simple Hash
+      optional_parameters.inject({}) do |result,(k,v)|
+        result.merge(k => v["Default"].to_s)
+      end
+    end
+
+    def noecho_params
+      noecho = stack_parameters.select { |p| p.parameter_value == '****' }
+      normalize(noecho)
+    end
+    memoize :noecho_params
 
     def stack_parameters
       resp = cfn.describe_stacks(stack_name: @stack_name)
@@ -54,18 +72,25 @@ module Lono::Cfn::Preview
     end
     memoize :output_template
 
-    def write_to_tmp(path, list)
-      converted = convert_to_cfn_format(list)
-      text = JSON.pretty_generate(converted)
+    def write_to_tmp(path, hash)
+      text = JSON.pretty_generate(hash)
       FileUtils.mkdir_p(File.dirname(path))
       IO.write(path, text)
     end
 
-    def convert_to_cfn_format(list)
+
+    # Returns simple Hash. Example:
+    #
+    #     {"foo"=>"1", "bar"=>"2"},
+    #
+    def normalize(list)
       camelized = list.map(&:to_h).map do |h|
         h.transform_keys {|k| k.to_s.camelize}
       end
-      camelized.sort_by { |h| h["ParameterKey"] }
+      camelized.sort_by! { |h| h["ParameterKey"] }
+      camelized.inject({}) do |result,h|
+        result.merge(h["ParameterKey"] => h["ParameterValue"])
+      end
     end
 
     def existing_path
