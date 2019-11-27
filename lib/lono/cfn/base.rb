@@ -46,7 +46,7 @@ class Lono::Cfn
           retry
         else
           puts "Exited"
-          exit
+          exit 1
         end
       rescue Aws::CloudFormation::Errors::ValidationError => e
         if e.message.include?("No updates") # No updates are to be performed.
@@ -109,7 +109,7 @@ class Lono::Cfn
       puts "This stack will create IAM resources.  Please approve to run the command again with #{capabilities} capabilities."
       puts "  #{command_with_iam(capabilities)}"
 
-      puts "Please confirm (y/n)"
+      puts "Please confirm (y/N)"
       $stdin.gets
     end
 
