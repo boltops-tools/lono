@@ -20,11 +20,11 @@ module Lono
     end
 
     def required_parameters
-      parameters.reject { |logical_id, p| p["Default"].nil? }
+      parameters.select { |logical_id, p| p["Default"].nil? }
     end
 
     def optional_parameters
-      parameters.select { |logical_id, p| !p["Default"].nil? }
+      parameters.reject { |logical_id, p| p["Default"].nil? }
     end
 
     def parameters
