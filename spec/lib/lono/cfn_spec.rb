@@ -16,7 +16,7 @@ describe Lono::Cfn do
 
     it "delete stack" do
       out = execute("#{@env} exe/lono cfn delete example #{@args}")
-      expect(out).to include("Delete")
+      expect(out).to include("Delet")
     end
 
     it "preview stack" do

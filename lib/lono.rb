@@ -14,7 +14,7 @@ require 'cfn_camelizer'
 gem_root = File.dirname(__dir__)
 $:.unshift("#{gem_root}/lib")
 $:.unshift("#{gem_root}/vendor/cfn-status/lib")
-require "cfn/status"
+require "cfn_status"
 
 require "lono/autoloader"
 Lono::Autoloader.setup
