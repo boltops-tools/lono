@@ -38,16 +38,8 @@ class Lono::Cfn
       begin
         save_stack(params) # defined in the sub class
       rescue Aws::CloudFormation::Errors::InsufficientCapabilitiesException => e
-        capabilities = e.message.match(/\[(.*)\]/)[1]
-        confirm = prompt_for_iam(capabilities)
-        if confirm =~ /^y/
-          @options.merge!(capabilities: [capabilities])
-          puts "Re-running: #{command_with_iam(capabilities).color(:green)}"
-          retry
-        else
-          puts "Exited"
-          exit 1
-        end
+        yes = rerun_with_iam?(e)
+        retry if yes
       rescue Aws::CloudFormation::Errors::ValidationError => e
         if e.message.include?("No updates") # No updates are to be performed.
           puts "WARN: #{e.message}".color(:yellow)
@@ -103,6 +95,19 @@ class Lono::Cfn
 
     def status
       @status ||= Status.new(@stack_name)
+    end
+
+    def rerun_with_iam?(e)
+      capabilities = e.message.match(/\[(.*)\]/)[1]
+      confirm = prompt_for_iam(capabilities)
+      if confirm =~ /^y/
+        @options.merge!(capabilities: [capabilities])
+        puts "Re-running: #{command_with_iam(capabilities).color(:green)}"
+        true
+      else
+        puts "Exited"
+        exit 1
+      end
     end
 
     def prompt_for_iam(capabilities)

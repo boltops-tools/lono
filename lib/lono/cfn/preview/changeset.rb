@@ -30,13 +30,17 @@ module Lono::Cfn::Preview
         change_set_name: change_set_name,
         stack_name: @stack_name,
         parameters: params,
-        capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"],
       }
       params[:tags] = tags unless tags.empty?
       set_template_body!(params)
       show_parameters(params, "cfn.create_change_set")
       begin
+        # Tricky for preview need to set capabilities so that it gets updated. For Base#run save_stack within the begin block already.
+        params[:capabilities] = capabilities # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
         cfn.create_change_set(params)
+      rescue Aws::CloudFormation::Errors::InsufficientCapabilitiesException => e
+        yes = rerun_with_iam?(e)
+        retry if yes
       rescue Aws::CloudFormation::Errors::ValidationError => e
         handle_error(e)
       end
