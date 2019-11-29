@@ -1,3 +1,3 @@
 module Lono
-  VERSION = "5.3.4"
+  VERSION = "5.4.0.beta"
 end
