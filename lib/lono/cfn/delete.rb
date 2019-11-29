@@ -20,6 +20,7 @@ class Lono::Cfn
           puts message
         else
           puts "#{@stack_name.inspect} stack does not exist".color(:red)
+          return
         end
       end
 
