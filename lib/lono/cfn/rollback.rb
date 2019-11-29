@@ -19,7 +19,7 @@ class Lono::Cfn
     end
 
     def status
-      Cfn::Status.new(@stack_name)
+      Lono::Cfn::Status.new(@stack_name)
     end
     memoize :status
   end
