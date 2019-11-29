@@ -98,6 +98,8 @@ class Lono::Cfn
     end
 
     def rerun_with_iam?(e)
+      # e.message is "Requires capabilities : [CAPABILITY_IAM]"
+      # grab CAPABILITY_IAM with regexp
       capabilities = e.message.match(/\[(.*)\]/)[1]
       confirm = prompt_for_iam(capabilities)
       if confirm =~ /^y/

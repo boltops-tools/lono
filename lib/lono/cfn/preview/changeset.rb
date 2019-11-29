@@ -39,6 +39,15 @@ module Lono::Cfn::Preview
         params[:capabilities] = capabilities # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
         cfn.create_change_set(params)
       rescue Aws::CloudFormation::Errors::InsufficientCapabilitiesException => e
+        # If coming from cfn_preview_command automatically add iam capabilities
+        cfn_preview_command = ARGV.join(" ").include?("cfn preview")
+        if cfn_preview_command
+          # e.message is "Requires capabilities : [CAPABILITY_IAM]"
+          # grab CAPABILITY_IAM with regexp
+          capabilities = e.message.match(/\[(.*)\]/)[1]
+          @options.merge!(capabilities: [capabilities])
+          retry
+        end
         yes = rerun_with_iam?(e)
         retry if yes
       rescue Aws::CloudFormation::Errors::ValidationError => e
