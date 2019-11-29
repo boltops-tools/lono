@@ -25,7 +25,8 @@ module Lono::Inspector
     def print_parameters(label, parameters)
       puts "#{label}:"
       if parameters.empty?
-        puts "  There are no #{label.downcase} parameters"
+        text = label.downcase.include?("required") ? "required" : "optional"
+        puts "  There are no #{text} parameters."
       else
         parameters.each do |logical_id, p|
           output = "  #{logical_id} (#{p["Type"]})"
