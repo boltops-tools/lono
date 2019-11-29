@@ -4,7 +4,7 @@ class Lono::Template::Dsl
     include Lono::Template::Context::Loader
 
     include Fn
-    include Helper # built-in helpers
+    include Helpers # built-in helpers
     include Lono::Template::Evaluate
     include Syntax
     extend Memoist

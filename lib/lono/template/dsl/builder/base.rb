@@ -1,7 +1,7 @@
 class Lono::Template::Dsl::Builder
   class Base
     include Fn
-    include Helper
+    include Helpers
 
     def initialize(blueprint, *definition)
       @blueprint = blueprint

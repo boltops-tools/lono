@@ -1,7 +1,8 @@
 # Built-in helpers for the DSL form
 class Lono::Template::Dsl::Builder
-  module Helper
+  module Helpers
     extend Memoist
+    include ParamHelper
 
     def tags(hash, casing: :camelize)
       hash.map do |k,v|
