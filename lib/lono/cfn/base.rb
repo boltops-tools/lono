@@ -102,7 +102,7 @@ class Lono::Cfn
     end
 
     def status
-      @status ||= Cfn::Status.new(@stack_name)
+      @status ||= Status.new(@stack_name)
     end
 
     def prompt_for_iam(capabilities)
