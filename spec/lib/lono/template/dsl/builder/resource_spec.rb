@@ -1,5 +1,5 @@
 describe Lono::Template::Dsl::Builder::Resource do
-  let(:resource) { Lono::Template::Dsl::Builder::Resource.new(definition) }
+  let(:resource) { Lono::Template::Dsl::Builder::Resource.new("ec2", definition) }
 
   context "short form" do
     let(:definition) do
