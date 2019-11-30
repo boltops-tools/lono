@@ -53,13 +53,11 @@ Resources:
         SourceSecurityGroupOwnerId:
           Fn::GetAtt:
           - MyElb
-          - SourceSecurityGroup
-          - OwnerAlias
+          - SourceSecurityGroup.OwnerAlias
         SourceSecurityGroupName:
           Fn::GetAtt:
           - MyElb
-          - SourceSecurityGroup
-          - GroupName
+          - SourceSecurityGroup.GroupName
 ```
 
 {% include back_to/intrinsic_functions.md %}
