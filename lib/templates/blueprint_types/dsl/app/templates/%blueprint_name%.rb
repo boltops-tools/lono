@@ -25,7 +25,7 @@ mapping("AmiMap",
 
 resource("Instance", "AWS::EC2::Instance",
   InstanceType: ref("InstanceType"),
-  ImageId: find_in_map("AmiMap", ref("AWS::Region"), :ami),
+  ImageId: find_in_map("AmiMap", ref("AWS::Region"), "Ami"),
   SecurityGroupIds: [get_att("SecurityGroup.GroupId")],
   UserData: base64(user_data("bootstrap.sh"))
 )
