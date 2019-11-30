@@ -2,14 +2,28 @@ The `lono summary` command helps you quickly understand a CloudFormation templat
 
 ## Examples
 
-    $ lono summary ec2
-    => CloudFormation Template Summary:
-    Parameters:
-    Required:
-      KeyName (AWS::EC2::KeyPair::KeyName)
-    Optional:
-      InstanceType (String) Default: t2.micro
-      SSHLocation (String) Default: 0.0.0.0/0
+    $ bundle exec lono summary ec2
+    Generating CloudFormation templates for blueprint ec2:
+      output/ec2/templates/ec2-old.yml
+      output/ec2/templates/ec2-new.yml
+    => CloudFormation Template Summary for template ec2-new:
+    Required Parameters (0):
+      There are no required parameters.
+    Optional Parameters (3):
+      InstanceType (String) Default: t3.micro
+      Subnet (String) Default:
+      Vpc (String) Default:
+    Resources:
+      1 AWS::EC2::Instance
+      1 AWS::EC2::SecurityGroup
+      2 Total
+    => CloudFormation Template Summary for template ec2-old:
+    Required Parameters (0):
+      There are no required parameters.
+    Optional Parameters (3):
+      InstanceType (String) Default: t3.micro
+      Subnet (String) Default:
+      Vpc (String) Default:
     Resources:
       1 AWS::EC2::Instance
       1 AWS::EC2::SecurityGroup
