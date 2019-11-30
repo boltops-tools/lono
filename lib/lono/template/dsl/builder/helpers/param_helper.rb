@@ -7,15 +7,23 @@ module Lono::Template::Dsl::Builder::Helpers
     #    2. condition - used to make it optional
     #
     def conditional_parameter(name, options={})
-      if options.empty?
-        options = ""
-      else
-        defaults = { Default: "" }
-        options.reverse_merge!(defaults)
-      end
-
+      options = normalize_conditional_parameter_options(options)
       parameter(name, options)
       condition("Has#{name}", not!(equals(ref(name), "")))
+    end
+
+    # use long name to minimize method name collision
+    def normalize_conditional_parameter_options(options)
+      if options.is_a?(Hash)
+        options = if options.empty?
+          ""
+        else
+          defaults = { Default: "" }
+          options.reverse_merge(defaults)
+        end
+      end
+
+      options
     end
 
     def optional_ref(name)
