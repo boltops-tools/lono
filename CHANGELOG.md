@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [6.0.0]
+- #13 DSL improvements: auto camelize off by default
+- `auto_camelize: off` as new default for blueprints.
+- Old blueprints will continue to auto_camelize unless the `.meta/config.yml` is updated to `auto_camelize: off`
+- Upgrade vendor/cfn_status
+- Update docs to encourage CamelCase for attributes and properties
+- Add and encourage shorthand bang intrinsic methods: `if!`, `not!`, `and!`, `or!`
+- Fix iam permission error for `lono cfn preview` command
+- Update cli help
+- Improve `lono summary` output
+- Introduced experimental helpers: `conditional_parameter` and `optional_ref`. Note that their interfaces may change
+- Treat common attributes `DependsOn` and `Condition` at the property level specially and move them to the attribute level automatically. Allows for cleaner resource definitions.
+- update blueprint starter skeleton
+
 ## [5.3.4]
 - fix param preview for noecho values that are set
 
