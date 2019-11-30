@@ -65,9 +65,9 @@ The example turns on camelization for pretty much every [Lono DSL method]({% lin
 The auto-camelized Lono DSL code looks much more Ruby-ish:
 
 ```ruby
-parameter("InstanceType", Default: "t3.micro", Description: "InstanceType IE: t3.micro # more t3.small")
-resource("SecurityGroup", "AWS::EC2::SecurityGroup",
-  GroupDescription: "demo security group",
+parameter(:instance_type, default: "t3.micro", description: "InstanceType IE: t3.micro # more t3.small")
+resource(:security_group, "AWS::EC2::SecurityGroup",
+  group_description: "demo security group",
 )
 ```
 
@@ -86,9 +86,9 @@ Resources:
       GroupDescription: demo security group
 ```
 
-It may appear that this is simply better code. However, you'll eventually run into edge-case camelization bugs. Or you'll end up using a construct like `DependsOn` or `Condition` which requires converting back and forth between underscore and CamelCase.
+Be wary of the allure. Though it may look like better code. You'll eventually run into annoying edge-case, and the mental overhead is more than it seems. You'll end up having to convert back and forth between underscore and CamelCase form.
 
-Maybe when the auto-camelization elimates enough of edge-cases, then auto-camelization may be preferred again.  Until then auto-camelization is recommended to be disabled.
+Maybe one day, when the auto-camelization eliminates enough of edge-cases, then auto-camelization may be preferred again.  Until then auto-camelization is strongly recommended to be disabled.
 
 ## Overriding Special Cases
 
@@ -135,6 +135,6 @@ InstanceType:
 
 When the argument values are Strings, then they are left alone.
 
-Note: Method argument camelization may be removed in the future. This is because it makes it harder to search code if you have to search for both underscore and CamelCase formats.
+Note: Method argument camelization may be removed in the future.
 
 {% include prev_next.md %}

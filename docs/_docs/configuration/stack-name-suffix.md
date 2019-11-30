@@ -27,4 +27,6 @@ For non-random suffixes the a natural flow might be to use lono current so you d
 
 More info about lono current is available at the [Lono Current docs]({% link _docs/extras/lono-current.md %})
 
+NOTE: The suffix feature is deprecated and will be removed in future.
+
 {% include prev_next.md %}

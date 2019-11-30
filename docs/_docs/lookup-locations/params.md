@@ -10,7 +10,7 @@ Lono supports param files that look like env files as a simple way to define you
 You can define params files in different locations. Lono lookups up each of these locations until it finds a params file.
 
 {:.lookup-locations}
-1. configs/**blueprint**/params/development/**param**.txt - Direct Form
+1. configs/**blueprint**/straight/up/path/to/file/**param**.txt - Direct Form
 2. configs/**blueprint**/params/development/**param**.txt - Direct Env Param
 3. configs/**blueprint**/params/**param**.txt -  Direct Simple Param
 4. configs/**blueprint**/params/development/**template**/**param**.txt - Conventional Param
