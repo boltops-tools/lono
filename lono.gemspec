@@ -4,7 +4,7 @@ require_relative "lib/lono/version"
 Gem::Specification.new do |gem|
   gem.authors       = ["Tung Nguyen"]
   gem.email         = ["tongueroo@gmail.com"]
-  gem.summary       = "Powerful CloudFormation Framework"
+  gem.summary       = "The CloudFormation Framework"
   gem.homepage      = "https://lono.cloud"
 
   vendor_files       = Dir.glob("vendor/**/*")
