@@ -20,7 +20,7 @@ Steps 2-3 are automated with lono and performed together with:
 
 Here are some useful flags:
 
-    lono cfn deploy STACK_NAME --iam --sure
+    lono cfn deploy STACK_NAME --sure
 
 More info: [lono cfn deploy](http://lono.cloud/reference/lono-cfn-deploy/)
 

@@ -34,7 +34,7 @@ template "example-stack" do
   source "example"
   variables(
     app: "example-app",
-    instance_type: "m4.small",
+    InstanceType: "m4.small",
     elb: true,
   )
 end
@@ -81,7 +81,7 @@ template "example" do
   source "example"
   variables(
     app: "example-app",
-    instance_type: "m4.small",
+    InstanceType: "m4.small",
     elb: true,
   )
 end
@@ -93,7 +93,7 @@ Since the output and source name are both `example` you can remove the source li
 template "example" do
   variables(
     app: "example-app",
-    instance_type: "m4.small",
+    InstanceType: "m4.small",
     elb: true,
   )
 end

@@ -1,14 +1,15 @@
 # Built-in helpers for the DSL form
 class Lono::Template::Dsl::Builder
-  module Helper
+  module Helpers
     extend Memoist
+    include ParamHelper
 
     def tags(hash, casing: :camelize)
       hash.map do |k,v|
         k = k.to_s
         k = case casing
         when :camelize
-          CfnCamelizer.camelize(k)
+          k.camelize
         when :underscore
           k.underscore
         when :dasherize
@@ -17,13 +18,13 @@ class Lono::Template::Dsl::Builder
           k
         end
 
-        {key: k, value: v}
+        {Key: k, Value: v}
       end
     end
 
     def dimensions(hash, casing: :camelize)
       tags(hash, casing: casing).map { |h|
-        h[:name] = h.delete(:key)
+        h[:Name] = h.delete(:Key) || h.delete(:key)
         h
       }
     end

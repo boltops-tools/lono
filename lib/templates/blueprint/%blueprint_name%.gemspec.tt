@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Write a short summary because it's required."  # TODO: Change me
   spec.description   = "Write a longer description or delete this line."  # TODO: Change me
-  spec.homepage      = "https://github.com/user/repo"  # TODO: Change me
+  spec.homepage      = "https://github.com/USER/<%= blueprint_name %>"  # TODO: Change me
   spec.license       = "<%= ENV['LONO_LICENSE'] || 'MIT' %>"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

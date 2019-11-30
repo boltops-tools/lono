@@ -1,5 +1,5 @@
 describe Lono::Template::Dsl::Builder::Output do
-  let(:output) { Lono::Template::Dsl::Builder::Output.new(definition) }
+  let(:output) { Lono::Template::Dsl::Builder::Output.new("ec2", definition) }
 
   context "short form without 2nd argument" do
     let(:definition) do

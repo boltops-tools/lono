@@ -103,7 +103,7 @@ class Lono::S3
     end
 
     def status
-      ::Cfn::Status.new(STACK_NAME)
+      CfnStatus.new(STACK_NAME)
     end
     memoize :status
 

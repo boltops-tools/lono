@@ -46,14 +46,14 @@ blueprints/ec2/app/templates/ec2.rb:
 aws_template_format_version "2010-09-09"
 description "AWS CloudFormation Sample Template EC2InstanceWithSecurityGroupSample: Create an Amazon EC2 instance running the Amazon Linux AMI. The AMI is chosen based on the region in which the stack is run. This example creates an EC2 security group for the instance to give you SSH access. **WARNING** This template creates an Amazon EC2 instance. You will be billed for the AWS resources used if you create a stack from this template."
 parameter("KeyName",
-  description: "Name of an existing EC2 KeyPair to enable SSH access to the instance",
-  type: "AWS::EC2::KeyPair::KeyName",
-  constraint_description: "must be the name of an existing EC2 KeyPair."
+  Description: "Name of an existing EC2 KeyPair to enable SSH access to the instance",
+  Type: "AWS::EC2::KeyPair::KeyName",
+  ConstraintDescription: "must be the name of an existing EC2 KeyPair."
 )
 parameter("InstanceType",
-  description: "WebServer EC2 instance type",
-  default: "t2.small",
-  allowed_values: [
+  Description: "WebServer EC2 instance type",
+  Default: "t2.small",
+  AllowedValues: [
     "t1.micro",
     "t2.nano",
     "t2.micro",
@@ -70,32 +70,32 @@ mapping("AWSRegionArch2AMI",
   "cn-northwest-1": { HVM64: "ami-0f7937761741dc640", HVMG2: "NOT_SUPPORTED" }
 )
 resource("EC2Instance", "AWS::EC2::Instance",
-  instance_type: ref("InstanceType"),
-  security_groups: [
+  InstanceType: ref("InstanceType"),
+  SecurityGroups: [
     ref("InstanceSecurityGroup")
   ],
-  key_name: ref("KeyName"),
-  image_id: find_in_map("AWSRegionArch2AMI",ref("AWS::Region"),find_in_map("AWSInstanceType2Arch",ref("InstanceType"),"Arch"))
+  KeyName: ref("KeyName"),
+  ImageId: find_in_map("AWSRegionArch2AMI",ref("AWS::Region"),find_in_map("AWSInstanceType2Arch",ref("InstanceType"),"Arch"))
 )
 resource("InstanceSecurityGroup", "AWS::EC2::SecurityGroup",
-  group_description: "Enable SSH access via port 22",
-  security_group_ingress: [
+  GroupDescription: "Enable SSH access via port 22",
+  SecurityGroupIngress: [
     {
-      ip_protocol: "tcp",
-      from_port: "22",
-      to_port: "22",
-      cidr_ip: ref("SSHLocation")
+      IpProtocol: "tcp",
+      FromPort: "22",
+      ToPort: "22",
+      CidrIp: ref("SSHLocation")
     }
   ]
 )
 output("InstanceId",
-  description: "InstanceId of the newly created EC2 instance",
-  value: ref("EC2Instance")
+  Description: "InstanceId of the newly created EC2 instance",
+  Value: ref("EC2Instance")
 )
 # ...
 output("PublicIP",
-  description: "Public IP address of the newly created EC2 instance",
-  value: get_att("EC2Instance","PublicIp")
+  Description: "Public IP address of the newly created EC2 instance",
+  Value: get_att("EC2Instance","PublicIp")
 )
 ```
 

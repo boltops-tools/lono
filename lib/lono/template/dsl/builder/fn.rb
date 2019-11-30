@@ -21,13 +21,19 @@ class Lono::Template::Dsl::Builder
       # so they can also be called via fn::if
       and: :array,
       equals: :array,
-      if: :array, # special case, if is a Ruby keyword , we'll use fn_if instead
+      if: :array, # special case, if is a Ruby keyword
       not: :array,
       or: :array,
       ref: :simple,
     }
     # These are also Ruby keywords
     # keywords: and if not or
+
+    # Defines both normal method and bang method. Example: if and if!
+    def self.define_methods(name, &block)
+      define_method(name, &block)
+      define_method("#{name}!", &block)
+    end
 
     # Note, for if function, do not flatten the args. Its arguments can be Arrays.  Example:
     #
@@ -42,31 +48,27 @@ class Lono::Template::Dsl::Builder
     #           Ref: ExistingSecurityGroup
     FUNCTIONS.each do |name, type|
       if type == :simple
-        define_method(name) do |arg|
+        define_methods(name) do |arg|
           id = fn_id(name)
-          arg = arg.is_a?(Symbol) ? CfnCamelizer.camelize(arg) : arg
           { id => arg }
         end
       else # array
-        define_method(name) do |*args|
+        define_methods(name) do |*args|
           id = fn_id(name)
           # Note, do not flatten args for if statement as it can have Array as arguments.
           args = args.flatten unless name == :if
-          args = args.map do |arg|
-            arg.is_a?(Symbol) ? CfnCamelizer.camelize(arg) : arg
-          end
           { id => args }
         end
       end
     end
 
     def fn_id(name)
-      "Fn::#{CfnCamelizer.camelize(name)}"
+      "Fn::#{name.to_s.camelize}"
     end
 
     # special cases
     def ref(name)
-      name = CfnCamelizer.camelize(name)
+      name = name.to_s.camelize
       { "Ref" => name }
     end
 
@@ -84,8 +86,10 @@ class Lono::Template::Dsl::Builder
               else
                 item
               end
-      list.map!(&:camelize) unless options[:autoformat] == false
-      { "Fn::GetAtt" => list }
+      # list.map!(&:camelize) unless options[:autoformat] == false # TODO: maybe add as an option.
+      # feel this may be to destructive since am going with auto_camelize false for resources now.
+      args = [list[0], list[1..-1].join('.')]
+      { "Fn::GetAtt" => args }
     end
 
     def join(delimiter, *list)

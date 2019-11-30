@@ -4,13 +4,13 @@ categories: intrinsic-function
 nav_order: 38
 ---
 
-Lono supports [Condition Functions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-conditions.html).  Since most of these function names are Ruby keywords they must be called explictly with `fn::`.
+Lono supports [Condition Functions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-conditions.html).  Since most of these function names are Ruby keywords they must be called with a bang (!).
 
 * equals
-* fn::and
-* fn::if
-* fn::not
-* fn::or
+* and!
+* if!
+* not!
+* or!
 
 Examples follow:
 
@@ -32,11 +32,11 @@ Conditions:
     - prod
 ```
 
-## Example: fn::and
+## Example: and!
 
 ```ruby
 condition("MyAndCondition",
-  fn::and(equals("sg-mysggroup", ref("ASecurityGroup")), {condition: "SomeOtherCondition"})
+  and!(equals("sg-mysggroup", ref("ASecurityGroup")), {Condition: "SomeOtherCondition"})
 )
 ```
 
@@ -56,7 +56,7 @@ Conditions:
 
 ```ruby
 condition("SecurityGroups",
-  fn::if("CreateNewSecurityGroup", ref("NewSecurityGroup"), ref("ExistingSecurityGroup"))
+  if!("CreateNewSecurityGroup", ref("NewSecurityGroup"), ref("ExistingSecurityGroup"))
 )
 ```
 
@@ -75,7 +75,7 @@ Conditions:
 
 ```ruby
 condition("MyNotCondition",
-  fn::not(equals(ref("EnvironmentType"), "prod"))
+  not!(equals(ref("EnvironmentType"), "prod"))
 )
 ```
 
@@ -90,11 +90,11 @@ Conditions:
       - prod
 ```
 
-## Example: fn::or
+## Example: or!
 
 ```ruby
 condition("MyOrCondition",
-  fn::or(equals("sg-mysggroup", ref("ASecurityGroup")), {condition: "SomeOtherCondition"})
+  or!(equals("sg-mysggroup", ref("ASecurityGroup")), {Condition: "SomeOtherCondition"})
 )
 ```
 

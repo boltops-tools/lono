@@ -10,9 +10,9 @@ The `join` method is the CloudFormation [Fn::Join](https://docs.aws.amazon.com/A
 
 ```ruby
 resource("Instance", "AWS::EC2::Instance",
-  instance_type: ref("InstanceType"),
-  image_id: "ami-0de53d8956e8dcf80",
-  tags: tags(name: join("-", ref("Param1"), ref("Param2")))
+  InstanceType: ref("InstanceType"),
+  ImageId: "ami-0de53d8956e8dcf80",
+  Tags: tags(Name: join("-", ref("Param1"), ref("Param2")))
 )
 ```
 

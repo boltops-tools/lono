@@ -1,5 +1,5 @@
 class Lono::Cfn
-  class Status < ::Cfn::Status
+  class Status < CfnStatus
     include Util
 
     def initialize(stack_name, options={})

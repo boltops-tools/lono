@@ -17,15 +17,16 @@ module Lono::Inspector
       if parameters.empty?
         puts "There are no parameters in this template."
       else
-        print_parameters("Required Parameters", required_parameters)
-        print_parameters("Optional Parameters", optional_parameters)
+        print_parameters("Required Parameters (#{required_parameters.size})", required_parameters)
+        print_parameters("Optional Parameters (#{optional_parameters.size})", optional_parameters)
       end
     end
 
     def print_parameters(label, parameters)
       puts "#{label}:"
       if parameters.empty?
-        puts "  There are no #{label.downcase} parameters"
+        text = label.downcase.include?("required") ? "required" : "optional"
+        puts "  There are no #{text} parameters."
       else
         parameters.each do |logical_id, p|
           output = "  #{logical_id} (#{p["Type"]})"

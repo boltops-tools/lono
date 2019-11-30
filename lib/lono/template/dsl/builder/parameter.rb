@@ -19,7 +19,7 @@ class Lono::Template::Dsl::Builder
       elsif (definition.size == 2 && valid_value?(second)) || # short form
             definition.size == 1
         logical_id = first
-        properties = valid_value?(second) ? { default: second } : {}
+        properties = valid_value?(second) ? { Default: second } : {}
         { logical_id => properties }
       else # I dont know what form
         raise "Invalid form provided. definition #{definition.inspect}"
@@ -28,7 +28,7 @@ class Lono::Template::Dsl::Builder
 
     def add_required(attributes)
       properties = attributes.values.first
-      properties[:type] ||= 'String'
+      properties["Type"] ||= 'String'
       attributes
     end
 

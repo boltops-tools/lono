@@ -39,7 +39,27 @@ Also, different `LONO_ENV` will generate corresponding configs. For example, `LO
 
 ## Authoring
 
-If you are authoring your own `seed/configs.rb`, the general structure looks like this:
+### Params
+
+As mentioned, the parameter starter values are inferred from the template definition itself.  Not only is the parameter list derived from the template, example values are also parsed from the Description attribute.  Anything after the `IE:` or `Example:` text will be used as the starter parameter value.  Here's an example:
+
+```ruby
+parameter("Subnets", Description: "Subnets in the VPC. Example: subnet-111, subnet-222 # at least 2 subnets required")
+```
+
+The [lono seed](https://lono.cloud/reference/lono-seed/) command will generate this:
+
+```
+Subnets=subnet-111, subnet-222 # at least 2 subnets required
+```
+
+The code self-documents the starter parameters!
+
+NOTE: Currently, parameter starter value inference is supported with the DSL form only.
+
+### Variables
+
+The variables starter file is generated based on the `seed/configs.rb` file in the blueprint. The general structure looks like this:
 
 ```ruby
 class Lono::Seed::Configs < Lono::Seed::Base

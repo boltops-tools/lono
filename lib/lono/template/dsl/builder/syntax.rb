@@ -15,44 +15,43 @@ class Lono::Template::Dsl::Builder
 
     def transform(*definition)
       definition = definition.flatten
-      definition.map! { |x| CfnCamelizer.camelize(x) }
       @cfn["Transform"] = definition.size == 1 ? definition.first : definition
     end
 
     def parameter(*definition)
       @cfn["Parameters"] ||= {}
-      param = Parameter.new(definition)
+      param = Parameter.new(@blueprint, definition)
       @cfn["Parameters"].merge!(param.template)
     end
 
     def mapping(*definition)
       @cfn["Mappings"] ||= {}
-      mapping = Mapping.new(definition)
+      mapping = Mapping.new(@blueprint, definition)
       @cfn["Mappings"].merge!(mapping.template)
     end
 
     def resource(*definition)
       @cfn["Resources"] ||= {}
-      resource = Resource.new(definition)
+      resource = Resource.new(@blueprint, definition)
       @cfn["Resources"].merge!(resource.template)
     end
 
     def condition(*definition)
       @cfn["Conditions"] ||= {}
-      condition = Condition.new(definition)
+      condition = Condition.new(@blueprint, definition)
       @cfn["Conditions"].merge!(condition.template)
     end
 
     def output(*definition)
       @cfn["Outputs"] ||= {}
-      output = Output.new(definition)
+      output = Output.new(@blueprint, definition)
       @cfn["Outputs"].merge!(output.template)
     end
 
     # Generic section method in case CloudFormation adds a new future section.
     # The generic section method adds a new top-level key
     def section(key, definition)
-      @cfn[key] = Section.new(definition).template
+      @cfn[key] = Section.new(@blueprint, definition).template
     end
   end
 end

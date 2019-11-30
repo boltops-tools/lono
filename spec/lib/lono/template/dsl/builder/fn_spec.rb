@@ -52,4 +52,26 @@ describe Lono::Template::Dsl::Builder::Fn do
       expect(out).to eq({"Ref" => "Name"})
     end
   end
+
+  context "bang methods allow shorter notation for ruby keyword methods" do
+    it "if!" do
+      out = context.if!("CreateNewSecurityGroup", context.ref("NewSecurityGroup"), context.ref("ExistingSecurityGroup"))
+      expect(out).to eq({"Fn::If"=>["CreateNewSecurityGroup", {"Ref"=>"NewSecurityGroup"}, {"Ref"=>"ExistingSecurityGroup"}]})
+    end
+
+    it "and!" do
+      out = context.and!(context.equals("sg-mysggroup", context.ref("ASecurityGroup")), {condition: "SomeOtherCondition"})
+      expect(out).to eq({"Fn::And"=>[{"Fn::Equals"=>["sg-mysggroup", {"Ref"=>"ASecurityGroup"}]}, {:condition=>"SomeOtherCondition"}]})
+    end
+
+    it "not!" do
+      out = context.not!(context.equals(context.ref("EnvironmentType"), "prod"))
+      expect(out).to eq({"Fn::Not"=>[{"Fn::Equals"=>[{"Ref"=>"EnvironmentType"}, "prod"]}]})
+    end
+
+    it "or!" do
+      out = context.or!(context.equals("sg-mysggroup", context.ref("ASecurityGroup")), {condition: "SomeOtherCondition"})
+      expect(out).to eq({"Fn::Or"=>[{"Fn::Equals"=>["sg-mysggroup", {"Ref"=>"ASecurityGroup"}]}, {:condition=>"SomeOtherCondition"}]})
+    end
+  end
 end

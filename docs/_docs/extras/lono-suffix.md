@@ -38,4 +38,6 @@ Random suffixes can help streamlined your development workflow.
 
 In this way, you can create multiple stacks continuously and random suffixes will be appended to the stack name. Then set the current stack name to the one are focused on updating and developing.
 
+NOTE: The suffix feature is deprecated and will be removed in future.
+
 {% include prev_next.md %}

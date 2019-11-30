@@ -9,7 +9,7 @@ class Lono::Cfn
     end
 
     def run
-      message = "Deleted #{@stack_name} stack."
+      message = "Deleting #{@stack_name} stack."
       if @options[:noop]
         puts "NOOP #{message}"
       else
@@ -20,6 +20,7 @@ class Lono::Cfn
           puts message
         else
           puts "#{@stack_name.inspect} stack does not exist".color(:red)
+          return
         end
       end
 

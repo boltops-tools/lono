@@ -1,5 +1,5 @@
 describe Lono::Template::Dsl::Builder::Mapping do
-  let(:mapping) { Lono::Template::Dsl::Builder::Mapping.new(definition) }
+  let(:mapping) { Lono::Template::Dsl::Builder::Mapping.new("ec2", definition) }
   context "medium form" do
     let(:definition) do
       [:ami_map, {
@@ -11,7 +11,7 @@ describe Lono::Template::Dsl::Builder::Mapping do
     it "produces template" do
       mapping.template
       result = mapping.template
-      # puts result
+      puts result
       expect(result).to eq(
         {"AmiMap"=>{"us-east-1"=>{"Ami"=>"ami-111"}, "us-east-2"=>{"Ami"=>"ami-222"}}}
       )

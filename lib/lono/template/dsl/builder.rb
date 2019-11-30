@@ -4,7 +4,7 @@ class Lono::Template::Dsl
     include Lono::Template::Context::Loader
 
     include Fn
-    include Helper # built-in helpers
+    include Helpers # built-in helpers
     include Lono::Template::Evaluate
     include Syntax
     extend Memoist
@@ -27,12 +27,12 @@ class Lono::Template::Dsl
     def template
       load_context
       evaluate_template_path(@path) # modifies @cfn
-      camelize(@cfn)
+      @cfn
     end
     memoize :template
 
     def build_template
-      @results = YAML.dump(camelize(@cfn))
+      @results = YAML.dump(@cfn)
     end
 
     def write_output
@@ -49,10 +49,6 @@ class Lono::Template::Dsl
         pretty_path = path.sub("#{Lono.root}/",'')
         puts "  #{pretty_path}"
       end
-    end
-
-    def camelize(data)
-      CfnCamelizer.transform(data)
     end
 
     # Not using Lono::Template::Context because that works differently.

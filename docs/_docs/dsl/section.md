@@ -12,10 +12,10 @@ The `section` method provides a general way to add a section to the CloudFormati
 ```ruby
 section("Resources",
   "SnsTopic" => {
-    type: "AWS::SNS::Topic",
-    properties: {
-      description: "my desc",
-      display_name: "my name",
+    Type: "AWS::SNS::Topic",
+    Properties: {
+      Description: "my desc",
+      DisplayName: "my name",
     }
   }
 )
