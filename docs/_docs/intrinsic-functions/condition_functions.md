@@ -52,7 +52,7 @@ Conditions:
     - Condition: SomeOtherCondition
 ```
 
-## Example: fn:if
+## Example: if!
 
 ```ruby
 condition("SecurityGroups",
@@ -71,7 +71,7 @@ Conditions:
     - Ref: ExistingSecurityGroup
 ```
 
-## Example: fn:not
+## Example: not!
 
 ```ruby
 condition("MyNotCondition",
