@@ -36,7 +36,7 @@ Conditions:
 
 ```ruby
 condition("MyAndCondition",
-  and!(equals("sg-mysggroup", ref("ASecurityGroup")), {condition: "SomeOtherCondition"})
+  and!(equals("sg-mysggroup", ref("ASecurityGroup")), {Condition: "SomeOtherCondition"})
 )
 ```
 
@@ -94,7 +94,7 @@ Conditions:
 
 ```ruby
 condition("MyOrCondition",
-  or!(equals("sg-mysggroup", ref("ASecurityGroup")), {condition: "SomeOtherCondition"})
+  or!(equals("sg-mysggroup", ref("ASecurityGroup")), {Condition: "SomeOtherCondition"})
 )
 ```
 

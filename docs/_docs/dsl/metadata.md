@@ -12,7 +12,7 @@ The `metadata` method maps to the CloudFormation Template Anatomy [Metadata](htt
 
 ```ruby
 metadata(
-  authors: { description: "Tung Nguyen (tongueroo@gmail.com)" },
+  authors: { Description: "Tung Nguyen (tongueroo@gmail.com)" },
   license: "MIT"
 )
 ```

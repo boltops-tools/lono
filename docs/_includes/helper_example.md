@@ -8,8 +8,8 @@ app/helpers/ec2_helper.rb:
 module Ec2Helper
   def ec2_instance(logical_id, props={})
     default = {
-      instance_type: "t3.micro",
-      image_id: ref("AmiId"),
+      InstanceType: "t3.micro",
+      ImageId: ref("AmiId"),
     }
     props.reverse_merge!(default)
 
@@ -28,10 +28,10 @@ app/templates/demo.rb:
 
 ```ruby
 ec2_instance("Instance",
-  security_group_ids: [get_att("SecurityGroup.GroupId")]
+  SecurityGroupIds: [get_att("SecurityGroup.GroupId")]
 )
 security_group("SecurityGroup",
-  group_description: "demo security group",
+  GroupDescription: "demo security group",
 )
 ```
 

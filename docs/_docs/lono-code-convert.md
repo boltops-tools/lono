@@ -53,15 +53,15 @@ The INFO messages are written to stderr and the Ruby code output is written to s
 
 ```ruby
 resource("Instance", "AWS::EC2::Instance",
-  instance_type: ref("InstanceType"),
-  image_id: find_in_map("AmiMap",ref("AWS::Region"),"Ami"),
-  security_group_ids: [
+  InstanceType: ref("InstanceType"),
+  ImageId: find_in_map("AmiMap",ref("AWS::Region"),"Ami"),
+  SecurityGroupIds: [
     get_att("SecurityGroup","GroupId")
   ],
-  user_data: base64("#!/bin/bash\necho \"hello world\"")
+  UserData: base64("#!/bin/bash\necho \"hello world\"")
 )
 resource("SecurityGroup", "AWS::EC2::SecurityGroup",
-  group_description: "demo security group"
+  GroupDescription: "demo security group"
 )
 ```
 

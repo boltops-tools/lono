@@ -10,14 +10,14 @@ The `import_value` method is the CloudFormation [Fn::ImportValue](https://docs.a
 
 ```ruby
 resource("Instance", "AWS::EC2::Instance",
-  instance_type: ref("InstanceType"),
-  image_id: "ami-0de53d8956e8dcf80",
-  network_interfaces: {
-    group_set: [import_value(sub("${NetworkStack}-SecurityGroupID"))],
-    associate_public_ip_address: "true",
-    device_index: "0",
-    delete_on_termination: "true",
-    subnet_id: import_value(sub("${NetworkStack}-SubnetID"))
+  InstanceType: ref("InstanceType"),
+  ImageId: "ami-0de53d8956e8dcf80",
+  NetworkInterfaces: {
+    GroupSet: [import_value(sub("${NetworkStack}-SecurityGroupID"))],
+    AssociatePublicIpAddress: "true",
+    DeviceIndex: "0",
+    DeleteOnTermination: "true",
+    SubnetId: import_value(sub("${NetworkStack}-SubnetID"))
   }
 )
 ```

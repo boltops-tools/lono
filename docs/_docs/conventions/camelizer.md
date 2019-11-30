@@ -65,9 +65,9 @@ The example turns on camelization for pretty much every [Lono DSL method]({% lin
 The auto-camelized Lono DSL code looks much more Ruby-ish:
 
 ```ruby
-parameter("InstanceType", default: "t3.micro", description: "InstanceType IE: t3.micro # more t3.small")
+parameter("InstanceType", Default: "t3.micro", Description: "InstanceType IE: t3.micro # more t3.small")
 resource("SecurityGroup", "AWS::EC2::SecurityGroup",
-  group_description: "demo security group",
+  GroupDescription: "demo security group",
 )
 ```
 
@@ -123,7 +123,7 @@ passthrough_parent_keys:
 Methods like [ref]({% link _docs/intrinsic-functions/ref.md %}) and [find_in_map]({% link _docs/intrinsic-functions/ref.md %}) will also camelize the arguments when they are symbols.  For example:
 
 ```ruby
-instance_type: ref(:instance_type)
+InstanceType: ref(:instance_type)
 ```
 
 Produces:

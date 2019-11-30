@@ -19,12 +19,12 @@ parameter("AmiId")            # no default, so this is a required parameter
 parameter("ImageId", "ami-123") # default is ami-123
 
 # medium form
-parameter("Company", default: "boltops", description: "instance type")
+parameter("Company", Default: "boltops", Description: "instance type")
 
 # long form
 parameter("InstanceType" => {
-  default: "t2.micro" ,
-  description: "instance type" ,
+  Default: "t2.micro" ,
+  Description: "instance type" ,
 })
 ```
 

@@ -19,12 +19,12 @@ output("Elb2") # same as output("Elb2", ref("Elb2"))
 output("SecurityGroup", get_att("SecurityGroup.GroupId"))
 
 # medium form
-output("StackName", value: ref("AWS::StackName"))
+output("StackName", Value: ref("AWS::StackName"))
 
 # long form
 output("VpcId" => {
-  description: "vpc id",
-  value: ref("VpcId"),
+  Description: "vpc id",
+  Value: ref("VpcId"),
 })
 ```
 
