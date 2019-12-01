@@ -108,27 +108,29 @@ Lono will use these files:
 ## Options
 
 ```
-[--blueprint=BLUEPRINT]            # override convention and specify the template file to use
-[--template=TEMPLATE]              # override convention and specify the template file to use
-[--param=PARAM]                    # override convention and specify the param file to use
-[--lono], [--no-lono]              # invoke lono to generate CloudFormation templates
-                                   # Default: true
-[--capabilities=one two three]     # iam capabilities. Ex: CAPABILITY_IAM, CAPABILITY_NAMED_IAM
-[--iam], [--no-iam]                # Shortcut for common IAM capabilities: CAPABILITY_IAM, CAPABILITY_NAMED_IAM
-[--rollback], [--no-rollback]      # rollback
-                                   # Default: true
-[--tags=key:value]                 # Tags for the stack. IE: name:api-web owner:bob
-[--suffix=SUFFIX]                  # Suffix for stack name.
-[--change-set], [--no-change-set]  # Uses generated change set to update the stack.  If false, will perform normal update-stack.
-                                   # Default: true
-[--diff], [--no-diff]              # Show diff of the source code template changes before continuing.
-                                   # Default: true
-[--preview], [--no-preview]        # Show preview of the stack changes before continuing.
-                                   # Default: true
-[--sure], [--no-sure]              # Skips are you sure prompt
-[--wait], [--no-wait]              # Wait for stack operation to complete.
-                                   # Default: true
-[--verbose], [--no-verbose]        
-[--noop], [--no-noop]              
+[--blueprint=BLUEPRINT]                          # override convention and specify the template file to use
+[--template=TEMPLATE]                            # override convention and specify the template file to use
+[--param=PARAM]                                  # override convention and specify the param file to use
+[--lono], [--no-lono]                            # invoke lono to generate CloudFormation templates
+                                                 # Default: true
+[--capabilities=one two three]                   # iam capabilities. Ex: CAPABILITY_IAM, CAPABILITY_NAMED_IAM
+[--iam], [--no-iam]                              # Shortcut for common IAM capabilities: CAPABILITY_IAM, CAPABILITY_NAMED_IAM
+[--rollback], [--no-rollback]                    # rollback
+                                                 # Default: true
+[--tags=key:value]                               # Tags for the stack. IE: name:api-web owner:bob
+[--suffix=SUFFIX]                                # Suffix for stack name.
+[--change-set], [--no-change-set]                # Uses generated change set to update the stack.  If false, will perform normal update-stack.
+                                                 # Default: true
+[--codediff-preview], [--no-codediff-preview]    # Show codediff changes preview.
+                                                 # Default: true
+[--changeset-preview], [--no-changeset-preview]  # Show ChangeSet changes preview.
+                                                 # Default: true
+[--param-preview], [--no-param-preview]          # Show parameter diff preview.
+                                                 # Default: true
+[--sure], [--no-sure]                            # Skips are you sure prompt
+[--wait], [--no-wait]                            # Wait for stack operation to complete.
+                                                 # Default: true
+[--verbose], [--no-verbose]                      
+[--noop], [--no-noop]                            
 ```
 

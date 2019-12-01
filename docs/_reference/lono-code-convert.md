@@ -25,36 +25,36 @@ Converts snippet of JSON or YAML CloudFormation templates to Ruby code.
 
     aws_template_format_version "2010-09-09"
     parameter("VpcId",
-      Type: "AWS::EC2::VPC::Id",
-      Description: "VpcId of your existing Virtual Private Cloud (VPC)",
-      ConstraintDescription: "must be the VPC Id of an existing Virtual Private Cloud."
+      type: "AWS::EC2::VPC::Id",
+      description: "VpcId of your existing Virtual Private Cloud (VPC)",
+      constraint_description: "must be the VPC Id of an existing Virtual Private Cloud."
     )
     ...
     ...
     ...
     resource("InstanceSecurityGroup", "AWS::EC2::SecurityGroup",
-      GroupDescription: "Enable SSH access and HTTP from the load balancer only",
-      SecurityGroupIngress: [
+      group_description: "Enable SSH access and HTTP from the load balancer only",
+      security_group_ingress: [
         {
-          IpProtocol: "tcp",
-          FromPort: "22",
-          ToPort: "22",
-          CidrIp: ref("SSHLocation")
+          ip_protocol: "tcp",
+          from_port: "22",
+          to_port: "22",
+          cidr_ip: ref("SSHLocation")
         },
         {
-          IpProtocol: "tcp",
-          FromPort: "80",
-          ToPort: "80",
-          SourceSecurityGroupId: select(0,get_att("ApplicationLoadBalancer.SecurityGroups"))
+          ip_protocol: "tcp",
+          from_port: "80",
+          to_port: "80",
+          source_security_group_id: select(0,get_att("ApplicationLoadBalancer","SecurityGroups"))
         }
       ],
-      VpcId: ref("VpcId")
+      vpc_id: ref("VpcId")
     )
     output("URL",
-      Description: "The URL of the website",
-      Value: join("",[
+      description: "The URL of the website",
+      value: join("",[
           "http://",
-          get_att("ApplicationLoadBalancer.DNSName")
+          get_att("ApplicationLoadBalancer","DNSName")
         ])
     )
 
