@@ -4,7 +4,8 @@ class Lono::Template
     extend Memoist
     include Lono::Template::Helper
     include Loader
-    include Helpers
+    include Helpers # ERB
+    include Dsl::Builder::Syntax # DSL
 
     def initialize(blueprint, options={})
       @blueprint, @options = blueprint, options
