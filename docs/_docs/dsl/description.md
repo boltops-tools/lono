@@ -3,7 +3,7 @@ title: Description
 category: dsl
 desc: The optional Description section enables you to include comments about your
   template. The Description must follow the AWSTemplateFormatVersion section.
-nav_order: 23
+nav_order: 27
 ---
 
 The `description` method maps to the CloudFormation Template Anatomy [Description](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-description-structure.html).

@@ -36,17 +36,17 @@
               {% endfor %}
             </ul>
         </li>
-        <li><a href="{% link _docs/dsl.md %}">DSL Docs</a>
+        <li><a href="{% link _docs/dsl/components.md %}">DSL Components</a>
             <ul>
-              {% assign docs = site.docs | where: "categories","dsl" %}
+              {% assign docs = site.docs | where: "categories","dsl-components" %}
               {% for doc in docs -%}
                 <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
               {% endfor %}
             </ul>
         </li>
-        <li><a href="{% link _docs/dsl/components.md %}">DSL Components</a>
+        <li><a href="{% link _docs/dsl.md %}">DSL Docs</a>
             <ul>
-              {% assign docs = site.docs | where: "categories","dsl-components" %}
+              {% assign docs = site.docs | where: "categories","dsl" %}
               {% for doc in docs -%}
                 <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
               {% endfor %}
