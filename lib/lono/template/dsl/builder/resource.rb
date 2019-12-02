@@ -21,7 +21,7 @@ class Lono::Template::Dsl::Builder
       elsif definition.size == 2 && second.is_a?(String) # short form with no properties
         logical_id, type = first, second
         { logical_id => {
-            type: type
+            Type: type
         }}
       elsif definition.size == 3 && (second.is_a?(String) || second.is_a?(NilClass)) # short form
         logical_id, type, properties = first, second, third
