@@ -13,7 +13,7 @@ module Lono
       option :rollback, type: :boolean, desc: "rollback", default: true
       option :tags, type: :hash, desc: "Tags for the stack. IE: name:api-web owner:bob"
       option :template, desc: "override convention and specify the template file to use"
-      option :variables, desc: "override convention and specify the variables file to use"
+      option :variable, desc: "override convention and specify the variable file to use"
     end
     wait_option = Proc.new do
       option :wait, type: :boolean, desc: "Wait for stack operation to complete.", default: true
