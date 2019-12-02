@@ -4,15 +4,16 @@ module Lono
     class_option :noop, type: :boolean
 
     base_options = Proc.new do
-      # common to create and update
+      # common to create, update and deploy
       option :blueprint, desc: "override convention and specify the template file to use"
-      option :template, desc: "override convention and specify the template file to use"
-      option :param, desc: "override convention and specify the param file to use"
-      option :lono, type: :boolean, desc: "invoke lono to generate CloudFormation templates", default: true
       option :capabilities, type: :array, desc: "iam capabilities. Ex: CAPABILITY_IAM, CAPABILITY_NAMED_IAM"
       option :iam, type: :boolean, desc: "Shortcut for common IAM capabilities: CAPABILITY_IAM, CAPABILITY_NAMED_IAM"
+      option :lono, type: :boolean, desc: "invoke lono to generate CloudFormation templates", default: true
+      option :param, desc: "override convention and specify the param file to use"
       option :rollback, type: :boolean, desc: "rollback", default: true
       option :tags, type: :hash, desc: "Tags for the stack. IE: name:api-web owner:bob"
+      option :template, desc: "override convention and specify the template file to use"
+      option :variables, desc: "override convention and specify the variables file to use"
     end
     wait_option = Proc.new do
       option :wait, type: :boolean, desc: "Wait for stack operation to complete.", default: true

@@ -37,7 +37,7 @@ class Lono::Param
       medium_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}"
       short_form = "#{root}/configs/#{@blueprint}/params/#{env}"
 
-      if ENV['LONO_PARAM_DEBUG']
+      if ENV['LONO_DEBUG_PARAM']
         puts "Lono.blueprint_root #{Lono.blueprint_root}"
         puts "direct_absolute_form #{direct_absolute_form}"
         puts "direct_relative_form #{direct_relative_form}"
@@ -87,7 +87,7 @@ class Lono::Param
       @base_path = lookup_param_file(env: "base")
       @env_path = lookup_param_file(env: Lono.env)
 
-      if ENV['LONO_PARAM_DEBUG']
+      if ENV['LONO_DEBUG_PARAM']
         puts "  @base_path #{@base_path.inspect}"
         puts "  @env_path #{@env_path.inspect}"
       end
