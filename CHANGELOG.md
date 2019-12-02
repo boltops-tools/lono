@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [6.0.1]
+- #14 restructure dsl methods are available in variables definition
+- #15 fix Type camelize bug
+- #16 add --variable option, allow user to specify
+
 ## [6.0.0]
 - #13 DSL improvements: auto camelize off by default
 - `auto_camelize: off` as new default for blueprints.
