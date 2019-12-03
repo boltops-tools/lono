@@ -2,7 +2,13 @@ describe Lono::Param::Generator do
   context "layering" do
     def generate(context)
       setup_params(context)
-      param = Lono::Param::Generator.new("example", mute: false)
+      param = Lono::Param::Generator.new("example",
+        stack: "example",
+        blueprint: "example",
+        template: "example",
+        param: "example",
+        param_from_convention: true,
+        mute: false)
       json = param.generate
       puts "json:"
       puts json

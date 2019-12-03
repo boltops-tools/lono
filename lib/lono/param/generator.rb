@@ -6,6 +6,7 @@ class Lono::Param
     attr_reader :env_path, :base_path # set when generate is called
     def initialize(blueprint, options={})
       @blueprint, @options = blueprint, options
+      @options[:stack] ||= @blueprint
       set_blueprint_root(@blueprint)
       @template, @param = template_param_convention(options)
     end
@@ -51,7 +52,7 @@ class Lono::Param
     def lookup_config_location(env)
       options = @options.clone
       options[:stack] ||= @blueprint
-      Lono::ConfigLocation.new("params", options).lookup
+      Lono::ConfigLocation.new("params", options, env).lookup
     end
 
     def puts_param_message(type)

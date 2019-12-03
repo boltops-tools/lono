@@ -1,6 +1,6 @@
 # Specificity determines lookup
 describe Lono::ConfigLocation do
-  let(:location) { Lono::ConfigLocation.new("params", options, root) }
+  let(:location) { Lono::ConfigLocation.new("params", options, "development", root) }
 
   context "all options match: stack, blueprint, template, param" do
     let(:options) { {stack: "ec2", blueprint: "ec2", template: "ec2", param: "ec2" } }
