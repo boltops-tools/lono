@@ -1,8 +1,10 @@
 module Lono
-  class Location
+  class ConfigLocation
     extend Memoist
 
-    def initialize(options={}, root=Lono.root, env=Lono.env)
+    def initialize(config, options={}, root=Lono.root, env=Lono.env)
+      @config = config # params or variables
+
       @stack = options[:stack]
       @blueprint = options[:blueprint]
       @template = options[:template]
@@ -20,11 +22,11 @@ module Lono
       levels = []
       levels += direct_levels unless @env == "base"
       # Standard lookup paths
-      template_level = "#{@root}/configs/#{@blueprint}/params/#{@env}/#{@template}/#{@requested}"
-      env_level = "#{@root}/configs/#{@blueprint}/params/#{@env}/#{@requested}"
-      params_level = "#{@root}/configs/#{@blueprint}/params/#{@requested}"
-      generic_env = "#{@root}/configs/#{@blueprint}/params/#{@env}"
-      levels += [template_level, env_level, params_level, generic_env]
+      template_level = "#{@root}/configs/#{@blueprint}/#{@config}/#{@env}/#{@template}/#{@requested}"
+      env_level = "#{@root}/configs/#{@blueprint}/#{@config}/#{@env}/#{@requested}"
+      config_level = "#{@root}/configs/#{@blueprint}/#{@config}/#{@requested}"
+      generic_env = "#{@root}/configs/#{@blueprint}/#{@config}/#{@env}"
+      levels += [template_level, env_level, config_level, generic_env]
 
       found = levels.find do |level|
         requested_file(level)
