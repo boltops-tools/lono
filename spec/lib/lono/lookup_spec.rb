@@ -85,4 +85,40 @@ describe Lono::Location do
       end
     end
   end
+
+  context "stack override" do
+    let(:options) { {stack: "my-stack", blueprint: "ec2", template: "ec2", param: "ec2", param_from_convention: true } }
+
+    context "template level" do
+      let(:root) { "spec/fixtures/lookup/params/root10" }
+      it "lookup" do
+        result = location.lookup
+        expect(result).to include("configs/ec2/params/development/ec2/my-stack.txt") # template level - most specificity
+      end
+    end
+
+    context "env level" do
+      let(:root) { "spec/fixtures/lookup/params/root11" }
+      it "lookup" do
+        result = location.lookup
+        expect(result).to include("configs/ec2/params/development/my-stack.txt") # env level
+      end
+    end
+
+    context "params level" do
+      let(:root) { "spec/fixtures/lookup/params/root12" }
+      it "lookup" do
+        result = location.lookup
+        expect(result).to include("configs/ec2/params/my-stack.txt") # params level
+      end
+    end
+
+    context "generic env level" do
+      let(:root) { "spec/fixtures/lookup/params/root13" }
+      it "lookup" do
+        result = location.lookup
+        expect(result).to include("configs/ec2/params/development.txt") # generic level
+      end
+    end
+  end
 end

@@ -20,6 +20,7 @@ class Lono::Cfn
       @template, @param = template_param_convention(options)
 
       # Add template and param to options because used later for Lono::Param::Generator
+      @options[:param_from_convention] = true unless @options[:param]
       @options[:blueprint], @options[:template], @options[:param] = @blueprint, @template, @param
 
       set_blueprint_root(@blueprint)

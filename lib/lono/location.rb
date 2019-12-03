@@ -2,12 +2,18 @@ module Lono
   class Location
     extend Memoist
 
-    def initialize(options, root=Lono.root, env=Lono.env)
+    def initialize(options={}, root=Lono.root, env=Lono.env)
       @stack = options[:stack]
       @blueprint = options[:blueprint]
       @template = options[:template]
-      @requested = options[:param] || options[:stack]
       @root, @env = root, env
+
+      # param is usually set from the convention. when set from convention stack name takes higher precedence
+      if options[:param_from_convention]
+        @requested = options[:stack]
+      else
+        @requested = options[:param] || options[:stack]
+      end
     end
 
     def lookup
