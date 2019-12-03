@@ -37,4 +37,52 @@ describe Lono::Location do
       end
     end
   end
+
+  context "direct lookup" do
+    let(:options) { {stack: "ec2", blueprint: "ec2", template: "ec2", param: "configs/ec2/params/direct/lookup.txt" } }
+
+    context "direct" do
+      let(:root) { "spec/fixtures/lookup/params/root5" }
+      it "lookup" do
+        result = location.lookup
+        expect(result).to include("configs/ec2/params/direct/lookup.txt") # direct lookup
+      end
+    end
+  end
+
+  context "param override" do
+    let(:options) { {stack: "ec2", blueprint: "ec2", template: "ec2", param: "my-param" } }
+
+    context "template level" do
+      let(:root) { "spec/fixtures/lookup/params/root6" }
+      it "lookup" do
+        result = location.lookup
+        expect(result).to include("configs/ec2/params/development/ec2/my-param.txt") # template level - most specificity
+      end
+    end
+
+    context "env level" do
+      let(:root) { "spec/fixtures/lookup/params/root7" }
+      it "lookup" do
+        result = location.lookup
+        expect(result).to include("configs/ec2/params/development/my-param.txt") # env level
+      end
+    end
+
+    context "params level" do
+      let(:root) { "spec/fixtures/lookup/params/root8" }
+      it "lookup" do
+        result = location.lookup
+        expect(result).to include("configs/ec2/params/my-param.txt") # params level
+      end
+    end
+
+    context "generic env level" do
+      let(:root) { "spec/fixtures/lookup/params/root9" }
+      it "lookup" do
+        result = location.lookup
+        expect(result).to include("configs/ec2/params/development.txt") # generic level
+      end
+    end
+  end
 end

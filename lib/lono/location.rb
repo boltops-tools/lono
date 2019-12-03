@@ -6,27 +6,38 @@ module Lono
       @stack = options[:stack]
       @blueprint = options[:blueprint]
       @template = options[:template]
-      @param = options[:param]
+      @requested = options[:param] || options[:stack]
       @root, @env = root, env
     end
 
     def lookup
-      template_level = "#{@root}/configs/#{@blueprint}/params/#{@env}/#{@template}/#{@param}"
-      env_level = "#{@root}/configs/#{@blueprint}/params/#{@env}/#{@param}"
-      params_level = "#{@root}/configs/#{@blueprint}/params/#{@param}"
+      levels = []
+      levels += direct_levels unless @env == "base"
+      # Standard lookup paths
+      template_level = "#{@root}/configs/#{@blueprint}/params/#{@env}/#{@template}/#{@requested}"
+      env_level = "#{@root}/configs/#{@blueprint}/params/#{@env}/#{@requested}"
+      params_level = "#{@root}/configs/#{@blueprint}/params/#{@requested}"
       generic_env = "#{@root}/configs/#{@blueprint}/params/#{@env}"
+      levels += [template_level, env_level, params_level, generic_env]
 
-      found = [template_level, env_level, params_level, generic_env].find do |level|
-        param_file(level)
+      found = levels.find do |level|
+        requested_file(level)
       end
-      param_file(found) if found
+      requested_file(found) if found
     end
 
-    def param_file(path)
+    def direct_levels
+      [
+        @requested, # IE: absolute full path
+        "#{@root}/#{@requested}", # IE : relative path within lono project
+      ]
+    end
+
+    def requested_file(path)
       # List of paths to consider from initial path provided
       paths = [path, "#{path}.txt", "#{path}.sh"]
       paths.find { |p| File.file?(p) }
     end
-    memoize :param_file
+    memoize :requested_file
   end
 end
