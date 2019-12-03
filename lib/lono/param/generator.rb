@@ -42,6 +42,7 @@ class Lono::Param
       @env_path = lookup_config_location(Lono.env)
 
       if ENV['LONO_DEBUG_PARAM']
+        puts "LONO_DEBUG_PARAM enabled"
         puts "  @base_path #{@base_path.inspect}"
         puts "  @env_path #{@env_path.inspect}"
       end
@@ -51,6 +52,7 @@ class Lono::Param
 
     def lookup_config_location(env)
       options = @options.clone
+      options[:blueprint] = @blueprint
       options[:stack] ||= @blueprint
       Lono::ConfigLocation.new("params", options, env).lookup
     end

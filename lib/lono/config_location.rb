@@ -1,23 +1,20 @@
 module Lono
   class ConfigLocation
     extend Memoist
+    include Lono::Conventions
 
     def initialize(config, options={}, env=Lono.env, root=Lono.root)
       @config = config # params or variables
 
-      puts "config #{config}"
-      puts "options #{options}"
-
       @stack = options[:stack]
       @blueprint = options[:blueprint]
-      @template = options[:template]
+      template, _ = template_param_convention(options)
+      @template = options[:template] || template
       @root, @env = root, env
 
-      puts "@root #{@root.inspect}"
-      puts "@env #{@env.inspect}"
-
       # param is usually set from the convention. when set from convention stack name takes higher precedence
-      if options[:param_from_convention]
+      param_from_convention = !options[:param]
+      if param_from_convention
         @requested = options[:stack]
       else
         @requested = options[:param] || options[:stack]
@@ -33,9 +30,6 @@ module Lono
       config_level = "#{@root}/configs/#{@blueprint}/#{@config}/#{@requested}"
       generic_env = "#{@root}/configs/#{@blueprint}/#{@config}/#{@env}"
       levels += [template_level, env_level, config_level, generic_env]
-
-      puts "levels:"
-      pp levels
 
       found = levels.find do |level|
         requested_file(level)
