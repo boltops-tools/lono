@@ -6,14 +6,13 @@ module Lono
     def initialize(config, options={}, env=Lono.env, root=Lono.root)
       @config = config # params or variables
 
+      param_from_convention = !options[:param]
       @stack = options[:stack]
-      @blueprint = options[:blueprint]
-      template, _ = template_param_convention(options)
-      @template = options[:template] || template
+      @blueprint = options[:blueprint] || @stack
+      @template, @param = template_param_convention(options)
       @root, @env = root, env
 
       # param is usually set from the convention. when set from convention stack name takes higher precedence
-      param_from_convention = !options[:param]
       if param_from_convention
         @requested = options[:stack]
       else
@@ -30,6 +29,9 @@ module Lono
       config_level = "#{@root}/configs/#{@blueprint}/#{@config}/#{@requested}"
       generic_env = "#{@root}/configs/#{@blueprint}/#{@config}/#{@env}"
       levels += [template_level, env_level, config_level, generic_env]
+
+      # puts "levels:"
+      # pp levels
 
       found = levels.find do |level|
         requested_file(level)

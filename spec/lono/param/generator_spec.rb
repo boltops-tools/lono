@@ -5,9 +5,6 @@ describe Lono::Param::Generator do
       param = Lono::Param::Generator.new("example",
         stack: "example",
         blueprint: "example",
-        template: "example",
-        param: "example",
-        param_from_convention: true,
         mute: false)
       json = param.generate
       puts "json:"

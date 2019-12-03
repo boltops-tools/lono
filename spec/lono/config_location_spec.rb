@@ -3,7 +3,7 @@ describe Lono::ConfigLocation do
   let(:location) { Lono::ConfigLocation.new("params", options, "development", root) }
 
   context "all options match: stack, blueprint, template, param" do
-    let(:options) { {stack: "ec2", blueprint: "ec2", template: "ec2", param: "ec2" } }
+    let(:options) { {stack: "ec2", blueprint: "ec2" } }
 
     context "template level" do
       let(:root) { "spec/fixtures/lookup/params/root1" }
@@ -39,7 +39,7 @@ describe Lono::ConfigLocation do
   end
 
   context "direct lookup" do
-    let(:options) { {stack: "ec2", blueprint: "ec2", template: "ec2", param: "configs/ec2/params/direct/lookup.txt" } }
+    let(:options) { {stack: "ec2", blueprint: "ec2", param: "configs/ec2/params/direct/lookup.txt" } }
 
     context "direct" do
       let(:root) { "spec/fixtures/lookup/params/root5" }
@@ -51,7 +51,7 @@ describe Lono::ConfigLocation do
   end
 
   context "param override" do
-    let(:options) { {stack: "ec2", blueprint: "ec2", template: "ec2", param: "my-param" } }
+    let(:options) { {stack: "ec2", blueprint: "ec2", param: "my-param" } }
 
     context "template level" do
       let(:root) { "spec/fixtures/lookup/params/root6" }
@@ -87,7 +87,7 @@ describe Lono::ConfigLocation do
   end
 
   context "stack override" do
-    let(:options) { {stack: "my-stack", blueprint: "ec2", template: "ec2", param: "ec2", param_from_convention: true } }
+    let(:options) { {stack: "my-stack", blueprint: "ec2" } }
 
     context "template level" do
       let(:root) { "spec/fixtures/lookup/params/root10" }
@@ -123,7 +123,7 @@ describe Lono::ConfigLocation do
   end
 
   context "stack and param override: explicitly specified param" do
-    let(:options) { {stack: "my-stack", blueprint: "ec2", template: "ec2", param: "my-param" } }
+    let(:options) { {stack: "my-stack", blueprint: "ec2", param: "my-param" } }
 
     context "template level" do
       let(:root) { "spec/fixtures/lookup/params/root14" }
