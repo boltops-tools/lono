@@ -5,6 +5,9 @@ module Lono
     def initialize(config, options={}, root=Lono.root, env=Lono.env)
       @config = config # params or variables
 
+      puts "config #{config}"
+      puts "options #{options}"
+
       @stack = options[:stack]
       @blueprint = options[:blueprint]
       @template = options[:template]

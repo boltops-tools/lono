@@ -2,8 +2,10 @@ describe Lono::Param::Generator do
   context "layering" do
     def generate(context)
       setup_params(context)
-      param = Lono::Param::Generator.new("example", mute: true)
+      param = Lono::Param::Generator.new("example", mute: false)
       json = param.generate
+      puts "json:"
+      puts json
       data = JSON.load(json)
       data.first["ParameterValue"]
     end

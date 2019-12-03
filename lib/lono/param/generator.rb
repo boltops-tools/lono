@@ -10,38 +10,17 @@ class Lono::Param
       @template, @param = template_param_convention(options)
     end
 
-    def puts_param_message(type)
-      path = send("#{type}_path")
-      return unless path
-      if param_file?(path)
-        pretty_path = path.sub("#{Lono.root}/",'')
-        puts "Using param for #{type}: #{pretty_path}".color(:yellow)
-      end
-    end
-
-    def lookup_paths
-      @base_path = lookup_param_file(env: "base")
-      @env_path = lookup_param_file(env: Lono.env)
-
-      if ENV['LONO_DEBUG_PARAM']
-        puts "  @base_path #{@base_path.inspect}"
-        puts "  @env_path #{@env_path.inspect}"
-      end
-
-      [@base_path, @env_path]
-    end
-
     def generate
       puts "Generating parameter files for blueprint #{@blueprint.color(:green)}:"
 
-      @base_path, @env_path = lookup_paths
+      @base_path, @env_path = config_locations
 
       return unless @base_path || @env_path
 
       # useful option for lono cfn, since some templates dont require params
-      return if @options[:allow_not_exists] && !source_exist?
+      return if @options[:allow_not_exists] && !params_exist?
 
-      if source_exist?
+      if params_exist?
         contents = process_erb
         data = convert_to_cfn_format(contents)
         json = JSON.pretty_generate(data)
@@ -57,21 +36,48 @@ class Lono::Param
       json
     end
 
+    def config_locations
+      @base_path = lookup_config_location("base")
+      @env_path = lookup_config_location(Lono.env)
+
+      if ENV['LONO_DEBUG_PARAM']
+        puts "  @base_path #{@base_path.inspect}"
+        puts "  @env_path #{@env_path.inspect}"
+      end
+
+      [@base_path, @env_path]
+    end
+
+    def lookup_config_location(env)
+      options = @options.clone
+      options[:stack] ||= @blueprint
+      Lono::ConfigLocation.new("params", options).lookup
+    end
+
+    def puts_param_message(type)
+      path = send("#{type}_path")
+      return unless path
+      if param_file?(path)
+        pretty_path = path.sub("#{Lono.root}/",'')
+        puts "Using param for #{type}: #{pretty_path}".color(:yellow)
+      end
+    end
+
     # Checks both base and source path for existing of the param file.
     # Example:
     #   params/base/mystack.txt - base path
     #   params/production/mystack.txt - source path
-    def source_exist?
+    def params_exist?
       @base_path && File.exist?(@base_path) ||
       @env_path && File.exist?(@env_path)
     end
 
     # useful for when calling CloudFormation via the aws-sdk gem
     def params(casing = :underscore)
-      @base_path, @env_path = lookup_paths
+      @base_path, @env_path = config_locations
 
       # useful option for lono cfn
-      return {} if @options[:allow_not_exists] && !source_exist?
+      return {} if @options[:allow_not_exists] && !params_exist?
 
       contents = process_erb
       convert_to_cfn_format(contents, casing)
