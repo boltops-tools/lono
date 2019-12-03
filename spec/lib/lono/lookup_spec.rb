@@ -193,4 +193,16 @@ describe Lono::Location do
       end
     end
   end
+
+  context "all options the same from convention" do
+    let(:options) { {stack: "ec2", blueprint: "ec2", template: "pet", param: "ec2", param_from_convention: true } }
+
+    context ".sh extension" do
+      let(:root) { "spec/fixtures/lookup/params/root22" }
+      it "lookup" do
+        result = location.lookup
+        expect(result).to include("configs/ec2/params/development.sh") # generic level
+      end
+    end
+  end
 end
