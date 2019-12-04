@@ -8,36 +8,12 @@ class Lono::Template::Context
     #   config/variables/development.rb - will override any variables in base.rb
     #
     def load_variables
-      load_variables_file(project_path("base"))
-
-      direct_absolute_form = @options[:variable] # user provided the absolute full path
-      direct_relative_form = "#{Lono.root}/configs/#{@blueprint}/variables/#{@options[:variable]}" # user provided the full path within the lono project
-      conventional_form = project_path(Lono.env)
-
-      if ENV['LONO_DEBUG_VARIABLE']
-        puts "direct_absolute_form: #{direct_absolute_form.inspect}"
-        puts "direct_relative_form: #{direct_relative_form.inspect}"
-        puts "conventional_form: #{conventional_form.inspect}"
-      end
-
-      load_variables_file(variable_file(direct_absolute_form)) if variable_file?(direct_absolute_form)
-      load_variables_file(variable_file(direct_relative_form)) if variable_file?(direct_relative_form)
-      load_variables_file(conventional_form) if variable_file?(conventional_form)
-    end
-
-    def variable_file?(path)
-      return if path.nil?
-      return path if File.file?(path) # direct lookup with .rb extension
-      return "#{path}.rb" if File.file?("#{path}.rb") # direct lookup without .rb extension
-    end
-
-    def variable_file(path)
-      return path if File.file?(path)
-      return "#{path}.rb" if File.file?("#{path}.rb")
-    end
-
-    def project_path(name)
-      "#{Lono.root}/configs/#{@blueprint}/variables/#{name}.rb"
+      options = @options.clone
+      options[:blueprint] = @blueprint
+      options[:stack] ||= @blueprint
+      location = Lono::ConfigLocation.new("variables", options, Lono.env)
+      path = location.lookup
+      evaluate_variables_file(path)
     end
 
     # Load the variables defined in config/variables/* to make available in the
@@ -56,15 +32,8 @@ class Lono::Template::Context
     #
     # NOTE: Only able to make instance variables avaialble with instance_eval,
     #   wasnt able to make local variables available.
-    def load_variables_file(path)
-      # if File.exist?(path)
-      #   puts "context.rb loading #{path}"
-      # else
-      #   puts "context.rb file doesnt exist #{path}"
-      # end
-
+    def evaluate_variables_file(path)
       return unless File.exist?(path)
-
       instance_eval(IO.read(path), path)
     end
 

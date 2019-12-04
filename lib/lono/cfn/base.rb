@@ -175,7 +175,7 @@ class Lono::Cfn
     end
 
     def generate_templates
-      Lono::Template::Generator.new(@blueprint, @options).run
+      Lono::Template::Generator.new(@blueprint, @options.merge(stack: @stack_name)).run
     end
 
     def post_process_templates

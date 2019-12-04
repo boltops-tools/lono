@@ -4,20 +4,14 @@ module Lono
     include Lono::Conventions
 
     def initialize(config, options={}, env=Lono.env, root=Lono.root)
-      @config = config # params or variables
+      # config can be params or variables
+      @config, @options, @root, @env = config, options, root, env
 
-      param_from_convention = !options[:param]
       @stack = options[:stack]
       @blueprint = options[:blueprint] || @stack
       @template, @param = template_param_convention(options)
-      @root, @env = root, env
 
-      # param is usually set from the convention. when set from convention stack name takes higher precedence
-      if param_from_convention
-        @requested = options[:stack]
-      else
-        @requested = options[:param] || options[:stack]
-      end
+      @requested = determine_requested
     end
 
     def lookup
@@ -30,7 +24,7 @@ module Lono
       generic_env = "#{@root}/configs/#{@blueprint}/#{@config}/#{@env}"
       levels += [template_level, env_level, config_level, generic_env]
 
-      if ENV["LONO_DEBUG_PARAM"]
+      if ENV["LONO_DEBUG_CONFIG"]
         puts "levels:"
         pp levels
       end
@@ -50,7 +44,7 @@ module Lono
       return if @@using_message_displayed[file]
 
       pretty_file = file.sub("#{Lono.root}/", "")
-      puts "Using param for #{@env}: #{pretty_file}".color(:yellow)
+      puts "Using #{@config} for #{@env}: #{pretty_file}"
 
       @@using_message_displayed[file] = true
     end
@@ -62,9 +56,26 @@ module Lono
       ]
     end
 
+    # Some switching logic between variable and param below
+
+    def determine_requested
+      # param is usually set from the convention. when set from convention stack name takes higher precedence
+      config_key = @config.singularize.to_sym # param or variable
+      from_convention = !@options[config_key]
+      if from_convention
+        @options[:stack]
+      elsif @config == "params"
+        @options[:param] || @options[:stack]
+      elsif @config == "variables"
+        @options[:variable] || @options[:stack]
+      end
+    end
+
     def requested_file(path)
       # List of paths to consider from initial path provided
-      paths = [path, "#{path}.txt", "#{path}.sh"]
+      paths = @config == "params" ?
+                [path, "#{path}.txt", "#{path}.sh"] :
+                [path, "#{path}.rb"]
       paths.find { |p| File.file?(p) }
     end
     memoize :requested_file
