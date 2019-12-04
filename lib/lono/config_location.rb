@@ -24,10 +24,7 @@ module Lono
       generic_env = "#{@root}/configs/#{@blueprint}/#{@config}/#{@env}"
       levels += [template_level, env_level, config_level, generic_env]
 
-      if ENV["LONO_DEBUG_CONFIG"]
-        puts "levels:"
-        pp levels
-      end
+      print_levels
 
       found = levels.find do |level|
         requested_file(level)
@@ -37,6 +34,12 @@ module Lono
         using_message(file)
         file
       end
+    end
+
+    def print_levels
+      return unless ENV["LONO_DEBUG_CONFIG"]
+      puts "levels:"
+      pp levels
     end
 
     @@using_message_displayed = {}
