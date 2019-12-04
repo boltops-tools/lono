@@ -1,27 +1,27 @@
 describe Lono::Param::Generator do
-  context "layering" do
+  context "param generator" do
     def generate(context)
-      setup_params(context)
+      setup_config("params", context)
+      setup_config("variables", context)
       param = Lono::Param::Generator.new("example",
         stack: "example",
         blueprint: "example",
         mute: false)
       json = param.generate
-      puts "json:"
-      puts json
       data = JSON.load(json)
       data.first["ParameterValue"]
     end
 
-    def setup_params(fixture_type)
-      src = "spec/fixtures/params/#{fixture_type}/params"
-      dest = "tmp/lono_project/configs/example/params"
+    def setup_config(config_type, fixture_type)
+      src = "spec/fixtures/params/#{fixture_type}/#{config_type}"
+      dest = "tmp/lono_project/configs/example/#{config_type}"
+      return unless File.exist?(src)
       FileUtils.rm_rf(dest) # clear out old fixtures from previous run
       FileUtils.mkdir_p(File.dirname(dest))
       FileUtils.cp_r(src, dest)
     end
 
-    context "overlay params" do
+    context "layer params" do
       it "should combine params" do
         param_value = generate("overlay")
         expect(param_value).to eq "2"
@@ -41,26 +41,22 @@ describe Lono::Param::Generator do
         expect(param_value).to eq "bar"
       end
     end
-  end
 
-  # Load the variables defined in config/variables/* to make available the params/*.txt files
-  #
-  # Example:
-  #
-  #   config/variables/base/variables.rb:
-  #     @ami = "ami-base-main"
-  #
-  #   params/base/example.txt:
-  #     Ami=<%= @ami %>
-  #
-  context "shared variables access" do
-    it "should have access to shared variables" do
-      # quickest to write test by shelling out
-      execute("LONO_PARAM_DEBUG=1 exe/lono generate ec2")
-      text = IO.read("#{Lono.root}/output/ec2/params/development.json")
-      data = JSON.load(text)
-      param = data.select { |i| i["ParameterKey"] == "Ami" }.first
-      expect(param["ParameterValue"]).to eq "ami-base-main"
+    # Load the variables defined in config/variables/* to make available the params/*.txt files
+    #
+    # Example:
+    #
+    #   config/variables/base/variables.rb:
+    #     @ami = "ami-base-main"
+    #
+    #   params/base/example.txt:
+    #     Ami=<%= @ami %>
+    #
+    context "shared variables access" do
+      it "should have access to shared variables" do
+        param_value = generate("with_vars")
+        expect(param_value).to eq "bar"
+      end
     end
   end
 end
