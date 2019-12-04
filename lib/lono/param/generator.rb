@@ -5,7 +5,7 @@ class Lono::Param
 
     attr_reader :env_path, :base_path # set when generate is called
     def initialize(blueprint, options={})
-      @blueprint, @options = blueprint, options
+      @blueprint, @options = blueprint, options.dup
       @options[:stack] ||= @blueprint
       set_blueprint_root(@blueprint)
       @template, @param = template_param_convention(options)

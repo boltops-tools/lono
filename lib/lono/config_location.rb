@@ -24,7 +24,7 @@ module Lono
       generic_env = "#{@root}/configs/#{@blueprint}/#{@config}/#{@env}"
       levels += [template_level, env_level, config_level, generic_env]
 
-      print_levels
+      print_levels(levels)
 
       found = levels.find do |level|
         requested_file(level)
@@ -36,7 +36,7 @@ module Lono
       end
     end
 
-    def print_levels
+    def print_levels(levels)
       return unless ENV["LONO_DEBUG_CONFIG"]
       puts "levels:"
       pp levels
