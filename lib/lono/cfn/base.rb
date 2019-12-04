@@ -146,14 +146,6 @@ class Lono::Cfn
       param_generator.generate  # Writes the json file in CamelCase keys format
       @@generate_all = param_generator.params    # Returns Array in underscore keys format
 
-      # At this point we have the info about params path used so we can display it.
-      # We display other useful info here too so it's together logically.
-      unless @options[:mute_using]
-        puts "Using template: #{pretty_path(@template_path)}"
-        param_generator.puts_param_message(:base)
-        param_generator.puts_param_message(:env)
-      end
-
       check_for_errors
       @@generate_all
     end
@@ -161,8 +153,9 @@ class Lono::Cfn
     def param_generator
       generator_options = {
         regenerate: false,
-        allow_not_exists: true
+        allow_not_exists: true,
       }.merge(@options)
+      generator_options[:stack] ||= @stack_name || @blueprint
       Lono::Param::Generator.new(@blueprint, generator_options)
     end
     memoize :param_generator

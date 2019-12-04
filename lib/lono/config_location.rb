@@ -30,13 +30,29 @@ module Lono
       generic_env = "#{@root}/configs/#{@blueprint}/#{@config}/#{@env}"
       levels += [template_level, env_level, config_level, generic_env]
 
-      # puts "levels:"
-      # pp levels
+      if ENV["LONO_DEBUG_PARAM"]
+        puts "levels:"
+        pp levels
+      end
 
       found = levels.find do |level|
         requested_file(level)
       end
-      requested_file(found) if found
+      if found
+        file = requested_file(found)
+        using_message(file)
+        file
+      end
+    end
+
+    @@using_message_displayed = {}
+    def using_message(file)
+      return if @@using_message_displayed[file]
+
+      pretty_file = file.sub("#{Lono.root}/", "")
+      puts "Using param for #{@env}: #{pretty_file}".color(:yellow)
+
+      @@using_message_displayed[file] = true
     end
 
     def direct_levels
