@@ -151,7 +151,7 @@ class Lono::Param
       # Now build up the aws json format for parameters
       params = []
       data.each do |key,value|
-        param = if value == "use_previous_value"
+        param = if value == "use_previous_value" || value == "UsePreviousValue"
                   {
                     "ParameterKey": key,
                     "UsePreviousValue": true
