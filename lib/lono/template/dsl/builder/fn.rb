@@ -67,9 +67,13 @@ class Lono::Template::Dsl::Builder
     end
 
     # special cases
-    def ref(name)
+    def ref(name, options={})
       name = name.to_s.camelize
-      { "Ref" => name }
+      if options[:Conditional] || options[:conditional]
+        if!("Has#{name}", ref(name), ref("AWS::NoValue"))
+      else
+        { "Ref" => name }
+      end
     end
 
     # Examples:
