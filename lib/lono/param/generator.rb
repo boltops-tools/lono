@@ -57,7 +57,7 @@ class Lono::Param
       options[:blueprint] = @blueprint
       options[:stack] ||= @blueprint
       location = Lono::ConfigLocation.new("params", options, env)
-      location.lookup
+      env == "base" ? location.lookup_base : location.lookup
     end
 
     def puts_param_message(type)

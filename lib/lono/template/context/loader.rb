@@ -12,8 +12,8 @@ class Lono::Template::Context
       options[:blueprint] = @blueprint
       options[:stack] ||= @blueprint
       location = Lono::ConfigLocation.new("variables", options, Lono.env)
-      path = location.lookup
-      evaluate_variables_file(path)
+      evaluate_variables_file(location.lookup_base) if location.lookup_base
+      evaluate_variables_file(location.lookup) if location.lookup # config file
     end
 
     # Load the variables defined in config/variables/* to make available in the

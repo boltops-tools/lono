@@ -16,7 +16,7 @@ module Lono
 
     def lookup
       levels = []
-      levels += direct_levels unless @env == "base"
+      levels += direct_levels
       # Standard lookup paths
       template_level = "#{@root}/configs/#{@blueprint}/#{@config}/#{@env}/#{@template}/#{@requested}"
       env_level = "#{@root}/configs/#{@blueprint}/#{@config}/#{@env}/#{@requested}"
@@ -31,7 +31,23 @@ module Lono
       end
       if found
         file = requested_file(found)
-        using_message(file)
+        using_message(file, @env)
+        file
+      end
+    end
+
+    def direct_levels
+      [
+        @requested, # IE: absolute full path
+        "#{@root}/#{@requested}", # IE : relative path within lono project
+      ]
+    end
+
+    def lookup_base
+      base = "#{@root}/configs/#{@blueprint}/#{@config}/base"
+      file = requested_file(base)
+      if file
+        using_message(file, "base")
         file
       end
     end
@@ -43,18 +59,13 @@ module Lono
     end
 
     @@using_message_displayed = {}
-    def using_message(file)
+    def using_message(file, type)
+      return if @@using_message_displayed[file]
+
       pretty_file = file.sub("#{Lono.root}/", "")
-      puts "Using #{@config} for #{@env}: #{pretty_file}".color(:red)
+      puts "Using #{@config} for #{type}: #{pretty_file}"
 
       @@using_message_displayed[file] = true
-    end
-
-    def direct_levels
-      [
-        @requested, # IE: absolute full path
-        "#{@root}/#{@requested}", # IE : relative path within lono project
-      ]
     end
 
     # Some switching logic between variable and param below
