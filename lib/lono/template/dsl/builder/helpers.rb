@@ -5,6 +5,11 @@ class Lono::Template::Dsl::Builder
     include ParamHelper
 
     def tags(hash, casing: :camelize)
+      puts "DEPRECATED: tags helper will be removed. Use tag_list instead."
+      tag_list(hash, casing: casing)
+    end
+
+    def tag_list(hash, casing: :camelize)
       hash.map do |k,v|
         k = k.to_s
         k = case casing
