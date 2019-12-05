@@ -82,7 +82,7 @@ class Lono::Template::Dsl::Builder
     #   get_attr(["logical_id", "attribute"])
     def get_att(*item)
       item = item.flatten
-      options = item.last.is_a?(Hash) ? item.pop : {}
+      item.last.is_a?(Hash) ? item.pop : {}
 
       # list is an Array
       list = if item.size == 1
