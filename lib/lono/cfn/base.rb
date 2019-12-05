@@ -150,16 +150,6 @@ class Lono::Cfn
       @@generate_all
     end
 
-    def param_generator
-      generator_options = {
-        regenerate: false,
-        allow_not_exists: true,
-      }.merge(@options)
-      generator_options[:stack] ||= @stack_name || @blueprint
-      Lono::Param::Generator.new(@blueprint, generator_options)
-    end
-    memoize :param_generator
-
     def ensure_s3_bucket_exist
       bucket = Lono::S3::Bucket.new
       return if bucket.exist?
@@ -177,6 +167,16 @@ class Lono::Cfn
     def generate_templates
       Lono::Template::Generator.new(@blueprint, @options.merge(stack: @stack_name)).run
     end
+
+    def param_generator
+      generator_options = {
+        regenerate: true,
+        allow_not_exists: true,
+      }.merge(@options)
+      generator_options[:stack] ||= @stack_name || @blueprint
+      Lono::Param::Generator.new(@blueprint, generator_options)
+    end
+    memoize :param_generator
 
     def post_process_templates
       Lono::Template::PostProcessor.new(@blueprint, @options).run

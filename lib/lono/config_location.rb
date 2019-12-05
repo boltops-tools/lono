@@ -44,10 +44,8 @@ module Lono
 
     @@using_message_displayed = {}
     def using_message(file)
-      return if @@using_message_displayed[file]
-
       pretty_file = file.sub("#{Lono.root}/", "")
-      puts "Using #{@config} for #{@env}: #{pretty_file}"
+      puts "Using #{@config} for #{@env}: #{pretty_file}".color(:red)
 
       @@using_message_displayed[file] = true
     end
@@ -64,13 +62,11 @@ module Lono
     def determine_requested
       # param is usually set from the convention. when set from convention stack name takes higher precedence
       config_key = @config.singularize.to_sym # param or variable
-      from_convention = !@options[config_key]
+      from_convention = !@options[config_key] && !@options[:config]
       if from_convention
         @options[:stack]
-      elsif @config == "params"
-        @options[:param] || @options[:stack]
-      elsif @config == "variables"
-        @options[:variable] || @options[:stack]
+      else
+        @options[config_key] || @options[:config] || @options[:stack]
       end
     end
 
