@@ -25,7 +25,7 @@ To determine what param file to use, lono searches for files at each level of sp
 
 The `BLUEPRINT`, `LONO_ENV`, and `TEMPLATE` are self-explantory. But what is `REQUESTED`?
 
-REQUESTED is either the `--param` value or the stack name.  `--param` takes higher precedence than stack name because it is more explicit. Here's area quick example:
+REQUESTED is either the `--param` value or the stack name.  `--param` takes higher precedence than stack name because it is more explicit. Here's a quick example:
 
 REQUESTED is the `--param` value:
 
