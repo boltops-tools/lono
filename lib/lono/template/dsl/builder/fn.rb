@@ -67,9 +67,13 @@ class Lono::Template::Dsl::Builder
     end
 
     # special cases
-    def ref(name)
+    def ref(name, options={})
       name = name.to_s.camelize
-      { "Ref" => name }
+      if options[:Conditional] || options[:conditional]
+        if!("Has#{name}", ref(name), ref("AWS::NoValue"))
+      else
+        { "Ref" => name }
+      end
     end
 
     # Examples:
@@ -78,7 +82,7 @@ class Lono::Template::Dsl::Builder
     #   get_attr(["logical_id", "attribute"])
     def get_att(*item)
       item = item.flatten
-      options = item.last.is_a?(Hash) ? item.pop : {}
+      item.last.is_a?(Hash) ? item.pop : {}
 
       # list is an Array
       list = if item.size == 1
