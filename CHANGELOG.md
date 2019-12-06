@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [6.1.0]
+- #17 big improvements to how the configs lookup logic happens: simpler and easier to understand
+- variables lookup strategy is same as params
+- `--config` option sets both `--param` and `--variable`
+- also account for stack name as part of conventional lookup - big win to help provide consistent and organized configs files.
+- #18 parameter(name, Conditional: true)
+- ref(name, Conditional: true)
+- deprecated `conditional_parameter`, `optional_ref`
+- deprecated `tags` helper, use `tag_list` instead
+- cleanup: organize CoreHelper
+
 ## [6.0.1]
 - #14 restructure dsl methods are available in variables definition
 - #15 fix Type camelize bug
