@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [6.1.1]
+- #19 fix param Conditional option
+
 ## [6.1.0]
 - #17 big improvements to how the configs lookup logic happens: simpler and easier to understand
 - variables lookup strategy is same as params
