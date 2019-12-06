@@ -5,7 +5,7 @@ class Lono::Template
     include Lono::Blueprint::Root
 
     def initialize(blueprint, options={})
-      @blueprint, @options = blueprint, options.dup
+      @blueprint, @options = blueprint, ActiveSupport::HashWithIndifferentAccess.new(options.dup)
       @template = @options[:template] || @blueprint
       Lono::ProjectChecker.check
       set_blueprint_root(@blueprint)
