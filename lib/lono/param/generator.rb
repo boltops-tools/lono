@@ -5,107 +5,25 @@ class Lono::Param
 
     attr_reader :env_path, :base_path # set when generate is called
     def initialize(blueprint, options={})
-      @blueprint, @options = blueprint, options
+      # dup because we're modifying the Thor frozen hash
+      # HashWithIndifferentAccess.new again because .dup changes it to a normal Hash
+      @blueprint, @options = blueprint, ActiveSupport::HashWithIndifferentAccess.new(options.dup)
+      @options[:stack] ||= @blueprint
       set_blueprint_root(@blueprint)
       @template, @param = template_param_convention(options)
-    end
-
-    def puts_param_message(type)
-      path = send("#{type}_path")
-      return unless path
-      if param_file?(path)
-        pretty_path = path.sub("#{Lono.root}/",'')
-        puts "Using param for #{type}: #{pretty_path}".color(:yellow)
-      end
-    end
-
-    # Lookup precedence:
-    #
-    #   configs/BLUEPRINT/params/development/TEMPLATE/PARAM.txt
-    #   configs/BLUEPRINT/params/development/PARAM.txt
-    #   configs/BLUEPRINT/params/development.txt
-    #
-    def lookup_param_file(root: Lono.root, env: Lono.env)
-      # The docs conver direct_absolute_form and direct_relative_form as the "Direct Form"
-      unless env == "base"
-        direct_absolute_form = @param # user provided the absolute full path
-        direct_relative_form = "#{root}/#{@param}" # user provided the full path within the lono project
-        direct_env_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}" # direct lookup is simple
-        direct_simple_form = "#{root}/configs/#{@blueprint}/params/#{@param}" # direct lookup is simple
-      end
-      long_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@template}/#{@param}"
-      medium_form = "#{root}/configs/#{@blueprint}/params/#{env}/#{@param}"
-      short_form = "#{root}/configs/#{@blueprint}/params/#{env}"
-
-      if ENV['LONO_DEBUG_PARAM']
-        puts "Lono.blueprint_root #{Lono.blueprint_root}"
-        puts "direct_absolute_form #{direct_absolute_form}"
-        puts "direct_relative_form #{direct_relative_form}"
-        puts "direct_env_form #{direct_env_form}"
-        puts "direct_simple_form #{direct_simple_form}"
-        puts "long_form #{long_form}"
-        puts "medium_form #{medium_form}"
-        puts "short_form #{short_form}"
-      end
-
-      unless env == "base"
-        return param_file(direct_absolute_form) if param_file?(direct_absolute_form)
-        return param_file(direct_relative_form) if param_file?(direct_relative_form)
-        return param_file(direct_env_form) if param_file?(direct_env_form) # consider this first its simple and direct but is scope to env so it's more specific
-        return param_file(direct_simple_form) if param_file?(direct_simple_form) # consider this first its simple and direct but is scope to env so it's more specific
-      end
-      return param_file(long_form) if param_file?(long_form) # consider this first because its more explicit
-
-      # All 3 are the same
-      # Also, blueprint and template the same and explicitly specified param
-      if @blueprint == @template
-        return param_file(medium_form) if param_file?(medium_form) # higher precedence between longer but short form should be encouraged
-        return param_file(short_form) if param_file?(short_form)
-        return # cannot find a param file
-      end
-
-      # Only template and param are the same
-      if @template == @param
-        return param_file(medium_form) if param_file?(medium_form) # only consider medium form
-        return # cannot find a param file
-      end
-    end
-
-    # Allows user to specify the .txt extension or not to.
-    # Also allows user to use other extensions like .sh if they are explicit about it.
-    def param_file?(path)
-      File.file?(path) || File.file?("#{path}.txt") || File.file?("#{path}.sh")
-    end
-
-    def param_file(path)
-      return path if File.file?(path)
-      return "#{path}.txt" if File.file?("#{path}.txt")
-      return "#{path}.sh" if File.file?("#{path}.sh")
-    end
-
-    def lookup_paths
-      @base_path = lookup_param_file(env: "base")
-      @env_path = lookup_param_file(env: Lono.env)
-
-      if ENV['LONO_DEBUG_PARAM']
-        puts "  @base_path #{@base_path.inspect}"
-        puts "  @env_path #{@env_path.inspect}"
-      end
-
-      [@base_path, @env_path]
     end
 
     def generate
       puts "Generating parameter files for blueprint #{@blueprint.color(:green)}:"
 
-      @base_path, @env_path = lookup_paths
+      @base_path, @env_path = config_locations
 
       return unless @base_path || @env_path
 
       # useful option for lono cfn, since some templates dont require params
-      return if @options[:allow_not_exists] && !source_exist?
+      return if @options[:allow_not_exists] && !params_exist?
 
-      if source_exist?
+      if params_exist?
         contents = process_erb
         data = convert_to_cfn_format(contents)
         json = JSON.pretty_generate(data)
@@ -121,21 +39,51 @@ class Lono::Param
       json
     end
 
+    def config_locations
+      @base_path = lookup_config_location("base")
+      @env_path = lookup_config_location(Lono.env)
+
+      if ENV['LONO_DEBUG_PARAM']
+        puts "LONO_DEBUG_PARAM enabled"
+        puts "  @base_path #{@base_path.inspect}"
+        puts "  @env_path #{@env_path.inspect}"
+      end
+
+      [@base_path, @env_path]
+    end
+
+    def lookup_config_location(env)
+      options = @options.clone
+      options[:blueprint] = @blueprint
+      options[:stack] ||= @blueprint
+      location = Lono::ConfigLocation.new("params", options, env)
+      env == "base" ? location.lookup_base : location.lookup
+    end
+
+    def puts_param_message(type)
+      path = send("#{type}_path")
+      return unless path
+      if param_file?(path)
+        pretty_path = path.sub("#{Lono.root}/",'')
+        puts "Using param for #{type}: #{pretty_path}".color(:yellow)
+      end
+    end
+
     # Checks both base and source path for existing of the param file.
     # Example:
     #   params/base/mystack.txt - base path
     #   params/production/mystack.txt - source path
-    def source_exist?
+    def params_exist?
       @base_path && File.exist?(@base_path) ||
       @env_path && File.exist?(@env_path)
     end
 
     # useful for when calling CloudFormation via the aws-sdk gem
     def params(casing = :underscore)
-      @base_path, @env_path = lookup_paths
+      @base_path, @env_path = config_locations
 
       # useful option for lono cfn
-      return {} if @options[:allow_not_exists] && !source_exist?
+      return {} if @options[:allow_not_exists] && !params_exist?
 
       contents = process_erb
       convert_to_cfn_format(contents, casing)
@@ -206,7 +154,7 @@ class Lono::Param
       # Now build up the aws json format for parameters
       params = []
       data.each do |key,value|
-        param = if value == "use_previous_value"
+        param = if value == "use_previous_value" || value == "UsePreviousValue"
                   {
                     "ParameterKey": key,
                     "UsePreviousValue": true

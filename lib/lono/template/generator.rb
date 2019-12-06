@@ -5,7 +5,7 @@ class Lono::Template
     include Lono::Blueprint::Root
 
     def initialize(blueprint, options={})
-      @blueprint, @options = blueprint, options
+      @blueprint, @options = blueprint, ActiveSupport::HashWithIndifferentAccess.new(options.dup)
       @template = @options[:template] || @blueprint
       Lono::ProjectChecker.check
       set_blueprint_root(@blueprint)
@@ -13,11 +13,11 @@ class Lono::Template
 
     def run
       # Examples:
-      #   Erb.new(b, options.clone).run
-      #   Dsl.new(b, options.clone).run
+      #   Erb.new(b, options.dup).run
+      #   Dsl.new(b, options.dup).run
       generator_class = "Lono::Template::#{template_type.classify}"
       generator_class = Object.const_get(generator_class)
-      generator_class.new(@blueprint, @options.clone).run
+      generator_class.new(@blueprint, @options).run
     end
 
     def template_type

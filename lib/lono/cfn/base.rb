@@ -19,9 +19,6 @@ class Lono::Cfn
       @blueprint = options[:blueprint] || remove_suffix(@stack_name)
       @template, @param = template_param_convention(options)
 
-      # Add template and param to options because used later for Lono::Param::Generator
-      @options[:blueprint], @options[:template], @options[:param] = @blueprint, @template, @param
-
       set_blueprint_root(@blueprint)
 
       @template_path = "#{Lono.config.output_path}/#{@blueprint}/templates/#{@template}.yml"
@@ -149,26 +146,9 @@ class Lono::Cfn
       param_generator.generate  # Writes the json file in CamelCase keys format
       @@generate_all = param_generator.params    # Returns Array in underscore keys format
 
-      # At this point we have the info about params path used so we can display it.
-      # We display other useful info here too so it's together logically.
-      unless @options[:mute_using]
-        puts "Using template: #{pretty_path(@template_path)}"
-        param_generator.puts_param_message(:base)
-        param_generator.puts_param_message(:env)
-      end
-
       check_for_errors
       @@generate_all
     end
-
-    def param_generator
-      generator_options = {
-        regenerate: false,
-        allow_not_exists: true
-      }.merge(@options)
-      Lono::Param::Generator.new(@blueprint, generator_options)
-    end
-    memoize :param_generator
 
     def ensure_s3_bucket_exist
       bucket = Lono::S3::Bucket.new
@@ -185,8 +165,18 @@ class Lono::Cfn
     end
 
     def generate_templates
-      Lono::Template::Generator.new(@blueprint, @options).run
+      Lono::Template::Generator.new(@blueprint, @options.merge(stack: @stack_name)).run
     end
+
+    def param_generator
+      generator_options = {
+        regenerate: true,
+        allow_not_exists: true,
+      }.merge(@options)
+      generator_options[:stack] ||= @stack_name || @blueprint
+      Lono::Param::Generator.new(@blueprint, generator_options)
+    end
+    memoize :param_generator
 
     def post_process_templates
       Lono::Template::PostProcessor.new(@blueprint, @options).run
