@@ -47,14 +47,14 @@ Lono will search for these files:
 
     configs/demo/variables/development/demo/my-variable.txt (template level)
     configs/demo/variables/development/my-variable.txt (env level)
-    configs/demo/variables/my-variable.txt (params level)
-    configs/demo/variables/development.txt (params generic env)
+    configs/demo/variables/my-variable.txt (variables level)
+    configs/demo/variables/development.txt (variables generic env)
 
 So if you have only created:
 
     configs/demo/variables/development/my-variable.txt (env level)
 
-Lono will use it.  The recommendation is to use the **env level** file.  This allows lono to use different params files based on the Lono.env. When you need to, you can override the param file with the `--variable` option.
+Lono will use it.  The recommendation is to use the **env level** file.  This allows lono to use different variables files based on the Lono.env. When you need to, you can override the variable file with the `--variable` option.
 
 ### REQUESTED as stack name
 
@@ -66,14 +66,14 @@ Lono will search for these files:
 
     configs/demo/variables/development/demo/my-stack.txt (template level)
     configs/demo/variables/development/my-stack.txt (env level)
-    configs/demo/variables/my-stack.txt (params level)
-    configs/demo/variables/development.txt (params generic level)
+    configs/demo/variables/my-stack.txt (variables level)
+    configs/demo/variables/development.txt (variables generic level)
 
 So if you have only created:
 
     configs/demo/variables/development/my-stack.txt
 
-Lono will use it.  This allow lono to launch stack names that match the params files.
+Lono will use it.  This allow lono to launch stack names that match the variables files.
 
 ## Thanks to Conventions
 
