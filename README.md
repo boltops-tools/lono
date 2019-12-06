@@ -54,7 +54,7 @@ resource("Instance", "AWS::EC2::Instance",
   UserData: base64(user_data("bootstrap.sh"))
 )
 resource("SecurityGroup", "AWS::EC2::SecurityGroup",
-  group_description: "demo security group",
+  GroupDescription: "demo security group",
 )
 
 output("Instance")
