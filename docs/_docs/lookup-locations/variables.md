@@ -37,7 +37,7 @@ REQUESTED is the value of the stack name:
 
 ## Detailed Examples
 
-### REQUESTED as param
+### REQUESTED as variable
 
 If you run the command:
 
