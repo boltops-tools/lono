@@ -22,6 +22,7 @@ module Lono::Template::Dsl::Builder::Helpers
     # use long name to minimize method name collision
     def normalize_conditional_parameter_options(options)
       if options.is_a?(Hash)
+        options.delete(:Conditional)
         options = if options.empty?
           ""
         else
