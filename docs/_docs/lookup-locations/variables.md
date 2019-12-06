@@ -25,7 +25,7 @@ To determine what variable file to use, lono searches for files at each level of
 
 The `BLUEPRINT`, `LONO_ENV`, and `TEMPLATE` are self-explantory. But what is `REQUESTED`?
 
-REQUESTED is either the `--variable` value or the stack name.  `--variable` takes higher precedence than stack name because it is more explicit. Here's are a quick example:
+REQUESTED is either the `--variable` value or the stack name.  `--variable` takes higher precedence than stack name because it is more explicit. Here's area quick example:
 
 REQUESTED is the `--variable` value:
 

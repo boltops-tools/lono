@@ -18,6 +18,7 @@ module Lono
     long_desc Help.text(:generate)
     option :clean, type: :boolean, default: false, desc: "remove all output files before generating"
     option :quiet, type: :boolean, desc: "silence the output"
+    option :stack, desc: "stack name. defaults to blueprint name."
     def generate(blueprint=nil)
       Blueprint::Find.one_or_all(blueprint).each do |b|
         Script::Build.new(b, options).run
