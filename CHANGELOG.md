@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [6.1.3]
+- #21 smarter tags helper. use @tags variable if tags called without arguments
+
 ## [6.1.2]
 - #20 improve param Conditional form with 3rd form
 
