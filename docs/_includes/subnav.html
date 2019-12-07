@@ -60,18 +60,18 @@
               {% endfor %}
             </ul>
         </li>
+        <li>Lookup Precedence</a>
+            <ul>
+                <li><a href="{% link _docs/lookup-locations/params.md %}">Params</a></li>
+                <li><a href="{% link _docs/lookup-locations/variables.md %}">Variables</a></li>
+            </ul>
+        </li>
         <li><a href="{% link _docs/conventions.md %}">Conventions</a></li>
             <ul>
               {% assign docs = site.docs | where: "categories","conventions" %}
               {% for doc in docs -%}
                 <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
               {% endfor %}
-            </ul>
-        </li>
-        <li>Lookup Precedence</a>
-            <ul>
-                <li><a href="{% link _docs/lookup-locations/params.md %}">Params</a></li>
-                <li><a href="{% link _docs/lookup-locations/variables.md %}">Variables</a></li>
             </ul>
         </li>
         <li>Configuration</a>

@@ -5,7 +5,19 @@ nav_order: 51
 
 Lono supports param files that look like env files as a simple way to define your CloudFormation run-time parameters.
 
-## Lookup Locations
+## Lookup Direct Locations
+
+You can specify the `--param` path directly. Example:
+
+    lono cfn deploy my-stack --blueprint demo --param configs/demo/params/my-param.txt
+
+You can also specify params files that exist outside of the lono project.
+
+    lono cfn deploy my-stack --blueprint demo --param /tmp/my-param.txt
+
+Direct locations take the highest precedence. Lono also supports powerful conventional lookup paths, which are covered next.
+
+## Lookup Conventional Locations
 
 You can define params files in different locations. Lono lookups up each of these locations until it finds a params file.
 

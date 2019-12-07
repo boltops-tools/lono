@@ -5,6 +5,18 @@ nav_order: 52
 
 Lono supports variables files that affect the CloudFormation template at compile-time.
 
+## Lookup Direct Locations
+
+You can specify the `--variable` path directly. Example:
+
+    lono cfn deploy my-stack --blueprint demo --variable configs/demo/variables/my-variable.txt
+
+You can also specify variables files that exist outside of the lono project.
+
+    lono cfn deploy my-stack --blueprint demo --variable /tmp/my-variable.txt
+
+Direct locations take the highest precedence. Lono also supports powerful conventional lookup paths, which are covered next.
+
 ## Lookup Locations
 
 You can define variables files in different locations. Lono lookups up each of these locations until it finds a variables file.
