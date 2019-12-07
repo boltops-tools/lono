@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Write a short summary because it's required."  # TODO: Change me
   spec.description   = "Write a longer description or delete this line."  # TODO: Change me
-  spec.homepage      = "https://github.com/USER/<%= blueprint_name %>"  # TODO: Change me
+  spec.homepage      = "<%= ENV['LONO_ORG'] || "https://github.com/USER" %>/<%= blueprint_name %>"
   spec.license       = "<%= ENV['LONO_LICENSE'] || 'MIT' %>"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -18,9 +18,9 @@ Gem::Specification.new do |spec|
     spec.metadata["allowed_push_host"] = "<%= ENV['LONO_ALLOWED_PUSH_HOST'] || "TODO: Set to 'http://mygemserver.com'"%>"
 
     spec.metadata["homepage_uri"] = spec.homepage
-<% if ENV['LONO_SOURCE_CODE_ORG'] -%>
-    spec.metadata["source_code_uri"] = "<%= ENV['LONO_SOURCE_CODE_ORG'] %>/<%= blueprint_name %>"
-    spec.metadata["changelog_uri"] = "<%= ENV['LONO_SOURCE_CODE_ORG'] %>/<%= blueprint_name %>/blob/master/CHANGELOG.md"
+<% if ENV['LONO_ORG'] -%>
+    spec.metadata["source_code_uri"] = "<%= ENV['LONO_ORG'] %>/<%= blueprint_name %>"
+    spec.metadata["changelog_uri"] = "<%= ENV['LONO_ORG'] %>/<%= blueprint_name %>/blob/master/CHANGELOG.md"
 <% else -%>
     spec.metadata["source_code_uri"] = "https://github.com/user/repo" # TODO: Change me
     spec.metadata["changelog_uri"] = "https://github.com/user/repo/blob/master/CHANGELOG.md"  # TODO: Change me

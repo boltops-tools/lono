@@ -12,10 +12,11 @@ class Lono::Blueprint
     def self.cli_options
       [
         [:bundle, type: :boolean, default: true, desc: "Runs bundle install on the project"],
+        [:demo, type: :boolean, default: true, desc: "Include demo template"],
         [:force, type: :boolean, desc: "Bypass overwrite are you sure prompt for existing files."],
         [:from_new, type: :boolean, desc: "Called from `lono new` command."],
-        [:project_name, default: '', desc: "Only used with from_new internally"],
         [:import, type: :boolean, desc: "Flag for lono code import"],
+        [:project_name, default: '', desc: "Only used with from_new internally"],
         [:type, default: "dsl", desc: "Blueprint type: dsl or erb"],
       ]
     end
@@ -43,6 +44,11 @@ class Lono::Blueprint
       end
     end
 
+    def set_variables
+      @demo = @options[:demo]
+      @demo = false if ENV["LONO_ORG"] # overrides --demo CLI option
+    end
+
     def create_project
       puts "=> Creating new blueprint called #{blueprint_name}."
       directory ".", "#{@cwd}/#{blueprint_name}"
@@ -50,7 +56,13 @@ class Lono::Blueprint
 
     def create_app_folder
       return if @options[:import]
-      directory "../blueprint_types/#{@options[:type]}", "#{@cwd}/#{blueprint_name}"
+
+      if @demo
+        directory "../blueprint_types/#{@options[:type]}", "#{@cwd}/#{blueprint_name}"
+      else
+        empty_directory "#{@cwd}/#{blueprint_name}/app/templates"
+        create_file "#{@cwd}/#{blueprint_name}/app/templates/#{blueprint_name}.rb"
+      end
     end
 
     def create_empty_directories
@@ -60,6 +72,7 @@ class Lono::Blueprint
     end
 
     def create_starter_configs
+      return unless @demo
       return if @options[:import]
 
       if options[:from_new] # lono new command
