@@ -73,12 +73,7 @@ module Lono
     def determine_requested
       # param is usually set from the convention. when set from convention stack name takes higher precedence
       config_key = @config.singularize.to_sym # param or variable
-      from_convention = !@options[config_key] && !@options[:config]
-      if from_convention
-        @options[:stack]
-      else
-        @options[config_key] || @options[:config] || @options[:stack]
-      end
+      @options[config_key] || @options[:config] || @options[:stack]
     end
 
     def requested_file(path)

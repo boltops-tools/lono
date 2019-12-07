@@ -2,13 +2,28 @@ module Lono::Template::Dsl::Builder::Helpers
   module CoreHelper
     extend Memoist
 
-    def tags(hash, casing: :camelize)
-      puts "DEPRECATED: tags helper will be removed. Use tag_list instead."
-      tag_list(hash, casing: casing)
+    def tags(list={})
+      casing = list.delete(:casing) || :camelize
+      if list.empty?
+        tag_list(@tags) # when list is empty, we'll use variables
+      else
+        tag_list(list, casing: casing)
+      end
     end
 
-    def tag_list(hash, casing: :camelize)
-      hash.map do |k,v|
+    def tag_list(list, casing: :camelize)
+      raise "tags list cannot be empty" if list == nil
+
+      if list.is_a?(Array)
+        hash = list.inject({}) do |h,i|
+          i.symbolize_keys!
+          h[i[:Key]] = i[:Value]
+          h
+        end
+        return tag_list(hash) # recursive call tag_list to normalized the argument with a Hash
+      end
+
+      list.map do |k,v|
         k = k.to_s
         k = case casing
         when :camelize
