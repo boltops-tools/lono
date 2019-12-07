@@ -21,6 +21,7 @@ To generate CloudFormation json parameter files in the `output` folder:
 ## Options
 
 ```
+[--stack=STACK]              # stack name. defaults to blueprint name.
 [--verbose], [--no-verbose]  
 [--noop], [--no-noop]        
 [--mute], [--no-mute]        

@@ -35,6 +35,7 @@ Generates CloudFormation template, parameter files, and scripts in lono project 
 ```
 [--clean], [--no-clean]  # remove all output files before generating
 [--quiet], [--no-quiet]  # silence the output
+[--stack=STACK]          # stack name. defaults to blueprint name.
 
 Runtime options:
 -f, [--force]                    # Overwrite files that already exist

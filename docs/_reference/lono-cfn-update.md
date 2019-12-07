@@ -65,28 +65,30 @@ The template used is `app/templates/different3.rb` and the parameters used is `c
 ## Options
 
 ```
-[--blueprint=BLUEPRINT]                          # override convention and specify the template file to use
-[--template=TEMPLATE]                            # override convention and specify the template file to use
-[--param=PARAM]                                  # override convention and specify the param file to use
-[--lono], [--no-lono]                            # invoke lono to generate CloudFormation templates
-                                                 # Default: true
-[--capabilities=one two three]                   # iam capabilities. Ex: CAPABILITY_IAM, CAPABILITY_NAMED_IAM
-[--iam], [--no-iam]                              # Shortcut for common IAM capabilities: CAPABILITY_IAM, CAPABILITY_NAMED_IAM
-[--rollback], [--no-rollback]                    # rollback
-                                                 # Default: true
-[--tags=key:value]                               # Tags for the stack. IE: name:api-web owner:bob
-[--change-set], [--no-change-set]                # Uses generated change set to update the stack.  If false, will perform normal update-stack.
-                                                 # Default: true
-[--codediff-preview], [--no-codediff-preview]    # Show codediff changes preview.
-                                                 # Default: true
-[--changeset-preview], [--no-changeset-preview]  # Show ChangeSet changes preview.
-                                                 # Default: true
-[--param-preview], [--no-param-preview]          # Show parameter diff preview.
-                                                 # Default: true
-[--sure], [--no-sure]                            # Skips are you sure prompt
-[--wait], [--no-wait]                            # Wait for stack operation to complete.
-                                                 # Default: true
-[--verbose], [--no-verbose]                      
-[--noop], [--no-noop]                            
+c, [--config=CONFIG]                                 # override convention and specify both the param and variable file to use
+    [--blueprint=BLUEPRINT]                          # override convention and specify the template file to use
+    [--capabilities=one two three]                   # iam capabilities. Ex: CAPABILITY_IAM, CAPABILITY_NAMED_IAM
+    [--iam], [--no-iam]                              # Shortcut for common IAM capabilities: CAPABILITY_IAM, CAPABILITY_NAMED_IAM
+    [--lono], [--no-lono]                            # invoke lono to generate CloudFormation templates
+                                                     # Default: true
+p, [--param=PARAM]                                   # override convention and specify the param file to use
+    [--rollback], [--no-rollback]                    # rollback
+                                                     # Default: true
+    [--tags=key:value]                               # Tags for the stack. IE: name:api-web owner:bob
+    [--template=TEMPLATE]                            # override convention and specify the template file to use
+v, [--variable=VARIABLE]                             # override convention and specify the variable file to use
+    [--change-set], [--no-change-set]                # Uses generated change set to update the stack.  If false, will perform normal update-stack.
+                                                     # Default: true
+    [--codediff-preview], [--no-codediff-preview]    # Show codediff changes preview.
+                                                     # Default: true
+    [--changeset-preview], [--no-changeset-preview]  # Show ChangeSet changes preview.
+                                                     # Default: true
+    [--param-preview], [--no-param-preview]          # Show parameter diff preview.
+                                                     # Default: true
+    [--sure], [--no-sure]                            # Skips are you sure prompt
+    [--wait], [--no-wait]                            # Wait for stack operation to complete.
+                                                     # Default: true
+    [--verbose], [--no-verbose]                      
+    [--noop], [--no-noop]                            
 ```
 
