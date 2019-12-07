@@ -1,3 +1,6 @@
+<% if ENV['LONO_ORG'] -%>
+ENV['gem_push']='no'
+<% end -%>
 require "bundler/gem_tasks"
 require "rspec/core/rake_task"
 
