@@ -5,7 +5,7 @@ module Lono::Template::Dsl::Builder::Helpers
     def tags(list={})
       casing = list.delete(:casing) || :camelize
       if list.empty?
-        tag_list(@tags) # when list is empty, we'll use variables
+        tag_list(@tags) if @tags # when list is empty, use @tags variable. If not set then return nil
       else
         tag_list(list, casing: casing)
       end
