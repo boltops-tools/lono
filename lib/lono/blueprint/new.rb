@@ -82,6 +82,11 @@ class Lono::Blueprint
       end
     end
 
+    def create_license
+      return unless ENV['LONO_LICENSE_FILE']
+      copy_file ENV['LONO_LICENSE_FILE'], "#{@cwd}/#{blueprint_name}/LICENSE.txt"
+    end
+
     # After this commands are executed with the newly created project
     def set_destination_root
       destination_root = "#{@cwd}/#{blueprint_name}"
