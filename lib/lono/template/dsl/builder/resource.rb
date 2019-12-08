@@ -46,8 +46,12 @@ class Lono::Template::Dsl::Builder
       logical_id = resource.keys.first
       attributes = resource[logical_id]
       properties = attributes["Properties"]
-      properties.delete_if { |k,v| v.nil? }
-      resource[logical_id]["Properties"] = properties
+
+      if properties
+        properties.delete_if { |k,v| v.nil? }
+        resource[logical_id]["Properties"] = properties
+      end
+
       resource
     end
   end
