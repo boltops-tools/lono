@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [6.1.6]
+- #24 auto remove properties with nil value
+- lono seed: change default optional value to nothing
+
 ## [6.1.5]
 - #23 improve blueprint starter project and add --no-demo option
 
