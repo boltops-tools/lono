@@ -70,10 +70,21 @@ class Lono::Template::Dsl::Builder
     def ref(name, options={})
       name = name.to_s.camelize
       if options[:Conditional] || options[:conditional]
-        if!("Has#{name}", ref(name), ref("AWS::NoValue"))
+        conditional_ref(name, options)
       else
-        { "Ref" => name }
+        split_separator = options[:Split] || options[:split]
+        if split_separator
+          split_separator = ',' if split_separator == true
+          split(split_separator, ref(name))
+        else
+          { "Ref" => name }
+        end
       end
+    end
+
+    def conditional_ref(name, options)
+      fallback = options[:Fallback] || options[:fallback] || ref("AWS::NoValue")
+      if!("Has#{name}", ref(name), fallback)
     end
 
     # Examples:
