@@ -125,7 +125,7 @@ class Lono::Seed
     end
 
     def description_example(description)
-      default = '...'
+      default = ''
       return default unless description
       md = description.match(/(Example|IE): (.*)/)
       return default unless md
