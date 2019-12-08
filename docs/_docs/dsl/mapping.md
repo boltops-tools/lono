@@ -42,6 +42,10 @@ Mappings:
       Ami: ami-0d7805fed18723d71
 ```
 
+## find_in_map method
+
+The `mapping` method is used in conjuction with the [find_in_map]({% link _docs/intrinsic-functions/find_in_map.md %}) method.
+
 {% include back_to/dsl.md %}
 
 {% include prev_next.md %}

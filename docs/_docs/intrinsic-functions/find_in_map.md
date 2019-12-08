@@ -42,6 +42,10 @@ Resources:
         - Ami
 ```
 
+## mapping method
+
+The `find_in_map` method is used in conjuction with the [mapping]({% link _docs/dsl/mapping.md %}) method.
+
 {% include back_to/intrinsic_functions.md %}
 
 {% include prev_next.md %}
