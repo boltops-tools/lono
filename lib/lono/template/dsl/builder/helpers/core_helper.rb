@@ -47,6 +47,10 @@ module Lono::Template::Dsl::Builder::Helpers
       }
     end
 
+    def stack_name
+      @options[:stack]
+    end
+
     def content(path)
       render_file(Lono.config.content_path, path)
     end
