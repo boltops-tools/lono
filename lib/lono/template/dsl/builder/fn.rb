@@ -69,10 +69,11 @@ class Lono::Template::Dsl::Builder
     # special cases
     def ref(name, options={})
       name = name.to_s.camelize
-      if options[:Conditional] || options[:conditional]
+      conditional = options.delete(:Conditional) || options.delete(:conditional)
+      if conditional
         conditional_ref(name, options)
       else
-        split_separator = options[:Split] || options[:split]
+        split_separator = options.delete(:Split) || options.delete(:split)
         if split_separator
           split_separator = ',' if split_separator == true
           split(split_separator, ref(name))
@@ -84,7 +85,7 @@ class Lono::Template::Dsl::Builder
 
     def conditional_ref(name, options)
       fallback = options[:Fallback] || options[:fallback] || ref("AWS::NoValue")
-      if!("Has#{name}", ref(name), fallback)
+      if!("Has#{name}", ref(name, options), fallback)
     end
 
     # Examples:
