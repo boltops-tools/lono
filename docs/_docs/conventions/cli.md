@@ -5,26 +5,25 @@ desc: Stack, blueprint, template, and params conventions.
 nav_order: 52
 ---
 
-Lono follows a set of CLI naming conventions. When followed, this dramatically allows lono commands to be shorter.
+Lono follows a set of CLI naming conventions. When followed, this can dramatically shorten lono commands.
 
 ## CLI Template Name Convention
 
-These conventions apply to all the `lono cfn` commands: `deploy`, `preview`, etc.
+These conventions apply to all the `lono cfn` commands: [deploy](https://lono.cloud/reference/lono-cfn-deploy/), [preview](https://lono.cloud/reference/lono-cfn-preview/), etc.
 
-By convention, the blueprint name is the same as the stack name. In turn, template name is the same as the blueprint name.  Lastly, the param name will default to the template name.
+By convention, the blueprint name is the same as the stack name. In turn, the template name is the same as the blueprint name.
 
 * stack - This is a required parameter and is the first CLI parameter.
 * blueprint - By convention matches the stack name but can be overridden with `--blueprint`.
 * template - By convention matches the blueprint name but can be overridden with `--template`.
-* param - By convention matches the template name but can be overridden with `--param`.
 
 For example, the following two commands are the same:
 
-Long form:
+Long-form:
 
-    lono cfn deploy demo --blueprint demo --template demo --param demo
+    lono cfn deploy demo --blueprint demo --template demo
 
-Short form:
+Short-form:
 
     lono cfn deploy demo
 
@@ -32,18 +31,34 @@ Short form:
 
 Often you want to create a stack name that is different from the blueprint name. Here's an example of overriding the blueprint name.
 
-    lono cfn deploy demo-1 --blueprint demo
+    lono cfn deploy my-stack --blueprint demo
 
-Remember that the template and parameter will in turn default to the blueprint name. So the command above is the same as:
+## Params
 
-    lono cfn deploy demo-1 --blueprint demo --template demo --param demo
+The param value matches the stack name by convention.
 
-If you are using different template and param names from the blueprint name, you will have to use the fully explicit form. Here's an example:
+* param - By convention matches the stack name but can be overridden with `--param`.
 
-    lono cfn deploy mystack-1 --blueprint demo --template ec2 --param large
+So the command:
+
+    lono cfn deploy my-stack --blueprint demo
+
+Is the same as:
+
+    lono cfn deploy my-stack --blueprint demo --template demo --param my-stack
+
+This allows us to organize the params files in a way that matches the stack name.  Example:
+
+    lono cfn deploy daisy   --blueprint demo --template demo --param daisy
+    lono cfn deploy jenkins --blueprint demo --template demo --param jenkins
+
+Will use the corresponding config files:
+
+    configs/demo/development/daisy.txt
+    configs/demo/development/jenkins.txt
 
 ## Params Files Lookup Locations
 
-What we are setting above with the `--param` option is the param "name". The param name is used to look up different possible param locations. This is covered in more details here: [Params Lookup Locations]({% link _docs/lookup-locations/params.md %}).
+The param name is used to look up different possible param locations. This is covered in more details here: [Params Lookup Locations]({% link _docs/lookup-locations/params.md %}).
 
 {% include prev_next.md %}
