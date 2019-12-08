@@ -41,7 +41,7 @@ module Lono::Template::Dsl::Builder::Helpers
     end
 
     def dimensions(hash, casing: :camelize)
-      tags(hash, casing: casing).map { |h|
+      tag_list(hash, casing: casing).map { |h|
         h[:Name] = h.delete(:Key) || h.delete(:key)
         h
       }
