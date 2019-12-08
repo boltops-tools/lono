@@ -43,4 +43,19 @@ describe Lono::Template::Dsl::Builder::Resource do
       )
     end
   end
+
+  context "clean" do
+    let(:definition) do
+      [ :vpc, "AWS::EC2::VPC", { cidr_block: "10.30.0.0/16", fake_property: nil } ]
+    end
+
+    it "produces template" do
+      resource.template
+      result = resource.template
+      # puts result
+      expect(result).to eq(
+        {"Vpc"=>{"Type"=>"AWS::EC2::VPC", "Properties"=>{"CidrBlock"=>"10.30.0.0/16"}}}
+      )
+    end
+  end
 end

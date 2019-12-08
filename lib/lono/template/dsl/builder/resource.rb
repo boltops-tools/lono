@@ -5,7 +5,7 @@
 class Lono::Template::Dsl::Builder
   class Resource < Base
     def template
-      camelize(standarize(@definition))
+      camelize(clean(standarize(@definition)))
     end
 
     # Type is the only required property: https://amzn.to/2x8W5aD
@@ -39,6 +39,16 @@ class Lono::Template::Dsl::Builder
       else # Dont understand this form
         raise "Invalid form provided. definition #{definition.inspect}"
       end
+    end
+
+    # Remove properties with nil value automatically
+    def clean(resource)
+      logical_id = resource.keys.first
+      attributes = resource[logical_id]
+      properties = attributes["Properties"]
+      properties.delete_if { |k,v| v.nil? }
+      resource[logical_id]["Properties"] = properties
+      resource
     end
   end
 end
