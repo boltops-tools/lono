@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [6.1.7]
+- #25 add stack_name helper
+- #26 ref Split: true option
+- #27 fix ref Split: true option
+
 ## [6.1.6]
 - #24 auto remove properties with nil value
 - lono seed: change default optional value to nothing
