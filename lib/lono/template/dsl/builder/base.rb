@@ -13,11 +13,12 @@ class Lono::Template::Dsl::Builder
       blueprint_meta = Lono::Blueprint::Meta.new(@blueprint)
       target_section = self.class.to_s.split('::').last.underscore
       # target_section: Lono::Template::Dsl::Builder::Parameter => parameter
-      if blueprint_meta.auto_camelize?(target_section)
-        CfnCamelizer.transform(attributes)
-      else
-        stringify_keys!(attributes)
-      end
+      data = if blueprint_meta.auto_camelize?(target_section)
+               CfnCamelizer.transform(attributes)
+             else
+               stringify_keys!(attributes)
+             end
+      clean(data)
     end
 
     # Accounts for Arrays also. ActiveSupport only works for Hashes.
@@ -30,6 +31,11 @@ class Lono::Template::Dsl::Builder
       else
         data # do not transform
       end
+    end
+
+    # Remove items with nil value automatically
+    def clean(data)
+      HashSqueezer.new(data).squeeze
     end
   end
 end
