@@ -4,7 +4,6 @@ module Lono::AppFile
   class Build < Base
     def initialize_variables
       @output_files_path = "#{Lono.config.output_path}/#{@blueprint}/files"
-      @options = {}
     end
 
     def run
