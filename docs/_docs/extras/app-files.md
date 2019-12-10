@@ -12,14 +12,14 @@ The `app/files` are particularly useful for Lambda function resources.   Example
 
 ```ruby
 resource("Function", "AWS::Lambda::Function",
-  code: {
-    s3_bucket: s3_bucket,
-    s3_key: file_s3_key("index.rb"),
+  Code: {
+    S3Bucket: s3_bucket,
+    S3Key: file_s3_key("index.rb"),
   },
-  handler: "index.lambda_handler",
-  role: get_att("LambdaExecutionRole.Arn"),
-  runtime: "ruby2.5",
-  timeout: "300"
+  Handler: "index.lambda_handler",
+  Role: get_att("LambdaExecutionRole.Arn"),
+  Runtime: "ruby2.5",
+  Timeout: "300"
 )
 ```
 
