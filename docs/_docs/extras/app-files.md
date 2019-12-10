@@ -41,9 +41,9 @@ If pass `file_s3_key` a folder instead of a file, lono will zip up the entire co
 
 ## ERB Support
 
-ERB is supported in app files that are directories. To activate ERB support, add a `.tt` extension to the file name. Lono will process the `.tt` files as ERB files and `.tt` extension will be removed from the final resulting file.  Example:
+ERB is supported in app files. To activate ERB support, add a `.tt` extension to the file name. Lono will process the `.tt` files as ERB files and the `.tt` extension will be removed from the resulting final file.  Example:
 
-app/files/lambda-function/index.rb.tt:
+app/files/index.rb.tt:
 
 ```ruby
 require 'json'
@@ -56,7 +56,7 @@ end
 
 Results in:
 
-app/files/lambda-function/index.rb:
+app/files/index.rb:
 
 ```ruby
 require 'json'
