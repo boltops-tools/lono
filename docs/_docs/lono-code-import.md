@@ -95,7 +95,7 @@ output("InstanceId",
 # ...
 output("PublicIP",
   Description: "Public IP address of the newly created EC2 instance",
-  Value: get_att("EC2Instance","PublicIp")
+  Value: get_att("EC2Instance.PublicIp")
 )
 ```
 
