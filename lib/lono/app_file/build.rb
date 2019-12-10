@@ -1,12 +1,14 @@
+require "thor"
+
 module Lono::AppFile
   class Build < Base
     def initialize_variables
       @output_files_path = "#{Lono.config.output_path}/#{@blueprint}/files"
+      @options = {}
     end
 
     def run
       return unless detect_files?
-
       puts "Building app/files for blueprint #{@blueprint}"
       build_all
     end
@@ -23,6 +25,12 @@ module Lono::AppFile
           puts "WARN: #{item.path} does not exist. Double check that the path is correct in the s3_key call.".color(:yellow)
         end
       end
+    end
+
+    def copy_to_output
+      override_source_paths("#{Lono.blueprint_root}/app/files")
+      self.destination_root = @output_files_path
+      directory(".", verbose: false)
     end
 
     def zip_file(item)
@@ -56,13 +64,6 @@ module Lono::AppFile
 
     def clean_output
       FileUtils.rm_rf(@output_files_path)
-    end
-
-    def copy_to_output
-      src = "#{Lono.blueprint_root}/app/files"
-      dest = @output_files_path
-      FileUtils.mkdir_p(File.dirname(dest))
-      FileUtils.cp_r(src, dest)
     end
 
     def detect_files?

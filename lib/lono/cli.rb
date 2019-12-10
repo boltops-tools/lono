@@ -50,13 +50,20 @@ module Lono
       Lono::Inspector::Graph.new(blueprint, template, options).run
     end
 
-    desc "seed", "Generates starter configs for a blueprint."
+    desc "seed BLUEPRINT", "Generates starter configs for a blueprint."
     long_desc Help.text("seed")
     option :param, desc: "override convention and specify the param file to use"
     option :template, desc: "override convention and specify the template file to use"
-    add_runtime_options!
+    add_runtime_options! # Thor::Action options like --force
     def seed(blueprint)
       Seed.new(blueprint, options).create
+    end
+
+    desc "app_files BLUEPRINT", "Builds app files"
+    long_desc Help.text("app_files")
+    add_runtime_options! # Thor::Action options like --force
+    def app_files(blueprint)
+      Lono::AppFile::Build.new(blueprint, options).run
     end
 
     desc "clean", "Removes `output` folder."
