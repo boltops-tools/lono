@@ -39,4 +39,32 @@ Lono will zip up the file in a package that works with Lambda.
 
 If pass `file_s3_key` a folder instead of a file, lono will zip up the entire contents within the folder.
 
+## ERB Support
+
+ERB is supported in app files. To activate ERB support, add a `.tt` extension to the file name. Lono will process the `.tt` files as ERB files and the `.tt` extension will be removed from the resulting final file.  Example:
+
+app/files/index.rb.tt:
+
+```ruby
+require 'json'
+
+def lambda_handler(event:, context:)
+  # <%= "comment is from erb" %>
+  { statusCode: 200, body: JSON.generate('Hello from Lambda!') }
+end
+```
+
+Results in:
+
+app/files/index.rb:
+
+```ruby
+require 'json'
+
+def lambda_handler(event:, context:)
+  # comment is from erb
+  { statusCode: 200, body: JSON.generate('Hello from Lambda!') }
+end
+```
+
 {% include prev_next.md %}
