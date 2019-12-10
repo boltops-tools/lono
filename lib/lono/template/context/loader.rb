@@ -8,7 +8,7 @@ class Lono::Template::Context
     #   config/variables/development.rb - will override any variables in base.rb
     #
     def load_variables
-      options = @options.clone
+      options = ActiveSupport::HashWithIndifferentAccess.new(@options.dup)
       options[:blueprint] = @blueprint
       options[:stack] ||= @blueprint
       location = Lono::ConfigLocation.new("variables", options, Lono.env)

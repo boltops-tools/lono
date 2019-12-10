@@ -29,8 +29,13 @@ module Lono::AppFile
     def copy_to_output
       override_source_paths("#{Lono.blueprint_root}/app/files")
       self.destination_root = @output_files_path
-      directory(".", verbose: false)
+      directory(".", verbose: true, context: context.get_binding)
     end
+
+    def context
+      Lono::Template::Context.new(@blueprint, @options)
+    end
+    memoize :context
 
     def zip_file(item)
       path = item.path

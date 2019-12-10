@@ -20,5 +20,10 @@ class Lono::Template
         instance_variable_set('@' + key.to_s, value)
       end
     end
+
+    # For Lono::AppFile::Build usage of Thor::Action directory
+    def get_binding
+      binding
+    end
   end
 end
