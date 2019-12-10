@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [6.1.9]
+- #30 fix md5 sum calcuation for single file
+- #31 Add app files ERB support docs
+- options `--sure` and `--iam` add `CAPABILITY_AUTO_EXPAND` for serverless transform
+
 ## [6.1.8]
 - #28 add user_data_script helper
 - #29 remove items in Hash structure with nil value at any level
