@@ -56,7 +56,7 @@ resource("Instance", "AWS::EC2::Instance",
   InstanceType: ref("InstanceType"),
   ImageId: find_in_map("AmiMap",ref("AWS::Region"),"Ami"),
   SecurityGroupIds: [
-    get_att("SecurityGroup","GroupId")
+    get_att("SecurityGroup.GroupId")
   ],
   UserData: base64("#!/bin/bash\necho \"hello world\"")
 )
