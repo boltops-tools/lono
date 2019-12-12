@@ -35,7 +35,7 @@ class Lono::Template::Dsl::Builder
 
     # Remove items with nil value automatically
     def clean(data)
-      HashSqueezer.new(data).squeeze
+      Squeezer.new(data).squeeze
     end
   end
 end
