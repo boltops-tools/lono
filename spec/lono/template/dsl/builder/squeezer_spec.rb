@@ -40,5 +40,15 @@ describe Lono::Template::Dsl::Builder::Squeezer do
       expect(result).to eq({ a: 1, c: 3})
     end
   end
-end
 
+  context "false values in Hash" do
+    let(:data) do
+      { a: 1, b: false, c: 3}
+    end
+
+    it "squeeze" do
+      result = squeezer.squeeze
+      expect(result).to eq({ a: 1, b: false, c: 3})
+    end
+  end
+end

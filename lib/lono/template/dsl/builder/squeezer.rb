@@ -5,7 +5,7 @@ class Lono::Template::Dsl::Builder
     end
 
     def squeeze(new_data=nil)
-      data = new_data || @data
+      data = new_data.nil? ? @data : new_data
 
       case data
       when Array
@@ -13,6 +13,7 @@ class Lono::Template::Dsl::Builder
       when Hash
         data.each_with_object({}) do |(k,v), squeezed|
           squeezed[k] = squeeze(v) unless v.nil?
+          squeezed
         end
       else
         data # do not transform
