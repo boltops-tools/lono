@@ -1,4 +1,3 @@
-# Based on https://stackoverflow.com/questions/32174183/remove-nil-values-from-hash
 class Lono::Template::Dsl::Builder
   class Squeezer
     def initialize(data)
@@ -7,15 +6,16 @@ class Lono::Template::Dsl::Builder
 
     def squeeze(new_data=nil)
       data = new_data || @data
-      data.each_with_object({}) do |(k, v), squeezed|
-        if v.is_a?(Array)
-          squeezed[k] = v.map { |i| squeeze(i) }
-        elsif v.is_a?(Hash)
-          squeezed[k] = squeeze(v)
-        else
-          squeezed[k] = v unless v.nil?
+
+      case data
+      when Array
+        data.map! { |v| squeeze(v) }
+      when Hash
+        data.each_with_object({}) do |(k,v), squeezed|
+          squeezed[k] = squeeze(v) unless v.nil?
         end
-        squeezed
+      else
+        data # do not transform
       end
     end
   end
