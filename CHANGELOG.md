@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [6.1.10]
+- #32 use lono dsl scope for the app files erb processing
+- #33 fix squeezer for Array. squeeze hashes nested in arrays too
+- #34 fix squeeze for false values
+
 ## [6.1.9]
 - #30 fix md5 sum calcuation for single file
 - #31 Add app files ERB support docs
