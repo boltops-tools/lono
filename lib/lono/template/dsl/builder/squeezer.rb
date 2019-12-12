@@ -12,7 +12,7 @@ class Lono::Template::Dsl::Builder
         data.map! { |v| squeeze(v) }
       when Hash
         data.each_with_object({}) do |(k,v), squeezed|
-          squeezed[k] = squeeze(v) unless v.nil?
+          squeezed[k] = squeeze(v) unless v.nil? # only remove nil values within Hash structures
           squeezed
         end
       else
