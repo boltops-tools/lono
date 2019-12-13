@@ -86,7 +86,7 @@ Resources:
       GroupDescription: demo security group
 ```
 
-Be wary of the allure. Though it may look like better code. You'll eventually run into annoying edge-case, and the mental overhead is more than it seems. You'll end up having to convert back and forth between underscore and CamelCase form.
+Be wary of the allure. Though it may look like better code. You'll eventually run into annoying edge cases, and the mental overhead is more than it seems. You'll end up having to convert back and forth between underscore and CamelCase form.
 
 Maybe one day, when the auto-camelization eliminates enough of edge-cases, then auto-camelization may be preferred again.  Until then auto-camelization is strongly recommended to be disabled.
 
