@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [6.1.11]
+- #35 fix app files variables erb lookup scope
+
 ## [6.1.10]
 - #32 use lono dsl scope for the app files erb processing
 - #33 fix squeezer for Array. squeeze hashes nested in arrays too
