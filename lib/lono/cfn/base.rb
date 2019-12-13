@@ -157,11 +157,11 @@ class Lono::Cfn
     end
 
     def build_scripts
-      Lono::Script::Build.new(@blueprint, @options).run
+      Lono::Script::Build.new(@blueprint, @options.merge(stack: @stack_name)).run
     end
 
     def build_files
-      Lono::AppFile::Build.new(@blueprint, @options).run
+      Lono::AppFile::Build.new(@blueprint, @options.merge(stack: @stack_name)).run
     end
 
     def generate_templates
