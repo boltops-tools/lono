@@ -54,7 +54,7 @@ module Lono
 
     def print_levels(levels)
       return unless ENV["LONO_DEBUG_CONFIG"]
-      puts "levels:"
+      puts "levels #{@config}:"
       pp levels
     end
 
