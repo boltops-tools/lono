@@ -10,7 +10,6 @@ doc/
 Gemfile.lock
 InstalledFiles
 lib/bundler/man
-output
 pkg
 rdoc
 spec/fixtures/my_project/templates/aws-waf-security-automations.yml
@@ -18,6 +17,7 @@ spec/project
 spec/reports
 test/tmp
 test/version_tmp
-tmp
 
 /infra
+/output
+/tmp

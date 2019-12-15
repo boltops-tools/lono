@@ -1,27 +1,32 @@
 class Lono::Cfn
   class Cancel
     include Lono::AwsServices
-    include Util
+    include Lono::Utils::Sure
 
-    def initialize(stack_name, options={})
-      @stack_name = switch_current(stack_name)
+    def initialize(options={})
       @options = options
+      @stack = options[:stack]
     end
 
     def run
-      stack = find_stack(@stack_name)
+      if @options[:noop]
+        puts "NOOP Canceling #{@stack} stack"
+        return
+      end
+
+      stack = find_stack(@stack)
       unless stack
-        puts "The '#{@stack_name}' stack does not exist. Unable to cancel"
+        puts "The '#{@stack}' stack does not exist. Unable to cancel"
         exit 1
       end
 
-      puts "Canceling updates to #{@stack_name}."
+      puts "Canceling updates to #{@stack}."
       puts "Current stack status: #{stack.stack_status}"
       if stack.stack_status == "CREATE_IN_PROGRESS"
-        cfn.delete_stack(stack_name: @stack_name)
+        cfn.delete_stack(stack_name: @stack)
         puts "Canceling stack creation."
       elsif stack.stack_status == "UPDATE_IN_PROGRESS"
-        cfn.cancel_update_stack(stack_name: @stack_name)
+        cfn.cancel_update_stack(stack_name: @stack)
         puts "Canceling stack update."
         status.wait if @options[:wait]
       else
@@ -30,7 +35,7 @@ class Lono::Cfn
     end
 
     def status
-      @status ||= Status.new(@stack_name)
+      @status ||= Status.new(@stack)
     end
   end
 end

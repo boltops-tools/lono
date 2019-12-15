@@ -1,18 +1,18 @@
 describe Lono::Cfn::Preview::Param do
   let(:preview) do
-    Lono::Cfn::Preview::Param.new("ec2")
+    Lono::Cfn::Preview::Param.new(blueprint: "ec2")
   end
 
   let(:optional_parameters) do
     {"Foo"=>
       {"Default"=>123,
-       "Description"=>"desc test",
-       "Type"=>"String"},
-     "Bar"=>{"Default"=>"db.t3.small", "Type"=>"String"}}
+      "Description"=>"desc test",
+      "Type"=>"String"},
+    "Bar"=>{"Default"=>"db.t3.small", "Type"=>"String"}}
   end
   let(:generate_all) do
     [{:parameter_key=>"Cat", :parameter_value=>"456"},
-     {:parameter_key=>"Dog", :parameter_value=>"whatever"}]
+    {:parameter_key=>"Dog", :parameter_value=>"whatever"}]
   end
   let(:stack_parameters) do
     [
@@ -22,9 +22,9 @@ describe Lono::Cfn::Preview::Param do
   end
 
   context "normalize" do
-    it "generated_params" do
+    it "generated_parameters" do
       allow(preview).to receive(:generate_all).and_return(generate_all)
-      expect(preview.generated_params).to eq(
+      expect(preview.generated_parameters).to eq(
         {"Dog"=>"whatever", "Cat"=>"456"}
       )
     end

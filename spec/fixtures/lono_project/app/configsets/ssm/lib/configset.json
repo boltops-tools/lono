@@ -1,0 +1,25 @@
+{
+    "AWS::CloudFormation::Init" : {
+        "configSets" : {
+            "default" : [ "config1" , "config2" ]
+        },
+        "config1" : {
+            "commands" : {
+                "test" : {
+                    "command" : "echo \"$CFNTEST\" > test.txt",
+                    "env" : { "CFNTEST" : "I come from config1." },
+                    "cwd" : "~"
+                }
+            }
+        },
+        "config2" : {
+            "commands" : {
+                "test" : {
+                    "command" : "echo \"$CFNTEST\" > test.txt",
+                    "env" : { "CFNTEST" : "I come from config2" },
+                    "cwd" : "~"
+                }
+            }
+        }
+    }
+}

@@ -3,8 +3,8 @@ describe Lono::CLI do
     commands = {
       # "new" => "name", # options is the completion because it's a Thor::Group
       "generate blueprint" => "--clean",
-      "cfn" =>  "create",
-      "cfn create" =>  "name",
+      "cfn" =>  "deploy",
+      "cfn deploy" =>  "stack",
       "param" => "generate",
     }
     commands.each do |command, expected_word|

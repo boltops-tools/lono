@@ -3,13 +3,12 @@ describe Lono::Param::Generator do
     def generate(context)
       setup_config("params", context)
       setup_config("variables", context)
-      param = Lono::Param::Generator.new("example",
-        stack: "example",
+      param = Lono::Param::Generator.new(
         blueprint: "example",
+        stack: "example",
         mute: false)
-      json = param.generate
-      data = JSON.load(json)
-      data.first["ParameterValue"]
+      data = param.generate
+      data.first[:parameter_value]
     end
 
     def setup_config(config_type, fixture_type)

@@ -13,7 +13,3 @@ Shows the status of the stack. If the stack is in progress then tail the status 
     11:52:35PM UPDATE_COMPLETE_CLEANUP_IN_PROGRESS AWS::CloudFormation::Stack ecs-asg
     11:52:36PM UPDATE_COMPLETE AWS::CloudFormation::Stack ecs-asg
 
-If current name is set.
-
-    lono cfn current --name ecs-asg
-    lono cfn status

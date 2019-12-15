@@ -38,7 +38,7 @@ template "example" do
 end
 ```
 
-Essentially with layering, when `lono generate` is called it will first evaluate `app/definitions/base.rb` and then evaluate the `LONO_ENV` specific definitions file.  By default `LONO_ENV=development`, so the evaluation order looks like this:
+Essentially with layering, when [lono generate](/reference/lono-generate/) is called it will first evaluate `app/definitions/base.rb` and then evaluate the `LONO_ENV` specific definitions file.  By default `LONO_ENV=development`, so the evaluation order looks like this:
 
 1. app/definitions/base.rb
 2. app/definitions/base/* # all files in this folder

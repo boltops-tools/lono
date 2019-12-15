@@ -1,14 +1,14 @@
 # Encapsulates helper methods and instance variables to be rendered in the ERB templates.
 class Lono::Template
-  class Context
+  class Context < Lono::AbstractBase
     extend Memoist
     include Lono::Template::Helper
     include Loader
     include Helpers # ERB
-    include Dsl::Builder::Syntax # DSL
+    include Strategy::Dsl::Builder::Syntax # DSL
 
-    def initialize(blueprint, options={})
-      @blueprint, @options = blueprint, options
+    def initialize(options={})
+      super
       load_variables
       load_project_helpers
     end

@@ -33,7 +33,7 @@ module Lono::AppFile
     end
 
     def context
-      Lono::Template::Context.new(@blueprint, @options)
+      Lono::Template::Context.new(@options)
     end
     memoize :context
 

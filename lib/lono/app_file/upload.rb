@@ -3,11 +3,8 @@ module Lono::AppFile
     include Lono::AwsServices
     extend Memoist
 
-    def initialize(blueprint, options={})
-      @blueprint, @options = blueprint, options
-    end
-
     def upload
+      return unless Registry.items.size > 0
       puts "Uploading app/files..."
 
       Registry.items.each do |item|

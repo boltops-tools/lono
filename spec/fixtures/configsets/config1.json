@@ -1,0 +1,21 @@
+{
+  "AWS::CloudFormation::Init": {
+    "configSets": {
+      "default": ["aaa1", "aaa2"]
+    },
+    "aaa1": {
+      "commands": {
+        "test": {
+          "command": "echo from-aaa1 > test1.txt"
+        }
+      }
+    },
+    "aaa2": {
+      "commands": {
+        "test": {
+          "command": "echo from-aaa2 > test1.txt"
+        }
+      }
+    }
+  }
+}

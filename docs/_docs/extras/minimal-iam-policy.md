@@ -1,10 +1,10 @@
 ---
 title: Minimal IAM Policy
 categories: extras
-nav_order: 62
+nav_order: 79
 ---
 
-The IAM user you use to run the `lono cfn deploy` command needs a minimal set of IAM policies in order to deploy. Here is a table of the baseline services needed:
+The IAM user you use to run the [lono cfn deploy](/reference/lono-cfn-deploy/) command needs a minimal set of IAM policies in order to deploy. Here is a table of the baseline services needed:
 
 Service | Description
 --- | ---
@@ -15,7 +15,7 @@ However, it really depends on what your CloudFormation templates provision. If y
 
 ## Instructions
 
-It is recommended that you create an IAM group and associate it with the IAM users that need access to use `lono cfn deploy`.  Here are starter instructions and a policy that you can tailor for your needs:
+It is recommended that you create an IAM group and associate it with the IAM users that need access to use [lono cfn deploy](/reference/lono-cfn-deploy/).  Here are starter instructions and a policy that you can tailor for your needs:
 
 ### Commands Summary
 

@@ -1,15 +1,5 @@
 class Lono::Template
-  class PostProcessor
-    include Lono::Blueprint::Root
-    extend Memoist
-
-    def initialize(blueprint, options={})
-      @blueprint, @options = blueprint, options
-      @template = @options[:template] || @blueprint
-      Lono::ProjectChecker.check
-      set_blueprint_root(@blueprint)
-    end
-
+  class PostProcessor < Lono::AbstractBase
     def run
       replacements.each do |placeholder, replacement|
         update_template!(template)
@@ -18,7 +8,7 @@ class Lono::Template
     end
 
     def write_template!
-      IO.write(template_path, YAML.dump(template)) # unless ENV['TEST'] # additional safeguard for testing
+      IO.write(template_path, YAML.dump(template)) # unless ENV['LONO_TEST'] # additional safeguard for testing
     end
 
     def replacements

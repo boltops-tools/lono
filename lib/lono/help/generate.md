@@ -2,13 +2,13 @@ Generates CloudFormation template, parameter files, and scripts in lono project 
 
 ## Examples
 
-    lono generate
-    lono generate --clean
-    lono g --clean # shortcut
+    lono generate BLUEPRINT
+    lono generate BLUEPRINT --clean
+    lono g BLUEPRINT --clean # shortcut
 
 ## Example Output
 
-    $ lono generate
+    $ lono generate ec2
     Generating CloudFormation templates, parameters, and scripts
     Generating CloudFormation templates:
       output/templates/ec2.yml

@@ -2,7 +2,7 @@
 title: Layering
 categories: core
 order: 5
-nav_order: 16
+nav_order: 17
 ---
 
 <div class="video-box"><div class="video-container"><iframe src="https://www.youtube.com/embed/oE2vEEUu6qc" frameborder="0" allowfullscreen=""></iframe></div></div>

@@ -5,7 +5,7 @@ reference: true
 
 ## Usage
 
-    lono generate
+    lono generate BLUEPRINT
 
 ## Description
 
@@ -15,13 +15,13 @@ Generates CloudFormation template, parameter files, and scripts in lono project 
 
 ## Examples
 
-    lono generate
-    lono generate --clean
-    lono g --clean # shortcut
+    lono generate BLUEPRINT
+    lono generate BLUEPRINT --clean
+    lono g BLUEPRINT --clean # shortcut
 
 ## Example Output
 
-    $ lono generate
+    $ lono generate ec2
     Generating CloudFormation templates, parameters, and scripts
     Generating CloudFormation templates:
       output/templates/ec2.yml
@@ -33,9 +33,12 @@ Generates CloudFormation template, parameter files, and scripts in lono project 
 ## Options
 
 ```
-[--clean], [--no-clean]  # remove all output files before generating
 [--quiet], [--no-quiet]  # silence the output
+[--clean], [--no-clean]  # remove all output files before generating
+                         # Default: true
+[--source=SOURCE]        # url or path to file with template
 [--stack=STACK]          # stack name. defaults to blueprint name.
+[--template=TEMPLATE]    # override convention and specify the template file to use
 
 Runtime options:
 -f, [--force]                    # Overwrite files that already exist

@@ -1,29 +1,31 @@
 require "yaml"
 
 class Lono::Template
-  class Generator
-    include Lono::Blueprint::Root
-
-    def initialize(blueprint, options={})
-      @blueprint, @options = blueprint, ActiveSupport::HashWithIndifferentAccess.new(options.dup)
-      @template = @options[:template] || @blueprint
-      Lono::ProjectChecker.check
-      set_blueprint_root(@blueprint)
-    end
-
+  class Generator < Lono::AbstractBase
     def run
       # Examples:
       #   Erb.new(b, options.dup).run
       #   Dsl.new(b, options.dup).run
-      generator_class = "Lono::Template::#{template_type.classify}"
+      generator_class = "Lono::Template::Strategy::#{template_type.camelize}"
       generator_class = Object.const_get(generator_class)
-      generator_class.new(@blueprint, @options).run
+      generator_class.new(@options).run
+      # The generator strategy class writes template to disk. The inject_configsets reads it back from disk.
+      # Leaving as-is instead of reading all in memory in case there's a reason.
+      inject_configsets
     end
 
     def template_type
-      meta_config = "#{Lono.blueprint_root}/.meta/config.yml"
-      data = YAML.load_file(meta_config)
-      data["template_type"] || "dsl"
+      if @options[:source]
+        "source"
+      else
+        jadespec = Lono::Jadespec.new(Lono.blueprint_root, "unknown") # abusing Jadespec to get template_type
+        jadespec.template_type
+      end
+    end
+
+    def inject_configsets
+      Lono::Configset::Preparer.new(@options).run # register and materialize gems
+      ConfigsetInjector.new(@options).run
     end
   end
 end

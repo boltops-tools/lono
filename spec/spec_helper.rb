@@ -1,13 +1,13 @@
-ENV['TEST'] = '1'
+ENV['LONO_TEST'] = '1'
 # Ensures aws api never called. Fixture home folder does not contain ~/.aws/credentails
-ENV['HOME'] = "spec/fixtures/home"
+ENV['HOME'] = "#{Dir.pwd}/spec/fixtures/home"
 # We'll always re-generate a new lono project in tmp. It can be:
 #
 #   1. copied from spec/fixtures/lono_project
 #   2. generated from `lono new`
 #
 # This is done because changing LONO_ROOT for specs was a mess.
-ENV['LONO_ROOT'] = "tmp/lono_project" # this gets kept
+ENV['LONO_ROOT'] = "#{Dir.pwd}/tmp/lono_project" # this gets kept
 ENV['AWS_REGION'] ||= "us-west-2"
 
 require "pp"
@@ -40,12 +40,12 @@ module Helper
   # Copies spec/fixtures/lono_project to tmp/lono_project,
   # Main fixture we'll use because it's faster
   def copy_lono_project
-    destroy_lono_project # just in case KEEP_TMP_PROJECT is used
+    destroy_lono_project(true)
     FileUtils.cp_r("spec/fixtures/lono_project", "tmp/lono_project")
   end
 
-  def destroy_lono_project
-    return if ENV['KEEP_TMP_PROJECT']
+  def destroy_lono_project(force=false)
+    return if ENV['KEEP_TMP_PROJECT'] && !force
     # Only use KEEP_TMP_PROJECT if you are testing exactly 1 spec for debugging
     # or it'll affect other tests.
     FileUtils.rm_rf(Lono.root)

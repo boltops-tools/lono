@@ -1,6 +1,6 @@
 ---
 title: Variables Layering Support
-nav_order: 18
+nav_order: 19
 ---
 
 Variables support layering. Layering is performed on the files in the `configs/demo/variables` folder.  Let's say you have the following variables directory structure:

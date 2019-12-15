@@ -1,6 +1,6 @@
 describe Lono::Template::PostProcessor do
   let(:processor) do
-    processor = Lono::Template::PostProcessor.new("example")
+    processor = Lono::Template::PostProcessor.new(blueprint: "example")
     allow(processor).to receive(:registry_items).and_return(registry_items)
     allow(processor).to receive(:template).and_return(template)
     allow(processor).to receive(:write_template!)

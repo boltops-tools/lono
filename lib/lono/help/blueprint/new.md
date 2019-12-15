@@ -9,7 +9,6 @@
           create  blueprints/demo
           create  blueprints/demo/demo.gemspec
           create  blueprints/demo/.gitignore
-          create  blueprints/demo/.meta/config.yml
           create  blueprints/demo/CHANGELOG.md
           create  blueprints/demo/Gemfile
           create  blueprints/demo/README.md

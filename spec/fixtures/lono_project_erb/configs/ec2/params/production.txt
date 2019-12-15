@@ -1,0 +1,1 @@
+InstanceType=t2.large

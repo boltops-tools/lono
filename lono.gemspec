@@ -30,9 +30,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency "cfn_camelizer"
   gem.add_dependency "filesize"
   gem.add_dependency "graph" # lono xgraph command dependency
-  gem.add_dependency "guard"
-  gem.add_dependency "guard-cloudformation"
-  # gem.add_dependency "guard-lono" # TODO: create guard gem
   gem.add_dependency "hashie"
   gem.add_dependency "json"
   gem.add_dependency "memoist"
@@ -41,6 +38,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "rainbow"
   gem.add_dependency "rb-fsevent"
   gem.add_dependency "render_me_pretty"
+  gem.add_dependency "text-table"
   gem.add_dependency "thor"
   gem.add_dependency "zeitwerk"
 
@@ -48,7 +46,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "cli_markdown"
   gem.add_development_dependency "guard-bundler"
   gem.add_development_dependency "guard-rspec"
-  gem.add_development_dependency "lono-pro"
   gem.add_development_dependency "rake"
   gem.add_development_dependency "rspec"
 end

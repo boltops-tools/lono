@@ -1,7 +1,7 @@
 ---
 title: Template Definitions
 categories: erb
-nav_order: 71
+nav_order: 89
 ---
 
 Template definitions are a core component of lono.  Template definitions are:
@@ -66,7 +66,7 @@ The variables to use are: `app`, `instance_type` and `elb`.  These variables wil
 
 Lastly, the output name specified is `example-stack`.  This tells lono to generate the output template to `output/example-stack.yml`.  The `.yml` extension is inferred automatically.
 
-When `lono generate` runs, lono uses the information in `app/definitions/base.rb` and `app/templates/example.yml` to generate the template to `output/templates/example.yml`.
+When [lono generate](/reference/lono-generate/) runs, lono uses the information in `app/definitions/base.rb` and `app/templates/example.yml` to generate the template to `output/templates/example.yml`.
 
 Template definitions also support layering, covered in [Layering Support]({% link _docs/core/layering.md %}).
 

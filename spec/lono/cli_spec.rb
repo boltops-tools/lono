@@ -27,12 +27,16 @@ describe Lono::CLI do
     it "generate should build templates" do
       # NOTE: LONO_ROOT modified in the spec_helper.rb
       execute("cd tmp && ../exe/lono new lono_project --no-bundle")
-      execute("exe/lono generate")
-      success = $?.exitstatus == 0
-      expect(success).to be true
+      exe_lono = "../../exe/lono"
+      Dir.chdir(Lono.root) do
+        execute("#{exe_lono} blueprint new demo")
+        execute("#{exe_lono} generate demo")
+        success = $?.success?
+        expect(success).to be true
 
-      exist = File.exist?("#{Lono.root}/configs/settings.yml")
-      expect(exist).to be true
+        exist = File.exist?("configs/settings.yml")
+        expect(exist).to be true
+      end
     end
   end
 end

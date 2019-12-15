@@ -4,41 +4,16 @@ module Lono
   # If not, provide a friendly message and possibly exit.
   class ProjectChecker
     class << self
-      # 2 ways to use lono.
-      #
-      #   1. A standalone project - not available below version 5
-      #   2. A multimode project - available after version 5
-      #
       @@checked = false
       def check
         return if @@checked
 
-        unless standalone? or multimode?
-          puts "ERROR: Was unable to detect that you are within a lono project. Are you sure you are in lono project?".color(:red)
+        unless File.exist?("#{Lono.root}/configs/settings.yml")
+          puts "ERROR: Could not find configs/settings.yml file. Are you sure you are in lono project?".color(:red)
           quit 1
         end
 
-        @@mode = standalone? ? :standalone : :multimode
-
         @@checked = true
-      end
-
-      def mode
-        @@mode
-      end
-
-      def standalone?
-        paths = %w[
-          app/definitions
-          app/templates
-        ]
-        paths.all? do |path|
-          File.exist?("#{Lono.root}/#{path}")
-        end
-      end
-
-      def multimode?
-        File.exist?("#{Lono.root}/configs/settings.yml")
       end
 
       # Dont exit for this one. It's okay. But show a warning.
@@ -49,8 +24,8 @@ module Lono
       end
 
       def quit(signal)
-        if ENV['TEST'] == '1'
-          signal == 0 || raise("Not in lono project")
+        if ENV['LONO_TEST'] == '1'
+          signal == 0 || raise("Not in lono project. pwd: #{Dir.pwd}")
         else
           exit(signal)
         end

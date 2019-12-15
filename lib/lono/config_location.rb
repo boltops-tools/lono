@@ -1,16 +1,11 @@
 module Lono
-  class ConfigLocation
+  class ConfigLocation < AbstractBase
     extend Memoist
-    include Lono::Conventions
 
     def initialize(config, options={}, env=Lono.env, root=Lono.root)
+      super(options)
       # config can be params or variables
-      @config, @options, @root, @env = config, options, root, env
-
-      @stack = options[:stack]
-      @blueprint = options[:blueprint] || @stack
-      @template, @param = template_param_convention(options)
-
+      @config, @options, @env, @root = config, options, env, root
       @requested = determine_requested
     end
 
@@ -73,14 +68,12 @@ module Lono
     def determine_requested
       # param is usually set from the convention. when set from convention stack name takes higher precedence
       config_key = @config.singularize.to_sym # param or variable
-      @options[config_key] || @options[:config] || @options[:stack]
+      @options[config_key] || @options[:config] || @stack
     end
 
     def requested_file(path)
-      # List of paths to consider from initial path provided
-      paths = @config == "params" ?
-                [path, "#{path}.txt", "#{path}.sh"] :
-                [path, "#{path}.rb"]
+      # List of paths to consider from initial path provided. Combine params and variables possible paths for simplicity.
+      paths = [path, "#{path}.txt", "#{path}.sh", "#{path}.rb"].compact
       paths.find { |p| File.file?(p) }
     end
     memoize :requested_file

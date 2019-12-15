@@ -7,9 +7,9 @@ module Lono
     register(New, "new", "new NAME", "Generates new lono blueprint.")
 
     desc "list", "Lists project blueprints"
-    long_desc Help.text("blueprint/new")
+    long_desc Help.text("blueprint/list")
     def list
-      List.available
+      Finder::Blueprint.list
     end
   end
 end

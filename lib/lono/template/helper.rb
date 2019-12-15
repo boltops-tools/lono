@@ -41,27 +41,27 @@ BASH_CODE
   end
 
   def scripts_s3_path
-    upload = Lono::Script::Upload.new(@blueprint)
+    upload = Lono::Script::Upload.new(@options)
     upload.s3_dest
   end
 
   def template_s3_path(template_name)
     # high jacking Upload for useful s3_https_url method
     template_path = "output/#{@blueprint}/templates/#{template_name}.yml"
-    upload = Lono::Template::Upload.new(@blueprint, @options)
+    upload = Lono::Template::Upload.new(@options)
     upload.s3_https_url(template_path)
   end
 
   def template_params(param_name)
-    generator_options = {
+    o = {
       allow_not_exists: true
     }.merge(@options)
-    generator_options["param"] = param_name
-    generator = Lono::Param::Generator.new(@blueprint, generator_options)
+    o["param"] = param_name
+    generator = Lono::Param::Generator.new(o)
     # do not generate because lono cfn calling logic already generated it we only need the values
-    params = generator.params    # Returns Array in underscore keys format
+    parameters = generator.parameters    # Returns Array in underscore keys format
     # convert Array to simplified hash structure
-    params.inject({}) do |h, param|
+    parameters.inject({}) do |h, param|
       h.merge(param[:parameter_key] => param[:parameter_value])
     end
   end

@@ -2,7 +2,7 @@
 title: Camelizer
 category: conventions
 desc: Hash key conventions.
-nav_order: 51
+nav_order: 70
 ---
 
 Lono generates CloudFormation templates from a [DSL]({% link _docs/dsl.md %}).  As a part of the generation process, Lono does not auto-camelize the keys of the CloudFormation template by default.
@@ -30,13 +30,12 @@ Even though it is less Ruby-ish, it has resulted in more overall productivity.
 
 Even though auto-camelization is disabled by default, it can be easily enabled. It can be enabled on both 1) a per-blueprint basis and 2) a DSL method basis.
 
-Each blueprint has a `.meta/config.yml` file.  It can be used to control the camelizer behavior. Example:
+Each blueprint is actually a gem. The gemspec metadata can be used control the camelizer behavior. Example:
 
-```yaml
----
-blueprint_name: ec2
-template_type: dsl
-auto_camelize: except_resource
+```ruby
+Gem::Specification.new do |s|
+  s.metadata = { auto_camelize: true }
+end
 ```
 
 Setting | Description
@@ -47,15 +46,9 @@ Setting | Description
 
 Lastly, you can finely control and enable auto-camelization with list of the [Lono DSL methods]({% link _docs/dsl.md %}).
 
-```yaml
-auto_camelize:
-- condition
-- mapping
-- metadata
-- output
-- parameter
-- section
-- transform
+```ruby
+Gem::Specification.new do |s|
+  s.metadata = { auto_camelize: %w[condition mapping metadata output parameter section transform] }
 ```
 
 The example turns on camelization for pretty much every [Lono DSL method]({% link _docs/dsl.md %}) except resource.

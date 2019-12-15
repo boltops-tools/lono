@@ -1,18 +1,9 @@
 module Lono
-  class Seed
-    include Lono::Blueprint::Root
-    include Lono::Conventions
-
-    def initialize(blueprint, options={})
-      @blueprint, @options = blueprint, options
-      set_blueprint_root(@blueprint)
-      @template, @param = template_param_convention(options)
-    end
-
+  class Seed < AbstractBase
     def create
       puts "Creating starter config files for #{@blueprint}"
       configs_class = load_configs_class # ::Configs or Lono::Seed::Base
-      configs = configs_class.new(@blueprint, @options)
+      configs = configs_class.new(@options)
       # The Configs class implements: variables
       configs.run # setup the instance variables
     end

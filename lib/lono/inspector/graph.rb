@@ -3,7 +3,7 @@ require "graph"
 
 module Lono::Inspector
   class Graph < Base
-    def initialize(blueprint, template, options)
+    def initialize(options={})
       super
       @nodes = [] # lookup map
     end

@@ -3,6 +3,7 @@ require "filesize"
 class Lono::Script
   class Upload < Base
     include Lono::AwsServices
+    include Lono::Utils::PrettyTime
 
     def run
       Lono::ProjectChecker.check
@@ -18,7 +19,7 @@ class Lono::Script
       start_time = Time.now
       obj.upload_file(tarball_path)
       time_took = pretty_time(Time.now-start_time).color(:green)
-      puts "Time to upload code to s3: #{time_took}"
+      puts "Time took to upload code to s3: #{time_took}"
     end
 
     def filesize
@@ -49,17 +50,6 @@ class Lono::Script
 
     def tarball_path
       IO.read(SCRIPTS_INFO_PATH).strip
-    end
-
-    # http://stackoverflow.com/questions/4175733/convert-duration-to-hoursminutesseconds-or-similar-in-rails-3-or-ruby
-    def pretty_time(total_seconds)
-      minutes = (total_seconds / 60) % 60
-      seconds = total_seconds % 60
-      if total_seconds < 60
-        "#{seconds.to_i}s"
-      else
-        "#{minutes.to_i}m #{seconds.to_i}s"
-      end
     end
   end
 end

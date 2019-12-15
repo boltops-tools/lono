@@ -9,7 +9,7 @@ reference: true
 
 ## Description
 
-Lists project blueprints
+Lists blueprints
 
 
 ## Options

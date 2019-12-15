@@ -1,20 +1,13 @@
 # Naming AppFile instead of File so we dont to use ::File for normal regular File class
 module Lono::AppFile
-  class Base
-    include Lono::Blueprint::Root
-    extend Memoist
-
+  class Base < Lono::AbstractBase
     # What's needed for a Thor::Group or "Sequence". Gives us Thor::Actions commands like create_file
     # Must be included before `def initialize` as we override the Thor initialize
     include Thor::Actions
     include Thor::Base
-
-    def initialize(blueprint, options={})
-      @blueprint, @options = blueprint, options
-      @template = @options[:template] || @blueprint
-      Lono::ProjectChecker.check
-      set_blueprint_root(@blueprint)
-      Lono::ProjectChecker.empty_templates
+    # Override Thor::Base initialize
+    def initialize(options={})
+      reinitialize(options)
       initialize_variables
     end
 

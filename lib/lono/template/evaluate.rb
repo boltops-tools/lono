@@ -14,7 +14,8 @@ class Lono::Template
 
     # Prints out a user friendly task_definition error message
     def template_evaluation_error(e)
-      error_info = e.backtrace.first
+      lines = e.backtrace.reject { |l| l.include?("/lib/lono/") }
+      error_info = lines.first
       path, line_no, _ = error_info.split(':')
       line_no = line_no.to_i
       puts "Error evaluating #{path}:".color(:red)

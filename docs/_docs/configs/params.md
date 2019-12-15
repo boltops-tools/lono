@@ -1,7 +1,7 @@
 ---
 title: Params
 order: 3
-nav_order: 14
+nav_order: 15
 ---
 
 Params are configs that you define to affect how the templates behave at runtime when the CloudFormation stack is launched.
@@ -22,7 +22,7 @@ The `configs` files are located at `configs/BLUEPRINT/params`.  Example:
 
 ## Examples
 
-Lono provides a way to specify the parameters in a simple `key=value` format commonly found in env files.  This format is less prone to human error than the AWS verbose parameter file format.  When `lono generate` is ran it processes the files in `configs/BLUEPRINT/params` folders and outputs the AWS JSON format file in `output/BLUEPRINT/params` folder.  Here's an example:
+Lono provides a way to specify the parameters in a simple `key=value` format commonly found in env files.  This format is less prone to human error than the AWS verbose parameter file format.  When [lono generate](/reference/lono-generate/) is ran it processes the files in `configs/BLUEPRINT/params` folders and outputs the AWS JSON format file in `output/BLUEPRINT/params` folder.  Here's an example:
 
 configs/demo/params/development.txt:
 

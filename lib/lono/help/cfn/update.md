@@ -21,7 +21,7 @@ By default, the update command will display a preview of the stack changes befor
 
 ## Conventions: template and param
 
-Lono follows some [coventions](http://lono.cloud/docs/conventions/) that helps keep the commands short.  We'll go through an example to explain:
+Lono follows some [coventions](https://lono.cloud/docs/conventions/) that helps keep the commands short.  We'll go through an example to explain:
 
 Provided that you are in a lono project and have a `demo` lono blueprint that contains a `demo` template.  To update a stack you can run:
 
