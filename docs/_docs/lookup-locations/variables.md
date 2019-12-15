@@ -9,11 +9,11 @@ Lono supports variables files that affect the CloudFormation template at compile
 
 You can specify the `--variable` path directly. Example:
 
-    lono cfn deploy my-stack --blueprint demo --variable configs/demo/variables/my-variable.txt
+    lono cfn deploy my-stack --blueprint demo --variable configs/demo/variables/my-variable.rb
 
 You can also specify variables files that exist outside of the lono project.
 
-    lono cfn deploy my-stack --blueprint demo --variable /tmp/my-variable.txt
+    lono cfn deploy my-stack --blueprint demo --variable /tmp/my-variable.rb
 
 Direct locations take the highest precedence. Lono also supports powerful conventional lookup paths, which are covered next.
 
@@ -23,10 +23,10 @@ You can define variables files in different locations. Lono lookups up each of t
 
 Lono will look up the variables file in this order.
 
-1. configs/BLUEPRINT/variables/LONO_ENV/TEMPLATE/REQUESTED.txt
-2. configs/BLUEPRINT/variables/LONO_ENV/REQUESTED.txt (recommended for most cases)
-3. configs/BLUEPRINT/variables/REQUESTED.txt
-4. configs/BLUEPRINT/variables/LONO_ENV.txt
+1. configs/BLUEPRINT/variables/LONO_ENV/TEMPLATE/REQUESTED.rb
+2. configs/BLUEPRINT/variables/LONO_ENV/REQUESTED.rb (recommended for most cases)
+3. configs/BLUEPRINT/variables/REQUESTED.rb
+4. configs/BLUEPRINT/variables/LONO_ENV.rb
 
 To determine what variable file to use, lono searches for files at each level of specificity until it finds a file. Lono starts with the level with the most specificity first. It ends with the generic env level, least specific, last.
 
@@ -57,14 +57,14 @@ If you run the command:
 
 Lono will search for these files:
 
-    configs/demo/variables/development/demo/my-variable.txt (template level)
-    configs/demo/variables/development/my-variable.txt (env level)
-    configs/demo/variables/my-variable.txt (variables level)
-    configs/demo/variables/development.txt (variables generic env)
+    configs/demo/variables/development/demo/my-variable.rb (template level)
+    configs/demo/variables/development/my-variable.rb (env level)
+    configs/demo/variables/my-variable.rb (variables level)
+    configs/demo/variables/development.rb (variables generic env)
 
 So if you have only created:
 
-    configs/demo/variables/development/my-variable.txt (env level)
+    configs/demo/variables/development/my-variable.rb (env level)
 
 Lono will use it.  The recommendation is to use the **env level** file.  This allows lono to use different variables files based on the Lono.env. When you need to, you can override the variable file with the `--variable` option.
 
@@ -76,14 +76,14 @@ If you run the command:
 
 Lono will search for these files:
 
-    configs/demo/variables/development/demo/my-stack.txt (template level)
-    configs/demo/variables/development/my-stack.txt (env level)
-    configs/demo/variables/my-stack.txt (variables level)
-    configs/demo/variables/development.txt (variables generic level)
+    configs/demo/variables/development/demo/my-stack.rb (template level)
+    configs/demo/variables/development/my-stack.rb (env level)
+    configs/demo/variables/my-stack.rb (variables level)
+    configs/demo/variables/development.rb (variables generic level)
 
 So if you have only created:
 
-    configs/demo/variables/development/my-stack.txt
+    configs/demo/variables/development/my-stack.rb
 
 Lono will use it.  This allow lono to launch stack names that match the variables files.
 
@@ -91,15 +91,15 @@ Lono will use it.  This allow lono to launch stack names that match the variable
 
 Thanks to [conventions]({% link _docs/conventions.md %}), the deploy command is greatly simplified. Here's an example. Let's say you have these `configs/demo` files:
 
-    configs/demo/variables/development/my-variable.txt
-    configs/demo/variables/development/my-stack.txt
-    configs/demo/variables/development.txt
+    configs/demo/variables/development/my-variable.rb
+    configs/demo/variables/development/my-stack.rb
+    configs/demo/variables/development.rb
 
 Now you can run:
 
-    lono cfn deploy my-stack --blueprint demo # uses my-stack.txt
-    lono cfn deploy demo --variable my-variable     # uses my-variable.txt
-    lono cfn deploy demo                      # uses development.txt
+    lono cfn deploy my-stack --blueprint demo # uses my-stack.rb
+    lono cfn deploy demo --variable my-variable     # uses my-variable.rb
+    lono cfn deploy demo                      # uses development.rb
 
 At the same time, the you can easily override the behavior with `--variable`.
 
