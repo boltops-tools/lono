@@ -3,6 +3,7 @@ title: CLI Reference
 ---
 {% include reference.md %}
 
+* [lono app_files]({% link _reference/lono-app_files.md %})
 * [lono blueprint]({% link _reference/lono-blueprint.md %})
 * [lono blueprints]({% link _reference/lono-blueprints.md %})
 * [lono cfn]({% link _reference/lono-cfn.md %})

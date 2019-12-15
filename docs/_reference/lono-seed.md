@@ -5,7 +5,7 @@ reference: true
 
 ## Usage
 
-    lono seed
+    lono seed BLUEPRINT
 
 ## Description
 
