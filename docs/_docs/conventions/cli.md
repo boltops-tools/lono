@@ -49,8 +49,9 @@ Is the same as:
 
 This allows us to organize the params files in a way that matches the stack name.  Example:
 
-    lono cfn deploy daisy   --blueprint demo --template demo
-    lono cfn deploy jenkins --blueprint demo --template demo
+    lono cfn deploy daisy   --blueprint demo
+
+    lono cfn deploy jenkins --blueprint demo
 
 Will use the corresponding config files:
 
