@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
 ## [7.0.0]
+* #36 lono v7
 * Breaking: project `blueprints` moved to `app/blueprints`. Use `lono upgrade` to update.
 * Introduce configsets concept.
 * Introduce lono sets concept: `lono sets`, `lono sets deploy`, `lono sets instances sync`
