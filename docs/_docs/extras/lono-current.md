@@ -1,7 +1,7 @@
 ---
 title: Lono Current
 categories: extras
-nav_order: 59
+nav_order: 77
 ---
 
 Sets current values so you do not have to provide the options repeatedly.  This shortens the commands.
@@ -31,19 +31,6 @@ Shortened commands:
     lono cfn status
 
 The stack name is not longer required because it is set as the current name.
-
-## Suffix Example
-
-Random suffixes can help streamlined your development workflow.
-
-    lono cfn current --suffix random
-    lono cfn create demo
-    lono cfn update demo-abc # generated random suffix was abc
-    lono cfn current --name demo-abc
-    lono cfn update
-    lono cfn update # update again
-
-In this way, you can create multiple stacks continuously and random suffixes will be appended to the stack name. Then set the current stack name to the one are focused on updating and developing.
 
 ## Remove all settings
 

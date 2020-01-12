@@ -29,9 +29,9 @@ Cancel a CloudFormation stack.
 ## Options
 
 ```
-[--sure], [--no-sure]        # Skips are you sure prompt
 [--wait], [--no-wait]        # Wait for stack operation to complete.
                              # Default: true
+[--sure], [--no-sure]        # Skip are you sure prompt
 [--verbose], [--no-verbose]  
 [--noop], [--no-noop]        
 ```

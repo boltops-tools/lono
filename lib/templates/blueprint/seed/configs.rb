@@ -21,8 +21,8 @@ class Lono::Seed::Configs < Lono::Seed::Base
   # Return String with the content of the config/BLUEPRINT/variables file.
   # def variables
   #   <<~EOL
-  #     @variable1=starter_value1
-  #     @variable2=starter_value2
+  #     @variable1 = "starter_value1"
+  #     @variable2 = "starter_value2"
   #   EOL
   # end
 end

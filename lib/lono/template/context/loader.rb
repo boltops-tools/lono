@@ -16,22 +16,10 @@ class Lono::Template::Context
       evaluate_variables_file(location.lookup) if location.lookup # config file
     end
 
-    # Load the variables defined in config/variables/* to make available in the
-    # template blocks in config/templates/*.
+    # Load the variables defined in config/variables/* to make available in lono scope.
     #
-    # Example:
-    #
-    #   `config/variables/base.rb`:
-    #     @foo = 123
-    #
-    #   `app/definitions/base.rb`:
-    #      template "mytemplate.yml" do
-    #        source "mytemplate.yml.erb"
-    #        variables(foo: @foo)
-    #      end
-    #
-    # NOTE: Only able to make instance variables avaialble with instance_eval,
-    #   wasnt able to make local variables available.
+    # NOTE: Was only able to make instance variables avaialble with instance_eval, wasnt able to make local variables
+    # available.
     def evaluate_variables_file(path)
       return unless File.exist?(path)
       instance_eval(IO.read(path), path)

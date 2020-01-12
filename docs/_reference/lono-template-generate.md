@@ -5,7 +5,7 @@ reference: true
 
 ## Usage
 
-    lono template generate
+    lono template generate BLUEPRINT
 
 ## Description
 

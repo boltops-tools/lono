@@ -8,21 +8,13 @@ class Lono::Blueprint
       @blueprint = blueprint
     end
 
-    def data
-      blueprint_location = Find.find(@blueprint)
-      meta_config = "#{blueprint_location}/.meta/config.yml"
-      YAML.load_file(meta_config)
+    def config
+      Lono::Finder::Blueprint.find(@blueprint)
     end
-    memoize :data
-
-    %w[blueprint_name template_type].each do |meth|
-      define_method meth do
-        data[meth]
-      end
-    end
+    memoize :config
 
     def auto_camelize?(target_section)
-      auto_camelize = data['auto_camelize']
+      auto_camelize = config.auto_camelize
       # auto_camelize.nil? for backward compatibility
       return true if auto_camelize.nil? || auto_camelize == true
 

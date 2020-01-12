@@ -63,10 +63,6 @@ The `INFO` messages are written to stderr so you can grab the translated templat
     lono code convert https://s3-us-east-2.amazonaws.com/cloudformation-templates-us-east-2/AutoScalingMultiAZWithNotifications.template > autoscaling.rb
     cat autoscaling.rb
 
-## Lono Pro
-
-This is a lono-pro addon command.
-
 
 ## Options
 

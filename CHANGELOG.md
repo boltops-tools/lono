@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.0.0]
+* Breaking: project `blueprints` moved to `app/blueprints`. Use `lono upgrade` to update.
+* Introduce configsets concept.
+* Introduce lono sets concept: `lono sets`, `lono sets deploy`, `lono sets instances sync`
+* Merge lono-pro into lono. Deprecate lono-pro gem.
+* Add lono registration.
+* Major refactoring:
+* Remove stack name suffix option
+* Remove current concept
+* Introduce Lono::AbstractBase class
+* Pass CLI options consistently straight through.
+* Use Lono::Conventions.
+* Introduce Lono::Cfn::Opts to remove duplication
+* Internally use `@stack` instead of `@stack_name`. `@stack` can be either a stack or stack_set
+
 ## [6.1.11]
 - #35 fix app files variables erb lookup scope
 
@@ -206,7 +221,7 @@ This project *tries* to adhere to [Semantic Versioning](http://semver.org/), eve
 - update cli docs
 
 ## [4.0.1]
-- add http://lono.cloud/reference/
+- add https://lono.cloud/reference/
 - improve cli docs
 
 ## [4.0.0]

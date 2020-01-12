@@ -54,7 +54,7 @@ Running `lono user_data bootstrap` produces:
 ## Options
 
 ```
-[--clean], [--no-clean]  # remove all output/user_data files before generating
+[--clean], [--no-clean]  # remove all output files before generating
                          # Default: true
 
 Runtime options:

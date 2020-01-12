@@ -1,0 +1,28 @@
+Resources:
+  Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-111
+      InstanceType: t3.micro
+    Metadata:
+      AWS::CloudFormation::Init:
+        configSets:
+          default:
+            - "existing"
+        existing:
+          commands:
+            test:
+              command: "echo existing1 >> /tmp/test.txt"
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: test
+    Metadata:
+      AWS::CloudFormation::Init:
+        configSets:
+          default:
+            - "existing"
+        existing:
+          commands:
+            test:
+              command: "echo existing2 >> /tmp/test.txt"

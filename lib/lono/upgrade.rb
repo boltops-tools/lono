@@ -1,18 +1,20 @@
 module Lono
-  class Upgrade < Command
-    desc "v3to4", "Upgrade from version 3 to 4."
-    def v3to4
-      Upgrade4.new(options).run
+  class Upgrade
+    def initialize(options)
+      @options = options
     end
 
-    desc "v4to4_2", "Upgrade from version 4.0 to 4.2"
-    def v4to4_2
-      Upgrade42.start
+    def run
+      app_blueprints_move # v6 to v7
+      puts "Lono project upgraded"
     end
 
-    desc "v4to5", "Upgrade from version 4.2 to 5.0"
-    def v4to5
-      Upgrade5.start
+    def app_blueprints_move
+      return if File.exist?("#{Lono.root}/app/blueprints")
+      return unless File.exist?("#{Lono.root}/blueprints")
+
+      FileUtils.mv("#{Lono.root}/blueprints", "#{Lono.root}/app/blueprints")
+      puts "Move blueprints to app/blueprints"
     end
   end
 end

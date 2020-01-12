@@ -6,8 +6,8 @@ module Lono::Cfn::Preview
     def run
       puts "Code Diff Preview:".color(:green)
 
-      unless stack_exists?(@stack_name)
-        puts "WARN: Cannot create a diff for the stack because the #{@stack_name} does not exists.".color(:yellow)
+      unless stack_exists?(@stack)
+        puts "WARN: Cannot create a diff for the stack because the #{@stack} does not exists.".color(:yellow)
         return
       end
 
@@ -23,20 +23,19 @@ module Lono::Cfn::Preview
 
     def download_existing_cfn_template
       resp = cfn.get_template(
-        stack_name: @stack_name,
+        stack_name: @stack,
         template_stage: "Original"
       )
-      resp.template_body
       IO.write(existing_template_path, resp.template_body)
     end
 
     # for clarity
     def new_cfn_template
-      @template_path
+      template_path
     end
 
     def existing_template_path
-      "/tmp/existing_cfn_template.yml"
+      "/tmp/existing_stack.yml"
     end
   end
 end

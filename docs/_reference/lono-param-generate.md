@@ -5,7 +5,7 @@ reference: true
 
 ## Usage
 
-    lono param generate
+    lono param generate BLUEPRINT
 
 ## Description
 

@@ -1,6 +1,6 @@
 ---
 title: Settings
-nav_order: 53
+nav_order: 72
 ---
 
 Lono's behavior can be tailored using a `settings.yml` file. This file should be created at `~/.lono/settings.yml` or `configs/settings.yml` within the project.  The options from the files get merged with the following precedence:
@@ -33,7 +33,6 @@ The table below covers what each setting does:
 Setting  | Description
 ------------- | -------------
 aws_profile  | This provides a way to tightly bind `LONO_ENV` to `AWS_PROFILE`.  This prevents you from forgetting to switch your `LONO_ENV` when switching your `AWS_PROFILE` thereby accidentally launching a stack in the wrong environment. More details are explained in the [LONO_ENV docs]({% link _docs/configuration/lono-env.md %}).
-stack_name_suffix  | This is a convenience flag that results in lono automatically appending a string to your stack name.  The string gets appended to the stack name, but gets removed internally so that lono can use its [conventions]({% link _docs/conventions.md %}). This may speed up your development flow when you are launching many stacks repeatedly. It is explained in more detail here: [Stack Name Suffix]({% link _docs/configuration/stack-name-suffix.md %}). Default: false
 extract_scripts | This configures how the `extract_scripts` helper works.  The extract_script helpers can take some options like `to` to specify where you want to extract `app/scripts` to.  The default is `/opt`, so scripts end up in `/opt/scripts`.
 
 {% include prev_next.md %}

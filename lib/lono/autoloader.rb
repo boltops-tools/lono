@@ -1,3 +1,5 @@
+require "lono/bundle"
+Lono::Bundle.setup
 require "zeitwerk"
 
 module Lono
@@ -14,7 +16,7 @@ module Lono
         loader = Zeitwerk::Loader.new
         loader.inflector = Inflector.new
         loader.push_dir(File.dirname(__dir__)) # lib
-        # loader.log! # uncomment to debug
+        loader.log! if ENV["LONO_AUTOLOAD_LOG"]
         loader.setup
       end
     end

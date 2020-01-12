@@ -5,9 +5,9 @@ module Lono
   #
   # Normally, the Lono::Erb#run method generates the CloudFormation templates
   # and embeds user-data script into the template.
-  class UserData
-    def initialize(blueprint, options)
-      @blueprint, @options = blueprint, options
+  class UserData < AbstractBase
+    def initialize(options={})
+      super
       @name = options[:name]
       @path = "#{Lono.root}/app/user_data/#{@name}.sh"
     end
@@ -25,7 +25,7 @@ module Lono
     # Context for ERB rendering.
     # This is where we control what references get passed to the ERB rendering.
     def context
-      @context ||= Lono::Template::Context.new(@blueprint, @options)
+      @context ||= Lono::Template::Context.new(@options)
     end
   end
 end

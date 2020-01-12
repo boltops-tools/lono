@@ -18,7 +18,6 @@ By default, `lono new` generates a skeleton project. Use `TEMPLATE` to generate 
           create  infra/blueprints/demo
           create  infra/blueprints/demo/demo.gemspec
           create  infra/blueprints/demo/.gitignore
-          create  infra/blueprints/demo/.meta/config.yml
           create  infra/blueprints/demo/Gemfile
           create  infra/blueprints/demo/README.md
           create  infra/blueprints/demo/seed/configs.rb
@@ -54,5 +53,5 @@ By default, `lono new` generates a skeleton project. Use `TEMPLATE` to generate 
 
       To list and create additional blueprints refer to https://lono.cloud/docs/core/blueprints
 
-    More info: http://lono.cloud/
+    More info: https://lono.cloud/
     $

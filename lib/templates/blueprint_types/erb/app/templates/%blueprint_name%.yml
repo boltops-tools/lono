@@ -1,8 +1,67 @@
 ---
-# Simple Starter Example
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Demo stack
+Parameters:
+  InstanceType:
+    Default: t3.micro
+    Type: String
+Mappings:
+  AmiMap:
+    ap-northeast-1:
+      Ami: ami-068a6cefc24c301d2
+    ap-northeast-2:
+      Ami: ami-0d59ddf55cdda6e21
+    ap-south-1:
+      Ami: ami-0ce933e2ae91880d3
+    ap-southeast-1:
+      Ami: ami-07539a31f72d244e7
+    ap-southeast-2:
+      Ami: ami-0119aa4d67e59007c
+    ca-central-1:
+      Ami: ami-0ff24797826ebbcd5
+    eu-central-1:
+      Ami: ami-0d4c3eabb9e72650a
+    eu-north-1:
+      Ami: ami-006cda581cf39451b
+    eu-west-1:
+      Ami: ami-01f14919ba412de34
+    eu-west-2:
+      Ami: ami-05f37c3995fffb4fd
+    eu-west-3:
+      Ami: ami-0e9e6ba6d3d38faa8
+    sa-east-1:
+      Ami: ami-07820a4443539a2b0
+    us-east-1:
+      Ami: ami-00068cd7555f543d5
+    us-east-2:
+      Ami: ami-0dacb0c129b49f529
+    us-west-1:
+      Ami: ami-0b2d8d1abb76a53d8
+    us-west-2:
+      Ami: ami-0c5204531f799e0c6
 Resources:
-  EC2Instance:
+  Instance:
     Type: AWS::EC2::Instance
     Properties:
-      InstanceType: t3.micro
-      ImageId: ami-05b186cbeb4bd0170 # us-west-2 Amazon Linux 2 AMI (HVM), SSD Volume Type
+      InstanceType:
+        Ref: InstanceType
+      ImageId:
+        Fn::FindInMap:
+        - AmiMap
+        - Ref: AWS::Region
+        - Ami
+      SecurityGroupIds:
+      - Fn::GetAtt:
+        - SecurityGroup
+        - GroupId
+      UserData:
+        Fn::Base64:
+          Fn::Sub:
+          - |-
+            #!/bin/bash
+            echo "hello world"
+          - {}
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: demo security group

@@ -1,25 +1,25 @@
 class Lono::Cfn
   class Delete
     include Lono::AwsServices
-    include Util
+    include Lono::Utils::Sure
 
-    def initialize(stack_name, options={})
-      @stack_name = switch_current(stack_name)
+    def initialize(options={})
       @options = options
+      @stack = options.delete(:stack)
     end
 
     def run
-      message = "Deleting #{@stack_name} stack."
+      message = "Deleting #{@stack} stack."
       if @options[:noop]
         puts "NOOP #{message}"
       else
-        are_you_sure?(@stack_name, :delete)
+        sure?("Are you sure you want to delete the #{@stack} stack?")
 
-        if stack_exists?(@stack_name)
-          cfn.delete_stack(stack_name: @stack_name)
+        if stack_exists?(@stack)
+          cfn.delete_stack(stack_name: @stack)
           puts message
         else
-          puts "#{@stack_name.inspect} stack does not exist".color(:red)
+          puts "#{@stack.inspect} stack does not exist".color(:red)
           return
         end
       end
@@ -32,7 +32,7 @@ class Lono::Cfn
     end
 
     def status
-      @status ||= Status.new(@stack_name)
+      @status ||= Status.new(@stack)
     end
   end
 end

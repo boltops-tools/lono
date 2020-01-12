@@ -1,7 +1,7 @@
 ---
 title: Shared Variables
 order: 4
-nav_order: 15
+nav_order: 16
 ---
 
 Shared Variables are configs that you define to affect how the templates are generated at compile-time. Shared variables are available to all templates, helpers, and parameters.

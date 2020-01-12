@@ -46,7 +46,7 @@ Here's a little more details to help understand what happened. We first installe
 
     To list and create additional blueprints refer to https://lono.cloud/docs/core/blueprints
 
-    More info: http://lono.cloud/
+    More info: https://lono.cloud/
     $
 
 Then we went into the `infra` project folder, created a blueprint, and deployed the demo stack:

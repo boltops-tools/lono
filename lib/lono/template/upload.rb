@@ -4,16 +4,11 @@ require 'base64'
 require 'digest'
 
 class Lono::Template
-  class Upload
-    include Lono::Blueprint::Root
+  class Upload < Lono::AbstractBase
     include Lono::AwsServices
 
-    def initialize(blueprint, options={})
-      @blueprint, @options = blueprint, options
-      @template = @options[:template] || @blueprint
-      Lono::ProjectChecker.check
-      set_blueprint_root(@blueprint)
-
+    def initialize(options={})
+      super
       @checksums = {}
       @prefix = Lono.env # s3://s3-bucket/development
     end
@@ -99,7 +94,7 @@ class Lono::Template
       "https://s3.amazonaws.com/#{s3_bucket}/#{@prefix}/#{template_path}"
     end
 
-    # used for cfn/base.rb def set_template_body!(params)
+    # used for cfn/base.rb def set_template_url!(options)
     def s3_presigned_url(template_output_path)
       template_path = template_output_path.sub('output/templates/','')
       key = "#{@prefix}/#{template_path}"

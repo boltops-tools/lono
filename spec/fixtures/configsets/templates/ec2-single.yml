@@ -1,0 +1,12 @@
+Resources:
+  Instance:
+    Metadata:
+      AWS::CloudFormation::Init:
+        config:
+          commands:
+            existing:
+              command: existing >> test.txt
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-111
+      InstanceType: t3.micro

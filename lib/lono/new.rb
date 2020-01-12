@@ -58,7 +58,7 @@ module Lono
       return unless options[:bundle]
 
       puts "=> Installing dependencies with: bundle install"
-      Bundler.with_clean_env do
+      Bundler.with_unbundled_env do
         system("BUNDLE_IGNORE_CONFIG=1 bundle install")
       end
     end
@@ -88,7 +88,7 @@ module Lono
 
         To list and create additional blueprints refer to https://lono.cloud/docs/core/blueprints
 
-        More info: http://lono.cloud/
+        More info: https://lono.cloud/
       EOL
     end
   end

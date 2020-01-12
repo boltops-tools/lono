@@ -1,0 +1,8 @@
+---
+AWS::CloudFormation::Init:
+  config:
+    commands:
+      c1:
+        command: echo c1 >> test.txt
+      c2:
+        command: echo c2 >> test.txt

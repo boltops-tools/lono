@@ -1,0 +1,3 @@
+# Configset: <%= configset_name %>
+
+This configset installs, configure and runs <%= configset_name %>.

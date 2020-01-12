@@ -7,12 +7,12 @@ module Lono::Cfn::Preview
     include Lono::AwsServices
 
     def run
-      return unless stack_exists?(@stack_name)
+      return unless stack_exists?(@stack)
 
-      generated_params # eager call generated_params so its output is above Parameter Diff Preview
+      generated_parameters # eager call generated_parameters so its output is above Parameter Diff Preview
       puts "Parameter Diff Preview:".color(:green)
       if @options[:noop]
-        puts "NOOP CloudFormation parameters preview for #{@stack_name} update"
+        puts "NOOP CloudFormation parameters preview for #{@stack} update"
         return
       end
 
@@ -30,7 +30,7 @@ module Lono::Cfn::Preview
     memoize :existing_params
 
     def new_params
-      params = optional_params.merge(generated_params)
+      params = optional_params.merge(generated_parameters)
       subtract(params, noecho_params)
     end
 
@@ -42,11 +42,11 @@ module Lono::Cfn::Preview
       Hash[hash.sort_by {|k,v| k}]
     end
 
-    def generated_params
-      params = generate_all
-      normalize(params)
+    def generated_parameters
+      parameters = generate_all
+      normalize(parameters)
     end
-    memoize :generated_params
+    memoize :generated_parameters
 
     def optional_params
       # normalizing to simple Hash
@@ -62,7 +62,7 @@ module Lono::Cfn::Preview
     memoize :noecho_params
 
     def stack_parameters
-      resp = cfn.describe_stacks(stack_name: @stack_name)
+      resp = cfn.describe_stacks(stack_name: @stack)
       stack = resp.stacks.first
       stack.parameters
     end
@@ -70,7 +70,7 @@ module Lono::Cfn::Preview
 
   private
     def output_template
-      Lono::OutputTemplate.new(@blueprint, @template)
+      Lono::Output::Template.new(@blueprint, @template)
     end
     memoize :output_template
 

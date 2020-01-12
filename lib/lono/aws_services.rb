@@ -8,7 +8,12 @@ require "aws_mfa_secure/ext/aws" # add MFA support
 module Lono
   module AwsServices
     extend Memoist
-    include Util
+    include Helper
+
+    def cfn
+      Aws::CloudFormation::Client.new
+    end
+    memoize :cfn
 
     def ec2
       Aws::EC2::Client.new
@@ -19,11 +24,6 @@ module Lono
       Aws::IAM::Client.new
     end
     memoize :iam
-
-    def sts
-      Aws::STS::Client.new # part of aws-sdk-core
-    end
-    memoize :sts
 
     def s3
       Aws::S3::Client.new
@@ -40,9 +40,9 @@ module Lono
     end
     memoize :s3_presigner
 
-    def cfn
-      Aws::CloudFormation::Client.new
+    def sts
+      Aws::STS::Client.new # part of aws-sdk-core
     end
-    memoize :cfn
+    memoize :sts
   end
 end

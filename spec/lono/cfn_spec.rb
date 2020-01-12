@@ -4,14 +4,14 @@ describe Lono::Cfn do
   end
 
   describe "lono cfn" do
-    it "create stack" do
-      out = execute("#{@env} exe/lono cfn create example #{@args}")
-      expect(out).to include("Create")
+    it "cancel stack" do
+      out = execute("#{@env} exe/lono cfn cancel example #{@args}")
+      expect(out).to include("Cancel")
     end
 
-    it "update stack" do
-      out = execute("#{@env} exe/lono cfn update example #{@args}")
-      expect(out).to include("Update")
+    it "deploy stack" do
+      out = execute("#{@env} exe/lono cfn deploy example #{@args}")
+      expect(out).to include("Deploy")
     end
 
     it "delete stack" do

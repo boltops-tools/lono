@@ -1,15 +1,16 @@
 <div class="col-md-3 content-nav">
     <ul>
         <li><a href="{% link quick-start.md %}">Quick Start</a></li>
+        <li><a href="{% link _docs/existing-templates.md %}">Use Existing Templates</a></li>
         <li><a href="{% link docs.md %}">Docs</a>
             <ul>
                 <li><a href="{% link _docs/walkthrough.md %}">Walkthrough</a></li>
                 <li><a href="{% link _docs/dry.md %}">DRY: Reusable Code</a></li>
                 <li><a href="{% link _docs/project-structure.md %}">Project Structure</a></li>
                 <li><a href="{% link _docs/install.md %}">Installation</a></li>
-                <li><a href="{% link _docs/ce-vs-pro.md %}">CE vs Pro</a></li>
                 <li><a href="{% link _docs/lono-code-convert.md %}">Code Convert</a></li>
                 <li><a href="{% link _docs/lono-code-import.md %}">Code Import</a></li>
+                <li><a href="{% link _docs/boltops-pro.md %}">BoltOps Pro</a></li>
             </ul>
         </li>
         <li><a href="{% link _docs/core.md %}">Core Concepts</a>
@@ -36,9 +37,26 @@
               {% endfor %}
             </ul>
         </li>
+        <li><a href="{% link _docs/configsets.md %}">Configsets</a>
+            <ul>
+              {% assign docs = site.docs | where: "categories","configsets" | sort: "order" %}
+              {% for doc in docs -%}
+                {% if doc.title == "Project vs Blueprint Configsets" %}
+                <li><a href='{{doc.url}}'>{{doc.nav_text}}</a>
+                    <ul>
+                        <li><a href='{% link _docs/configsets/project.md %}'>Project</a></li>
+                        <li><a href='{% link _docs/configsets/blueprint.md %}'>Blueprint</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li><a href='{{doc.url}}'>{{doc.nav_text}}</a></li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+        </li>
         <li><a href="{% link _docs/dsl/components.md %}">DSL Components</a>
             <ul>
-              {% assign docs = site.docs | where: "categories","dsl-components" %}
+              {% assign docs = site.docs | where: "categories","dsl-components"" | sort: "order" %}
               {% for doc in docs -%}
                 <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
               {% endfor %}
@@ -52,9 +70,17 @@
               {% endfor %}
             </ul>
         </li>
+        <li><a href="{% link _docs/dsl-extras.md %}">DSL Extras</a>
+            <ul>
+              {% assign docs = site.docs | where: "categories","dsl-extras" %}
+              {% for doc in docs -%}
+                <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
+              {% endfor %}
+            </ul>
+        </li>
         <li><a href="{% link _docs/intrinsic-functions.md %}">Intrinsic Functions</a>
             <ul>
-              {% assign docs = site.docs | where: "categories","intrinsic-function" %}
+              {% assign docs = site.docs | where: "categories","intrinsic-function"" | sort: "order" %}
               {% for doc in docs -%}
                 <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
               {% endfor %}
@@ -64,6 +90,9 @@
             <ul>
                 <li><a href="{% link _docs/lookup-locations/params.md %}">Params</a></li>
                 <li><a href="{% link _docs/lookup-locations/variables.md %}">Variables</a></li>
+                <li><a href="{% link _docs/lookup-locations/blueprints.md %}">Blueprints</a></li>
+                <li><a href="{% link _docs/lookup-locations/project-configsets.md %}">Project Configsets</a></li>
+                <li><a href="{% link _docs/lookup-locations/blueprint-configsets.md %}">Blueprint Configsets</a></li>
             </ul>
         </li>
         <li><a href="{% link _docs/conventions.md %}">Conventions</a></li>
@@ -79,12 +108,19 @@
                 <li><a href="{% link _docs/configuration/settings.md %}">Settings</a></li>
                 <li><a href="{% link _docs/configuration/lono-env.md %}">Lono Env</a></li>
                 <li><a href="{% link _docs/configuration/lono-seed.md %}">Lono Seed</a></li>
-                <li><a href="{% link _docs/configuration/stack-name-suffix.md %}">Stack Suffix</a></li>
             </ul>
         </li>
         <li>Extras
             <ul>
               {% assign docs = site.docs | where: "categories","extras" | sort: "order" %}
+              {% for doc in docs -%}
+                <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
+              {% endfor %}
+            </ul>
+        </li>
+        <li>Stack Sets
+            <ul>
+              {% assign docs = site.docs | where: "categories","stack-sets" | sort: "order" %}
               {% for doc in docs -%}
                 <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
               {% endfor %}
@@ -98,6 +134,7 @@
               {% endfor %}
             </ul>
         </li>
+        <li><a href="{% link _docs/register.md %}">Register</a></li>
         <li><a href="{% link articles.md %}">Articles</a></li>
         <li><a href="{% link _docs/lono-help.md %}">Lono Help</a></li>
         <li><a href="{% link _docs/next-steps.md %}">Next Steps</a></li>

@@ -1,6 +1,6 @@
 ---
 title: 'DRY: Reusable Code'
-nav_order: 4
+nav_order: 5
 ---
 
 Lono is designed to allow you to reuse CloudFormation templates.  A key is the separation of configs and template code in a structured and organized way.

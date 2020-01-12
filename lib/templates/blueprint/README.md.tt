@@ -27,7 +27,7 @@ The generated files in `config/<%= blueprint_name %>` folder look something like
 
 ## Deploy
 
-Use the [lono cfn deploy](http://lono.cloud/reference/lono-cfn-deploy/) command to deploy. Example:
+Use the [lono cfn deploy](https://lono.cloud/reference/lono-cfn-deploy/) command to deploy. Example:
 
     LONO_ENV=development lono cfn deploy <%= blueprint_name %>-development --blueprint <%= blueprint_name %> --sure
     LONO_ENV=production  lono cfn deploy <%= blueprint_name %>-production  --blueprint <%= blueprint_name %> --sure

@@ -39,23 +39,6 @@ module Lono
       end
     end
 
-    # Precedence (highest to lowest)
-    #   1. LONO_SUFFIX
-    #   2. .current/lono
-    #   3. config/settings.yml
-    def suffix
-      suffix = ENV['LONO_SUFFIX'] # highest precedence
-      suffix ||= Cfn::Current.suffix
-      unless suffix
-        settings = Setting.new.data
-        suffix ||= settings["stack_name_suffix"] # lowest precedence
-      end
-
-      return if suffix&.empty?
-      suffix
-    end
-    memoize :suffix
-
     # Do not use the Setting#data to load the profile because it can cause an
     # infinite loop then if we decide to use Lono.env from within settings class.
     def settings
@@ -67,9 +50,22 @@ module Lono
     end
     memoize :settings
 
-    def pro_version
-      installed = Gem::Specification.detect { |spec| spec.name == 'lono-pro' }
-      installed ? Lono::Pro::VERSION : "not installed"
+    def lono_pro_removal_check!
+      if lono_pro_installed?
+        puts "ERROR: A lono-pro gem installation has been detected.".color(:red)
+        puts <<~EOL
+          The lono-pro gem is now a part of lono itself. The lono-pro gem has been deprecated.
+          Please uninstall the lono-pro gem and remove it from your Gemfile to continue.
+        EOL
+        exit 1
+      end
+    end
+
+    def lono_pro_installed?
+      Lono::Pro::VERSION
+      true
+    rescue NameError
+      false
     end
 
   private

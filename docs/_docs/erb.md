@@ -1,6 +1,6 @@
 ---
 title: ERB
-nav_order: 65
+nav_order: 83
 ---
 
 Lono provides the ability write your CloudFormation templates with ERB.

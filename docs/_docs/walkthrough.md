@@ -1,13 +1,13 @@
 ---
 title: Walkthrough
-nav_order: 3
+nav_order: 4
 ---
 
-Here's a brief walkthrough of how lono works.
+Here's a walkthrough of how lono works that's more detailed than the [Quick Start]({% link quick-start.md %}).
 
 1. You define blueprints that include templates written in a [DSL]({% link _docs/dsl.md %})
 2. You generate the templates and verify that they look good
-3. You deploy the blueprint's template with `lono cfn deploy`
+3. You deploy the blueprint's template with [lono cfn deploy](/reference/lono-cfn-deploy/)
 
 ## 1. Demo Template DSL
 
@@ -31,7 +31,7 @@ When your templates look good, then you can deploy them with:
 
     lono cfn deploy demo
 
-Note, the `lono cfn deploy` command automatically calls `lono generate` so you don't have to worry about regenerating the template. You can check on the stack on the AWS CloudFormation console:
+Note, the [lono cfn deploy](/reference/lono-cfn-deploy/) command automatically calls [lono generate](/reference/lono-generate/) so you don't have to worry about regenerating the template. You can check on the stack on the AWS CloudFormation console:
 
 <img src="/img/tutorial/stack-created.png" alt="Stack Created" class="doc-photo">
 

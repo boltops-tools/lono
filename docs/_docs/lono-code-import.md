@@ -19,7 +19,6 @@ The [lono code import](https://lono.cloud/reference/lono-code-import/) command w
           create  blueprints/ec2
           create  blueprints/ec2/ec2.gemspec
           create  blueprints/ec2/.gitignore
-          create  blueprints/ec2/.meta/config.yml
           create  blueprints/ec2/CHANGELOG.md
           create  blueprints/ec2/Gemfile
           create  blueprints/ec2/README.md

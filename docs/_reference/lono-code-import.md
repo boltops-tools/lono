@@ -42,10 +42,6 @@ Imports CloudFormation template and converts it to Ruby code.
     More info: https://lono.cloud/docs/core/blueprints
     $
 
-## Lono Pro
-
-This is a lono-pro addon command.
-
 
 ## Options
 
