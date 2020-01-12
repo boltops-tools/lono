@@ -25,7 +25,7 @@ Notice how there are different `development` and `production` config files. This
 
 The CloudFormation code itself lives in the blueprints folder.
 
-    blueprints
+    app/blueprints
     ├── ec2
     └── vpc
 
