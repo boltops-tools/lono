@@ -68,7 +68,7 @@ class Lono::Template::Strategy::Dsl::Builder
 
     # special cases
     def ref(name, options={})
-      name = name.to_s.camelize
+      name = name.to_s
       conditional = options.delete(:Conditional) || options.delete(:conditional)
       if conditional
         conditional_ref(name, options)
