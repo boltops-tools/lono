@@ -28,6 +28,9 @@ class Lono::Template::Strategy::Dsl
     end
 
     def to_yaml
+      # https://stackoverflow.com/questions/24508364/how-to-emit-yaml-in-ruby-expanding-aliases
+      # Trick to prevent YAML from emitting aliases
+      @cfn = YAML.load(@cfn.to_json)
       @results = YAML.dump(@cfn)
     end
 
