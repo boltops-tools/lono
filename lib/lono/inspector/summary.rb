@@ -24,7 +24,7 @@ module Lono::Inspector
       shown = []
       puts "# Parameters Total (#{parameters.size})"
       parameter_groups.each do |label, parameters|
-        puts "# Parameter Group (#{parameters.size}): #{label}"
+        puts "# Parameter Group (#{parameters.size}): #{label}".color(:sienna)
         parameters.each do |name|
           puts parameter_line(name)
           shown << name
