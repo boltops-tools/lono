@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.0.2]
+- fix build and improve docs
+- improve reg check message
+
 ## [7.0.1]
 - #37 allow Conditional to work with no camelized keys
 - #38 prevent YAML.dump from emitting aliases
