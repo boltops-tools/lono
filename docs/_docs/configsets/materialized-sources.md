@@ -40,7 +40,7 @@ base:
 
 ## Materialized source GitHub orgs support
 
-Notice with the "configset option", you specify the full source **with** the repo name.  With the Environment and configs/settings.yml technique, you do **not** specify the repo name.
+Notice with the "configset option", you specify the full source **with** the repo name.  With the Environment and `configs/settings.yml`, you do **not** specify the repo name.
 
 Materialized sources are not typical Gemfile gem sources. They infer the repo name from the configset name.  If the repo name is different from configset, then you can explicitly specify `repo` in the `configset` definition.  Example:
 

@@ -5,15 +5,15 @@ nav_order: 11
 
 Here are the main Lono concepts:
 
-1. Blueprints
-2. Templates
-3. Configs: Params and Variables
-4. Layering: Params and Variables
-5. Helpers
+1. [Blueprints]({% link _docs/core/blueprints.md %})
+2. [Templates]({% link _docs/core/templates.md %})
+3. [Configs]({% link _docs/core/configs.md %}): Params and Variables
+4. [Layering]({% link _docs/core/layering.md %}): Params and Variables
+5. [Helpers]({% link _docs/core/helpers.md %})
 
 ## Blueprints
 
-Essentially, blueprints encapsulate the code that is used to generate CloudFormation templates. Blueprints live in your project's `blueprints` folder or as gems.  Blueprints allow you to add infrastructure components and configure them to fit your needs with [Param]({% link _docs/configs/params.md %}) or [Shared Variables](({% link _docs/configs/shared-variables.md %})) configs files. The blueprint component is covered in detailed at the [Blueprints docs]({% link _docs/core/blueprints.md %}).
+Essentially, blueprints encapsulate the code that is used to generate CloudFormation templates. Blueprints live in your project's `app/blueprints` folder or as gems.  Blueprints allow you to add infrastructure components and configure them to fit your needs with [Param]({% link _docs/configs/params.md %}) or [Shared Variables](({% link _docs/configs/shared-variables.md %})) configs files. The blueprint component is covered in detailed at the [Blueprints docs]({% link _docs/core/blueprints.md %}).
 
 ## Templates
 
@@ -25,7 +25,7 @@ Essentially, blueprints encapsulate the code that is used to generate CloudForma
 
 ## Layering: Params and Variables
 
-Lono supports a concept called layering.  Layering is how lono merges multiple files together to produce a final result.  This is useful for building multiple environments. For example, it is common to build a separate production and development environment.  Most of the infrastructure is the same except for a few parts that require specific environment overrides.  Lono's layering ability makes this simple to do.  More info on [Layering Support]({% link _docs/core/layering.md %}).
+Lono supports a concept called layering.  Layering allows you to build both production and development environments with the same code.  More info on [Layering Support]({% link _docs/core/layering.md %}).
 
 ## Helpers
 

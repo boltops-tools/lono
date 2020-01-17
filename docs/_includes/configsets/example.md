@@ -1,6 +1,6 @@
 ## Configset Example
 
-Here's an simple configset example:
+Here's a simple configset example:
 
 ```yaml
 AWS::CloudFormation::Init:

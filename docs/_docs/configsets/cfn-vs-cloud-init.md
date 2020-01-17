@@ -6,10 +6,10 @@ order: 8
 nav_order: 31
 ---
 
-There are two similarly named projects: cfn-init and cloud-init. Both provide a standard way to customize EC2 instances. You may be wondering what's the difference between these projects.
+There are two similarly named projects: cfn-init and cloud-init. Both provide a standard way to customize EC2 instances, but they are different tools. You may be wondering what's the difference between these projects.
 
 * cloud-init is a Ubuntu-developed project that provides a standard to customize Cloud instances.
-* cfn-init is an AWS supported way of customizing EC2 instances which uses cloud-init.
+* cfn-init is an AWS supported way of customizing EC2 instances.
 
 ## More Details
 

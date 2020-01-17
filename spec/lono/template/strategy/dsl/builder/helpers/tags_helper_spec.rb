@@ -37,7 +37,7 @@ describe Lono::Template::Strategy::Dsl::Builder::Helpers::TagsHelper do
     end
 
     it "Hash with refs" do
-      list = tester.tags(Name: ref("test"))
+      list = tester.tags(Name: ref("Test"))
       expect(list).to eq [{:Key=>"Name", :Value=>{"Ref"=>"Test"}}]
     end
   end

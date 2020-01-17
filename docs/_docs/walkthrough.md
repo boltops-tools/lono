@@ -11,15 +11,15 @@ Here's a walkthrough of how lono works that's more detailed than the [Quick Star
 
 ## 1. Demo Template DSL
 
-The `lono new` command creates a lono project structure that includes a demo blueprint. That demo blueprint looks something like this:
+The [lono new]({% link _reference/lono-new.md %}) command creates a lono project structure. Then you use the [lono blueprint new]({% link _reference/lono-blueprint-new.md %}) to generate a demo blueprint. That demo blueprint looks something like this:
 
 {% include demo_template_ruby.md %}
 
 ## 2. Generate the Template
 
-When you run:
+You can optionally use [lono generate]({% link _reference/lono-generate.md %}) to generate the templates.
 
-    lono generate
+    lono generate demo
 
 It'll generates a CloudFormation template from the DSL and writes it to `output/demo/templates/demo.yml`:
 
@@ -27,11 +27,11 @@ It'll generates a CloudFormation template from the DSL and writes it to `output/
 
 ## 3. Deploy the Blueprint's Template
 
-When your templates look good, then you can deploy them with:
+When your templates look good, you then use [lono cfn deploy]({% link _reference/lono-cfn-deploy.md %}) to launch the stack:
 
     lono cfn deploy demo
 
-Note, the [lono cfn deploy](/reference/lono-cfn-deploy/) command automatically calls [lono generate](/reference/lono-generate/) so you don't have to worry about regenerating the template. You can check on the stack on the AWS CloudFormation console:
+You can check on the stack in the AWS CloudFormation console:
 
 <img src="/img/tutorial/stack-created.png" alt="Stack Created" class="doc-photo">
 

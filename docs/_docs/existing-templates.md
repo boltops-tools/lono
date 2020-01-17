@@ -3,11 +3,11 @@ title: Use Existing Templates
 nav_order: 2
 ---
 
-If you already have existing CloudFormation templates, you can use the `--source` option to reuse them.  This allows you to take advantage of lono features. The source can be a file or an url.
+If you already have existing CloudFormation templates, you can use the `--source` option to reuse them.  This allows you to take advantage of lono features with little effort. The source can be a file or an url.
 
 ## Example
 
-Use [lono new](/reference/lono-new/) to quickly generate an empty lono project.
+First, use [lono new](/reference/lono-new/) to quickly generate an empty lono project.
 
     lono new infra
     cd infra
@@ -45,11 +45,11 @@ Set a KeyPair that exists on your AWS account. You can use [aws ec2 describe-key
     # InstanceType=t3.micro
     KeyName=my-key-pair # must exist on your AWS account
 
-After you set the `KeyName` in the params file, you're ready to launch the CloudFormation stack that creates the EC2 instance.
+After you set the `KeyName` in the params file, you're ready to launch the CloudFormation stack which will create an EC2 instance.
 
 ## Deploy Stack
 
-Deploy the stack with [lono deploy](/reference/lono-cfn-deploy/)
+Deploy the stack with [lono cfn deploy](/reference/lono-cfn-deploy/)
 
     $ lono cfn deploy demo --source $URL
     ...
@@ -69,19 +69,20 @@ Deploy the stack with [lono deploy](/reference/lono-cfn-deploy/)
 
 ## Preview Stack
 
-When deploying an updated template, lono will show previews of changes about to deploy. This provides you a lot of useful information before hitting the "big red button".  Lono provides 3 different previews. To demonstrate them, here's a summary of what we'll do:
+When deploying an updated template, lono will show previews of changes about to deploy. This provides you a lot of useful information before hitting the "big red button".  Lono provides 3 types of previews:
 
-1. Change the `InstanceType` parameter in `configs/demo/params/development.txt`.
-2. Use an update template url with a modified template. To keep things simple, here's the [url with the updated template](https://raw.githubusercontent.com/tongueroo/cloudformation-ec2-example/a505e92/ec2.yml). The `Monitoring: true` property has been added to the EC2 Instance.
-3. Use the [lono cfn preview](/reference/lono-cfn-preview/) command to see a preview.
-4. Deploy again.
+1. Parameter diff preview: Shows parameters that were changed.
+2. Code diff preview: Shows a code diff of the template.
+3. Changeset preview: Uses the CloudFormation ChangeSet feature to show what resources will be changed.
 
-Let's update `InstanceType=t3.small` in configs/demo/params/development.txt:
+All of the previews are useful in their own way. Here's an [updated template](https://raw.githubusercontent.com/tongueroo/cloudformation-ec2-example/a505e92/ec2.yml) which will help demonstrate the previews.
+
+Let's also update `InstanceType=t3.small` in configs/demo/params/development.txt:
 
     InstanceType=t3.small
     KeyName=my-key-pair # must exist on your AWS account
 
-Now we're ready to change the URL to the updated template and preview the changes.
+Now change the URL to the updated template and preview the changes.
 
 ```diff
 $ URL=https://raw.githubusercontent.com/tongueroo/cloudformation-ec2-example/a505e92/ec2.yml
@@ -102,21 +103,21 @@ Modify AWS::EC2::Instance: Instance i-0ceca7445937eab93
 $
 ```
 
-The 3 preview lono provides are:
+We can see that:
 
-1. Parameter diff preview - We can see that the `InstanceType` has been changed from a `t3.micro` to `t3.small`
-2. Code diff preview - We can see `Monitoring: true` line has been added to the template
-3. Changeset preview: - CloudFormation has detected that the instance will be modified.
+1. Parameter diff preview: The `InstanceType` has been changed from a `t3.micro` to `t3.small`
+2. Code diff preview: We can see `Monitoring: true` line has been added to the template
+3. Changeset preview: CloudFormation has detected that the instance will be modified.
 
-Previews allow you to deploy changes to the CloudFormation stack with a higher level of confidence. You can deploy when you are ready:
+Previews allow you to deploy CloudFormation changes with a higher level of confidence. You can deploy when you are ready:
 
     lono cfn deploy demo --source $URL --sure
 
-Note, deploying without `--sure` will prompt you with the preview to spare you from remembering to run lono cfn preview separately.
+Note, deploying without `--sure` will prompt you with the preview, so you usually don't have to remember to run [lono cfn preview]({% link _reference/lono-cfn-preview.md %}) separately.
 
 ## Configset: Automatically Configure Instances
 
-Using existing templates with the `--source` option gives you access to all sorts of lono features. One interesting feature are [configsets]({% link _docs/configsets.md %}).  Configsets are essentially configuration management. It allows you to configure your EC2 instances automatically.  You can do all sorts of customizations. Some examples of things configsets can do: install packages, create files, run commands, ensure services are running.
+Using existing templates with the `--source` option gives you access to all sorts of lono features. One interesting feature is [configsets]({% link _docs/configsets.md %}).  Configsets are essentially configuration management. It allows you to configure your EC2 instances automatically.  You can do all sorts of customizations. Some examples of things configsets can do: install packages, create files, run commands, ensure services are running.
 
 Let's add the httpd configset. Add the `httpd` gem to your Gemfile to make the configset available.
 
@@ -138,8 +139,6 @@ With that one line of configuration alone, you will install, configure, and run 
 
 You will see that lono adds the configset to the CloudFormation template for you.
 
-Note: The [boltopspro/httpd](https://github.com/boltopspro/httpd) repo is a public [BoltOps Pro](https://www.boltops.com/pro) repo.
-
 ## Summary
 
 We went through a few lono commands with an existing template. If you have existing templates that you would like to use, the `--source` option provides an excellent way to get started.
@@ -159,6 +158,6 @@ To avoid having to specify `--source` repeatedly, you can import the template.
 
 Then your commands become simply:
 
-    lono code deploy demo
+    lono cfn deploy demo
 
 {% include prev_next.md %}

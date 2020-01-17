@@ -22,7 +22,7 @@ Your project configsets are located in the `app/configsets`. Example:
 * app/configsets/cfn-hup/lib/configset.yml
 * app/configsets/httpd/lib/configset.yml
 
-You tell lono to add them into your CloudFormation templates with configs. Example:
+You tell lono to add them to CloudFormation templates with configs. Example:
 
 configs/ec2/configsets/base.rb:
 
@@ -39,10 +39,12 @@ You have full control over which configsets to use for each template.
 
 {% include configsets/cfn-init.md %}
 
-The Lono configsets concept empowers you to use configsets in a reusable and managable way.
+The Lono configsets concept empowers you to reuse configsets.
 
 ## How They Work
 
-Configsets work with [AWS::CloudFormation::Init](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-init.html) and [cfn-init](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-init.html). Configsets do not magically get applied after being added to the CloudFormation template though.  The `cfn-init` script must be called to apply the configset. Usually the `cfn-init` script is called in the UserData script. This ensures configsets are applied when instances are launched. Additionally, the [cfn-hup](https://github.com/boltopspro/cfn-hup) script can be set up to apply configsets continuously.
+Configsets do not magically get applied after being added to the CloudFormation template though.  The `cfn-init` script must be called to apply the configset. Usually the `cfn-init` script is called in the UserData script. This ensures configsets are applied when instances are launched. Additionally, the [cfn-hup](https://github.com/boltopspro/cfn-hup) script can be set up to apply configsets continuously.
+
+Configsets ultimately work with [AWS::CloudFormation::Init](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-init.html) and [cfn-init](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-init.html).
 
 {% include prev_next.md %}

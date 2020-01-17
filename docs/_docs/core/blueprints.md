@@ -38,4 +38,10 @@ To list the project's blueprints:
 
     lono blueprints
 
+## Pro Blueprints
+
+You can use the [lono pro blueprints]({% link _reference/lono-pro-blueprints.md %}) to also list the available [Pro Blueprints]({% link _docs/boltops-pro.md %}).
+
+    lono pro blueprints
+
 {% include prev_next.md %}

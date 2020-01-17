@@ -6,15 +6,22 @@ nav_order: 6
 A lono project structure looks something like this:
 
     project
-    ├── blueprints
-    │   └── demo
-    │       └── app
-    │           └── templates
-    │               └── demo.rb
+    ├── app
+    │   ├── blueprints
+    │   │   └── demo
+    │   │       └── app
+    │   │           └── templates
+    │   │               └── demo.rb
+    │   └── configsets
+    │       └── httpd
+    │           └── lib
+    │               └── configset.yml
     ├── configs
     │   ├── demo
+    │   │   ├── configsets
+    │   │   │   └── base.rb
     │   │   ├── params
-    │   │   │   │── development.txt
+    │   │   │   ├── development.txt
     │   │   │   └── production.txt
     │   │   └── variables
     │   │       ├── development.rb
@@ -23,17 +30,18 @@ A lono project structure looks something like this:
     └── output
         └── demo
             ├── params
-            │   │── development.json
+            │   ├── development.json
             │   └── production.json
             └── templates
                 └── demo.yml
-
 
 ## Files and Folders
 
 File / Folders  | Description
 ------------- | -------------
-blueprints | Where project blueprints live. [Blueprints]({% link _docs/core/blueprints.md %}) essentially contain code to build CloudFormation templates. They can be configured with `configs`.
+app/blueprints | Where project blueprints live. [Blueprints]({% link _docs/core/blueprints.md %}) essentially contain code to build CloudFormation templates. They can be configured with `configs`.
+app/configsets | Where project configsets live. [Configsets]({% link _docs/configsets.md %}) essentially contain code to build CloudFormation templates. They can be configured with `configs`.
+configs/demo/configsets | Where configsets are configured.  How you selectively add configsets to templates.
 configs/demo/params | Where CloudFormation run-time parameters can be defined.  [Parameters]({% link _docs/configs/params.md %}) are defined with env-like files.  These are blueprint specific.
 configs/demo/variables | Where Lono shared variables can be defined.  [Shared Variables]({% link _docs/configs/shared-variables.md %}) can be used to affect the way templates are built at compile time. These are blueprint specific.
 configs/settings.yml | Lono's behavior can be tailored with [Settings]({% link _docs/configuration/settings.md %}).
@@ -44,7 +52,7 @@ That hopefully gives you a basic idea of an lono project structure.
 
 ## Concepts
 
-There are a few Lono conceptual components like blueprints, templates, params, variables, etc. These are covered in the [Core Concepts]({% link _docs/core.md %}) docs.
+There are a few Lono conceptual components like blueprints, templates, params, variables, etc. These are covered in the [Core Concepts]({% link _docs/core.md %}) docs. Configsets are covered in the [Configsets docs]({% link _docs/configsets.md %}).
 
 ## Blueprint Structures
 

@@ -2,6 +2,7 @@ class Lono::Pro
   class Repo < Base
     def run
       data = api.repos(@options[:type])
+      # data = data[7..9]
       header = ["Name", "Docs", "Description"]
       rows = data.map do |d|
         desc = truncate(d[:description])
