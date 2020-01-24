@@ -20,7 +20,7 @@ gem "ruby", ">= 0.5.5", "< 0.8.8", git: "git@github.com:boltopspro/ruby"
 gem "ssm", "~> 0.2", git: "git@github.com:boltopspro/ssm" # pessimistic version
 ```
 
-The pessimistic version `ssm ~> 0.2` example means configset version 0.2 or great will be used. However, the next major version bump will not be used, IE: 1.0.0.  More info about the [pessimistic operation here](https://thoughtbot.com/blog/rubys-pessimistic-operator).
+The pessimistic version `ssm ~> 0.2` example means configset version 0.2 or greater will be used. However, the next major version bump will not be used, IE: 1.0.0.  More info about the [pessimistic operation here](https://thoughtbot.com/blog/rubys-pessimistic-operator).
 
 The configset version is locked by bundler and your Gemfile. In the configset declaration, you do not have to specify version numbers. Example:
 
