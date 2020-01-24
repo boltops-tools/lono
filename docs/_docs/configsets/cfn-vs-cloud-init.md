@@ -15,7 +15,7 @@ There are two similarly named projects: cfn-init and cloud-init. Both provide a 
 
 ### cloud-init
 
-The [cloud-init](https://cloud-init.io/) project tagline is that they "The standard for customising cloud instances". So it works with multiple cloud providers. It comes pre-installed in the Ubuntu Cloud Images and also on the official EC2 Ubuntu images. It has a larger documentation site: [cloud-init Documentation](https://cloudinit.readthedocs.io/en/latest/).
+The [cloud-init](https://cloud-init.io/) project tagline is that they are "The standard for customising cloud instances". So it works with multiple cloud providers. It comes pre-installed in the Ubuntu Cloud Images and also on the official EC2 Ubuntu images. It has a larger documentation site: [cloud-init Documentation](https://cloudinit.readthedocs.io/en/latest/).
 
 The Cloud configs are written as YAML and allow you to use directives for common tasks like installing packages, configuring files, and running commands.  Here are [Cloud config examples](https://cloudinit.readthedocs.io/en/latest/topics/examples.html) Interestingly, there does not seem to be a service module.
 
