@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.0.3]
+- #39 improve param parser. allow surrounding quotes
+
 ## [7.0.2]
 - fix build and improve docs
 - improve reg check message
