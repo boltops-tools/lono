@@ -3,8 +3,6 @@ title: Lono Code Import
 nav_order: 9
 ---
 
-<div class="video-box"><div class="video-container"><iframe src="https://www.youtube.com/embed/YVU3wPini8U" frameborder="0" allowfullscreen=""></iframe></div></div>
-
 {% include lono-code-excerpt.md %}
 
 The [lono code import](https://lono.cloud/reference/lono-code-import/) command allows you to take JSON or YAML templates and convert it to the Lono DSL code. The conversion process saves you engineering time writing it yourself.
