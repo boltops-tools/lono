@@ -90,10 +90,7 @@ class Lono::Param
       contents = []
       contents << render_erb(@base_path)
       contents << render_erb(@env_path)
-      result = contents.compact.join("\n")
-      # puts "process_erb result".color(:yellow)
-      # puts result
-      result
+      contents.compact.join("\n") # result
     end
 
     def render_erb(path)
@@ -128,6 +125,7 @@ class Lono::Param
       data = {}
       lines.each do |line|
         key,value = line.strip.split("=").map {|x| x.strip}
+        value = remove_surrounding_quotes(value)
         data[key] = value
       end
 
@@ -151,6 +149,16 @@ class Lono::Param
         end
       end
       params
+    end
+
+    def remove_surrounding_quotes(s)
+      if s =~ /^"/ && s =~ /"$/
+        s.sub(/^["]/, '').gsub(/["]$/,'') # remove surrounding double quotes
+      elsif s =~ /^'/ && s =~ /'$/
+        s.sub(/^[']/, '').gsub(/[']$/,'') # remove surrounding single quotes
+      else
+        s
+      end
     end
 
     def output_path
