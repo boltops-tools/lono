@@ -79,7 +79,8 @@ module Lono::Inspector
         type, count = a
         printf "%3s %s\n", count, type
       end
-      printf "%3s %s\n", resource_types.size, "Total"
+      total = types.inject(0) { |sum,(type,count)| sum += count }
+      printf "%3s %s\n", total, "Total"
     end
 
     def output_template
