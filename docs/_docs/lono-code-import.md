@@ -3,7 +3,7 @@ title: Lono Code Import
 nav_order: 9
 ---
 
-<div class="video-box"><div class="video-container"><iframe src="https://www.youtube.com/embed/YVU3wPini8U" frameborder="0" allowfullscreen=""></iframe></div></div>
+<div class="video-box"><div class="video-container"><iframe src="https://www.youtube.com/embed/DwMR_ZQn2N8" frameborder="0" allowfullscreen=""></iframe></div></div>
 
 {% include lono-code-excerpt.md %}
 
