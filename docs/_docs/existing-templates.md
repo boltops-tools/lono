@@ -139,6 +139,12 @@ With that one line of configuration alone, you will install, configure, and run 
 
 You will see that lono adds the configset to the CloudFormation template for you.
 
+## Cleanup
+
+To clean up and delete the stack, you can use the [lono cfn delete](https://lono.cloud/reference/lono-cfn-delete/) command:
+
+    lono cfn delete demo
+
 ## Summary
 
 We went through a few lono commands with an existing template. If you have existing templates that you would like to use, the `--source` option provides an excellent way to get started.
