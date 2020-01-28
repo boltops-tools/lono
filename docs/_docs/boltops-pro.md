@@ -3,7 +3,7 @@ title: What is BoltOps Pro?
 nav_order: 10
 ---
 
-[BoltOps Pro](https://www.boltops.com/pro) is Infrastructure Code as a Service. BoltOps Pro provides reusable infrastructure-as-code provided as CloudFormation templates.  The templates are tested in a daily build process. They are completely configurable to fit your needs. Essentially, they save you time.
+[BoltOps Pro](https://www.boltops.com/pro) is Infrastructure Code as a Service. BoltOps Pro provides reusable CloudFormation templates.  The templates are tested in a daily build process. They are completely configurable to fit your needs. Essentially, they save you time.
 
 You can also see the list of available Pro blueprints with the [lono pro blueprints]({% link _reference/lono-pro-blueprints.md %}) command.
 
