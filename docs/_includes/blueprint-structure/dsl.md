@@ -6,8 +6,6 @@
     │   └── user_data
     │       └── bootstrap.sh
     ├── demo.gemspec
-    ├── .meta
-    │   └── config.yml
     └── seed
         └── configs.rb
 
