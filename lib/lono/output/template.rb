@@ -15,7 +15,12 @@ module Lono::Output
     end
 
     def parameters
-      data["Parameters"] || []
+      list = data["Parameters"] || []
+      # Not using sort_parameter_group because structure is different
+      list.sort_by do |name, data|
+        optional = !data["Default"].nil?
+        [optional, name].join('-')
+      end.to_h
     end
 
     def parameter_groups
@@ -23,9 +28,9 @@ module Lono::Output
       return unless interface
       pgs = interface["ParameterGroups"]
       pgs.inject({}) do |result, pg|
-        k = pg["Label"]["default"]
-        v = pg["Parameters"]
-        result.merge(k => v)
+        label = pg["Label"]["default"]
+        parameters = sort_parameter_group(pg["Parameters"])
+        result.merge(label => parameters)
       end
     end
 
@@ -37,6 +42,15 @@ module Lono::Output
     memoize :data
 
   private
+    def sort_parameter_group(list)
+      list.sort_by do |name|
+        raw_parameters = data["Parameters"] || []
+        param = raw_parameters[name]
+        optional = !param["Default"].nil?
+        [optional, name].join('-')
+      end
+    end
+
     # Check if the template exists and print friendly error message.  Exits if it
     # does not exist.
     def check_template_exists!(template_path)
