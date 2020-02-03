@@ -78,7 +78,7 @@ module Lono::Finder
       table = Text::Table.new
       table.head = ["Name", "Path", "Type"]
 
-      components = find_all
+      components = find_all.sort_by { |jadespec| jadespec.name }
       components.each do |jadespec|
         pretty_path = jadespec.root.sub("#{Lono.root}/", "")
         unless options[:filter_materialized] && jadespec.source_type == "materialized"

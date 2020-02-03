@@ -12,8 +12,8 @@ Lono supports [CloudFormation stack sets](https://docs.aws.amazon.com/AWSCloudFo
 
 The main commands for stack sets are:
 
-    lono sets deploy
-    lono sets instances sync
+    lono sets deploy STACK_SET
+    lono sets instances sync STACK_SET
 
 The `lono sets deploy` command deploys the stack set. You then use the `lono sets instances sync` command to add or remove stack instances.
 
@@ -23,7 +23,16 @@ First, deploy a stack set.
 
     lono sets deploy my-set --blueprint demo
 
-Then configure the accounts and regions to add stacks instances. You can do this with the configs files.
+Then configure the accounts and regions to add stacks instances. You can do this with the configs files. Here's an example structure:
+
+    configs/
+    └── demo
+        ├── accounts
+        │   └── development
+        │       └── my-set.txt
+        └── regions
+            └── development
+                └── my-set.txt
 
 configs/demo/accounts/development/my-set.txt
 
