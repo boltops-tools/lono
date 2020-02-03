@@ -151,7 +151,7 @@ class Lono::Cfn
     def stack_status
       return true if testing_update?
       return false if @options[:noop]
-      resp = cfn.describe_stacks(stack_name: @stack_name)
+      resp = cfn.describe_stacks(stack_name: @stack)
       resp.stacks[0].stack_status
     end
 
