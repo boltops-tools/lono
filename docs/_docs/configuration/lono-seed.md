@@ -55,8 +55,6 @@ Subnets=subnet-111, subnet-222 # at least 2 subnets required
 
 The code self-documents the starter parameters!
 
-NOTE: Currently, parameter starter value inference is supported with the DSL form only.
-
 ### Variables
 
 The variables starter file is generated based on the `seed/configs.rb` file in the blueprint. The general structure looks like this:
