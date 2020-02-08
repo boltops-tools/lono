@@ -1,6 +1,6 @@
 ---
 title: Variables Lookup Locations
-nav_order: 65
+nav_order: 68
 ---
 
 Lono supports variables files that affect the CloudFormation template at compile-time.

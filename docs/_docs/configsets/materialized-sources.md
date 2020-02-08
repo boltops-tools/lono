@@ -2,8 +2,8 @@
 title: Materialized Gem Sources
 nav_text: Materialized Sources
 categories: configsets
-order: 7
-nav_order: 30
+order: 10
+nav_order: 33
 ---
 
 {% include configsets/materialized.md header=false %}

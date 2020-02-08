@@ -6,14 +6,16 @@ order: 1
 nav_order: 22
 ---
 
-Typically, configsets are directly hardcoded into the CloudFormation template. Unfortunately, this makes them hard to reuse. With Lono, configsets are separate files. This allows them to be reusable with different templates. Lono takes the separate configset files and injects them into your CloudFormation templates.
+Typically, configsets are directly hardcoded into the CloudFormation template. Unfortunately, this makes them hard to reuse. IE: You copy and paste the cnofigset code between CloudFormation templates.
+
+With Lono, configsets are define separately from the template. Lono takes the configsets and adds them into your CloudFormation templates. This allows them to be reusable with different templates.
 
 ## Example
 
 Let's say you have two blueprints: ec2 and asg.
 
-* The ec2 blueprint has an "Instance" resource.
-* The asg blueprint has an "AutoScalingGroup" and a "LaunchConfiguration" resource.
+* The ec2 blueprint has an `Instance` resource.
+* The asg blueprint has an `LaunchConfiguration` resource.
 
 You can reuse the same configsets for both blueprints. Example:
 
@@ -47,6 +49,6 @@ The asg blueprint's UserData calls cfn-init like this:
 /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource LaunchConfiguration --region ${AWS::Region}
 ```
 
-The beauty is that you can choose whichever configsets needed.  You don't have to copy and paste the configset into different templates. Just configure them, and lono injects them into the CloudFormation template for you.
+The beauty is that you can choose whichever configsets are needed.  You don't have to copy and paste the configset into different templates. Just configure them, and lono injects them into the CloudFormation template for you.
 
 {% include prev_next.md %}

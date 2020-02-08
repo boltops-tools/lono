@@ -35,8 +35,8 @@ class Lono::Configset
       if @demo
         options = {}
       else
-        create_file "#{@cwd}/#{configset_name}/lib/configset.yml"
-        options = {exclude_pattern: %r{configset\.yml}}
+        create_file "#{@cwd}/#{configset_name}/lib/configset.rb"
+        options = {exclude_pattern: %r{configset\.rb}}
       end
 
       directory ".", "#{@cwd}/#{configset_name}", options

@@ -1,0 +1,17 @@
+AWS::CloudFormation::Init:
+  configSets:
+    default:
+    - httpd
+  httpd:
+    packages:
+      yum:
+        httpd: []
+    files:
+      "/var/www/html/index.html":
+        content: |
+<%= indent(@html, 10) %>
+    services:
+      sysvinit:
+        httpd:
+          enabled: true
+          ensureRunning: true

@@ -1,6 +1,6 @@
 ## UserData cfn-init
 
-You can make sure configsets are applied by calling the cfn-init script in the UserData script. The UserData script runs when EC2 instances are launched.  Here's an example UserData script.
+You can make sure configsets are applied when instances are launched by calling the `cfn-init` script in UserData. Here's an example UserData script.
 
 ```bash
 #!/bin/bash

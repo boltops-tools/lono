@@ -1,6 +1,6 @@
 ---
 title: Params Lookup Locations
-nav_order: 64
+nav_order: 67
 ---
 
 Lono supports param files that look like env files as a simple way to define your CloudFormation run-time parameters.
@@ -23,17 +23,17 @@ You can define params files in different locations. Lono lookups up each of thes
 
 Lono will look up the params file in this order.
 
-1. configs/BLUEPRINT/params/LONO_ENV/TEMPLATE/REQUESTED.txt
-2. configs/BLUEPRINT/params/LONO_ENV/REQUESTED.txt (recommended for most cases)
-3. configs/BLUEPRINT/params/REQUESTED.txt
-4. configs/BLUEPRINT/params/LONO_ENV.txt
+1. configs/BLUEPRINT/params/LONO_ENV/TEMPLATE/REQUESTED.txt (template level - most specific)
+2. configs/BLUEPRINT/params/LONO_ENV/REQUESTED.txt (env level - recommended for most cases)
+3. configs/BLUEPRINT/params/REQUESTED.txt (params level)
+4. configs/BLUEPRINT/params/LONO_ENV.txt (params generic env - least specific)
 
-To determine what param file to use, lono searches for files at each level of specificity until it finds a file. Lono starts with the level with the most specificity first. It ends with the generic env level, least specific, last.
+To determine what param file to use, lono searches for files at each level of specificity until it finds a file. Lono starts with the level with the most specificity first. It ends with the generic env level, least specific, last. Here's a concrete example that may help:
 
-1. template level (most specific)
-2. env level (recommended for most cases)
-3. params level
-4. params generic env (least specific)
+1. configs/demo/params/development/demo/my-stack.txt
+2. configs/demo/params/development/my-stack.txt (recommended)
+3. configs/demo/params/my-stack.txt
+4. configs/demo/params/development.txt
 
 The `BLUEPRINT`, `LONO_ENV`, and `TEMPLATE` are self-explantory. But what is `REQUESTED`?
 

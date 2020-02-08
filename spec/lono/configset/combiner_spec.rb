@@ -4,7 +4,7 @@ describe Lono::Configset::Combiner do
   end
 
   def load_configset(name)
-    data = IO.read("spec/fixtures/configsets/#{name}")
+    data = IO.read("spec/fixtures/configsets/snippets/#{name}")
     if File.extname(name) == ".yml"
       YAML.load(data)
     else
@@ -13,7 +13,7 @@ describe Lono::Configset::Combiner do
   end
 
   def load_template(name)
-    YAML.load(IO.read("spec/fixtures/configsets/templates/#{name}"))
+    YAML.load(IO.read("spec/fixtures/configsets/snippets/templates/#{name}"))
   end
 
   def registry(*args)
