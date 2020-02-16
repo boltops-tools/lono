@@ -38,17 +38,6 @@ class Lono::Importer
       path.sub("#{Lono.root}/",'')
     end
 
-    def create_dot_lono(type)
-      dot_lono = "#{Lono.blueprint_root}/.meta"
-      FileUtils.mkdir_p(dot_lono)
-      config = {
-        "blueprint_name" => @blueprint,
-        "template_type" => "#{type}",
-      }
-      text = YAML.dump(config)
-      IO.write("#{dot_lono}/config.yml", text)
-    end
-
     def blueprint_name
       return @options[:name] if @options[:name]
       # Else infer name from the original source.
