@@ -1,6 +1,6 @@
 ---
 title: Conventions
-nav_order: 72
+nav_order: 71
 ---
 
 Lono follows a set of naming conventions to encourage best practices in a naming scheme. This also dramatically allows lono commands to be shorter and hopefully more memorable.

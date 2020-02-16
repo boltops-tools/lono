@@ -12,6 +12,7 @@ module Lono
       blueprint = o[:blueprint] || o[:stack]
       template = o[:template] || blueprint
       param = o[:param] || template || blueprint
+      stack ||= blueprint # fallback for commands that dont take stack name. IE: lono generate
       [stack, blueprint, template, param]
     end
 

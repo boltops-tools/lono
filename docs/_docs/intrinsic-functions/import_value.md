@@ -1,7 +1,7 @@
 ---
 title: ImportValue
 categories: intrinsic-function
-nav_order: 61
+nav_order: 62
 ---
 
 The `import_value` method is the CloudFormation [Fn::ImportValue](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-importvalue.html) equivalent.

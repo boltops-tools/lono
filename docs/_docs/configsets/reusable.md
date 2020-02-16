@@ -3,7 +3,7 @@ title: Reusable Configusets
 nav_text: Reusable
 categories: configsets
 order: 1
-nav_order: 22
+nav_order: 23
 ---
 
 Typically, configsets are directly hardcoded into the CloudFormation template. Unfortunately, this makes them hard to reuse. IE: You copy and paste the cnofigset code between CloudFormation templates.

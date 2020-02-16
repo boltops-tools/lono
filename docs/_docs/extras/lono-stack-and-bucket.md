@@ -1,7 +1,7 @@
 ---
 title: Lono Stack and Bucket
 categories: extras
-nav_order: 81
+nav_order: 80
 ---
 
 ## Overview

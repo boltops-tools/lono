@@ -141,12 +141,15 @@ class Lono::Sets::Instances
 
     def lookup(config_type)
       config_type = config_type.to_s
-      base_path = lookup_config_location(config_type, "base")
-      env_path = lookup_config_location(config_type, Lono.env)
-      items = load_config(base_path)
-      items += load_config(env_path)
+
+      items = []
+      layering = Lono::Layering.new(config_type, @options, Lono.env)
+      layering.locations.each do |path|
+        items += load_config(path)
+      end
       items = items.sort.uniq
-      if config_type == :accounts
+
+      if config_type == "accounts"
         @accounts = items
       else
         @regions = items
@@ -164,11 +167,6 @@ class Lono::Sets::Instances
         items << l unless l.empty? || l.match(/^\s*#/) # dont include empty linnks or commented lines
       end
       items
-    end
-
-    def lookup_config_location(config_type, env)
-      location = Lono::ConfigLocation.new(config_type, @options, env)
-      env == "base" ? location.lookup_base : location.lookup
     end
 
     def validate!

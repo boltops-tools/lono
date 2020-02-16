@@ -1,7 +1,7 @@
 ---
 title: Organizing Lono
 categories: erb
-nav_order: 96
+nav_order: 95
 ---
 
 ## Breaking up app/definitions

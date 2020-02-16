@@ -92,8 +92,4 @@ output/demo/params/mystack.json:
 
 Lono param files also support layering which is covered in [Layering Support]({% link _docs/core/layering.md %}).
 
-## Params Files Lookup Locations
-
-What we are setting above with the `--param` option is the param "name". The param name is used to look up different possible param locations. This is covered in more details here: [Params Lookup Locations]({% link _docs/lookup-locations/params.md %}).
-
 {% include prev_next.md %}

@@ -1,7 +1,7 @@
 ---
 title: GetAtt
 categories: intrinsic-function
-nav_order: 59
+nav_order: 60
 ---
 
 The `get_att` method is the CloudFormation [Fn::GetAtt](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-getatt.html) equivalent.

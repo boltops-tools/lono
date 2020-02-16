@@ -1,6 +1,6 @@
 ---
 title: Blueprint Configsets Lookup Locations
-nav_order: 71
+nav_order: 70
 ---
 
 Blueprint configsets are configured within a blueprint in it's `config/configsets.rb` file.  Example:
