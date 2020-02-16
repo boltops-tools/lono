@@ -10,7 +10,7 @@ describe Lono::Template::ConfigsetInjector do
   # Tested at the Combiner level.
   context "template has no existing metdata" do
     let(:cfn) do
-      YAML.load_file("spec/fixtures/configsets/templates/ec2-no-metadata.yml")
+      YAML.load_file("spec/fixtures/configsets/snippets/templates/ec2-no-metadata.yml")
     end
     let(:metadata_map) do
       json =<<~EOL

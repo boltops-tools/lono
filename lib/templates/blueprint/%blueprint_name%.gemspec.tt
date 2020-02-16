@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.summary       = "Write a short summary because it's required."  # TODO: Change me
   spec.description   = "Write a longer description or delete this line."  # TODO: Change me
   spec.homepage      = "<%= ENV['LONO_ORG'] || "https://github.com/USER" %>/<%= blueprint_name %>"
-  spec.license       = "<%= ENV['LONO_LICENSE'] || 'MIT' %>"
+  spec.license       = "<%= ENV['LONO_LICENSE'] || '' %>"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
@@ -42,6 +42,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
 <% if @options[:type] != "dsl" %>
-  spec.metadata = {"template_type" => "erb"}
+  spec.metadata = {"lono" => {"type" => "erb"}}
 <% end %>
 end

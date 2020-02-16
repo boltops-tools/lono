@@ -1,6 +1,27 @@
 ## Configset Example
 
-Here's a simple configset example:
+Here's a simple configset example in DSL form.
+
+app/configsets/httpd/lib/configset.rb:
+
+```ruby
+package("yum",
+  httpd: []
+)
+file("/var/www/html/index.html",
+  content: "<h2>html test content</h2>"
+)
+service("sysvinit",
+  httpd: {
+    enabled: true,
+    ensureRunning: true,
+  }
+)
+```
+
+The configet can also be written in ERB form.
+
+app/configsets/httpd/lib/configset.yml:
 
 ```yaml
 AWS::CloudFormation::Init:
@@ -14,8 +35,8 @@ AWS::CloudFormation::Init:
     services:
       sysvinit:
        httpd:
-        enabled: 'true'
-        ensureRunning: 'true'
+        enabled: true
+        ensureRunning: true
 ```
 
 This configset will install, configure, and ensure that the httpd server is running, even if the server is rebooted.

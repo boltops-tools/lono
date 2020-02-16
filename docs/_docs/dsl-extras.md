@@ -1,6 +1,6 @@
 ---
 title: DSL Extras
-nav_order: 47
+nav_order: 50
 ---
 
 Most Lono DSL methods match closely to the [CloudFormation Template Anatomy](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/conditions-section-structure.html) section. Additionally, there are some DSL extra methods that are useful.

@@ -27,9 +27,9 @@ class Lono::Template::Context
 
     # Load custom helper methods from project
     def load_project_helpers
-      Dir.glob("#{Lono.config.helpers_path}/**/*_helper.rb").each do |path|
-        filename = path.sub(%r{.*/},'').sub('.rb','')
-        module_name = filename.classify
+      Dir.glob("#{Lono.config.helpers_path}/**/*.rb").each do |path|
+        filename = path.sub("#{Lono.config.helpers_path}/",'').sub('.rb','')
+        module_name = filename.camelize
 
         # Prepend a period so require works LONO_ROOT is set to a relative path
         # without a period.

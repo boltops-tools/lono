@@ -9,5 +9,5 @@ A quick way create a project configset is with the [lono configset new](/referen
           create  app/configsets/httpd/Gemfile
           create  app/configsets/httpd/README.md
           create  app/configsets/httpd/Rakefile
-          create  app/configsets/httpd/lib/configset.yml
+          create  app/configsets/httpd/lib/configset.rb
     $

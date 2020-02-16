@@ -3,7 +3,7 @@ title: Transform
 category: dsl
 desc: The optional Transform section specifies one or more macros that AWS CloudFormation
   uses to process your template.
-nav_order: 46
+nav_order: 49
 ---
 
 The `transform` method maps to the CloudFormation Template Anatomy [Transform](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html) section.

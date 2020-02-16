@@ -9,6 +9,11 @@ class Lono::Configset
       @map = {} # stores resource logical id => metadata cfn-init
     end
 
+    def generator_options(registry, options={})
+      o = @options.merge(configset: registry.name, resource: registry.resource)
+      o.merge(options)
+    end
+
     def metadata_map
       return {} unless additional_configsets?
 
@@ -17,12 +22,14 @@ class Lono::Configset
       end
 
       Register::Blueprint.configsets.each do |registry|
-        loader = Lono::Blueprint::Configset::Loader.new(registry, @options)
-        add(registry, loader.metdata_configset)
+        generator = Lono::Configset::Generator.new(generator_options(registry, type: "blueprint"))
+        cloudformation_init = generator.build
+        add(registry, cloudformation_init)
       end
       Register::Project.configsets.each do |registry|
-        loader = Loader.new(registry, @options)
-        add(registry, loader.metdata_configset)
+        generator = Lono::Configset::Generator.new(generator_options(registry, type: "project"))
+        cloudformation_init = generator.build
+        add(registry, cloudformation_init)
       end
 
       combine

@@ -169,8 +169,10 @@ class Lono::Cfn
 
     def show_options(options, meth=nil)
       options = options.clone.compact
-      options[:template_body] = "Hidden due to size... View at: #{pretty_path(template_path)}"
-      options[:template_url] = options[:template_url].sub(/\?.*/,'')
+      if options[:template_body] # continue_update_rollback
+        options[:template_body] = "Hidden due to size... View at: #{pretty_path(template_path)}"
+        options[:template_url] = options[:template_url].sub(/\?.*/,'')
+      end
       to = meth || "AWS API"
       puts "Parameters passed to #{to}:"
       puts YAML.dump(options.deep_stringify_keys)

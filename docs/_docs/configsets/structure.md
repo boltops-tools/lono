@@ -10,7 +10,8 @@ Here's an example lono configset structure:
 
 ```sh
 ├── lib
-│   ├── configset.yml
+│   ├── helpers/
+│   ├── configset.rb
 │   ├── meta.rb
 │   └── variables.rb
 └── httpd.gemspec
@@ -18,7 +19,8 @@ Here's an example lono configset structure:
 
 File | Description | Required?
 --- | --- | ---
-configset.yml | The configset code.  The top-level key should be `AWS::CloudFormation::Init`. | required
+helpers | Where you define custom helpers and extend the configset DSL. | optional
+configset.rb | The configset code.  The top-level key should be `AWS::CloudFormation::Init`. | required
 meta.rb | Additional meta info about the configset. Supports `depends_on`, to specify other configsets as dependencies. | optional
 variables.rb | Predefined variables shipped with the configset. Predefined variables can be overridden with [Configset Variables]({% link _docs/configsets/variables.md %}). | optional
 httpd.gemspec | A standard gemspec definition.  Configure things like name and author. | required

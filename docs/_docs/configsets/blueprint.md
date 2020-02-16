@@ -1,7 +1,7 @@
 ---
 title: Blueprint Configsets
 nav_text: Blueprint
-nav_order: 26
+nav_order: 30
 ---
 
 Blueprint configsets are added by blueprints. This allows blueprint to prepackaged configsets, so you don't have to worry about adding them to your project `configs/BLUEPRINT/configsets` files.

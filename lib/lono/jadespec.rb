@@ -25,8 +25,12 @@ module Lono
       Dir.glob("#{@root}/*.gemspec").first
     end
 
-    def template_type
-      metadata[:template_type] || "dsl"
+    def type
+      metadata[:type] || "dsl"
+    end
+
+    def strategy
+      metadata[:strategy] || "erb" # erb for now, will depreciate though
     end
 
     def auto_camelize
@@ -34,7 +38,9 @@ module Lono
     end
 
     def metadata
-      gemspec.metadata.deep_symbolize_keys
+      gem_metata = gemspec.metadata || {}
+      metadata = gem_metata["lono"] || {} # gemspec metadata Hash keys are strings
+      metadata.deep_symbolize_keys
     end
     memoize :metadata
   end

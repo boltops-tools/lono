@@ -1,7 +1,7 @@
 ---
 title: Split
 categories: intrinsic-function
-nav_order: 62
+nav_order: 65
 ---
 
 The `split` method is the CloudFormation [Fn::Split](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-split.html) equivalent.

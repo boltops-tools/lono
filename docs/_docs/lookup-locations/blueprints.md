@@ -1,6 +1,6 @@
 ---
 title: Blueprint Lookup Locations
-nav_order: 66
+nav_order: 69
 ---
 
 Blueprints encapsulation CloudFormation templates in a convenient and reusable way.  Blueprints are searched for in a few locations. It is similiar to how `LOAD_PATH` works.
