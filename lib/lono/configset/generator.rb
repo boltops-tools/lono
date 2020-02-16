@@ -31,7 +31,7 @@ class Lono::Configset
 
     def strategy
       jadespec = Lono::Jadespec.new(configset_root, "unknown") # abusing Jadespec to get strategy
-      jadespec.strategy
+      jadespec.lono_strategy
     end
 
     def configset_root

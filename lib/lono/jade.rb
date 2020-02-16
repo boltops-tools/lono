@@ -7,7 +7,7 @@ module Lono
     class_attribute :downloaded
     self.downloaded = []
 
-    delegate :template_type, :auto_camelize, :source_type, to: :jadespec
+    delegate :source_type, to: :jadespec
 
     attr_accessor :dependencies, :from, :depends_ons
     attr_reader :name, :type, :registry, :jadespec

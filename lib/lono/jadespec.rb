@@ -25,15 +25,21 @@ module Lono
       Dir.glob("#{@root}/*.gemspec").first
     end
 
-    def type
-      metadata["lono_type"] || "dsl"
-    end
-    alias_method :template_type, :type
-
-    def strategy
-      metadata["lono_strategy"] || "erb" # erb for now, will depreciate though
+    def lono_type
+      metadata["lono_type"] || detect_type
     end
 
+    def detect_type
+      configset = Dir.glob("#{@root}/lib/configset.*").size > 0
+      configset ? "configset" : "blueprint"
+    end
+
+    def lono_strategy
+      return metadata["lono_strategy"] if metadata["lono_strategy"]
+      lono_type == "blueprint" ? "dsl" : "erb" # TODO: default to dsl for configset also in next major release
+    end
+
+    # backward-compatiable for now
     def auto_camelize
       metadata["lono_auto_camelize"] || false
     end
