@@ -26,21 +26,20 @@ module Lono
     end
 
     def type
-      metadata[:type] || "dsl"
+      metadata["lono_type"] || "dsl"
     end
+    alias_method :template_type, :type
 
     def strategy
-      metadata[:strategy] || "erb" # erb for now, will depreciate though
+      metadata["lono_strategy"] || "erb" # erb for now, will depreciate though
     end
 
     def auto_camelize
-      metadata[:auto_camelize] || false
+      metadata["lono_auto_camelize"] || false
     end
 
     def metadata
-      gem_metata = gemspec.metadata || {}
-      metadata = gem_metata["lono"] || {} # gemspec metadata Hash keys are strings
-      metadata.deep_symbolize_keys
+      gemspec.metadata || {}
     end
     memoize :metadata
   end
