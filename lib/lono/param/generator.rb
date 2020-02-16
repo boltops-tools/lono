@@ -5,92 +5,27 @@ class Lono::Param
     def generate
       puts "Generating parameter files for blueprint #{@blueprint.color(:green)}:"
 
-      @base_path, @env_path = config_locations
-
-      return {} unless @base_path || @env_path
-
-      # useful option for lono cfn, since some templates dont require params
-      return {} if @options[:allow_not_exists] && !params_exist?
-
-      if params_exist?
-        contents = process_erb
-        data = convert_to_cfn_format(contents)
-        camel_data = convert_to_cfn_format(contents, :camel)
-        json = JSON.pretty_generate(camel_data)
-        write_output(json)
-        unless @options[:mute]
-          short_output_path = output_path.sub("#{Lono.root}/","")
-          puts "  #{short_output_path}"
-        end
-      else
-        puts "#{@base_path} or #{@env_path} could not be found?  Are you sure it exist?"
-        exit 1
+      contents = []
+      layering = Lono::Layering.new("params", @options, Lono.env)
+      layering.locations.each do |path|
+        contents << render_erb(path)
       end
+      contents = contents.compact.join("\n") # result
+
+      data = convert_to_cfn_format(contents)
+      camel_data = convert_to_cfn_format(contents, :camel)
+      json = JSON.pretty_generate(camel_data)
+      write_output(json)
+      unless @options[:mute]
+        short_output_path = output_path.sub("#{Lono.root}/","")
+        puts "  #{short_output_path}"
+      end
+
       data
     end
 
     def parameters
       generate
-    end
-
-    def config_locations
-      @base_path = lookup_config_location("base")
-      @env_path = lookup_config_location(Lono.env)
-
-      if ENV['LONO_DEBUG_PARAM']
-        puts "LONO_DEBUG_PARAM enabled"
-        puts "  @base_path #{@base_path.inspect}"
-        puts "  @env_path #{@env_path.inspect}"
-      end
-
-      [@base_path, @env_path]
-    end
-
-    def lookup_config_location(env)
-      location = Lono::ConfigLocation.new("params", @options, env)
-      env == "base" ? location.lookup_base : location.lookup
-    end
-
-    def puts_param_message(type)
-      path = send("#{type}_path")
-      return unless path
-      if param_file?(path)
-        pretty_path = path.sub("#{Lono.root}/",'')
-        puts "Using param for #{type}: #{pretty_path}".color(:yellow)
-      end
-    end
-
-    # Checks both base and source path for existing of the param file.
-    # Example:
-    #   params/base/mystack.txt - base path
-    #   params/production/mystack.txt - source path
-    def params_exist?
-      @base_path && File.exist?(@base_path) ||
-      @env_path && File.exist?(@env_path)
-    end
-
-    # Reads both the base source and env source and overlay the two
-    # Example 1:
-    #   params/base/mystack.txt - base path
-    #   params/production/mystack.txt - env path
-    #
-    #   the base/mystack.txt gets combined with the prod/mystack.txt
-    #   it produces a final prod/mystack.txt
-    #
-    # Example 2:
-    #   params/base/mystack.txt - base path
-    #
-    #   the base/mystack.txt is used to produced a prod/mystack.txt
-    #
-    # Example 3:
-    #   params/production/mystack.txt - env path
-    #
-    #   the prod/mystack.txt is used to produced a prod/mystack.txt
-    def process_erb
-      contents = []
-      contents << render_erb(@base_path)
-      contents << render_erb(@env_path)
-      contents.compact.join("\n") # result
     end
 
     def render_erb(path)
@@ -104,17 +39,6 @@ class Lono::Param
     # This is where we control what references get passed to the ERB rendering.
     def context
       @context ||= Lono::Template::Context.new(@options)
-    end
-
-    def parse_contents(contents)
-      lines = contents.split("\n")
-      # remove comment at the end of the line
-      lines.map! { |l| l.sub(/#.*/,'').strip }
-      # filter out commented lines
-      lines = lines.reject { |l| l =~ /(^|\s)#/i }
-      # filter out empty lines
-      lines = lines.reject { |l| l.strip.empty? }
-      lines
     end
 
     def convert_to_cfn_format(contents, casing=:underscore)
@@ -151,6 +75,17 @@ class Lono::Param
       params
     end
 
+    def parse_contents(contents)
+      lines = contents.split("\n")
+      # remove comment at the end of the line
+      lines.map! { |l| l.sub(/#.*/,'').strip }
+      # filter out commented lines
+      lines = lines.reject { |l| l =~ /(^|\s)#/i }
+      # filter out empty lines
+      lines = lines.reject { |l| l.strip.empty? }
+      lines
+    end
+
     def remove_surrounding_quotes(s)
       if s =~ /^"/ && s =~ /"$/
         s.sub(/^["]/, '').gsub(/["]$/,'') # remove surrounding double quotes
@@ -162,14 +97,7 @@ class Lono::Param
     end
 
     def output_path
-      output = Lono.config.output_path.sub("#{Lono.root}/","")
-      path = if @base_path && !@env_path
-               # Handle case when base config exist but the env config does not
-               @base_path.sub("configs", output).sub("base", Lono.env)
-             else
-               @env_path.sub("configs", output)
-             end
-      path.sub(/\.txt$/,'.json')
+      "#{Lono.root}/output/#{@blueprint}/params/#{@stack}.json"
     end
 
     def write_output(json)

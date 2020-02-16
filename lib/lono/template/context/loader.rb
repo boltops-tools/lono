@@ -11,9 +11,10 @@ class Lono::Template::Context
       options = ActiveSupport::HashWithIndifferentAccess.new(@options.dup)
       options[:blueprint] = @blueprint
       options[:stack] ||= @blueprint
-      location = Lono::ConfigLocation.new("variables", options, Lono.env)
-      evaluate_variables_file(location.lookup_base) if location.lookup_base
-      evaluate_variables_file(location.lookup) if location.lookup # config file
+      layering = Lono::Layering.new("variables", options, Lono.env)
+      layering.locations.each do |path|
+        evaluate_variables_file(path)
+      end
     end
 
     # Load the variables defined in config/variables/* to make available in lono scope.

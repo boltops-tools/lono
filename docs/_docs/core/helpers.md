@@ -2,7 +2,7 @@
 title: Helpers
 categories: core
 order: 6
-nav_order: 20
+nav_order: 21
 ---
 
 You can extend Lono's DSL with helpers. This is a powerful way to keep your code organized and readable.

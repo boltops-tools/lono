@@ -32,6 +32,8 @@ module Lono
     def template
       with_cli_scope do
         option :template, desc: "override convention and specify the template file to use"
+        option :param, desc: "override convention and specify the param file to use"
+        option :variable, desc: "override convention and specify the variable file to use"
       end
     end
 

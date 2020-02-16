@@ -2,7 +2,7 @@
 title: Parameter Groups
 category: dsl-extras
 desc: Add to the CloudFormation Metadata Parameter Groups and Parameter Labels.
-nav_order: 53
+nav_order: 54
 ---
 
 [Parameter Groups](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudformation-interface-parametergroup.html) and [Parameter Labels](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudformation-interface-parameterlabel.html) control how parameter form fields are displayed in the CloudFormation Console. This allows you to group parameter form fields in a friendly manner.  They're added to the CloudFormation template under the [Metadata.AWS::CloudFormation::Interface key](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cloudformation-interface.html). The structure looks like this:

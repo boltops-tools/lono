@@ -1,7 +1,7 @@
 ---
 title: Join
 categories: intrinsic-function
-nav_order: 62
+nav_order: 63
 ---
 
 The `join` method is the CloudFormation [Fn::Join](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-join.html) equivalent.

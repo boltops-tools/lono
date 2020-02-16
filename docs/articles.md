@@ -1,6 +1,6 @@
 ---
 title: Articles
-nav_order: 98
+nav_order: 97
 ---
 
 ## Articles On Lono and CloudFormation
