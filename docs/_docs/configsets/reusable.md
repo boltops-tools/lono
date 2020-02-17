@@ -6,7 +6,7 @@ order: 1
 nav_order: 23
 ---
 
-Typically, configsets are directly hardcoded into the CloudFormation template. Unfortunately, this makes them hard to reuse. IE: You copy and paste the cnofigset code between CloudFormation templates.
+Typically, configsets are directly hardcoded into the CloudFormation template. Unfortunately, this makes them hard to reuse. IE: You copy and paste the configset code between CloudFormation templates.
 
 With Lono, configsets are define separately from the template. Lono takes the configsets and adds them into your CloudFormation templates. This allows them to be reusable with different templates.
 
