@@ -1,5 +1,7 @@
 #!/bin/bash
 
+gem install bundler # upgrade bundler
+
 set -exu
 
 git config --global user.email "tonguerooo@gmail.com"
