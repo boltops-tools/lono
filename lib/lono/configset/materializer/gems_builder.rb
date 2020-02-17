@@ -33,7 +33,7 @@ module Lono::Configset::Materializer
     end
 
     def bundle
-      Bundler.with_original_env do
+      Bundler.with_unbundled_env do
         bundle_install
       end
     end
