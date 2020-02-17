@@ -64,9 +64,9 @@ Here's an example with the `--param` option. Here REQUESTED comes from `--param 
 
 These params files are layered on top of the "Common" `base.txt` and `development.txt` files.
 
-1. configs/demo/params/my-stack.txt
-2. configs/demo/params/development/my-stack.txt (recommended)
-3. configs/demo/params/development/demo/my-stack.txt
+1. configs/demo/params/my-param.txt
+2. configs/demo/params/development/my-param.txt (recommended)
+3. configs/demo/params/development/demo/my-param.txt
 
 Layering allows you to override the locations with the `--param` option. The `--param` option takes higher precedence than `stack name` because it is more explicit.
 
