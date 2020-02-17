@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.1.0]
+- #42 introduce configset dsl
+- #43 improve layering behavior
+- #44 metadata fixes:  lono_strategy
+- #45 lono_type fix
+- #46 require bundler 2 at least: fixes Gemfile.lock generation
+- #47 use with_unbundled_env
+
 ## [7.0.5]
 - #41 sort parameter with required at top
 
