@@ -72,9 +72,9 @@ Here's an example with the `--variable` option. Here REQUESTED comes from `--var
 
 These variables files are layered on top of the "Common" `base.rb` and `development.rb` files.
 
-1. configs/demo/variables/my-stack.rb
-2. configs/demo/variables/development/my-stack.rb (recommended)
-3. configs/demo/variables/development/demo/my-stack.rb
+1. configs/demo/variables/my-variable.rb
+2. configs/demo/variables/development/my-variable.rb (recommended)
+3. configs/demo/variables/development/demo/my-variable.rb
 
 Layering allows you to override the locations with the `--variable` option. The `--variable` option takes higher precedence than `stack name` because it is more explicit.
 
