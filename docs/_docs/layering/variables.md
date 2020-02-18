@@ -5,17 +5,15 @@ nav_order: 19
 
 ## Common Layers
 
-Variables support layering for the`configs/demo/variables` folder. Variables files are layered if they exist.
-
-* `base.rb` is always be evaluated.
-* `development.rb` or `production.rb` is evaluated based on LONO_ENV.
-
-Let's say you have the following variables directory structure:
+Variables support layering for the `configs/demo/variables` folder. Variables files are layered if they exist. Let's say you have the following variables directory structure:
 
     configs/demo/variables
     ├── base.rb
     ├── development.rb
     └── production.rb
+
+* `base.rb` is always evaluated.
+* `development.rb` or `production.rb` is evaluated based on LONO_ENV.
 
 In this case, you want to define your common variables used for templates in the `base.rb`. Specific environment overrides can be defined in their respective `LONO_ENV` variables file.  For example, let's say we're setting the min and max size of an autoscaling group. We could have something like this:
 

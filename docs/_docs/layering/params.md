@@ -5,17 +5,15 @@ nav_order: 18
 
 ## Common Layers
 
-Params support layering for the`configs/demo/params` folder. Params files are layered if they exist.
-
-* `base.txt` is always be evaluated.
-* `development.txt` or `production.txt` is evaluated based on LONO_ENV.
-
-Let's say you have the following params directory structure:
+Params support layering for the `configs/demo/params` folder. Params files are layered if they exist. Let's say you have the following params directory structure:
 
     configs/demo/params
     ├── base.txt
     ├── development.txt
     └── production.txt
+
+* `base.txt` is always evaluated.
+* `development.txt` or `production.txt` is evaluated based on LONO_ENV.
 
 In this case, you want to define your common params used for templates in the `base.txt` and overrides in `production.txt`. For example, let's say we're setting the min and max size of an autoscaling group. We could have something like this:
 

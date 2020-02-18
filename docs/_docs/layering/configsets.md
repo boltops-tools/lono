@@ -5,9 +5,9 @@ nav_order: 20
 
 ## Common Layers
 
-Configsets support layering for the`configs/demo/configsets` folder. Configsets files are layered if they exist.
+Configsets support layering for the `configs/demo/configsets` folder. Configsets files are layered if they exist.
 
-* `base.rb` is always be evaluated.
+* `base.rb` is always evaluated.
 * `development.rb` or `production.rb` is evaluated based on LONO_ENV.
 
 Let's say you have the following configsets directory structure:

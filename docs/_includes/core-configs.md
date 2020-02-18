@@ -1,4 +1,4 @@
-Configs are how you can customize the blueprints to fit your needs.  There are 2 types of configs: [Params docs]({% link _docs/configs/params.md %}) and [Variables docs]({% link _docs/configs/shared-variables.md %}). Params allow you to affect the templates at run-time. Variables configs allow you to affect the templates at compile-time.
+Configs are how you can customize the blueprints to fit your needs.  There are two main types of configs: [Params docs]({% link _docs/configs/params.md %}) and [Variables docs]({% link _docs/configs/shared-variables.md %}). Params allow you to affect the templates at run-time. Variables configs allow you to affect the templates at compile-time.
 
 ## Location
 
