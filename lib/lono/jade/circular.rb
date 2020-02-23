@@ -4,7 +4,7 @@ class Lono::Jade
       circular = circular_dependency?
       return unless circular
 
-      puts "ERROR: configset circular dependency detected".color(:red)
+      puts "ERROR: jade circular dependency detected".color(:red)
       puts "circular dependency: #{parent_names.join(" => ")}"
       exit 1
     end

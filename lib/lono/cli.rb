@@ -23,6 +23,14 @@ module Lono
       Configset::List.new(options.merge(blueprint: blueprint)).run
     end
 
+    desc "extensions [BLUEPRINT]", "Lists extensions"
+    long_desc Help.text(:extensions)
+    opts.source
+    opts.stack
+    def extensions(blueprint=nil)
+      Extension::List.new(options.merge(blueprint: blueprint)).run
+    end
+
     desc "generate BLUEPRINT", "Generate both CloudFormation templates and parameters files."
     long_desc Help.text(:generate)
     option :quiet, type: :boolean, desc: "silence the output"
@@ -123,6 +131,10 @@ module Lono
     desc "configset SUBCOMMAND", "configset subcommands"
     long_desc Help.text(:configset)
     subcommand "configset", Configset
+
+    desc "extension SUBCOMMAND", "extension subcommands"
+    long_desc Help.text(:extension)
+    subcommand "extension", Extension
 
     desc "param SUBCOMMAND", "param subcommands"
     long_desc Help.text(:param)

@@ -55,7 +55,7 @@ class Lono::Configset
         next unless init
 
         data = {
-          registry: Lono::Configset::Registry.new(["#{logical_id}OriginalConfigset"], resource: logical_id),
+          registry: Lono::Jade::Registry.new(["#{logical_id}OriginalConfigset"], resource: logical_id),
           metdata_configset: attributes["Metadata"]
         }
         configsets << data

@@ -1,4 +1,4 @@
-module Lono::Configset::Materializer
+class Lono::Jade::Materializer
   class Source
     def initialize(lono_settings=nil)
       @lono_settings = lono_settings || Lono::Setting.new.data

@@ -1,0 +1,7 @@
+module <%= extension_class_name %>::Helpers
+  module Outputs
+    def resource1_output
+      output("Resource1")
+    end
+  end
+end

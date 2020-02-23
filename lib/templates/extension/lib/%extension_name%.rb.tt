@@ -1,0 +1,5 @@
+$:.unshift(File.expand_path("../", __FILE__))
+require "<%= extension_underscore_name %>/version"
+
+module <%= extension_class_name %>
+end

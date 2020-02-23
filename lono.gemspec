@@ -29,6 +29,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "aws-sdk-ssm"
   gem.add_dependency "bundler", "~> 2"
   gem.add_dependency "cfn_camelizer"
+  gem.add_dependency "cli-format"
   gem.add_dependency "filesize"
   gem.add_dependency "graph" # lono xgraph command dependency
   gem.add_dependency "hashie"

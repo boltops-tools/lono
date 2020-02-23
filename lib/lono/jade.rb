@@ -2,10 +2,6 @@ module Lono
   class Jade
     include Circular
     extend Memoist
-    class_attribute :tracked
-    self.tracked = []
-    class_attribute :downloaded
-    self.downloaded = []
 
     delegate :source_type, to: :jadespec
 
@@ -18,7 +14,6 @@ module Lono
       @materialized = false
       @resolved = false
       @depends_ons = []
-      self.class.tracked << self
     end
 
     def repo
@@ -34,7 +29,9 @@ module Lono
 
     def dependencies
       @depends_ons.map do |registry|
-        Lono::Jade.new(registry.depends_on, registry.parent.type, registry)
+        jade = Lono::Jade.new(registry.depends_on, registry.parent.type, registry) # not same sig as register_configset?
+        Lono::Jade::Registry.tracked_configsets << jade
+        jade
       end
     end
 
@@ -56,7 +53,12 @@ module Lono
       return nil unless @jadespec
       if @jadespec.source_type == "materialized"
         # possible "duplicated" jade instances with same name but will uniq in final materialized Gemfile
-        self.class.downloaded << self
+        case @jadespec.lono_type
+        when "configset"
+          Lono::Jade::Registry.downloaded_configsets << self
+        when "extension"
+          Lono::Jade::Registry.downloaded_extensions << self
+        end
       end
       evaluate_meta_rb
       @jadespec
@@ -66,18 +68,23 @@ module Lono
     # Must return config to set @jadespec in materialize
     # Only allow download of Lono::Blueprint::Configset::Jade
     # Other configsets should be configured in project Gemfile.
+    #
+    # Cases:
+    #
+    #    1a) blueprint/configset top-level - download
+    #    1b) blueprint/configset depends_on - download
+    #    2a) configset top-level - dont download, will report to user with validate_all!
+    #    2b) configset depends_on - download
+    #    3) extension - download
+    #
     def download
       return if finder.find(@name, local_only: true) # no need to download because locally found
-      # 4 cases:
-      # 1a) blueprint/configset top-level - download
-      # 1b) blueprint/configset depends_on - download
-      # 2a) configset top-level - dont download, will report to user with validate_all!
-      # 2b) configset depends_on - download
-      return unless %w[blueprint/configset configset].include?(@type) # TODO: support materializing nested blueprints later
-      # only download jades that came from depends_on
-      return unless @registry.parent || @type == "blueprint/configset"
-      jade = Lono::Configset::Materializer::Jade.new(self)
-      jade.build
+      return unless %w[blueprint/configset configset extension].include?(@type)
+      # Comment out. Unsure if this complexity is worth it. Always download jades.
+      # Only download jades that came from depends_on
+      # return unless @registry.parent || %w[blueprint/configset extension].include?(@type)
+      materializer = Materializer.new(self)
+      materializer.build
     end
     memoize :download
 

@@ -1,8 +1,7 @@
 module Lono::Configset::Register
   module Dsl
-    def configset(*args)
-      options = args.last.is_a?(Hash) ? args.pop : {}
-      registry = Lono::Configset::Registry.new(args, options)
+    def configset(*args, **options)
+      registry = Lono::Jade::Registry.register_configset(args, options)
       self.class.append(registry)
       store_for_validation(registry)
     end
