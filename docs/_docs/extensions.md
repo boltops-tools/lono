@@ -16,7 +16,7 @@ module SgExtensions::Helpers
   module Parameters
     def security_group_parameters
       parameter_group("AWS::EC2::SecurityGroup") do
-        parameter("GroupDescription", demo security group")
+        parameter("GroupDescription", "demo security group")
       end
     end
   end
