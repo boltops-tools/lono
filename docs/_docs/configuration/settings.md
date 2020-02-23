@@ -1,6 +1,6 @@
 ---
 title: Settings
-nav_order: 74
+nav_order: 78
 ---
 
 Lono's behavior can be tailored using a `settings.yml` file. This file should be created at `~/.lono/settings.yml` or `configs/settings.yml` within the project.  The options from the files get merged with the following precedence:

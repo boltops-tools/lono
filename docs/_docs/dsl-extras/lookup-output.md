@@ -2,7 +2,7 @@
 title: Lookup Output
 category: dsl-extras
 desc: Can be used in params files with ERB to lookup outputs from other stacks.
-nav_order: 53
+nav_order: 39
 ---
 
 The `lookup_output` method can be used in [params]({% link _docs/configs/params.md %}) files to reference outputs in other stacks.

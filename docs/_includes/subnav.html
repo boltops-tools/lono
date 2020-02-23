@@ -38,26 +38,9 @@
               {% endfor %}
             </ul>
         </li>
-        <li><a href="{% link _docs/configsets.md %}">Configsets</a>
-            <ul>
-              {% assign docs = site.docs | where: "categories","configsets" | sort: "order" %}
-              {% for doc in docs -%}
-                {% if doc.title == "Project vs Blueprint Configsets" %}
-                <li><a href='{{doc.url}}'>{{doc.nav_text}}</a>
-                    <ul>
-                        <li><a href='{% link _docs/configsets/project.md %}'>Project</a></li>
-                        <li><a href='{% link _docs/configsets/blueprint.md %}'>Blueprint</a></li>
-                    </ul>
-                </li>
-                {% else %}
-                <li><a href='{{doc.url}}'>{{doc.nav_text}}</a></li>
-                {% endif %}
-              {% endfor %}
-            </ul>
-        </li>
         <li><a href="{% link _docs/dsl/components.md %}">DSL Components</a>
             <ul>
-              {% assign docs = site.docs | where: "categories","dsl-components"" | sort: "order" %}
+              {% assign docs = site.docs | where: "categories","dsl-components" | sort: "order" %}
               {% for doc in docs -%}
                 <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
               {% endfor %}
@@ -81,17 +64,43 @@
         </li>
         <li><a href="{% link _docs/intrinsic-functions.md %}">Intrinsic Functions</a>
             <ul>
-              {% assign docs = site.docs | where: "categories","intrinsic-function"" | sort: "order" %}
+              {% assign docs = site.docs | where: "categories","intrinsic-function" | sort: "order" %}
               {% for doc in docs -%}
                 <li><a href='{{doc.url}}'>{{doc.title}}</a></li>
               {% endfor %}
             </ul>
         </li>
-        <li>Lookup Precedence</a>
+        <li><a href="{% link _docs/extensions.md %}">Extensions</a>
             <ul>
-                <li><a href="{% link _docs/lookup-locations/blueprints.md %}">Blueprints</a></li>
-                <li><a href="{% link _docs/lookup-locations/project-configsets.md %}">Project Configsets</a></li>
-                <li><a href="{% link _docs/lookup-locations/blueprint-configsets.md %}">Blueprint Configsets</a></li>
+              {% assign docs = site.docs | where: "categories","extensions" | sort: "order" %}
+              {% for doc in docs -%}
+                <li><a href='{{doc.url}}'>{{doc.nav_text}}</a></li>
+              {% endfor %}
+            </ul>
+        </li>
+        <li><a href="{% link _docs/configsets.md %}">Configsets</a>
+            <ul>
+              {% assign docs = site.docs | where: "categories","configsets" | sort: "order" %}
+              {% for doc in docs -%}
+                {% if doc.title == "Project vs Blueprint Configsets" %}
+                <li><a href='{{doc.url}}'>{{doc.nav_text}}</a>
+                    <ul>
+                        <li><a href='{% link _docs/configsets/project.md %}'>Project</a></li>
+                        <li><a href='{% link _docs/configsets/blueprint.md %}'>Blueprint</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li><a href='{{doc.url}}'>{{doc.nav_text}}</a></li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+        </li>
+        <li><a href="{% link _docs/lookup-precedence.md %}">Lookup Precedence</a>
+            <ul>
+              {% assign docs = site.docs | where: "categories","lookup" | sort: "order" %}
+              {% for doc in docs -%}
+                <li><a href='{{doc.url}}'>{{doc.nav_text}}</a></li>
+              {% endfor %}
             </ul>
         </li>
         <li><a href="{% link _docs/conventions.md %}">Conventions</a></li>

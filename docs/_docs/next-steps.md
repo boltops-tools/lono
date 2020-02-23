@@ -1,6 +1,6 @@
 ---
 title: Next Steps
-nav_order: 99
+nav_order: 103
 ---
 
 This concludes the tutorial guide for lono. Hopefully, you are now more comfortable with lono's basic usage, concepts, and have a feel for the workflow.

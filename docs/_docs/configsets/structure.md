@@ -3,19 +3,17 @@ title: Configset Structure
 nav_text: Structure
 categories: configsets
 order: 2
-nav_order: 24
+nav_order: 58
 ---
 
 Here's an example lono configset structure:
 
-```sh
-├── lib
-│   ├── helpers/
-│   ├── configset.rb
-│   ├── meta.rb
-│   └── variables.rb
-└── httpd.gemspec
-```
+    ├── lib
+    │   ├── helpers/
+    │   ├── configset.rb
+    │   ├── meta.rb
+    │   └── variables.rb
+    └── httpd.gemspec
 
 File | Description | Required?
 --- | --- | ---

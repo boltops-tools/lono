@@ -3,7 +3,7 @@ title: Variables Layering Support
 nav_order: 19
 ---
 
-## Common Layers
+## Intro: Common Layers
 
 Variables support layering for the `configs/demo/variables` folder. Variables files are layered if they exist. Let's say you have the following variables directory structure:
 
@@ -31,7 +31,7 @@ configs/demo/variables/production.rb:
 @max_size = 20
 ```
 
-Lono will use the `@max_size = 20` parameter value when launching the stack with `LONO_ENV=production`.  Lono will use `@max_size = 1` for all other `LONO_ENV` values.  Example:
+Lono will use the `@max_size = 20` variableeter value when launching the stack with `LONO_ENV=production`.  Lono will use `@max_size = 1` for all other `LONO_ENV` values.  Example:
 
     $ lono cfn deploy demo # @max_size = 1
     $ LONO_ENV=production lono cfn deploy demo # @max_size = 20
@@ -42,15 +42,16 @@ Remember variables can be used to affect templates at compile-time. Here's the l
 
 Depending on how you use variables with layering, you can dramatically simpify your code.
 
-## Conventional Requested
+## Full Layering: Conventional Requested
 
-Additionally, you can define variables files that conventionally matches what is requested. This is usually the stack name. Lono uses the requested stack name to look up variables files in conventional locations and also uses them for layering. Here are the conventional locations in a general form:
+Additionally, layering also considers variables files that match the stack name. Here is a list of the full layering possibilities.
 
 Description | Path | Comments
 --- | --- | ---
-variables level | configs/BLUEPRINT/variables/REQUESTED.rb | least specific
+base | configs/BLUEPRINT/variables/base.rb | always evaluated
+env | configs/BLUEPRINT/variables/LONO_ENV.rb | evaluated based on `LONO_ENV` value
+variables level | configs/BLUEPRINT/variables/REQUESTED.rb | common evaluated based on REQUESTED
 env level | configs/BLUEPRINT/variables/LONO_ENV/REQUESTED.rb | generally recommended
-template level | configs/BLUEPRINT/variables/LONO_ENV/TEMPLATE/REQUESTED.rb | most specific
 
 The `BLUEPRINT`, `LONO_ENV`, and `TEMPLATE` placeholders are self-explanatory.  `REQUESTED` requires a little more explanation. `REQUESTED` is usually the requested `stack name`.  Here's a concrete example with `stack name`:
 
@@ -58,27 +59,25 @@ The `BLUEPRINT`, `LONO_ENV`, and `TEMPLATE` placeholders are self-explanatory.  
 
 The layers would be:
 
-1. configs/demo/variables/my-stack.rb
-2. configs/demo/variables/development/my-stack.rb (recommended)
-3. configs/demo/variables/development/demo/my-stack.rb
+1. configs/demo/variables/base.rb
+2. configs/demo/variables/development.rb
+3. configs/demo/variables/my-stack.rb
+4. configs/demo/variables/development/my-stack.rb (recommended)
 
-These variables files are layered on top of the "Common" `base.rb` and `development.rb` layers.
-
-Here's an example with the `--variable` option. Here REQUESTED comes from `--variable my-variable`:
+If you need to use a different variable file that does not match the stack name, you can explicitly specify the variable file with the `--variable` option. Here's an example with the `--variable` option. Here `REQUESTED` comes from `--variable my-variable`:
 
     lono cfn deploy my-stack --blueprint demo --variable my-variable # REQUESTED=my-variable
 
-These variables files are layered on top of the "Common" `base.rb` and `development.rb` files.
+These variables files are layered on top of the "Common" `base.rb` and `development.rb` layers.
 
-1. configs/demo/variables/my-variable.rb
-2. configs/demo/variables/development/my-variable.rb (recommended)
-3. configs/demo/variables/development/demo/my-variable.rb
-
-Layering allows you to override the locations with the `--variable` option. The `--variable` option takes higher precedence than `stack name` because it is more explicit.
+1. configs/demo/variables/base.rb
+2. configs/demo/variables/development.rb
+3. configs/demo/variables/my-variable.rb
+4. configs/demo/variables/development/my-variable.rb (recommended)
 
 ## Direct Locations
 
-You can also specify the `--variable` path directly. Example:
+You can also specify relative and full paths for the `--variable` value. Example:
 
     lono cfn deploy my-stack --blueprint demo --variable configs/demo/variables/my-variable.rb
 
@@ -86,6 +85,10 @@ You can specify variables files that exist outside of the lono project too.
 
     lono cfn deploy my-stack --blueprint demo --variable /tmp/my-variable.rb
 
-Direct locations take the highest precedence and generally remove the "Conventionally Requested" layers.
+Relative and full paths generally remove the "Conventional" lookups for the layers.  So you'll end up with this:
+
+1. configs/demo/variables/base.rb
+2. configs/demo/variables/development.rb
+3. /tmp/my-variable.rb
 
 {% include prev_next.md %}

@@ -51,6 +51,8 @@ Blog Post also covers this: [lono summary Tutorial Introduction](https://blog.bo
 ```
 [--source=SOURCE]      # url or path to file with template
 [--template=TEMPLATE]  # override convention and specify the template file to use
+[--param=PARAM]        # override convention and specify the param file to use
+[--variable=VARIABLE]  # override convention and specify the variable file to use
 
 Runtime options:
 -f, [--force]                    # Overwrite files that already exist

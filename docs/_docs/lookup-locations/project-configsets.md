@@ -1,6 +1,9 @@
 ---
 title: Project Configsets Lookup Locations
-nav_order: 69
+nav_text: Project Configsets
+category: lookup
+order: 4
+nav_order: 72
 ---
 
 Project configsets are configured by you in one of the configs/BLUEPRINT/configsets folders.  Example:

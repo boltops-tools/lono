@@ -1,7 +1,7 @@
 ---
 title: Condition Functions
 categories: intrinsic-function
-nav_order: 58
+nav_order: 44
 ---
 
 Lono supports [Condition Functions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-conditions.html).  Since most of these function names are Ruby keywords they must be called with a bang (!).

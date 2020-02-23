@@ -1,6 +1,6 @@
 ---
 title: DSL
-nav_order: 40
+nav_order: 26
 ---
 
 Lono provides the ability write your CloudFormation template with a DSL. The DSL is actually just Ruby code. This means we get the full power of a programming language. We can use loops, define methods, modules, etc.

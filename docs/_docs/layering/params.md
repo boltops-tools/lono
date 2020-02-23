@@ -3,7 +3,7 @@ title: Params Layering Support
 nav_order: 18
 ---
 
-## Common Layers
+## Intro: Common Layers
 
 Params support layering for the `configs/demo/params` folder. Params files are layered if they exist. Let's say you have the following params directory structure:
 
@@ -34,15 +34,16 @@ Remember params can be used to affect templates at run-time. Here's the lifecycl
 
 <img src="/img/tutorial/lono-flowchart.png" alt="Stack Created" class="doc-photo lono-flowchart">
 
-## Conventional Requested
+## Full Layering: Conventional Requested
 
-Additionally, you can define params files that conventionally matches what is requested. This is usually the stack name. Lono uses the requested stack name to look up params files in conventional locations and also uses them for layering. Here are the conventional locations in a general form:
+Additionally, layering also considers params files that match the stack name. Here is a list of the full layering possibilities.
 
 Description | Path | Comments
 --- | --- | ---
-params level | configs/BLUEPRINT/params/REQUESTED.txt | least specific
+base | configs/BLUEPRINT/params/base.txt | always evaluated
+env | configs/BLUEPRINT/params/LONO_ENV.txt | evaluated based on `LONO_ENV` value
+params level | configs/BLUEPRINT/params/REQUESTED.txt | common evaluated based on REQUESTED
 env level | configs/BLUEPRINT/params/LONO_ENV/REQUESTED.txt | generally recommended
-template level | configs/BLUEPRINT/params/LONO_ENV/TEMPLATE/REQUESTED.txt | most specific
 
 The `BLUEPRINT`, `LONO_ENV`, and `TEMPLATE` placeholders are self-explanatory.  `REQUESTED` requires a little more explanation. `REQUESTED` is usually the requested `stack name`.  Here's a concrete example with `stack name`:
 
@@ -50,27 +51,25 @@ The `BLUEPRINT`, `LONO_ENV`, and `TEMPLATE` placeholders are self-explanatory.  
 
 The layers would be:
 
-1. configs/demo/params/my-stack.txt
-2. configs/demo/params/development/my-stack.txt (recommended)
-3. configs/demo/params/development/demo/my-stack.txt
+1. configs/demo/params/base.txt
+2. configs/demo/params/development.txt
+3. configs/demo/params/my-stack.txt
+4. configs/demo/params/development/my-stack.txt (recommended)
 
-These params files are layered on top of the "Common" `base.txt` and `development.txt` layers.
-
-Here's an example with the `--param` option. Here REQUESTED comes from `--param my-param`:
+If you need to use a different param file that does not match the stack name, you can explicitly specify the param file with the `--param` option. Here's an example with the `--param` option. Here `REQUESTED` comes from `--param my-param`:
 
     lono cfn deploy my-stack --blueprint demo --param my-param # REQUESTED=my-param
 
-These params files are layered on top of the "Common" `base.txt` and `development.txt` files.
+These params files are layered on top of the "Common" `base.txt` and `development.txt` layers.
 
-1. configs/demo/params/my-param.txt
-2. configs/demo/params/development/my-param.txt (recommended)
-3. configs/demo/params/development/demo/my-param.txt
-
-Layering allows you to override the locations with the `--param` option. The `--param` option takes higher precedence than `stack name` because it is more explicit.
+1. configs/demo/params/base.txt
+2. configs/demo/params/development.txt
+3. configs/demo/params/my-param.txt
+4. configs/demo/params/development/my-param.txt (recommended)
 
 ## Direct Locations
 
-You can also specify the `--param` path directly. Example:
+You can also specify relative and full paths for the `--param` value. Example:
 
     lono cfn deploy my-stack --blueprint demo --param configs/demo/params/my-param.txt
 
@@ -78,6 +77,10 @@ You can specify params files that exist outside of the lono project too.
 
     lono cfn deploy my-stack --blueprint demo --param /tmp/my-param.txt
 
-Direct locations take the highest precedence and generally remove the "Conventionally Requested" layers.
+Relative and full paths generally remove the "Conventional" lookups for the layers.  So you'll end up with this:
+
+1. configs/demo/params/base.txt
+2. configs/demo/params/development.txt
+3. /tmp/my-param.txt
 
 {% include prev_next.md %}
