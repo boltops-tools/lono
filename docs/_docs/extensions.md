@@ -9,28 +9,28 @@ Extensions provide a way to share helpers code between lono blueprints.
 
 Let's say you want to create some helper methods that you want to share between 2 blueprints.  Both blueprints will have some common parameters and resources.  Here are some examples:
 
-ec2_extension/lib/ec2_extension/helpers/parameters.rb:
+sg_extension/lib/sg_extension/helpers/parameters.rb:
 
 ```ruby
-module Ec2Extensions::Helpers
+module SgExtensions::Helpers
   module Parameters
-    def ec2_parameters
-      parameter_group("AWS::AutoScaling::AutoScalingGroup") do
-        parameter("InstanceType", "t3.small")
+    def security_group_parameters
+      parameter_group("AWS::EC2::SecurityGroup") do
+        parameter("GroupDescription", demo security group")
       end
     end
   end
 end
 ```
 
-ec2_extension/lib/ec2_extension/helpers/resources.rb:
+sg_extension/lib/sg_extension/helpers/resources.rb:
 
 ```ruby
-module Ec2Extensions::Helpers
+module SgExtensions::Helpers
   module Resources
     def security_group
       resource("SecurityGroup", "AWS::EC2::SecurityGroup",
-        GroupDescription: "demo security group",
+        GroupDescription: ref("GroupDescription"),
       )
     end
   end
@@ -42,8 +42,8 @@ In your blueprint you can use the extension like so:
 app/blueprints/demo/templates/demo.rb
 
 ```ruby
-extend_with "ec2_extension"
-ec2_parameters
+extend_with "sg_extension"
+security_group_parameters
 security_group
 
 # Additional resource not from extension
