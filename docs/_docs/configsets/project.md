@@ -1,7 +1,7 @@
 ---
 title: Project Configsets
 nav_text: Project
-nav_order: 30
+nav_order: 64
 ---
 
 Project configsets are added by you to your lono project.  There are different ways to create or add a configset.

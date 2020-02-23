@@ -13,6 +13,8 @@ title: CLI Reference
 * [lono completion_script]({% link _reference/lono-completion_script.md %})
 * [lono configset]({% link _reference/lono-configset.md %})
 * [lono configsets]({% link _reference/lono-configsets.md %})
+* [lono extension]({% link _reference/lono-extension.md %})
+* [lono extensions]({% link _reference/lono-extensions.md %})
 * [lono generate]({% link _reference/lono-generate.md %})
 * [lono new]({% link _reference/lono-new.md %})
 * [lono param]({% link _reference/lono-param.md %})

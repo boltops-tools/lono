@@ -1,7 +1,7 @@
 ---
 title: GetAZs
 categories: intrinsic-function
-nav_order: 61
+nav_order: 47
 ---
 
 The `get_azs` method is the CloudFormation [Fn::GetAZs](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-getavailabilityzones.html) equivalent.

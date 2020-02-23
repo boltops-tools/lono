@@ -43,7 +43,6 @@ Running `lono user_data bootstrap` produces:
     aws s3 cp s3://mybucket/path/to/folder/development/scripts/scripts-93b8b29b.tgz /opt/
     cd /opt
     tar zxf /opt/scripts-93b8b29b.tgz
-    chmod -R a+x /opt/scripts
     chown -R ec2-user:ec2-user /opt/scripts
 
     SCRIPTS=/opt/scripts

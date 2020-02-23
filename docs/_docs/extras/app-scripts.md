@@ -1,12 +1,10 @@
 ---
 title: App Scripts
-categories: erb
-nav_order: 87
+categories: extras
+nav_order: 82
 ---
 
-Often it is useful to be able to upload custom scripts to the server and run them. One way to do this is first to upload the scripts to s3 and then download them down to the server as part of the user-data script.  Lono supports this deployment flow with the `app/scripts` folder.
-
-Any scripts added to the `app/scripts` folder get tarballed up and uploaded to s3. The s3 location is configured with the `s3_folder` option in [settings.yml]({% link _docs/configuration/settings.md %}) file.  Once the s3_folder option is configured `lono cfn create` and `lono cfn update` commands will automatically upload the `app/scripts` folder as part of generating templates.
+Often it is useful to be able to upload custom scripts to the server and run them. One way to do this is first to upload the scripts to s3 and then download them down to the server as part of the user-data script.  Lono supports this deployment flow with the `app/scripts` folder.  Any scripts added to the `app/scripts` folder get tarballed up and uploaded to the lono s3 bucket.
 
 ## extract_scripts helper
 
@@ -29,13 +27,6 @@ In order to use extract_scripts, you'll need scripts in the `app/scripts` folder
 cat >app/scripts/install_stuff.sh <<EOL
 yum install -y jq
 EOL
-```
-
-And remember to configure `s3_folder` in settings.yml. Example:
-
-```
-base:
-  s3_folder: mybucket/path/to/folder # just an example
 ```
 
 ## lono user_data command
@@ -62,7 +53,6 @@ mkdir -p /opt
 aws s3 cp s3://mybucket/path/to/folder/development/scripts/scripts-93b8b29b.tgz /opt/
 cd /opt
 tar zxf /opt/scripts-93b8b29b.tgz
-chmod -R a+x /opt/scripts
 chown -R ec2-user:ec2-user /opt/scripts
 
 SCRIPTS=/opt/scripts

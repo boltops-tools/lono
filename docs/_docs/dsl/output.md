@@ -3,7 +3,7 @@ title: Output
 category: dsl
 desc: The optional Outputs section declares output values shown in the CloudFormation
   outputs console.
-nav_order: 46
+nav_order: 32
 ---
 
 The `output` method maps to the CloudFormation Template Anatomy [Outputs](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html) section.

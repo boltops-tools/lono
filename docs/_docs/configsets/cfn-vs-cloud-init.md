@@ -3,7 +3,7 @@ title: cfn-init vs cloud-init
 nav_text: cfn-init vs cloud-init
 categories: configsets
 order: 11
-nav_order: 35
+nav_order: 69
 ---
 
 There are two similarly named projects: cfn-init and cloud-init. Both provide a standard way to customize EC2 instances, but they are different tools. You may be wondering what's the difference between these projects.

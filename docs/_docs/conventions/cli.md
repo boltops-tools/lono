@@ -2,7 +2,7 @@
 title: CLI
 category: conventions
 desc: Stack, blueprint, template, and params conventions.
-nav_order: 73
+nav_order: 77
 ---
 
 Lono follows a set of CLI naming conventions. When followed, this can dramatically shorten lono commands.
@@ -56,9 +56,5 @@ Will use the corresponding config files:
 
     configs/demo/development/daisy.txt
     configs/demo/development/jenkins.txt
-
-## Params Layering
-
-The param name is used to look up different possible param locations for layering. This is covered in more details here: [Params Layering]({% link _docs/layering/params.md %}).
 
 {% include prev_next.md %}

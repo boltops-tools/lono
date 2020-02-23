@@ -1,24 +1,24 @@
 ---
-title: lono configset
+title: lono extensions
 reference: true
 ---
 
 ## Usage
 
-    lono configset SUBCOMMAND
+    lono extensions [BLUEPRINT]
 
 ## Description
 
-configset subcommands
+Lists extensions
 
-## Subcommands
-
-* [lono configset generate]({% link _reference/lono-configset-generate.md %}) - Generate configset from DSL
-* [lono configset new]({% link _reference/lono-configset-new.md %}) - Generates new lono configset.
 
 ## Options
 
 ```
+[--source=SOURCE]  # url or path to file with template
+[--stack=STACK]    # stack name. defaults to blueprint name.
+
+Runtime options:
 -f, [--force]                    # Overwrite files that already exist
 -p, [--pretend], [--no-pretend]  # Run but do not make any changes
 -q, [--quiet], [--no-quiet]      # Suppress status output

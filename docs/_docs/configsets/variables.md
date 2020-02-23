@@ -3,7 +3,7 @@ title: Configset Variables
 nav_text: Variables
 categories: configsets
 order: 6
-nav_order: 28
+nav_order: 62
 ---
 
 You can define variables to be made available in your configset code.

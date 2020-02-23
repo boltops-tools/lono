@@ -1,20 +1,19 @@
 ---
-title: lono configset
+title: lono extension
 reference: true
 ---
 
 ## Usage
 
-    lono configset SUBCOMMAND
+    lono extension SUBCOMMAND
 
 ## Description
 
-configset subcommands
+extension subcommands
 
 ## Subcommands
 
-* [lono configset generate]({% link _reference/lono-configset-generate.md %}) - Generate configset from DSL
-* [lono configset new]({% link _reference/lono-configset-new.md %}) - Generates new lono configset.
+* [lono extension new]({% link _reference/lono-extension-new.md %}) - Generates new lono extension.
 
 ## Options
 

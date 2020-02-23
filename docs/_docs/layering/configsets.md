@@ -3,7 +3,7 @@ title: Configsets Layering Support
 nav_order: 20
 ---
 
-## Common Layers
+## Intro: Common Layers
 
 Configsets support layering for the `configs/demo/configsets` folder. Configsets files are layered if they exist.
 
@@ -33,7 +33,7 @@ configset("httpd", resource: "Instance")
 
 Lono will always use the `cfn-hup` configset, but only the `httpd` for the production environment.
 
-## Conventional Requested
+## Full Layering: Conventional Requested
 
 The conventional locations are layered similiarly to how [Params]({% link _docs/layering/params.md %}) and [Variables]({% link _docs/layering/variables.md %}) work.
 

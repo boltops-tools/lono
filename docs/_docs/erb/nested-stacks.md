@@ -1,25 +1,10 @@
 ---
 title: Nested Stack Support
 categories: erb
-nav_order: 94
+nav_order: 98
 ---
 
-## Uploading Templates to S3
-
-By default, lono provides the generated template on the local file system when creating CloudFormation stacks. This is done to keep things simple and fast for the common use case of a single template.
-
-However, if you are working with advanced nested CloudFormation templates that contain a parent stack and several child stacks, then the child templates must be uploaded and available in s3 for CloudFormation to work. Lono can upload the generated templates automatically with a simple configuration setting.  To enable s3 uploading post template generation:
-
-```yaml
-base:
-  s3_folder: bucket/path/to/folder
-```
-
-That's all that is required to tell lono to upload the generated templates to s3. When `s3_folder` is set, lono will automatically upload templates to the `s3_folder` as part of the lifecycle `lono cfn` commands.
-
-## Helper method for nested templates
-
-Lono also provides helper methods to help work with nested CloudFormation templates.
+Lono provides helper methods to help work with nested CloudFormation templates.
 
 Helper  | Description
 ------------- | -------------
@@ -28,14 +13,7 @@ Helper  | Description
 
 ### The template_s3_path helper
 
-Instead of hard-coding the s3 bucket and path name in your parent stack you can use this helper to reference it from your `settings.yml` configuration. For example, if your s3_folder is configured in `settings.yml` like so:
-
-```yaml
-base:
-  s3_folder: my-bucket/templates
-```
-
-And you use it in your `app/templates/parent.yml` like so:
+Instead of hard-coding the s3 bucket and path name in your parent stack you can use this helper to reference it from code.  You use it in your `app/templates/parent.yml` like so:
 
 ```ruby
 <%= template_s3_path("ChildTemplate") %>
@@ -44,7 +22,7 @@ And you use it in your `app/templates/parent.yml` like so:
 This produces the url in your `output/templates/parent.yml`:
 
 ```ruby
-https://s3.amazonaws.com/my-bucket/templates/production/ChildTemplate.yml
+https://s3.amazonaws.com/lono-bucket/templates/production/ChildTemplate.yml
 ```
 
 Note that the `LONO_ENV` is added to the final s3 path in case you are using the same s3 bucket for multiple environments.

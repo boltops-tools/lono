@@ -3,7 +3,7 @@ title: Conditional Parameter
 category: dsl-extras
 desc: Helps with creating a common pattern of creating a parameter, condition, and
   ref.
-nav_order: 52
+nav_order: 38
 ---
 
 Conditional parameters is a lono concept. It encapsulates a common pattern with the usage of `parameter`, `condition` and `ref`.

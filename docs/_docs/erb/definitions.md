@@ -1,7 +1,7 @@
 ---
 title: Template Definitions
 categories: erb
-nav_order: 91
+nav_order: 95
 ---
 
 Template definitions are a core component of lono.  Template definitions are:

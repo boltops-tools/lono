@@ -1,6 +1,6 @@
 ---
 title: Configsets
-nav_order: 22
+nav_order: 56
 ---
 
 Configsets are essentially configuration management. Use configsets to configure and update your EC2 instances automatically. Lono allows you to use configsets in a reusable way.
