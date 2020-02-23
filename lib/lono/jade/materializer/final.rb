@@ -1,4 +1,4 @@
-module Lono::Configset::Materializer
+class Lono::Jade::Materializer
   class Final
     def build(jades)
       return if jades.empty?

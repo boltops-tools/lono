@@ -7,5 +7,7 @@ class Lono::Template::Strategy::Dsl::Builder
     include LookupHelper
     include S3Helper
     include TagsHelper
+
+    include Lono::Template::Strategy::Common::Helpers
   end
 end

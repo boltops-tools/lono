@@ -13,8 +13,8 @@ module Lono::Template::Strategy::Dsl::Builder::Helpers
     def user_data_script
       unless @user_data_script
         return <<~EOL
-          # @user_data_script variable not set. IE: @user_data_script = "configs/#{@blueprint}/user-data/boostrap.sh"
-          # Also, make sure that "configs/#{@blueprint}/user-data/boostrap.sh" path you're using exists.
+          # @user_data_script variable not set. IE: @user_data_script = "configs/#{@blueprint}/user_data/boostrap.sh"
+          # Also, make sure that "configs/#{@blueprint}/user_data/boostrap.sh" path you're using exists.
         EOL
       end
 

@@ -1,7 +1,7 @@
 require "bundler"
 
-module Lono::Configset::Materializer
-  class Jade
+class Lono::Jade
+  class Materializer
     extend Memoist
 
     def initialize(jade)
@@ -9,7 +9,7 @@ module Lono::Configset::Materializer
     end
 
     def build
-      GemsBuilder.new(@jade).build
+      Materializer::GemsBuilder.new(@jade).build
     end
   end
 end

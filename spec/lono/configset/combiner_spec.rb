@@ -18,7 +18,7 @@ describe Lono::Configset::Combiner do
 
   def registry(*args)
     options = args.last.is_a?(Hash) ? args.pop : {}
-    Lono::Configset::Registry.new(args, options)
+    Lono::Jade::Registry.new(args, options)
   end
 
   context("no existing metadata") do

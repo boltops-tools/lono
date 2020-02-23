@@ -1,6 +1,20 @@
 class Lono::Template::Context
   module Loader
+    include LoadFiles
+
     private
+    # Not using Lono::Template::Context because that works differently.
+    # That is used to load a context object that is passed to RenderMePretty's context.
+    # So that we can load context for params files and erb templates.
+    #
+    # In this case builder is actually the dsl context.
+    # We want to load variables and helpers into this builder context directly.
+    # This loads additional context. It looks very similar to Lono::Template::Context
+    def load_context
+      load_variables
+      load_helpers
+    end
+
     # Variables in base.rb are overridden by their environment specific variables
     # file.  Example, file LONO_ENV=development:
     #
@@ -27,20 +41,12 @@ class Lono::Template::Context
     end
 
     # Load custom helper methods from project
-    def load_project_helpers
-      Dir.glob("#{Lono.config.helpers_path}/**/*.rb").each do |path|
-        filename = path.sub("#{Lono.config.helpers_path}/",'').sub('.rb','')
-        module_name = filename.camelize
+    def load_helpers
+      load_project_helpers # project helpers will override extension helpers
+    end
 
-        # Prepend a period so require works LONO_ROOT is set to a relative path
-        # without a period.
-        #
-        # Example: LONO_ROOT=tmp/lono_project
-        first_char = path[0..0]
-        path = "./#{path}" unless %w[. /].include?(first_char)
-        require path
-        self.class.send :include, module_name.constantize
-      end
+    def load_project_helpers
+      load_files(Lono.config.helpers_path)
     end
   end
 end

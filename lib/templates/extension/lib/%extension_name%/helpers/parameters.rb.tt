@@ -1,0 +1,10 @@
+module <%= extension_class_name %>::Helpers
+  module Parameters
+    def example_parameters
+      parameter_group("AWS::Service::Resource") do
+        parameter("Parameter1")
+        parameter("Parameter2")
+      end
+    end
+  end
+end

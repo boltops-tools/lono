@@ -24,7 +24,6 @@ module Lono::Finder
       end
     end
 
-    # overridden in finder/blueprint/configset.rb
     def local
       project + vendor + gems
     end
@@ -43,7 +42,7 @@ module Lono::Finder
       components(gem_roots, "gem")
     end
 
-    # Folders that each materialized gems to tmp/configsets
+    # Folders that each materialized gems to tmp/jades
     def materialized
       components(materialized_gem_roots, "materialized")
     end
@@ -114,8 +113,9 @@ module Lono::Finder
     memoize :gem_roots
 
     def materialized_gem_roots
-      gemfile_lock = "#{Lono.root}/tmp/configsets/Gemfile.lock"
+      gemfile_lock = "#{Lono.root}/tmp/jades/Gemfile.lock"
       return [] unless File.exist?(gemfile_lock)
+
       parser = Bundler::LockfileParser.new(Bundler.read_file(gemfile_lock))
       specs = parser.specs
       # __materialize__ only exists in Gem::LazySpecification and not in Gem::Specification

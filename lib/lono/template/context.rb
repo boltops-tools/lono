@@ -9,8 +9,7 @@ class Lono::Template
 
     def initialize(options={})
       super
-      load_variables
-      load_project_helpers
+      load_context
     end
 
     # Take a hash and makes them instance variables in the current scope.

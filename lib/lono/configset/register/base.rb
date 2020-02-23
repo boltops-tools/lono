@@ -18,7 +18,8 @@ module Lono::Configset::Register
 
     def jadify
       self.class.configsets.each do |registry|
-        Lono::Jade.new(registry.name, jade_type, registry)
+        jade = Lono::Jade.new(registry.name, jade_type, registry)
+        Lono::Jade::Registry.tracked_configsets << jade
       end
     end
 

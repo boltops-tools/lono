@@ -4,7 +4,8 @@ class Lono::Template::Strategy::Dsl::Builder
     include Fn
     include Lono::Template::Evaluate
     include Section::Methods
-    include Section::Extensions
+    include ParameterGroup
+    include ExtendWith
     include Helpers # built-in helpers
   end
 end

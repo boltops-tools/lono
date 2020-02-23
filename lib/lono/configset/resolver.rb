@@ -7,6 +7,7 @@ class Lono::Configset
     @@resolving_message_shown = false
     def resolve(*unresolved)
       unresolved.flatten! # initially only top-level
+      unresolved.uniq! { |jade| jade.name }
       puts "Resolving dependencies..." if !@@resolving_message_shown && !unresolved.empty?
       puts "Resolving #{unresolved.map(&:name)}" if ENV['LONO_DEBUG_CONFIGSET']
 

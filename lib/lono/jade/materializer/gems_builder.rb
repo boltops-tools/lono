@@ -1,12 +1,12 @@
 require 'open3'
 
-module Lono::Configset::Materializer
+class Lono::Jade::Materializer
   class GemsBuilder
     extend Memoist
 
     def initialize(*jades)
       @jades = jades.flatten
-      @build_root = "#{Lono.root}/tmp/configsets"
+      @build_root = "#{Lono.root}/tmp/jades"
     end
 
     def build
@@ -51,7 +51,7 @@ module Lono::Configset::Materializer
         puts stdout
         puts stderr
         if stderr.include?("correct access rights")
-          puts "Are you sure you have access to the git repo?".color(:yellow)
+          puts "Are you sure you have access to the git repo and the repo exists?".color(:yellow)
         end
         exit 1
       end
