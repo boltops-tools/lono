@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.2.1]
+- #51 fix extensions helpers loading and cleanup
+
 ## [7.2.0]
 - #48 fix codebuild and circleci
 - #49 lono extensions
