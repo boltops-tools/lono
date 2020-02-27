@@ -2,6 +2,7 @@ class Lono::Template::Strategy::Dsl
   class Builder
     include Lono::Template::Util
     include Lono::Template::Context::Loader
+    include Lono::Extensions::Loader
 
     include Syntax
     extend Memoist
@@ -27,6 +28,7 @@ class Lono::Template::Strategy::Dsl
     # load_extensions and evaluate extend_with methods earlier than load_context so project helpers can override extensions
     def load_extensions # evaluates extend_with
       Lono::Extensions::Preparer.new(@options).run
+      load_all_extension_helpers # after Extensions::Preparer#run
     end
 
     def finalize

@@ -3,14 +3,13 @@ class Lono::Extensions
     def initialize(options={})
       super
       @register = Register.new(options)
-      @loader = Loader.new(options)
     end
 
     def run
       @register.run
       materialize
-      # no need to validate because bundler will fail to install extension earlier and is a form of "validation already"
-      @loader.run
+      # loading happens in Lono::Extensions::Loader load_all_extension_helpers module
+      # so it has the proper self.class include scope
     end
 
     def materialize
