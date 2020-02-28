@@ -34,9 +34,9 @@ AWS::CloudFormation::Init:
         content: "<h2>html test content</h2>"
     services:
       sysvinit:
-       httpd:
-        enabled: true
-        ensureRunning: true
+        httpd:
+          enabled: true
+          ensureRunning: true
 ```
 
 This configset will install, configure, and ensure that the httpd server is running, even if the server is rebooted.
