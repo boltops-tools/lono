@@ -2,7 +2,7 @@
 title: cfn-init vs cloud-init
 nav_text: cfn-init vs cloud-init
 categories: configsets
-order: 11
+order: 12
 nav_order: 69
 ---
 

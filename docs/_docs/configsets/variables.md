@@ -2,7 +2,7 @@
 title: Configset Variables
 nav_text: Variables
 categories: configsets
-order: 6
+order: 7
 nav_order: 62
 ---
 

@@ -2,7 +2,7 @@
 title: Project vs Blueprint Configsets
 nav_text: Project vs Blueprint
 categories: configsets
-order: 7
+order: 8
 nav_order: 63
 ---
 
