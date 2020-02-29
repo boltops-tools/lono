@@ -41,7 +41,7 @@ module Lono::Configset::Strategy
     def load_project_predefined_variables
       paths = [
         "#{Lono.root}/configs/#{@blueprint}/configsets/variables.rb", # global
-        "#{Lono.root}/configs/#{@blueprint}/configsets/#{@configset}/variables.rb", # configset specific
+        "#{Lono.root}/configs/#{@blueprint}/configsets/variables/#{@configset}.rb", # configset specific
       ]
       paths.each do |path|
         evaluate_file(path)

@@ -28,16 +28,16 @@ You can set variables in the `configs/BLUEPRINT/configets` folder of your projec
 Examples:
 
 1. configs/ec2/configsets/variables.rb - global override for all configsets used in the ec2 blueprint
-2. configs/ec2/configsets/httpd/variables.rb - local override, only to the httpd configset
+2. configs/ec2/configsets/variables/httpd.rb - local override, only to the httpd configset
 
 If both global and local variables are set, the local variable takes higher precedence and will be used. It is generally recommended to use local overrides only. Example:
 
-configs/ec2/configsets/httpd/variables.rb
+configs/ec2/configsets/variables/httpd.rb
 
 ```ruby
 @html =<<-EOL
 <h1>project variables.rb override</h1>
-<p>Hello there from configs/ec2/configsets/httpd/variables.rb</p>
+<p>Hello there from configs/ec2/configsets/variables/httpd.rb</p>
 EOL
 ```
 
@@ -91,7 +91,7 @@ Note, we're also using the `indent` method to align the YAML content.
 
 Since the configs file is Ruby, you have the full power of Ruby to organize things however you wish. Example:
 
-configs/ec2/configsets/httpd/variables.rb
+configs/ec2/configsets/variables/httpd.rb
 
 ```ruby
 @html = IO.read(File.expand_path("html/index.html", __dir__))
