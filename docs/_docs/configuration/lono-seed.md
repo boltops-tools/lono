@@ -64,8 +64,8 @@ class Lono::Seed::Configs < Lono::Seed::Base
   # Template for variables
   def variables
     <<~EOL
-      @variable1=value1
-      @variable2=value2
+      @variable1 = value1
+      @variable2 = value2
     EOL
   end
 end
