@@ -42,7 +42,7 @@ Lono conditional parameters encapsulates the `parameter`, `condition`, and `ref`
 ```ruby
 parameter("KeyName", Conditional: true)
 resource("Instance", "AWS::EC2::Instance",
-  KeyName: ref("KeyName"), Conditional: true)
+  KeyName: ref("KeyName", Conditional: true)
 )
 ```
 
