@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["<%= ENV['LONO_EMAIL'] || user_info[:email] %>"]
   spec.summary       = "Lono extension: <%= extension_name %>"
   spec.homepage      = "<%= ENV['LONO_ORG'] || "https://github.com/USER" %>/<%= extension_name %>"
-  spec.license       = "<%= ENV['LONO_LICENSE'] || 'MIT' %>"
+  spec.license       = "<%= ENV['LONO_LICENSE'] || 'Nonstandard' %>"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
