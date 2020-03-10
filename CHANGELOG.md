@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.2.3]
+- #53 improve configset lookup path lookup
+- cleanup starter blueprint
+
 ## [7.2.2]
 - #52 configset: content_file helper
 
