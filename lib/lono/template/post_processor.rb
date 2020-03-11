@@ -14,15 +14,15 @@ class Lono::Template
     def replacements
       map = {}
       registry_items.each do |item|
-        if item.directory? || item.file?
-          replacement = item.s3_path
+        if item.type == "lambda_layer"
+          placeholder = "file://app/files/lambda_layer/#{item.name}"
+        elsif item.directory? || item.file?
+          placeholder = "file://app/files/file/#{item.name}"
         else
           puts "WARN: PostProcessor replacements Cannot find file: #{item.path}"
           next
         end
-
-        placeholder = "file://app/files/#{item.name}"
-        map[placeholder] = replacement
+        map[placeholder] = item.s3_path
       end
       map
     end

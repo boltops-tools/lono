@@ -2,13 +2,18 @@ module Lono::AppFile
   class Registry
     # Holds metadata about the item in the regsitry.
     class Item
-      attr_reader :name, :options
+      attr_reader :name, :options, :type
       def initialize(name, blueprint, options={})
         @name, @blueprint, @options = name, blueprint, options
+        @type = options[:type] || "file"
       end
 
       def path
-        "#{Lono.root}/output/#{@blueprint}/files/#{@name}"
+        if @type == "file"
+          "#{Lono.root}/output/#{@blueprint}/files/#{@name}"
+        else
+          "#{Lono.root}/output/#{@blueprint}/lambda_layers/#{@name}/opt"
+        end
       end
 
       def directory?
@@ -20,7 +25,7 @@ module Lono::AppFile
       end
 
       def s3_path
-        file_path = zip_file_path.sub(%r{.*/output/[\w_-]+/files/}, '') # dont use basename. there might be subfolders
+        file_path = zip_file_path.sub(%r{.*/output/[\w_-]+/(files|lambda_layers)/}, '') # dont use basename. there might be subfolders
         "#{s3_prefix}/#{file_path}"
       end
 
@@ -30,7 +35,7 @@ module Lono::AppFile
       end
 
       def zip_file_name
-        "#{File.basename(path)}-#{Lono::Md5.sum(path)}.zip"
+        "#{File.basename(path)}-#{@type}-#{Lono::Md5.sum(path)}.zip"
       end
 
     private
