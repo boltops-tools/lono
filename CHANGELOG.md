@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.3.0]
+- #54 introduce lambda layer concept
+
 ## [7.2.3]
 - #53 improve configset lookup path lookup
 - cleanup starter blueprint
