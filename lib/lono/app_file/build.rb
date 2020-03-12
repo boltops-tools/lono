@@ -15,8 +15,21 @@ module Lono::AppFile
     def build_all
       clean_output
       copy_to_output
+      build_layers
+      compress_output
+    end
+
+    def build_layers
+      layer_items = Registry.layers
+      layer_items.each do |item|
+        LambdaLayer.new(@blueprint, item).build
+      end
+    end
+
+    def compress_output
       Registry.items.each do |item|
-        if item.directory?
+        # type can be lambda_layer or file
+        if item.type == "lambda_layer" || item.directory?
           zip_directory(item)
         elsif item.file?
           zip_file(item)
