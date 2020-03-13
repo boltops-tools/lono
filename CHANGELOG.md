@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.3.1]
+- #55 lambda layer fixes: allow Gemfile path option to vendor gems
+
 ## [7.3.0]
 - #54 introduce lambda layer concept
 
