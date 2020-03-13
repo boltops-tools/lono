@@ -1,3 +1,5 @@
+require 'shellwords'
+
 class Lono::AppFile::Build::LambdaLayer
   # Based on jets
   class RubyPackager
@@ -36,8 +38,7 @@ class Lono::AppFile::Build::LambdaLayer
 
     def rsync_and_link(src, dest)
       FileUtils.mkdir_p(dest)
-      # Trailing slashes are required
-      sh "rsync -a --links #{src}/ #{dest}/"
+      rsync(src, dest)
 
       # create symlink in output path not the cache path
       symlink_dest = "#{output_area}/vendor/gems/ruby/#{ruby_folder}"
@@ -69,12 +70,12 @@ class Lono::AppFile::Build::LambdaLayer
     def bundle_install
       puts "Bundling: running bundle install in cache area: #{cache_area}."
 
-      copy_gemfiles(@app_root)
+      rsync(output_area, cache_area)
 
       # Uncomment out to always remove the cache/vendor/gems to debug
       # FileUtils.rm_rf("#{cache_area}/vendor/gems")
 
-      # Remove .bundle folder so .bundle/config doesnt affect how Jets packages gems.
+      # Remove .bundle folder so .bundle/config doesnt affect how gems are packages
       # Not using BUNDLE_IGNORE_CONFIG=1 to allow home ~/.bundle/config to affect bundling though.
       # This is useful if you have private gems sources that require authentication. Example:
       #
@@ -125,18 +126,6 @@ class Lono::AppFile::Build::LambdaLayer
       FileUtils.cp(src, dest)
     end
 
-    # Clean up extra unneeded files to reduce package size
-    def copy_gemfiles(app_root)
-      FileUtils.mkdir_p(cache_area)
-      FileUtils.cp("#{app_root}/Gemfile", "#{cache_area}/Gemfile")
-
-      gemfile_lock = "#{app_root}/Gemfile.lock"
-      dest = "#{cache_area}/Gemfile.lock"
-      return unless File.exist?(gemfile_lock)
-
-      FileUtils.cp(gemfile_lock, dest)
-    end
-
     def setup_bundle_config(dir)
       text =<<-EOL
 ---
@@ -174,7 +163,31 @@ EOL
       puts "=> #{command}"
       out = `#{command}`
       puts out if ENV['LONO_DEBUG_LAMBDA_LAYER']
-      $?.success?
+      success = $?.success?
+      raise("ERROR: running command #{command}").color(:red) unless success
+      success
+    end
+
+    def rsync(src, dest)
+      # Using FileUtils.cp_r doesnt work if there are special files like socket files in the src dir.
+      # Instead of using this hack https://bugs.ruby-lang.org/issues/10104
+      # Using rsync to perform the copy.
+      src.chop! if src.ends_with?('/')
+      dest.chop! if dest.ends_with?('/')
+      check_rsync_installed!
+      # Ensures required trailing slashes
+      FileUtils.mkdir_p(File.dirname(dest))
+      sh "rsync -a --links --no-specials --no-devices #{Shellwords.escape(src)}/ #{Shellwords.escape(dest)}/"
+    end
+
+    @@rsync_installed = false
+    def check_rsync_installed!
+      return if @@rsync_installed # only check once
+      if system "type rsync > /dev/null 2>&1"
+        @@rsync_installed = true
+      else
+        raise "ERROR: Rsync is required. Rsync does not seem to be installed.".color(:red)
+      end
     end
   end
 end
