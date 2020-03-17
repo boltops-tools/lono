@@ -129,7 +129,6 @@ class Lono::AppFile::Build::LambdaLayer
     def setup_bundle_config(dir)
       text =<<-EOL
 ---
-BUNDLE_FROZEN: "true"
 BUNDLE_PATH: "vendor/gems"
 BUNDLE_WITHOUT: "development:test"
 EOL
