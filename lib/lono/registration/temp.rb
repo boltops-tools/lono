@@ -29,8 +29,10 @@ class Lono::Registration
       end
 
       puts <<~EOL
-        Lono is not registered. To remove this prompt, please set up your registration
-        info in .lono/registration.yml. Registration is free. You can register at:
+        Lono is not registered. This prompt appears every 24 hours when lono is not registered.
+        To remove this prompt, please set up your registration info in .lono/registration.yml.
+
+        Registration is free. You can register at:
 
             https://register.lono.cloud
 
