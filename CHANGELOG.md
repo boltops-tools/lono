@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.4.0]
+- #57 Big improvements generally and configsets
+- #58 Docs: Configsets and new DSL Helpers
+
 ## [7.3.2]
 - #56 build lambda layer fix: allow Gemfile.lock to be generated if not provided
 
