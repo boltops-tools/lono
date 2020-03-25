@@ -8,10 +8,9 @@ require "aws-sdk-core"
 #   Lono::Template::Context.new(blueprint, @options)
 module Lono::Template::Helper
   def template_s3_path(template_name)
-    # high jacking Upload for useful s3_https_url method
+    # hi-jacking Uploader for https_url
     template_path = "output/#{@blueprint}/templates/#{template_name}.yml"
-    upload = Lono::Template::Upload.new(@options)
-    upload.s3_https_url(template_path)
+    Lono::S3::Uploader.new(template_path).s3_https_url
   end
 
   def template_params(param_name)

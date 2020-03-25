@@ -12,8 +12,9 @@ describe Lono::Configset::Strategy::Erb do
 
   context("example") do
     it "build" do
-      data = erb.build
-      expect(data).to be_a(Hash)
+      metadata = erb.build
+      expect(metadata).to be_a(Hash)
+      data = metadata["Metadata"]
       init_key = data.key?("AWS::CloudFormation::Init")
       expect(init_key).to be true
       template =<<~EOL

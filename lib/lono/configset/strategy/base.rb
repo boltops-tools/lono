@@ -13,6 +13,18 @@ module Lono::Configset::Strategy
     extend Memoist
     include Lono::Configset::EvaluateFile
 
+    # All Lono DSL Helpers and Fn - so configsets have access to instrinic functions like ref
+    # Not including the Lono::Template::Strategy::Dsl::Builder::Syntax since dont need those methods
+    #
+    # Interesting note: must include these modules here so load_project_predefined_variables works.
+    # Since load_project_predefined_variables calls evaluate_file / instance eval which seems to only be
+    # able to access methods from the direct class, not inherited classes like Dsl.
+    #
+    # This allows methods like ref and sub to work in variables files.
+    #
+    include Lono::Template::Strategy::Dsl::Builder::Helpers
+    include Lono::Template::Strategy::Dsl::Builder::Fn
+
     def initialize(options={})
       @options = options
       @configset = options[:configset]
@@ -25,9 +37,17 @@ module Lono::Configset::Strategy
       @evaluation_path = find_evaluation_path # implemented by subclass
       copy_instance_variables
       load_configset_helpers
-      load # implemented by subclass
+      init = load # implemented by subclass
+      finish_full_structure(init)
     end
     memoize :build
+
+    def finish_full_structure(init)
+      full = {"Metadata" => {}}
+      full["Metadata"]["AWS::CloudFormation::Init"] = init["AWS::CloudFormation::Init"]
+      full["Metadata"]["AWS::CloudFormation::Authentication"] = authentication if authentication # only on dsl
+      full.deep_stringify_keys!
+    end
 
     def copy_instance_variables
       load_blueprint_predefined_variables

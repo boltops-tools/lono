@@ -1,8 +1,8 @@
-require 'shellwords'
-
 class Lono::AppFile::Build::LambdaLayer
   # Based on jets
   class RubyPackager
+    include Lono::Utils::Rsync
+
     def initialize(blueprint, registry_item)
       @blueprint, @registry_item = blueprint, registry_item
 
@@ -156,37 +156,6 @@ EOL
     def gemfile_exist?
       gemfile_path = "#{@app_root}/Gemfile"
       File.exist?(gemfile_path)
-    end
-
-    def sh(command)
-      puts "=> #{command}"
-      out = `#{command}`
-      puts out if ENV['LONO_DEBUG_LAMBDA_LAYER']
-      success = $?.success?
-      raise("ERROR: running command #{command}").color(:red) unless success
-      success
-    end
-
-    def rsync(src, dest)
-      # Using FileUtils.cp_r doesnt work if there are special files like socket files in the src dir.
-      # Instead of using this hack https://bugs.ruby-lang.org/issues/10104
-      # Using rsync to perform the copy.
-      src.chop! if src.ends_with?('/')
-      dest.chop! if dest.ends_with?('/')
-      check_rsync_installed!
-      # Ensures required trailing slashes
-      FileUtils.mkdir_p(File.dirname(dest))
-      sh "rsync -a --links --no-specials --no-devices #{Shellwords.escape(src)}/ #{Shellwords.escape(dest)}/"
-    end
-
-    @@rsync_installed = false
-    def check_rsync_installed!
-      return if @@rsync_installed # only check once
-      if system "type rsync > /dev/null 2>&1"
-        @@rsync_installed = true
-      else
-        raise "ERROR: Rsync is required. Rsync does not seem to be installed.".color(:red)
-      end
     end
   end
 end

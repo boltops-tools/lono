@@ -1,11 +1,13 @@
 class Lono::Cfn
   class Opts < Lono::Opts
     def create
+      notification_arns_option
       base_options
       wait_options
     end
 
     def update
+      notification_arns_option
       base_options
       update_options
       wait_options
@@ -74,6 +76,12 @@ class Lono::Cfn
         # common to Lono::Cfn and Lono::Sets
         option :codediff_preview, type: :boolean, default: true, desc: "Show codediff changes preview."
         option :param_preview, type: :boolean, default: true, desc: "Show parameter diff preview."
+      end
+    end
+
+    def notification_arns_option
+      with_cli_scope do
+        option :notification_arns, type: :array, desc: "The Simple Notification Service (SNS) topic ARNs to publish stack related events."
       end
     end
   end

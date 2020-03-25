@@ -20,10 +20,12 @@ class Lono::Template
           next
         end
 
-        metdata = resource["Metadata"] ||= {}
-        metdata["AWS::CloudFormation::Init"] ||= {}
-        # The metadata_configset has been combined with the original AWS::CloudFormation::Init if it exists
-        metdata["AWS::CloudFormation::Init"] = metadata_configset["AWS::CloudFormation::Init"]
+        resource["Metadata"] ||= metadata_configset["Metadata"]
+
+        # metdata = resource["Metadata"] ||= {}
+        # metdata["AWS::CloudFormation::Init"] ||= {}
+        # # The metadata_configset has been combined with the original AWS::CloudFormation::Init if it exists
+        # metdata["AWS::CloudFormation::Init"] = metadata_configset["AWS::CloudFormation::Init"]
       end
 
       @cfn

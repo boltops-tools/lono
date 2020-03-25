@@ -31,6 +31,7 @@ module Lono::Cfn::Preview
         stack_name: @stack,
         parameters: parameters,
       }
+      options[:notification_arns] = notification_arns if notification_arns
       options[:tags] = tags unless tags.empty?
       set_template_url!(options)
       show_options(options, "cfn.create_change_set")

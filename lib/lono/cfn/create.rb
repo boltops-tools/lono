@@ -24,11 +24,12 @@ class Lono::Cfn
       end
 
       options = {
-        stack_name: @stack,
-        parameters: parameters,
         capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
         disable_rollback: !@options[:rollback],
+        parameters: parameters,
+        stack_name: @stack,
       }
+      options[:notification_arns] = notification_arns if notification_arns
       options[:tags] = tags unless tags.empty?
       set_template_url!(options)
 

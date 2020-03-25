@@ -2,6 +2,8 @@ require "thor"
 
 module Lono::AppFile
   class Build < Base
+    include Lono::Utils::Item::Zip
+
     def initialize_variables
       @output_files_path = "#{Lono.config.output_path}/#{@blueprint}/files"
     end
@@ -14,9 +16,26 @@ module Lono::AppFile
 
     def build_all
       clean_output
+      validate_files!
       copy_to_output
       build_layers
       compress_output
+    end
+
+    def validate_files!
+      items = Registry.items + Registry.layers
+      missing = items.select do |item|
+        !File.exist?(item.src_path)
+      end
+      missing_paths = missing.map { |item| item.src_path }.uniq
+      unless missing_paths.empty?
+        puts "ERROR: These app/files are missing were used by the s3_key method but are missing".color(:red)
+        missing_paths.each do |path|
+          puts "    #{path}"
+        end
+        puts "Please double check that they exist."
+        exit 1
+      end
     end
 
     def build_layers
@@ -29,12 +48,10 @@ module Lono::AppFile
     def compress_output
       Registry.items.each do |item|
         # type can be lambda_layer or file
-        if item.type == "lambda_layer" || item.directory?
-          zip_directory(item)
-        elsif item.file?
-          zip_file(item)
+        if item.type == "lambda_layer" || item.exist?
+          zip(item)
         else
-          puts "WARN: #{item.path} does not exist. Double check that the path is correct in the s3_key call.".color(:yellow)
+          puts "WARN: #{item.src_path} does not exist. Double check that the path is correct in the s3_key call.".color(:yellow)
         end
       end
     end
@@ -49,35 +66,6 @@ module Lono::AppFile
       Lono::Template::Context.new(@options)
     end
     memoize :context
-
-    def zip_file(item)
-      path = item.path
-      zip_file = item.zip_file_name
-
-      puts "Zipping file and generating md5 named file from: #{path}"
-      command = "cd #{File.dirname(path)} && zip -q #{zip_file} #{File.basename(path)}" # create zipfile at same level of file
-      zip(command)
-    end
-
-    def zip_directory(item)
-      path = item.path
-      zip_file = item.zip_file_name
-
-      puts "Zipping folder and generating md5 named file from: #{path}"
-      command = "cd #{path} && zip --symlinks -rq #{zip_file} ." # create zipfile witih directory
-      zip(command)
-      FileUtils.mv("#{path}/#{zip_file}", "#{File.dirname(path)}/#{zip_file}") # move zip back to the parent directory
-    end
-
-    def zip(command)
-      # puts "=> #{command}".color(:green) # uncomment to debug
-      `#{command}`
-      unless $?.success?
-        puts "ERROR: Fail to run #{command}".color(:red)
-        puts "Maybe zip is not installed or path is incorrect?"
-        exit 1
-      end
-    end
 
     def clean_output
       FileUtils.rm_rf(@output_files_path)

@@ -3,6 +3,7 @@ class Lono::Template::Strategy::Dsl::Builder
   module Helpers
     extend Memoist
     include CoreHelper
+    include Ec2Helper
     include FileHelper
     include LookupHelper
     include S3Helper

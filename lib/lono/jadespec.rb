@@ -4,12 +4,14 @@ module Lono
   class Jadespec
     extend Memoist
 
-    delegate :name, to: :gemspec
-
     attr_accessor :from
     attr_reader :root, :source_type
     def initialize(root, source_type)
       @root, @source_type = root, source_type
+    end
+
+    def name
+      exist? ? gemspec.name : "not gemspec file found for @root: #{@root}"
     end
 
     def exist?

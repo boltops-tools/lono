@@ -7,8 +7,8 @@ module Lono::Configset::Register
     end
 
     # DSL
-    def source(v)
-      self.class.source = v
-    end
+    # def source(v)
+    #   self.class.source = v
+    # end
   end
 end

@@ -32,11 +32,15 @@ class Lono::Configset
         # jade like jade.resource_from_parent.
         registry = jade.registry
         registry.resource = jade.resource_from_parent
-        if jade.type == "blueprint/configset"
-          Register::Blueprint.prepend(registry)
-        elsif jade.type == "configset"
-          Register::Project.prepend(registry)
-        end
+
+        # Always prepend to Register::Blueprint.configsets to ensure they are run before any other configset.
+        # Leaving old code in place for now. Possibly revisit this approach.
+        Register::Blueprint.prepend(registry)
+        # if jade.type == "blueprint/configset"
+        #   Register::Blueprint.prepend(registry)
+        # elsif jade.type == "configset"
+        #   Register::Project.prepend(registry)
+        # end
       end
     end
   end

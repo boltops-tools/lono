@@ -12,8 +12,9 @@ describe Lono::Configset::Strategy::Dsl do
 
   context("example") do
     it "build" do
-      data = dsl.build
-      expect(data).to be_a(Hash)
+      metadata = dsl.build
+      expect(metadata).to be_a(Hash)
+      data = metadata["Metadata"]
       init_key = data.key?("AWS::CloudFormation::Init")
       expect(init_key).to be true
       template =<<~EOL

@@ -57,7 +57,8 @@ class Lono::Seed
       @output_template.parameter_groups.each do |label, parameters|
         lines << "# Parameter Group: #{label}"
         parameters.each do |name|
-          lines << parameter_line(name)
+          parameter_line = parameter_line(name)
+          lines << parameter_line unless lines.include?(parameter_line)
           shown << name
         end
         lines << ""

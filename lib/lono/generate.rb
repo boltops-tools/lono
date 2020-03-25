@@ -23,6 +23,7 @@ module Lono
     def post_generate
       return if @options[:noop]
       return if @options[:source]
+
       build_files # builds app/files to output/BLUEPRINT/files
       post_process_template
       upload_files
@@ -51,10 +52,18 @@ module Lono
 
     def build_files
       Lono::AppFile::Build.new(@options).run
+      Lono::Configset::S3File::Build.new(@options).run # copies files to the output folder
     end
 
     def generate_templates
-      Lono::Template::Generator.new(@options).run
+      Lono::Template::Generator.new(@options).run # write templates to disk
+      inject_configsets
+    end
+
+    def inject_configsets
+      # The inject_configsets reads it back from disk. Leaving as-is instead of reading all in memory in case there's a reason.
+      Lono::Configset::Preparer.new(@options).run # register and materialize gems
+      Lono::Template::ConfigsetInjector.new(@options).run
     end
 
     def post_process_template
@@ -71,6 +80,7 @@ module Lono
 
     def upload_files
       Lono::AppFile::Upload.new(@options).upload
+      Lono::Configset::S3File::Upload.new(@options).upload
     end
 
     def check_for_errors
