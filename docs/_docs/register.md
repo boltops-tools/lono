@@ -1,6 +1,6 @@
 ---
 title: Register
-nav_order: 100
+nav_order: 112
 ---
 
 Lono has been written from years of experience and provides a workflow that makes CloudFormation much easier. Lono makes it possible to reuse CloudFormation templates. You can deploy the same templates across AWS accounts and build multiple environments.

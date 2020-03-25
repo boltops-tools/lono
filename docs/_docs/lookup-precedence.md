@@ -1,6 +1,6 @@
 ---
 title: Lookup Precedence
-nav_order: 70
+nav_order: 80
 ---
 
 Lono components have flexible lookup locations. This provides you with control and the power to override and customize components when necessary.

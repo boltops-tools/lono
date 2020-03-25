@@ -3,7 +3,7 @@ title: Blueprint Configsets Lookup Locations
 nav_text: Blueprint Configsets
 category: lookup
 order: 5
-nav_order: 73
+nav_order: 83
 ---
 
 Blueprint configsets are configured within a blueprint in it's `config/configsets.rb` file.  Example:
@@ -18,8 +18,9 @@ Blueprint configsets are searched for in a few locations. It is similiar to how 
 
 Location | Type | Description
 --- | --- | ---
-BLUEPRINT/app/configsets | blueprint | The blueprint's local configsets
+PROJECT/app/configsets | project | Your project configsets
 PROJECT/vendor/configsets | vendor | Frozen vendor configsets
+BLUEPRINT/app/configsets | blueprint | The blueprint's local configsets. Useful for blueprint-specific configset that are not really reusable.
 gems folder | gem | The gems folder is the location where the configset gem is installed. You can use `bundle show GEM` to reveal the location.
 gems folder | materialized | All blueprint configsets and their dependency configset are materialized as gems.
 

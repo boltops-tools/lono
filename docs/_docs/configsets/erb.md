@@ -3,7 +3,7 @@ title: Configset ERB
 nav_text: ERB
 categories: configsets
 order: 4
-nav_order: 60
+nav_order: 68
 ---
 
 Configsets can be written with ERB and YAML also.  Writing configsets with YAML can be useful for very simple configsets.

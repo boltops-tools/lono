@@ -1,7 +1,7 @@
 ---
 title: Lambda Layers
 categories: extras
-nav_order: 81
+nav_order: 94
 ---
 
 Lono supports building and uploading Ruby Gem Lambda Layers.  Here's an example Lambda function and Gemfile to demonstrate how lono helps with building Lambda layers.
@@ -20,7 +20,7 @@ app/files/lambda-function/Gemfile
 
 ```ruby
 source "https://rubygems.org"
-gem "cody" # just an example gem
+gem "s3-secure" # just an example gem - Lambda Layer cannot be empty and requires at least one gem
 ```
 
 Then we'll create the Lambda function and layer.
@@ -45,7 +45,7 @@ resource("LayerVersion", "AWS::Lambda::LayerVersion",
   CompatibleRuntimes: ["ruby2.7"],
   Content: {
     S3Bucket: s3_bucket,
-    S3Key: s3_key("lambda-function/", type: "lambda_layer", lang: "ruby") # type: "lambda_layer" results in autobuilding the layer
+    S3Key: s3_key("lambda-function/", type: "lambda_layer", lang: "ruby") # type: "lambda_layer" results in autobuilding the layer using the Gemfile.lock
   },
   Description: "lambda layer",
   LayerName: "lambda-layer", # if not named, then it defaults to the logical id
@@ -54,6 +54,8 @@ resource("LayerVersion", "AWS::Lambda::LayerVersion",
 ```
 
 We specify `s3_key("lambda-function/", type: "lambda_layer", lang: "ruby")` using the same folder where the `index.rb` Ruby code and `Gemfile` is located. This tells lono to use the Gemfile in that folder to build the Lambda Layer.
+
+IMPORANT: Make sure to run `bundle` in the `app/files/lambda-function` folder to generate an updated `Gemfile.lock` file.
 
 ## Lambda Layers for Other Languages
 

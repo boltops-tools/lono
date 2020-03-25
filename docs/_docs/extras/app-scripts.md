@@ -1,7 +1,7 @@
 ---
 title: App Scripts
 categories: extras
-nav_order: 82
+nav_order: 92
 ---
 
 Often it is useful to be able to upload custom scripts to the server and run them. One way to do this is first to upload the scripts to s3 and then download them down to the server as part of the user-data script.  Lono supports this deployment flow with the `app/scripts` folder.  Any scripts added to the `app/scripts` folder get tarballed up and uploaded to the lono s3 bucket.

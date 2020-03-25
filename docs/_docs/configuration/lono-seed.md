@@ -1,6 +1,6 @@
 ---
 title: Lono Seed
-nav_order: 80
+nav_order: 90
 ---
 
 For each blueprint and CloudFormation template, you will usually need to set up some [configs]({% link _docs/core/configs.md %}). To help with this, Lono has a `lono seed` command that generates starter configs values.

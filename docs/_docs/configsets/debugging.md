@@ -3,7 +3,7 @@ title: 'Debugging Tips: cfn-init and configsets'
 nav_text: Debugging Tips
 categories: configsets
 order: 9
-nav_order: 66
+nav_order: 75
 ---
 
 Here are some debugging tips that will help when working with cfn-init.
@@ -41,11 +41,15 @@ The cfn-init script itself only supports JSON when providing a file.
 
 Here's a [YAML to JSON One Liner](https://blog.boltops.com/2017/09/16/json-to-yaml-one-liner) to help you convert it.
 
-    ruby -ryaml -rjson -e 'puts YAML.dump(JSON.load(ARGF))' < configset.yml > configset.json
+## Running repeatedly with lono
 
-And vice-versa:
+Though knowing how to run the configset on the local machine is very helpful in understanding how configsets work, have found that is is quickest to just use lono to repeatedly apply the configsets in one terminal and while watching the logs in another terminal. In one terminal:
 
-    ruby -ryaml -rjson -e 'puts YAML.dump(JSON.load(ARGF))' < configset.json > configset.yml
+    lono cfn deploy BLUEPRINT --sure
+
+In another terminal, ssh into the machine and tail the logs with:
+
+    tail -f /var/log/cfn-init.log
 
 ## Where are the Logs?
 
@@ -65,5 +69,9 @@ The UserData script runs **only** at launch time.  This means if you make change
 It is recommended to set up [cfn-hup](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-hup.html) reloader, so you do not have to log into the instance and kick off the cfn-init script manually.
 
 Here's the [cfn-hup configset](https://github.com/boltopspro/cfn-hup/blob/master/lib/configset.yml) that sets up the cfn-hup reloader.  The [BoltOps Pro cfn-hup configset](https://github.com/boltopspro/cfn-hup) is available for free.
+
+## cfn-hup retries
+
+Notice that cfn-hup will repeatedly retry running the configsets until it has successfully completed. So if you have an instruction in the the configset that is failing, you'll see in the `/var/log/cfn-init.log` repeatedly running every minute or so. Unsure if there's a way to control this behavior.
 
 {% include prev_next.md %}

@@ -1,7 +1,7 @@
 ---
 title: Lono Current
 categories: extras
-nav_order: 84
+nav_order: 95
 ---
 
 Sets current values so you do not have to provide the options repeatedly.  This shortens the commands.

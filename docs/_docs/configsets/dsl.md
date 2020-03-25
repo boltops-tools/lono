@@ -48,4 +48,13 @@ AWS::CloudFormation::Init:
           ensureRunning: true
 ```
 
+## DSL Methods
+
+{% assign docs = site.docs | where: "categories","configsets-dsl" | sort: "order" %}
+Method | Description
+--- | ---
+{% for doc in docs -%}
+[{{ doc.title }}]({{ doc.url }}) | {{ doc.desc }}
+{% endfor %}
+
 {% include prev_next.md %}
