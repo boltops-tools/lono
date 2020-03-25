@@ -13,17 +13,25 @@ class Lono::Template
 
     def replacements
       map = {}
+
       registry_items.each do |item|
         if item.type == "lambda_layer"
           placeholder = "file://app/files/lambda_layer/#{item.name}"
         elsif item.directory? || item.file?
           placeholder = "file://app/files/file/#{item.name}"
         else
-          puts "WARN: PostProcessor replacements Cannot find file: #{item.path}"
+          puts "WARN: PostProcessor replacements Cannot find file: #{item.output_path}"
           next
         end
         map[placeholder] = item.s3_path
       end
+
+      Lono::Configset::S3File::Registry.items.each do |item|
+        placeholder = "file://configset/#{item.configset}/#{item.name}"
+        # map[placeholder] = "https://s3.amazonaws.com/#{Lono::S3::Bucket.name}/#{item.s3_path}"
+        map[placeholder] = item.replacement_value
+      end
+
       map
     end
 

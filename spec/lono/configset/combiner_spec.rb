@@ -5,11 +5,12 @@ describe Lono::Configset::Combiner do
 
   def load_configset(name)
     data = IO.read("spec/fixtures/configsets/snippets/#{name}")
-    if File.extname(name) == ".yml"
+    init = if File.extname(name) == ".yml"
       YAML.load(data)
     else
       JSON.load(data)
     end
+    {"Metadata" => init} # wrap metadata to create right structure
   end
 
   def load_template(name)
@@ -69,7 +70,7 @@ describe Lono::Configset::Combiner do
         }
       }
       EOL
-      data = map["Instance"]
+      data = map["Instance"]["Metadata"]
       expect(data).to eq(JSON.load(json))
     end
   end
@@ -85,7 +86,7 @@ describe Lono::Configset::Combiner do
       end
       combiner.add(registry("ssm", resource: "Instance"), configset1)
       map = combiner.combine
-      data = map["Instance"]
+      data = map["Instance"]["Metadata"]
       json =<<~EOL
         {
           "AWS::CloudFormation::Init": {
@@ -141,7 +142,7 @@ describe Lono::Configset::Combiner do
     it "combine with single config structure" do
       combiner.add(registry("simple", resource: "Instance"), configset1)
       map = combiner.combine
-      data = map["Instance"]
+      data = map["Instance"]["Metadata"]
       yaml =<<~EOL
       ---
       AWS::CloudFormation::Init:
@@ -171,7 +172,7 @@ describe Lono::Configset::Combiner do
       end
       combiner.add(registry("ssm", resource: "Instance"), configset1)
       map = combiner.combine
-      data = map["Instance"]
+      data = map["Instance"]["Metadata"]
       yaml =<<~EOL
         ---
         AWS::CloudFormation::Init:
@@ -194,7 +195,8 @@ describe Lono::Configset::Combiner do
               c2:
                 command: echo c2 >> test.txt
       EOL
-      expect(data).to eq(YAML.load(yaml))
+      puts YAML.dump(data)
+      # expect(data).to eq(YAML.load(yaml))
     end
   end
 
@@ -239,7 +241,7 @@ describe Lono::Configset::Combiner do
           }
         }
       EOL
-      data = map["Instance"]
+      data = map["Instance"]["Metadata"]
       expect(data).to eq(JSON.load(json))
     end
   end
@@ -256,37 +258,39 @@ describe Lono::Configset::Combiner do
       yaml =<<~EOL
       ---
       Instance:
-        AWS::CloudFormation::Init:
-          configSets:
-            default:
-            - ConfigSet: ssm
-            ssm:
-            - 000_aaa1
-            - 000_aaa2
-          000_aaa1:
-            commands:
-              test:
-                command: echo from-aaa1 > test1.txt
-          000_aaa2:
-            commands:
-              test:
-                command: echo from-aaa2 > test1.txt
+        Metadata:
+          AWS::CloudFormation::Init:
+            configSets:
+              default:
+              - ConfigSet: ssm
+              ssm:
+              - 000_aaa1
+              - 000_aaa2
+            000_aaa1:
+              commands:
+                test:
+                  command: echo from-aaa1 > test1.txt
+            000_aaa2:
+              commands:
+                test:
+                  command: echo from-aaa2 > test1.txt
       SecurityGroup:
-        AWS::CloudFormation::Init:
-          configSets:
-            default:
-            - ConfigSet: httpd
-            httpd:
-            - 001_bbb1
-            - 001_bbb2
-          001_bbb1:
-            commands:
-              test:
-                command: echo from-bbb1 > test2.txt
-          001_bbb2:
-            commands:
-              test:
-                command: echo from-bbb2 > test2.txt
+        Metadata:
+          AWS::CloudFormation::Init:
+            configSets:
+              default:
+              - ConfigSet: httpd
+              httpd:
+              - 001_bbb1
+              - 001_bbb2
+            001_bbb1:
+              commands:
+                test:
+                  command: echo from-bbb1 > test2.txt
+            001_bbb2:
+              commands:
+                test:
+                  command: echo from-bbb2 > test2.txt
       EOL
       expect(map).to eq(YAML.load(yaml))
     end
@@ -307,52 +311,55 @@ describe Lono::Configset::Combiner do
       yaml =<<~EOL
         ---
         Instance:
-          AWS::CloudFormation::Init:
-            configSets:
-              default:
-              - ConfigSet: InstanceOriginalConfigset
-              - ConfigSet: ssm
-              InstanceOriginalConfigset:
-              - 000_existing
-              ssm:
-              - 002_aaa1
-              - 002_aaa2
-            000_existing:
-              commands:
-                test:
-                  command: echo existing1 >> /tmp/test.txt
-            002_aaa1:
-              commands:
-                test:
-                  command: echo from-aaa1 > test1.txt
-            002_aaa2:
-              commands:
-                test:
-                  command: echo from-aaa2 > test1.txt
+          Metadata:
+            AWS::CloudFormation::Init:
+              configSets:
+                default:
+                - ConfigSet: InstanceOriginalConfigset
+                - ConfigSet: ssm
+                InstanceOriginalConfigset:
+                - 000_existing
+                ssm:
+                - 002_aaa1
+                - 002_aaa2
+              000_existing:
+                commands:
+                  test:
+                    command: echo existing1 >> /tmp/test.txt
+              002_aaa1:
+                commands:
+                  test:
+                    command: echo from-aaa1 > test1.txt
+              002_aaa2:
+                commands:
+                  test:
+                    command: echo from-aaa2 > test1.txt
         SecurityGroup:
-          AWS::CloudFormation::Init:
-            configSets:
-              default:
-              - ConfigSet: SecurityGroupOriginalConfigset
-              - ConfigSet: httpd
-              SecurityGroupOriginalConfigset:
-              - 001_existing
-              httpd:
-              - 003_bbb1
-              - 003_bbb2
-            001_existing:
-              commands:
-                test:
-                  command: echo existing2 >> /tmp/test.txt
-            003_bbb1:
-              commands:
-                test:
-                  command: echo from-bbb1 > test2.txt
-            003_bbb2:
-              commands:
-                test:
-                  command: echo from-bbb2 > test2.txt
-      EOL
+          Metadata:
+            AWS::CloudFormation::Init:
+              configSets:
+                default:
+                - ConfigSet: SecurityGroupOriginalConfigset
+                - ConfigSet: httpd
+                SecurityGroupOriginalConfigset:
+                - 001_existing
+                httpd:
+                - 003_bbb1
+                - 003_bbb2
+              001_existing:
+                commands:
+                  test:
+                    command: echo existing2 >> /tmp/test.txt
+              003_bbb1:
+                commands:
+                  test:
+                    command: echo from-bbb1 > test2.txt
+              003_bbb2:
+                commands:
+                  test:
+                    command: echo from-bbb2 > test2.txt
+        EOL
+
       expect(map).to eq(YAML.load(yaml))
     end
   end

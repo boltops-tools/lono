@@ -15,14 +15,16 @@ describe Lono::Template::ConfigsetInjector do
     let(:metadata_map) do
       json =<<~EOL
         {
-          "AWS::CloudFormation::Init": {
-            "configSets": {
-              "default": ["s1"]
-            },
-            "s1": {
-              "commands": {
-                "test": {
-                  "command": "echo from-aaa1 > test1.txt"
+          "Metadata": {
+            "AWS::CloudFormation::Init": {
+              "configSets": {
+                "default": ["s1"]
+              },
+              "s1": {
+                "commands": {
+                  "test": {
+                    "command": "echo from-aaa1 > test1.txt"
+                  }
                 }
               }
             }

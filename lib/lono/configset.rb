@@ -10,7 +10,7 @@ module Lono
     long_desc Help.text(:generate)
     option :resource, default: "PretendResource", desc: "Set the @resource instance variable availalbe in the configset"
     def generate(configset)
-      Generator.new(options.merge(configset: configset)).run
+      Generator.new(options.merge(configset: configset, cli: true)).run
     end
   end
 end

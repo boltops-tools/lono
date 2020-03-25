@@ -10,8 +10,9 @@ class Lono::Extensions
 
     def load_extension_helpers(registry)
       root = find_extensions_root_path(registry)
+      extension_file = "#{root}/lib/#{registry.name}"
+      require extension_file
       helpers_path = "#{root}/lib/#{registry.name}/helpers"
-
       load_files(helpers_path)
     end
 

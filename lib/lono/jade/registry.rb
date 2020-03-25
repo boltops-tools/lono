@@ -40,9 +40,18 @@ class Lono::Jade
     class << self
       def register_configset(args, options)
         registry = new(args, options)
-        jade = Lono::Jade.new(registry.name, 'configset', registry)
+        jade_type = determine_jade_type(caller)
+        jade = Lono::Jade.new(registry.name, jade_type, registry)
         self.tracked_configsets << jade
         registry
+      end
+
+      def determine_jade_type(caller)
+        if caller.detect { |l| l =~ %r{config/configsets.rb} }
+          'blueprint/configset'
+        else
+          'configset'
+        end
       end
 
       def register_extension(args, options)

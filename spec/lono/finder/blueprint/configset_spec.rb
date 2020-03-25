@@ -2,11 +2,15 @@ describe Lono::Finder::Blueprint::Configset do
   let(:configset) { Lono::Finder::Blueprint::Configset.new(lono_root: lono_root, blueprint_root: blueprint_root) }
   let(:lono_root) { nil }
   let(:blueprint_root) { nil }
+  before(:each) do
+    destroy_lono_project
+  end
 
   context "blueprint local" do
     let(:blueprint_root) { "spec/fixtures/finder/blueprint-configset/blueprint_only" }
     it "find" do
       root_path = configset.find("ssm").root
+      puts "root_path #{root_path}"
       expect(root_path).to include "blueprint_only/app/configsets/ssm"
       root_path = configset.find("non-existing")
       expect(root_path).to be nil

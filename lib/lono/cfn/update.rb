@@ -46,6 +46,7 @@ class Lono::Cfn
         capabilities: capabilities, # ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM"]
         disable_rollback: !@options[:rollback],
       }
+      options[:notification_arns] = notification_arns if notification_arns
       options[:tags] = tags unless tags.empty?
       set_template_url!(options)
       show_options(options, "cfn.update_stack")

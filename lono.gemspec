@@ -27,6 +27,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "aws-sdk-iam" # lono seed
   gem.add_dependency "aws-sdk-s3"
   gem.add_dependency "aws-sdk-ssm"
+  gem.add_dependency "aws_data"
   gem.add_dependency "bundler", "~> 2"
   gem.add_dependency "cfn_camelizer"
   gem.add_dependency "cli-format"

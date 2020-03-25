@@ -41,7 +41,7 @@ class Lono::Configset
       table = Text::Table.new
       table.head = ["Name", "Path", "Type", "From"]
       @final.each do |spec|
-        pretty_root = spec.root.sub("#{Lono.root}/",'')
+        pretty_root = spec.root.sub("#{Lono.root}/",'').sub(ENV["HOME"], "~")
         table.rows << [spec.name, pretty_root, spec.source_type, spec.from]
       end
 

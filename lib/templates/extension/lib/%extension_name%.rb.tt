@@ -1,5 +1,8 @@
 $:.unshift(File.expand_path("../", __FILE__))
 require "<%= extension_underscore_name %>/version"
 
+require "<%= extension_underscore_name %>/autoloader"
+<%= extension_class_name %>::Autoloader.setup
+
 module <%= extension_class_name %>
 end

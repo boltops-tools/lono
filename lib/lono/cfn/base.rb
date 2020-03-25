@@ -167,6 +167,13 @@ class Lono::Cfn
       end
     end
 
+    def notification_arns
+      @setting ||= Lono::Setting.new
+      settings = @setting.data
+      arns = @options["notification_arns"] || settings["notification_arns"]
+      arns == [''] ? [] : arns # allow removing the notification_arns setting
+    end
+
     def show_options(options, meth=nil)
       options = options.clone.compact
       if options[:template_body] # continue_update_rollback
@@ -185,9 +192,8 @@ class Lono::Cfn
     #
     # Reference: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html
     def set_template_url!(options)
-      upload = Lono::Template::Upload.new(@options)
       url_path = template_path.sub("#{Lono.root}/",'')
-      url = upload.s3_presigned_url(url_path)
+      url = Lono::S3::Uploader.new(url_path).presigned_url
       url.gsub!(/\.yml.*/, ".yml") # Interesting dont need presign query string. For stack sets it actually breaks it. So removing.
       options[:template_url] = url
       options

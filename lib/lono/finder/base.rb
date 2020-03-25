@@ -79,7 +79,7 @@ module Lono::Finder
 
       components = find_all.sort_by { |jadespec| jadespec.name }
       components.each do |jadespec|
-        pretty_path = jadespec.root.sub("#{Lono.root}/", "")
+        pretty_path = jadespec.root.sub("#{Lono.root}/", "").sub(ENV['HOME'], "~")
         unless options[:filter_materialized] && jadespec.source_type == "materialized"
           table.rows << [jadespec.name, pretty_path, jadespec.source_type]
         end

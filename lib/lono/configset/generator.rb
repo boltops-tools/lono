@@ -26,7 +26,12 @@ class Lono::Configset
       #   Dsl.new(options).build
       generator_class = "Lono::Configset::Strategy::#{strategy.camelize}"
       generator_class = Object.const_get(generator_class)
-      generator_class.new(@options.merge(root: configset_root)).build
+      full = generator_class.new(@options.merge(root: configset_root)).build
+      if @options[:cli]
+        full["Metadata"] # contains AWS::CloudFormation::Init and optional AWS::CloudFormation::Authentication
+      else
+        full # Combiner uses full metadata structure
+      end
     end
 
     def strategy

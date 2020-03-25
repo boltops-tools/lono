@@ -26,7 +26,8 @@ class Lono::Extension
       presenter.header = %w[Name Path Type]
       jadespecs.each do |j|
         if tracked_extension_names.include?(j.name)
-          presenter.rows << [j.name, j.root, j.source_type]
+          pretty_path = j.root.sub("#{Lono.root}/",'').sub(ENV["HOME"], "~")
+          presenter.rows << [j.name, pretty_path, j.source_type]
         end
       end
       presenter.show
