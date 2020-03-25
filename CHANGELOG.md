@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.4.1]
+- lono generate fix: generate with configsets
+
 ## [7.4.0]
 - #57 Big improvements generally and configsets
 - #58 Docs: Configsets and new DSL Helpers
