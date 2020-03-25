@@ -89,6 +89,15 @@
                         <li><a href='{% link _docs/configsets/blueprint.md %}'>Blueprint</a></li>
                     </ul>
                 </li>
+                {% elsif doc.title == "Configset DSL" %}
+                <li><a href='{{doc.url}}'>{{doc.nav_text}}</a>
+                    <ul>
+                        {% assign cs_dsl_docs = site.docs | where: "categories","configsets-dsl" | sort: "order" %}
+                        {% for cs_doc in cs_dsl_docs -%}
+                        <li><a href="{{ cs_doc.url }}">{{ cs_doc.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
                 {% else %}
                 <li><a href='{{doc.url}}'>{{doc.nav_text}}</a></li>
                 {% endif %}

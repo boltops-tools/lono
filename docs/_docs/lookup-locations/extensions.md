@@ -3,7 +3,7 @@ title: Extensions Lookup Locations
 nav_text: Extensions
 category: lookup
 order: 6
-nav_order: 74
+nav_order: 84
 ---
 
 Extensions allow you extend to the Lono DSL and can be shareable between multiple blueprints.  Extensions are searched for in a few locations. It is similiar to how `LOAD_PATH` works.

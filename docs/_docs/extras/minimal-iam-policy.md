@@ -1,7 +1,7 @@
 ---
 title: Minimal IAM Policy
 categories: extras
-nav_order: 86
+nav_order: 97
 ---
 
 The IAM user you use to run the [lono cfn deploy](/reference/lono-cfn-deploy/) command needs a minimal set of IAM policies in order to deploy. Here is a table of the baseline services needed:

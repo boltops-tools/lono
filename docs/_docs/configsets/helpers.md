@@ -3,7 +3,7 @@ title: Configset Helpers
 nav_text: Helpers
 categories: configsets
 order: 5
-nav_order: 61
+nav_order: 69
 ---
 
 Helpers allow you to extend the Configset DSL.

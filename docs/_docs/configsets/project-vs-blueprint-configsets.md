@@ -3,7 +3,7 @@ title: Project vs Blueprint Configsets
 nav_text: Project vs Blueprint
 categories: configsets
 order: 8
-nav_order: 63
+nav_order: 72
 ---
 
 There are 2 different types of Lono configsets: Project and Blueprint configsets. Project configsets are configured by you. Blueprint configsets are configured by blueprints.

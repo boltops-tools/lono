@@ -1,7 +1,7 @@
 ---
 title: App Files
 categories: extras
-nav_order: 81
+nav_order: 91
 ---
 
 As part of [lono cfn deploy](/reference/lono-cfn-deploy/), the files in the `app/files` folder can get zipped and uploaded to the lono managed s3 bucket. The files only get uploaded if they are referenced in your template with the `file_s3_url`.
@@ -13,8 +13,8 @@ The `app/files` are particularly useful for Lambda function resources.   Example
 ```ruby
 resource("Function", "AWS::Lambda::Function",
   Code: {
-    S3Bucket: s3_bucket,
-    S3Key: file_s3_key("index.rb"),
+    S3Bucket: s3_bucket, # lono managed s3 bucket
+    S3Key: s3_key("index.rb"), # will use app/files/index.rb
   },
   Handler: "index.lambda_handler",
   Role: get_att("LambdaExecutionRole.Arn"),
@@ -37,7 +37,7 @@ Lono will zip up the file in a package that works with Lambda.
 
 ## Zipping Folders
 
-If pass `file_s3_key` a folder instead of a file, lono will zip up the entire contents within the folder.
+If pass `s3_key` a folder instead of a file, lono will zip up the entire contents within the folder.
 
 ## ERB Support
 
