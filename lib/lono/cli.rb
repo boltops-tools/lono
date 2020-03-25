@@ -39,10 +39,11 @@ module Lono
     opts.stack
     opts.template
     def generate(blueprint)
-      o = options.merge(blueprint: blueprint)
-      Script::Build.new(o).run
-      Template::Generator.new(o).run
-      Param::Generator.new(o).generate
+      o = options.merge(
+        blueprint: blueprint,
+        generate_only: true,
+      )
+      Lono::Generate.new(o).all
     end
 
     desc "user_data NAME", "Generates user_data script for debugging."
