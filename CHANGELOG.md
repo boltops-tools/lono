@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.4.2]
+- #60 fix edge case when cached materialized Gemfile.lock breaks finder
+
 ## [7.4.1]
 - #59 lono generate fix: generate with configsets
 
