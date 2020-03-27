@@ -120,8 +120,20 @@ module Lono::Finder
       specs = parser.specs
       # __materialize__ only exists in Gem::LazySpecification and not in Gem::Specification
       specs.each { |spec| spec.__materialize__ }
-      specs.map do |spec|
-        spec.full_gem_path
+      begin
+        specs.map do |spec|
+          spec.full_gem_path
+        end
+      rescue RuntimeError => e
+        if e.message.include?("LazySpecification has not been materialized yet")
+          # Thinking quiet behavior is preferred. Leaving comment here for now.
+          # puts "WARN: The Finder class is having trouble using the cached tmp/jades/Gemfile.lock to search for materialized gems."
+          # puts "This can happen when materialized gems are updated. It is generally safe to ignore."
+          # puts "To remove this warning you can remove the cached Gemfile.lock"
+          return []
+        else
+          raise(e)
+        end
       end
     end
     memoize :materialized_gem_roots
