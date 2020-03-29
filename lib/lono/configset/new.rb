@@ -1,6 +1,7 @@
 class Lono::Configset
   class New < Lono::Sequence
     include Lono::Blueprint::Helper
+    include Lono::Utils::Generators::Tree
 
     argument :configset_name
 
@@ -70,15 +71,7 @@ class Lono::Configset
     end
 
     def tree
-      tree_installed = system("type tree > /dev/null")
-      return unless tree_installed
-
-      structure = `tree .`
-      puts <<~EOL
-        Here is the structure of your configset:
-
-        #{structure}
-      EOL
+      tree_structure("configset")
     end
   end
 end
