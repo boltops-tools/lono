@@ -2,6 +2,7 @@ class Lono::Extension
   class New < Lono::Sequence
     include Lono::Blueprint::Helper # for user_info
     include Lono::Extension::Helper
+    include Lono::Utils::Generators::Tree
 
     argument :extension_name
 
@@ -58,15 +59,7 @@ class Lono::Extension
     end
 
     def tree
-      tree_installed = system("type tree > /dev/null")
-      return unless tree_installed
-
-      structure = `tree .`
-      puts <<~EOL
-        Here is the structure of your extension:
-
-        #{structure}
-      EOL
+      tree_structure("extension")
     end
   end
 end

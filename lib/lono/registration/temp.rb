@@ -38,7 +38,7 @@ class Lono::Registration
 
         More info: https://lono.cloud/docs/register/
 
-        Continue temporarily without registration? (y/N)
+        Continue without registration? (y/N)
       EOL
 
       answer = $stdin.gets.to_s.strip # nil on CI

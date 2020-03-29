@@ -10,12 +10,18 @@ class Lono::S3
       def name
         return @@name if @@name # only memoize once bucket has been created
 
+        check_aws_setup!
+
         stack = new.find_stack
         return unless stack
 
         resp = cfn.describe_stack_resources(stack_name: STACK_NAME)
         bucket = resp.stack_resources.find { |r| r.logical_resource_id == "Bucket" }
         @@name = bucket.physical_resource_id # actual bucket name
+      end
+
+      def check_aws_setup!
+        AwsSetup.new.check!
       end
     end
 

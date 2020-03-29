@@ -1,6 +1,7 @@
 class Lono::Blueprint
   class New < Lono::Sequence
     include Helper
+    include Lono::Utils::Generators::Tree
 
     argument :blueprint_name
 
@@ -95,17 +96,6 @@ class Lono::Blueprint
       FileUtils.cd(self.destination_root)
     end
 
-    def bundle_install
-      return if options[:from_new] || options[:import]
-
-      return unless options[:bundle]
-
-      puts "=> Installing dependencies with: bundle install"
-      Bundler.with_unbundled_env do
-        system("BUNDLE_IGNORE_CONFIG=1 bundle install")
-      end
-    end
-
     def welcome_message
       return if options[:from_new] || options[:import]
       puts <<~EOL
@@ -122,17 +112,7 @@ class Lono::Blueprint
     end
 
     def tree
-      return if options[:from_new] || options[:import]
-
-      tree_installed = system("type tree > /dev/null")
-      return unless tree_installed
-
-      structure = `tree .`
-      puts <<~EOL
-        Here is the structure of your blueprint:
-
-        #{structure}
-      EOL
+      tree_structure("blueprint")
     end
 
     # Reason: So `lono code import` prints out the params values with relative paths
