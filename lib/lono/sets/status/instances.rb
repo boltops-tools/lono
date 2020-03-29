@@ -11,14 +11,10 @@ class Lono::Sets::Status
 
     def wait(to="completed")
       puts "Stack Instance statuses... (takes a while)"
-      puts "You can check on the StackSets console Operations Tab for the operation status."
+      puts "You can check on the StackSetsole Operations Tab for the operation status."
       wait_until_outdated if @options[:start_on_outdated]
 
-      # Tricky: extra sleep so that the show_aws_cli_command in wait_until_stack_set_operation_complete
-      # shows up first. Quickest way to implement.
-      threads = with_instances do |instance|
-        Thread.new { sleep 5;  instance.tail(to) }
-      end
+      threads = start_wait_for_instances_threads
       wait_until_stack_set_operation_complete # start the the tailer here so the show_aws_cli_command shows up
       threads.map(&:join)
     end
@@ -33,11 +29,17 @@ class Lono::Sets::Status
         return
       end
 
-      threads = with_instances do |instance|
-        Thread.new { sleep 5;  instance.show }
-      end
+      threads = start_wait_for_instances_threads
       wait_until_stack_set_operation_complete
       threads.map(&:join)
+    end
+
+    def start_wait_for_instances_threads
+      # Tricky: extra sleep so that the show_aws_cli_command in wait_until_stack_set_operation_complete
+      # shows up first. Quickest way to implement.
+      with_instances do |instance|
+        Thread.new { sleep 5;  instance.show }
+      end
     end
 
     def with_instances
