@@ -11,10 +11,16 @@ class Lono::Sets::Status
 
     def wait(to="completed")
       puts "Stack Instance statuses... (takes a while)"
+      puts "You can check on the StackSets console Operations Tab for the operation status."
       wait_until_outdated if @options[:start_on_outdated]
 
       with_instances do |instance|
-        Thread.new { instance.tail(to) }
+        Thread.new do
+          # Tricky: extra sleep here so that the show_aws_cli_command in wait_until_stack_set_operation_complete
+          # shows up first. Quickest way to implement this.
+          sleep 5
+          instance.tail(to)
+        end
       end.map(&:join)
       wait_until_stack_set_operation_complete
     end
@@ -49,8 +55,9 @@ class Lono::Sets::Status
           stack_set_name: @stack,
           operation_id: operation_id,
         )
-        stack_set_operation = resp.stack_set_operation
-        status = stack_set_operation.status
+        stack_set_operation_resp = resp.stack_set_operation
+        status = stack_set_operation_resp.status
+        show_aws_cli_command(stack_set_operation_resp.operation_id)
         # puts "DEBUG: wait_until_stack_set_operation_complete"
         unless completed?(status)
           sleep 5
@@ -60,6 +67,20 @@ class Lono::Sets::Status
         show_time_spent(stack_set_operation)
         puts "Stack set operation completed."
       end
+    end
+
+    @@aws_cli_command_shown = false
+    def show_aws_cli_command(operation_id)
+      return if @@aws_cli_command_shown
+
+      command = "aws cloudformation describe-stack-set-operation --stack-set-name #{@stack} --operation-id #{operation_id}"
+      puts <<~EOL
+        Here is also the cli command to check:
+
+            #{command}
+
+      EOL
+      @@aws_cli_command_shown = true
     end
 
     # describe_stack_set_operation stack_set_operation.status is
