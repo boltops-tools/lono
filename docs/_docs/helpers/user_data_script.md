@@ -21,12 +21,12 @@ In the variables file, set the `@user_data_script` variable to the path of the s
 configs/demo/variables/development.rb:
 
 ```ruby
-@user_data_script = "configs/demo/user-data/bootstrap.sh"
+@user_data_script = "configs/demo/user_data/bootstrap.sh"
 ```
 
 Make sure that the script exists. Example:
 
-configs/demo/user-data/bootstrap.sh
+configs/demo/user_data/bootstrap.sh
 
     #!/bin/bash
     /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource Instance --region ${AWS::Region}
