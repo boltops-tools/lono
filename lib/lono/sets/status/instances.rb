@@ -56,9 +56,9 @@ class Lono::Sets::Status
           stack_set_name: @stack,
           operation_id: operation_id,
         )
-        stack_set_operation_resp = resp.stack_set_operation
-        status = stack_set_operation_resp.status
-        show_aws_cli_command(stack_set_operation_resp.operation_id)
+        stack_set_operation = resp.stack_set_operation
+        status = stack_set_operation.status
+        show_aws_cli_command(stack_set_operation.operation_id)
         # puts "DEBUG: wait_until_stack_set_operation_complete"
         unless completed?(status)
           sleep 5
