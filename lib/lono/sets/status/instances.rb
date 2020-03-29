@@ -14,15 +14,13 @@ class Lono::Sets::Status
       puts "You can check on the StackSets console Operations Tab for the operation status."
       wait_until_outdated if @options[:start_on_outdated]
 
-      with_instances do |instance|
-        Thread.new do
-          # Tricky: extra sleep here so that the show_aws_cli_command in wait_until_stack_set_operation_complete
-          # shows up first. Quickest way to implement this.
-          sleep 5
-          instance.tail(to)
-        end
-      end.map(&:join)
-      wait_until_stack_set_operation_complete
+      # Tricky: extra sleep so that the show_aws_cli_command in wait_until_stack_set_operation_complete
+      # shows up first. Quickest way to implement.
+      threads = with_instances do |instance|
+        Thread.new { sleep 5;  instance.tail(to) }
+      end
+      wait_until_stack_set_operation_complete # start the the tailer here so the show_aws_cli_command shows up
+      threads.map(&:join)
     end
 
     def show
@@ -35,10 +33,11 @@ class Lono::Sets::Status
         return
       end
 
-      with_instances do |instance|
-        Thread.new { instance.show }
-      end.map(&:join)
+      threads = with_instances do |instance|
+        Thread.new { sleep 5;  instance.show }
+      end
       wait_until_stack_set_operation_complete
+      threads.map(&:join)
     end
 
     def with_instances
