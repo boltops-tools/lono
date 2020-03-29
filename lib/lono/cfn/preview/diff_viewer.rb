@@ -13,7 +13,11 @@ module Lono::Cfn::Preview
 
     def diff_viewer
       return ENV['LONO_DIFF'] if ENV['LONO_DIFF']
-      system("type colordiff > /dev/null") ? "colordiff" : "diff"
+      colordiff_installed = system("type colordiff > /dev/null 2>&1")
+      unless colordiff_installed
+        puts "INFO: colordiff it not available. Recommend installing it."
+      end
+      colordiff_installed ? "colordiff" : "diff"
     end
   end
 end
