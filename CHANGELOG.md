@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.4.3]
+- #61 clean install fixes
+- improve tree detection
+- improve colordiff detection
+- improve AWS setup detection
+- remove bundler install for blueprint, extension, and configsets
+
 ## [7.4.2]
 - #60 fix edge case when cached materialized Gemfile.lock breaks finder
 
