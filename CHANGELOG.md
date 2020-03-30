@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.4.5]
+- add DeletionPolicy to special property mover also
+- improve sets delete messaging
+
 ## [7.4.4]
 - #62 update gemspec templates
 - #63 lono sets: default --iam option to true for stack sets
