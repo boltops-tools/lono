@@ -75,7 +75,7 @@ command("install-jq",
 )
 ```
 
-Geneates:
+Generates:
 
 ```yaml
 AWS::CloudFormation::Init:
