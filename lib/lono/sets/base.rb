@@ -1,5 +1,10 @@
 class Lono::Sets
   class Base < Lono::Cfn::Base
+    def initialize(options={})
+      options[:iam] = true # easy to forget the --iam option. Default to turning it on for StackSets
+      super
+    end
+
     def run
       generate_all
       save

@@ -11,12 +11,12 @@ class Lono::Sets::Status
 
     def wait(to="completed")
       puts "Stack Instance statuses... (takes a while)"
+      puts "You can check on the StackSetsole Operations Tab for the operation status."
       wait_until_outdated if @options[:start_on_outdated]
 
-      with_instances do |instance|
-        Thread.new { instance.tail(to) }
-      end.map(&:join)
-      wait_until_stack_set_operation_complete
+      threads = start_wait_for_instances_threads
+      wait_until_stack_set_operation_complete # start the the tailer here so the show_aws_cli_command shows up
+      threads.map(&:join)
     end
 
     def show
@@ -29,10 +29,17 @@ class Lono::Sets::Status
         return
       end
 
-      with_instances do |instance|
-        Thread.new { instance.show }
-      end.map(&:join)
+      threads = start_wait_for_instances_threads
       wait_until_stack_set_operation_complete
+      threads.map(&:join)
+    end
+
+    def start_wait_for_instances_threads
+      # Tricky: extra sleep so that the show_aws_cli_command in wait_until_stack_set_operation_complete
+      # shows up first. Quickest way to implement.
+      with_instances do |instance|
+        Thread.new { sleep 5;  instance.show }
+      end
     end
 
     def with_instances
@@ -51,6 +58,7 @@ class Lono::Sets::Status
         )
         stack_set_operation = resp.stack_set_operation
         status = stack_set_operation.status
+        show_aws_cli_command(stack_set_operation.operation_id)
         # puts "DEBUG: wait_until_stack_set_operation_complete"
         unless completed?(status)
           sleep 5
@@ -60,6 +68,20 @@ class Lono::Sets::Status
         show_time_spent(stack_set_operation)
         puts "Stack set operation completed."
       end
+    end
+
+    @@aws_cli_command_shown = false
+    def show_aws_cli_command(operation_id)
+      return if @@aws_cli_command_shown
+
+      command = "aws cloudformation describe-stack-set-operation --stack-set-name #{@stack} --operation-id #{operation_id}"
+      puts <<~EOL
+        Here is also the cli command to check:
+
+            #{command}
+
+      EOL
+      @@aws_cli_command_shown = true
     end
 
     # describe_stack_set_operation stack_set_operation.status is

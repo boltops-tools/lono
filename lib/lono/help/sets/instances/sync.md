@@ -1,3 +1,5 @@
+Lono uses the `config/accounts` and `config/regions` to calculate whether `create-stack-set` or `delete-stack-set` need to be called and calls them accordingly.  You use this instead of `lono sets deploy` when only configs have been adjust and you want to keep the existing template.
+
 Provided:
 
 configs/demo/accounts/development/my-set.txt
