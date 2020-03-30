@@ -6,7 +6,7 @@ class Lono::Template::Strategy::Dsl::Builder::Section::Resource
     end
 
     def move!
-      %w[depends_on condition].each do |attribute_name|
+      %w[Condition DeletionPolicy DependsOn].each do |attribute_name|
         # Account for camelize, underscore, String, and Symbol
         move(attribute_name.to_sym)
         move(attribute_name.camelize.to_sym)
