@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.4.4]
+- #62 update gemspec templates
+- #63 lono sets: default --iam option to true for stack sets
+
 ## [7.4.3]
 - #61 clean install fixes
 - improve tree detection
