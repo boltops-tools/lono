@@ -14,7 +14,12 @@ class Lono::Sets
       if @options[:noop]
         puts "NOOP #{message}"
       else
-        sure?("Are you sure you want to delete the #{@stack} stack set?", "Be sure that it emptied of stack instances first.")
+        desc =<<~EOL
+          Be sure that the emptied StackSet instances is emptied first.
+          You can empty it with a separate command: lono sets instances delete #{@stack} --all
+          This command will only delete the StackSet itself after it's been emptied.
+        EOL
+        sure?("Are you sure you want to delete the #{@stack} stack set?", desc)
 
         if stack_set_exists?(@stack)
           cfn.delete_stack_set(stack_set_name: @stack) # resp is an Empty structure, so much get operation_id from status
