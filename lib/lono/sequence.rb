@@ -12,7 +12,7 @@ class Lono::Sequence < Thor::Group
 
 private
   def git_installed?
-    system("type git > /dev/null")
+    system("type git > /dev/null 2>&1")
   end
 
   def run_git?

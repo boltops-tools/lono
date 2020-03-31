@@ -90,14 +90,14 @@ module Lono::Inspector
         path = "/tmp/cloudformation-depends-on-#{random}"
         save path, "png"
         # Check if open command exists and use it to open the image.
-        system "open #{path}.png" if system("type open > /dev/null")
+        system "open #{path}.png" if system("type open > /dev/null 2>&1")
       end
     end
 
     # Check if Graphiz is installed and prints a user friendly message if it is not installed.
     # Provide instructions if on macosx.
     def check_graphviz_installed
-      installed = system("type dot > /dev/null") # dot is a command that is part of the graphviz package
+      installed = system("type dot > /dev/null 2>&1") # dot is a command that is part of the graphviz package
       unless installed
         puts "It appears that the Graphviz is not installed.  Please install it to generate the graph."
         if RUBY_PLATFORM =~ /darwin/
