@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.4.6]
+- #64 lono new updates: no starter seed files, allow custom readme
+- silence type check
+
 ## [7.4.5]
 - add DeletionPolicy to special property mover also
 - improve sets delete messaging
