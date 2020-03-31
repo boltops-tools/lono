@@ -52,7 +52,7 @@ class Lono::Blueprint
 
     def create_project
       puts "=> Creating new blueprint called #{blueprint_name}."
-      directory ".", "#{@cwd}/#{blueprint_name}"
+      directory ".", "#{@cwd}/#{blueprint_name}", directory_options
     end
 
     def create_app_folder
@@ -72,20 +72,14 @@ class Lono::Blueprint
       empty_directory "#{@cwd}/#{blueprint_name}/app/templates"
     end
 
-    def create_starter_configs
-      return unless @demo
-      return if @options[:import]
-
-      if options[:from_new] # lono new command
-        directory "../blueprint_configs", options[:project_name]
-      else # lono blueprint new command
-        directory "../blueprint_configs", "."
-      end
-    end
-
     def create_license
       return unless ENV['LONO_LICENSE_FILE']
       copy_file ENV['LONO_LICENSE_FILE'], "#{@cwd}/#{blueprint_name}/LICENSE.txt"
+    end
+
+    def create_readme
+      return unless ENV['LONO_README_FILE']
+      template ENV['LONO_README_FILE'], "#{@cwd}/#{blueprint_name}/README.md"
     end
 
     # After this commands are executed with the newly created project
@@ -119,6 +113,15 @@ class Lono::Blueprint
     # when the config files are generated.
     def reset_current_dir
       FileUtils.cd(@old_dir)
+    end
+
+  private
+    def directory_options
+      if ENV['LONO_README_FILE']
+        {exclude_pattern: /README/}
+      else
+        {}
+      end
     end
   end
 end
