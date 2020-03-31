@@ -1,2 +1,0 @@
-# Starter Example
-# @variable = "value"
