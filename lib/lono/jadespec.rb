@@ -28,6 +28,7 @@ module Lono
     end
 
     def lono_type
+      deprecation_check(metadata)
       metadata["lono_type"] || detect_type
     end
 
@@ -37,6 +38,7 @@ module Lono
     end
 
     def lono_strategy
+      deprecation_check(metadata)
       return metadata["lono_strategy"] if metadata["lono_strategy"]
       lono_type == "blueprint" ? "dsl" : "erb" # TODO: default to dsl for configset also in next major release
     end
@@ -50,5 +52,20 @@ module Lono
       gemspec.metadata || {}
     end
     memoize :metadata
+
+  private
+    @@deprecation_check_shown = {}
+    def deprecation_check(metadata)
+      return unless ENV['LONO_DEPRECATION_SOFT']
+      return if @@deprecation_check_shown[name]
+
+      unless metadata["lono_type"]
+        puts "DEPRECATION WARNING: lono_type is not set for #{name}".color(:yellow)
+      end
+      unless metadata["lono_strategy"]
+        puts "DEPRECATION WARNING: lono_strategy is not set for #{name}".color(:yellow)
+      end
+      @@deprecation_check_shown[name] = true
+    end
   end
 end
