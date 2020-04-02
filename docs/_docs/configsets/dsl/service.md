@@ -11,8 +11,7 @@ order: 7
 nav_order: 66
 ---
 
-The `command` method maps to the [AWS::CloudFormation::Init](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-init.html) commands section.
-
+{{ page.desc }}
 
 ```ruby
 service("sysvinit",
