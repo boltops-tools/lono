@@ -13,8 +13,8 @@ nav_order: 67
 
 {{ page.desc }}
 
-The cfn-init processing order according to the [AWS::CloudFormation::Init
-](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-init.html) docs is:
+The cfn-init processes sections according to the following order [AWS::CloudFormation::Init
+](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-init.html):
 
 1. packages
 2. groups
