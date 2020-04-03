@@ -51,10 +51,13 @@ AWS::CloudFormation::Init:
     - configset-2
   configset-1:
     commands:
-      001_uptime: {}
+      001_create-file:
+        command: touch /tmp/test.txt
+        test: test -e /tmp/test.txt
   configset-2:
     commands:
-      001_pwd: {}
+      001_uptime-command:
+        command: uptime
 ```
 
 Notice, how you do not have to define the `configSets` key. Lono automatically generates `configSets` structure using the order which you declare the `configset` blocks.
