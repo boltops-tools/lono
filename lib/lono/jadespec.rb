@@ -62,9 +62,6 @@ module Lono
       unless metadata["lono_type"]
         puts "DEPRECATION WARNING: lono_type is not set for #{name}".color(:yellow)
       end
-      unless metadata["lono_strategy"]
-        puts "DEPRECATION WARNING: lono_strategy is not set for #{name}".color(:yellow)
-      end
       @@deprecation_check_shown[name] = true
     end
   end
