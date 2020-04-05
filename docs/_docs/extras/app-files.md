@@ -4,7 +4,7 @@ categories: extras
 nav_order: 91
 ---
 
-As part of [lono cfn deploy](/reference/lono-cfn-deploy/), the files in the `app/files` folder can get zipped and uploaded to the lono managed s3 bucket. The files only get uploaded if they are referenced in your template with the `file_s3_url`.
+As part of [lono cfn deploy](/reference/lono-cfn-deploy/), the files in the `app/files` folder can get zipped and uploaded to the lono managed s3 bucket. The files only get uploaded if they are referenced in your template with the `s3_url`.
 
 ## Lambda Function Example
 
