@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.4.7]
+- #65 soft lono deprecations: `lono_type` must be set in gemspec
+- #66 fix configset s3_key, s3 endpoint is specially treated for us-east-1
+- #67 fix materializer for multiple extensions
+
 ## [7.4.6]
 - #64 lono new updates: no starter seed files, allow custom readme
 - silence type check
