@@ -12,7 +12,8 @@ class Lono::Template::Strategy::Dsl::Builder
         data.map! { |v| squeeze(v) }
       when Hash
         data.each_with_object({}) do |(k,v), squeezed|
-          squeezed[k] = squeeze(v) unless v.nil? # only remove nil values within Hash structures
+          # only remove nil and empty Array values within Hash structures
+          squeezed[k] = squeeze(v) unless v.nil? || v.is_a?(Array) && v.empty?
           squeezed
         end
       else
@@ -21,4 +22,3 @@ class Lono::Template::Strategy::Dsl::Builder
     end
   end
 end
-
