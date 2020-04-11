@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.4.8]
+- #68 squeezer: auto clean empty array values
+- add version numbers to extension gemspec template to remove deprecations
+
 ## [7.4.7]
 - #65 soft lono deprecations: `lono_type` must be set in gemspec
 - #66 fix configset s3_key, s3 endpoint is specially treated for us-east-1
