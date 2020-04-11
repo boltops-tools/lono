@@ -45,7 +45,6 @@ module Lono
         generate_only: true,
       )
       Lono::Generate.new(o).all
-      Lono::Registration.check
     end
 
     desc "user_data NAME", "Generates user_data script for debugging."
