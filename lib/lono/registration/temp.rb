@@ -29,25 +29,18 @@ class Lono::Registration
       end
 
       puts <<~EOL
-        Lono is not registered. This prompt appears every 24 hours when lono is not registered.
-        To remove this prompt, please set up your registration info in .lono/registration.yml.
 
-        Registration is free. You can register at:
+        Looks like lono is not registered. Lono registration is optional and free.
+        If you like lono though, please register to help support it. You can register at:
 
             https://register.lono.cloud
 
-        More info: https://lono.cloud/docs/register/
+        Registration removes this message. Registered users can also optionally receive
+        updates and special offers, including discounts to BoltOps Pro:
 
-        Continue without registration? (y/N)
+            https://lono.cloud/docs/boltops-pro/
+
       EOL
-
-      answer = $stdin.gets.to_s.strip # nil on CI
-      if answer !~ /^y/i
-        puts "Exiting."
-        exit 1
-      end
-
-      save_temp_key(resp) # save key if user confirms
     end
 
     def save_temp_key(info)

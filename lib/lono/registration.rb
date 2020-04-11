@@ -11,5 +11,9 @@ module Lono
     def temp_check
       Temp.new.check
     end
+
+    def self.check
+      Check.new.check
+    end
   end
 end

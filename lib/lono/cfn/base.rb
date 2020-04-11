@@ -15,7 +15,6 @@ class Lono::Cfn
       starting_message
       parameters = generate_all
       begin
-        check_registration
         save(parameters) # defined in the sub class
       rescue Aws::CloudFormation::Errors::InsufficientCapabilitiesException => e
         yes = rerun_with_iam?(e)
@@ -40,11 +39,8 @@ class Lono::Cfn
 
       # exit code for cfn.rb cli, so there's less duplication
       exit 1 unless success
+      Lono::Registration.check
       success
-    end
-
-    def check_registration
-      Lono::Registration::Check.new.check
     end
 
     def continue_update_rollback_sure?

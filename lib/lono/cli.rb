@@ -13,6 +13,7 @@ module Lono
     long_desc Help.text(:blueprints)
     def blueprints
       Finder::Blueprint.list
+      Lono::Registration.check
     end
 
     desc "configsets [BLUEPRINT]", "Lists configsets"
@@ -44,6 +45,7 @@ module Lono
         generate_only: true,
       )
       Lono::Generate.new(o).all
+      Lono::Registration.check
     end
 
     desc "user_data NAME", "Generates user_data script for debugging."
