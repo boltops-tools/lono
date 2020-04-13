@@ -21,13 +21,6 @@ class Lono::Registration
     def prompt
       return if ENV['LONO_TEST']
 
-      # We get the api first before the prompt to check if api is up
-      resp = get_temp_key
-      # resp nil means non-200 http response. Failsafe behavior is to continue.
-      if resp.nil?
-        return true
-      end
-
       puts <<~EOL
 
         Looks like lono is not registered. Lono registration is optional and free.
@@ -35,12 +28,17 @@ class Lono::Registration
 
             https://register.lono.cloud
 
-        Registration removes this message. Registered users can also optionally receive
-        updates and special offers, including discounts to BoltOps Pro:
+        This prompt appears every 24 hours when lono is not registered. Registration removes
+        this message. Registered users can also optionally receive updates and special offers,
+        including discounts to BoltOps Pro:
 
             https://lono.cloud/docs/boltops-pro/
 
       EOL
+
+      # resp nil means non-200 http response
+      resp = get_temp_key
+      save_temp_key(resp) unless resp.nil? # save temp key so prompt only happens periodically
     end
 
     def save_temp_key(info)
