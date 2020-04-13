@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.4.9]
+- #69 `stack_output` and `stack_resource` helpers
+
 ## [7.4.8]
 - #68 squeezer: auto clean empty array values
 - add version numbers to extension gemspec template to remove deprecations
