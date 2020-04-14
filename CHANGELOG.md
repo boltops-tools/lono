@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.4.10]
+- #70 fix out-of-sync Gemfile.lock
+
 ## [7.4.9]
 - #69 `stack_output` and `stack_resource` helpers
 
