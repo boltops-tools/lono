@@ -90,10 +90,8 @@ class Lono::AppFile::Build::LambdaLayer
       end
 
       remove_bundled_with("#{cache_area}/Gemfile.lock")
-
-      # Copy the Gemfile.lock back to the project in case it was updated.
-      # For example we add the jets-rails to the Gemfile.
-      copy_back_gemfile_lock
+      # Fixes really tricky bug where Gemfile and Gemfile.lock is out-of-sync. Details: https://gist.github.com/tongueroo/b5b0d0c924a4a1633eee514795e4b04b
+      FileUtils.cp("#{cache_area}/Gemfile.lock", "#{Lono.config.output_path}/#{@blueprint}/files/#{@registry_name}/Gemfile.lock")
 
       puts 'Bundle install success.'
     end
@@ -118,12 +116,6 @@ class Lono::AppFile::Build::LambdaLayer
 
       content = new_lines.join('')
       IO.write(gemfile_lock, content)
-    end
-
-    def copy_back_gemfile_lock
-      src = "#{cache_area}/Gemfile.lock"
-      dest = "#{@app_root}/Gemfile.lock"
-      FileUtils.cp(src, dest)
     end
 
     def setup_bundle_config(dir)
