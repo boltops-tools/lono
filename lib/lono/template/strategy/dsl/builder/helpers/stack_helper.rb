@@ -31,9 +31,10 @@ module Lono::Template::Strategy::Dsl::Builder::Helpers
     end
 
     def lookup_output(name)
-      stack_output(name)
+      result = stack_output(name)
       return unless ENV['LONO_DEPRECATION_SOFT']
       puts "DEPRECATION WARNING: lookup_output is deprecated. Please use stack_output instead".color(:yellow)
+      result
     end
 
   private
