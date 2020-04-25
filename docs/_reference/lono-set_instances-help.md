@@ -1,11 +1,11 @@
 ---
-title: lono instances help
+title: lono set_instances help
 reference: true
 ---
 
 ## Usage
 
-    lono instances help [COMMAND]
+    lono set_instances help [COMMAND]
 
 ## Description
 

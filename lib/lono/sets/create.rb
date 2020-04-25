@@ -19,9 +19,6 @@ class Lono::Sets
 
       options = build_options
       show_options(options, "cfn.create_stack_set")
-
-      sure?("Are you sure you want to create the #{@stack} stack set?")
-
       cfn.create_stack_set(options) # resp.stack_set_id => String. There is no resp.operation_id
       puts message unless @options[:mute]
       true # There is no resp.operation_id

@@ -26,26 +26,19 @@ class Lono::Sets
         puts <<~EOL
           NOTE: There are 0 stack instances associated with the #{@stack} stack set.
           Will update the stack set template but there no instances to be updated.
-          Add `configs/#{@blueprint}/accounts` and `configs/#{@blueprint}/regions` settings
-          and use `lono sets instances sync` to add stack instances.
+
+          Use `lono set_instances deploy` to add stack instances. Example:
+
+              lono set_instances deploy #{@stack} --accounts 111 --regions us-west-2 us-east-2
+
         EOL
       else
         sure?("Are you sure you want to update the #{@stack} stack set?", long_desc)
       end
 
       resp = cfn.update_stack_set(options)
-      operation_id = resp[:operation_id]
-      puts message unless @options[:mute]
 
-      return true if @options[:noop] || !@options[:wait]
-
-      Lono::Sets::Status::Instance::Base.show_time_progress = true
-      Lono::Sets::Status::Instance::Base.delay_factor = stack_instances.size
-      status = Status.new(@options.merge(operation_id: operation_id))
-      success = status.wait
-      summarize(operation_id)
-      exit 1 unless success
-      success
+      Lono::Sets::Waiter.new(@options).run(resp[:operation_id])
     end
 
     def stack_instances

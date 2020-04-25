@@ -1,4 +1,4 @@
-class Lono::Sets::Instances
+class Lono::SetInstances
   class Sync < Base
     include Lono::Sets::Summarize
     include Lono::Utils::Sure
@@ -9,6 +9,9 @@ class Lono::Sets::Instances
     end
 
     def run
+      puts "DEPRECATED: The sync command is deprecated, in favor of the deploy command.".color(:yellow)
+      puts "Found more success with an explicit approach. sync may be removed in future versions of lono."
+
       unless stack_set_exists?(@stack)
         puts "ERROR: Cannot update a stack set because #{@stack} does not exists.".color(:red)
         return
@@ -114,8 +117,6 @@ class Lono::Sets::Instances
         operation_id: operation_id,
         start_on_outdated: meth != :delete_stack_instances,
       )
-      Lono::Sets::Status::Instance::Base.show_time_progress = true
-      Lono::Sets::Status::Instance::Base.delay_factor = accounts.size * regions.size
       instances_status = Status.new(o)
       final_status = meth == :delete_stack_instances ? "deleted" : "completed"
       instances_status.run(to: final_status) unless @options[:noop] # returns success: true or false

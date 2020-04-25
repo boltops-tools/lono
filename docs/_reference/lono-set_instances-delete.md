@@ -1,11 +1,11 @@
 ---
-title: lono instances delete
+title: lono set_instances delete
 reference: true
 ---
 
 ## Usage
 
-    lono instances delete STACK_SET
+    lono set_instances delete STACK_SET
 
 ## Description
 
@@ -13,7 +13,7 @@ Delete CloudFormation stack set instances.
 
 ## Example
 
-    $ lono sets instances delete my-set --accounts 112233445566 --regions us-west-1 us-west-2
+    $ lono set_instances delete my-set --accounts 112233445566 --regions us-west-1 us-west-2
     Are you sure you want to delete the my-set instances?
     These stack instances will be deleted:
 

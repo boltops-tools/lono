@@ -30,9 +30,5 @@ module Lono
     def list
       List.new(options).run
     end
-
-    desc "instances SUBCOMMAND", "instances subcommands"
-    long_desc Help.text("sets/instances")
-    subcommand "instances", Instances
   end
 end

@@ -1,3 +1,5 @@
+IMPORTANT: The `lono set_instances sync` command is deprecated in favor of `lono set_instances deploy`. With stack sets, found more success with explicitness.
+
 Lono uses the `config/accounts` and `config/regions` to calculate whether `create-stack-set` or `delete-stack-set` need to be called and calls them accordingly.  You use this instead of `lono sets deploy` when only configs have been adjust and you want to keep the existing template.
 
 Provided:
@@ -23,9 +25,9 @@ configs/demo/regions/development/my-set.txt
     ap-northeast-1
     ap-northeast-2
 
-Running `lono sets instances sync` will delete and add the stack instances accordingly.
+Running `lono set_instances sync` will delete and add the stack instances accordingly.
 
-    $ lono sets instances sync my-set --blueprint demo
+    $ lono set_instances sync my-set --blueprint demo
     Using regions for development: configs/demo/regions/development/my-set.sh
     Using accounts for development: configs/demo/accounts/development/my-set.sh
     Are you sure you want to sync stack instances?

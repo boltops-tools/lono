@@ -65,6 +65,7 @@ The template used is `app/templates/different3.rb` and the parameters used is `c
 ## Options
 
 ```
+    [--notification-arns=one two three]              # The Simple Notification Service (SNS) topic ARNs to publish stack related events.
     [--rollback], [--no-rollback]                    # rollback
                                                      # Default: true
     [--source=SOURCE]                                # url or path to file with template

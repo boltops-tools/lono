@@ -1,4 +1,4 @@
-class Lono::Sets::Instances
+class Lono::SetInstances
   class Base < Lono::Sets::Base
     # Simple structure to help with subtracting logic
     # [["112233445566", "us-west-1"], ["112233445566", "us-west-1"]]

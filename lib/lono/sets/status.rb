@@ -14,6 +14,9 @@ class Lono::Sets
     end
 
     def wait
+      Lono::Sets::Status::Instance::Base.show_time_progress = true
+      Lono::Sets::Status::Instance::Base.delay_factor = stack_instances.size
+
       status = nil
       until completed?(status)
         resp = display_one
@@ -42,9 +45,14 @@ class Lono::Sets
     end
 
     def show
+      if summaries.empty?
+        puts "No stack operations have been done with this stack set. So there is no status to report."
+        return
+      end
+
       display_one
       o = @options.merge(show_time_spent: false)
-      instances_status = Lono::Sets::Instances::Status.new(o)
+      instances_status = Lono::SetInstances::Status.new(o)
       instances_status.run
       summarize(operation_id)
     end
@@ -60,7 +68,7 @@ class Lono::Sets
       Thread.new do
         # show_time_spent because we already show it in this status class. Dont want it to show twice.
         o = @options.merge(start_on_outdated: true, show_time_spent: false)
-        instances_status = Lono::Sets::Instances::Status.new(o)
+        instances_status = Lono::SetInstances::Status.new(o)
         instances_status.run
       end
       @@instances_status_waiter_started = true
@@ -101,11 +109,15 @@ class Lono::Sets
     end
 
     def latest_operation_id
+      summaries.first.operation_id
+    end
+
+    def summaries
       resp = cfn.list_stack_set_operations(
         stack_set_name: @stack,
         max_results: 1,
       )
-      resp.summaries.first.operation_id
+      resp.summaries
     end
 
     def stack_instances

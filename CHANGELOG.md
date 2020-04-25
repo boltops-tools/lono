@@ -103,7 +103,7 @@ This project *tries* to adhere to [Semantic Versioning](http://semver.org/), eve
 - #36 lono v7
 - Breaking: project `blueprints` moved to `app/blueprints`. Use `lono upgrade` to update.
 - Introduce configsets concept.
-- Introduce lono sets concept: `lono sets`, `lono sets deploy`, `lono sets instances sync`
+- Introduce lono sets concept: `lono sets`, `lono sets deploy`, `lono set_instances sync`
 - Merge lono-pro into lono. Deprecate lono-pro gem.
 - Add lono registration.
 - Major refactoring:

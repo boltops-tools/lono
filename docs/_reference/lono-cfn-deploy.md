@@ -37,6 +37,7 @@ Often you want to create a stack name that is different from the blueprint name.
 ## Options
 
 ```
+    [--notification-arns=one two three]              # The Simple Notification Service (SNS) topic ARNs to publish stack related events.
     [--rollback], [--no-rollback]                    # rollback
                                                      # Default: true
     [--source=SOURCE]                                # url or path to file with template
