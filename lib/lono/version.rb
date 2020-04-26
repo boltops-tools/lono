@@ -1,3 +1,3 @@
 module Lono
-  VERSION = "7.4.11"
+  VERSION = "7.5.0"
 end

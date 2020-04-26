@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.5.0]
+- #71 `set_instances deploy` command in favor of `set_instances sync`
+
 ## [7.4.11]
 - fix lookup_output
 
