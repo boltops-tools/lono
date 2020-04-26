@@ -1,5 +1,13 @@
-class Lono::Sets::Instances
+class Lono::SetInstances
   class Opts < Lono::Sets::Opts
+    def update
+      delete
+    end
+
+    def create
+      delete
+    end
+
     def delete
       operation_preferences_options
       accounts_options

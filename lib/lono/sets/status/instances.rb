@@ -11,7 +11,7 @@ class Lono::Sets::Status
 
     def wait(to="completed")
       puts "Stack Instance statuses... (takes a while)"
-      puts "You can check on the StackSetsole Operations Tab for the operation status."
+      puts "You can also check with StackSets console at the Operations Tab."
       wait_until_outdated if @options[:start_on_outdated]
 
       threads = start_wait_for_instances_threads
@@ -23,8 +23,11 @@ class Lono::Sets::Status
       if stack_instances.empty?
         # Note: no access to @blueprint here
         puts <<~EOL
-          There are 0 stack instances associated with the #{@stack} stack set.  Add files
-          Add accounts and regions configs use `lono sets instances sync` to add stack instances.
+          There are 0 stack instances associated with the #{@stack} stack set.
+          Use `lono set_instances deploy` to add stack instances. Example:
+
+              lono set_instances deploy #{@stack} --accounts 111 --regions us-west-2 us-east-2
+
         EOL
         return
       end
@@ -64,7 +67,7 @@ class Lono::Sets::Status
           sleep 5
         end
       end
-      if @show_time_spent # or else it double shows from `lono sets deploy`. Do want it to show for `lono sets instances sync` though
+      if @show_time_spent # or else it double shows from `lono sets deploy`. Do want it to show for `lono set_instances sync` though
         show_time_spent(stack_set_operation)
         puts "Stack set operation completed."
       end
@@ -108,7 +111,7 @@ class Lono::Sets::Status
       resp = cfn.list_stack_instances(stack_set_name: @stack)
       summaries = resp.summaries
       # filter is really only used internally. So it's fine to keep it as complex data structure since that's what we
-      # build it up as in Lono::Sets::Instances::Deploy
+      # build it up as in Lono::SetInstances::Deploy
       filter = @options[:filter] # [["112233445566", "us-west-1"],["112233445566", "us-west-2"]]
       return summaries unless filter
 

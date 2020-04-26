@@ -1,4 +1,4 @@
-class Lono::Sets::Instances
+class Lono::SetInstances
   class Status
     def initialize(options={})
       @options = options

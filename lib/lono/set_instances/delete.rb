@@ -1,28 +1,24 @@
-class Lono::Sets::Instances
-  class Delete < Base
-    include Lono::AwsServices
-    include Lono::Utils::Sure
-
+class Lono::SetInstances
+  class Delete < Changeable
     def initialize(options={})
-      @options = options
+      super
       @stack = options[:stack]
     end
 
     def run
       validate!
 
-      sure?("Are you sure you want to delete the #{@stack} instances?", long_desc)
+      sure?("Are you sure you want to delete the #{@stack} stack instances?", long_desc)
 
       # delete_stack_instances resp has operation_id
       # Could also use that to poll for status with the list_stack_set_operation_results
       # api. Currently, Instance::Status class not using this info. If we need will add the logic.
+      retain_stacks = @options[:retain_stacks] ? @options[:retain_stacks] : false
       resp = cfn.delete_stack_instances(
-        options = {
-          stack_set_name: @stack,
-          accounts: accounts,
-          regions: regions,
-          retain_stacks: false,
-        }
+        stack_set_name: @stack,
+        accounts: accounts,
+        regions: regions,
+        retain_stacks: retain_stacks,
       )
       operation_id = resp.operation_id
 
@@ -32,8 +28,6 @@ class Lono::Sets::Instances
         start_on_outdated: false,
         operation_id: operation_id,
       )
-      Lono::Sets::Status::Instance::Base.show_time_progress = true
-      Lono::Sets::Status::Instance::Base.delay_factor = accounts.size * regions.size
       instances_status = Status.new(o)
       instances_status.run(to: "deleted") unless @options[:noop] # returns success: true or false
     end
@@ -48,22 +42,6 @@ class Lono::Sets::Instances
 
       Number of stack instances to be deleted: #{total}
       EOL
-    end
-
-    def validate!
-      invalid = (regions.blank? || accounts.blank?) && !@options[:all]
-      if invalid
-        puts "ERROR: You must provide --accounts and --regions or --all.".color(:red)
-        exit 1
-      end
-    end
-
-    def accounts
-      @options[:all] ? stack_instances.map(&:account).uniq : @options[:accounts]
-    end
-
-    def regions
-      @options[:all] ? stack_instances.map(&:region).uniq : @options[:regions]
     end
   end
 end

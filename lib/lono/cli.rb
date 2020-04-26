@@ -162,6 +162,10 @@ module Lono
     long_desc Help.text(:sets)
     subcommand "sets", Sets
 
+    desc "set_instances SUBCOMMAND", "set_instances subcommands"
+    long_desc Help.text(:set_instances)
+    subcommand "set_instances", SetInstances
+
     desc "template SUBCOMMAND", "template subcommands"
     long_desc Help.text(:template)
     subcommand "template", Template

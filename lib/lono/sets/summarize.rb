@@ -1,5 +1,7 @@
 class Lono::Sets
   module Summarize
+    include Lono::AwsServices
+
     def summarize(operation_id)
       puts "Stack Set Operation Summary:"
       resp = cfn.list_stack_set_operation_results(stack_set_name: @stack, operation_id: operation_id)

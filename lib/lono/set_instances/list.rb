@@ -1,4 +1,4 @@
-class Lono::Sets::Instances
+class Lono::SetInstances
   class List
     include Lono::AwsServices
 

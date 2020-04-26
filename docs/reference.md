@@ -23,6 +23,7 @@ title: CLI Reference
 * [lono s3]({% link _reference/lono-s3.md %})
 * [lono script]({% link _reference/lono-script.md %})
 * [lono seed]({% link _reference/lono-seed.md %})
+* [lono set_instances]({% link _reference/lono-set_instances.md %})
 * [lono sets]({% link _reference/lono-sets.md %})
 * [lono summary]({% link _reference/lono-summary.md %})
 * [lono template]({% link _reference/lono-template.md %})
