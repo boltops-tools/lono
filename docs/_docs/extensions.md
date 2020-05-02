@@ -12,7 +12,7 @@ Let's say you want to create some helper methods that you want to share between 
 sg_extension/lib/sg_extension/helpers/parameters.rb:
 
 ```ruby
-module SgExtensions::Helpers
+module SgExtension::Helpers
   module Parameters
     def security_group_parameters
       parameter_group("AWS::EC2::SecurityGroup") do
@@ -26,7 +26,7 @@ end
 sg_extension/lib/sg_extension/helpers/resources.rb:
 
 ```ruby
-module SgExtensions::Helpers
+module SgExtension::Helpers
   module Resources
     def security_group
       resource("SecurityGroup", "AWS::EC2::SecurityGroup",
