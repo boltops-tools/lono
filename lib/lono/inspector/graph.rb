@@ -102,7 +102,7 @@ module Lono::Inspector
         puts "It appears that the Graphviz is not installed.  Please install it to generate the graph."
         if RUBY_PLATFORM =~ /darwin/
           puts "You can install Graphviz with homebrew:"
-          puts "  brew install brew install graphviz"
+          puts "    brew install graphviz"
         end
         exit 1
       end
