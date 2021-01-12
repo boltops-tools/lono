@@ -39,7 +39,6 @@ class Lono::Cfn
 
       # exit code for cfn.rb cli, so there's less duplication
       exit 1 unless success
-      Lono::Registration.check
       success
     end
 
