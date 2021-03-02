@@ -10,6 +10,8 @@
 
 [![BoltOps Badge](https://img.boltops.com/boltops/badges/boltops-badge.png)](https://www.boltops.com)
 
+Please **watch/star** this repo to help grow and support the project.
+
 Lono is a CloudFormation framework. It builds, manages, and deploys CloudFormation templates.
 
 ## Lono Features
