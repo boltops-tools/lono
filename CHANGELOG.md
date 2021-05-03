@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.5.1] - 2021-05-03
+- remove registration check
+- fix brew install graphviz message
+
 ## [7.5.0]
 - #71 `set_instances deploy` command in favor of `set_instances sync`
 
