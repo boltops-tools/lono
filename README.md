@@ -5,7 +5,6 @@
 # Lono
 
 ![CodeBuild](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiYTloZ3dBZkZTYnlTaU1ZZTMvenROM1dmY2lDZzE0MDRVZ2d6NXdqb2JmSXNrQ3pkVGpKRTJMMnhTNDlOYUNOUlZZUmR6TktGcXRWMVFoYzhrSXFZWVZNPSIsIml2UGFyYW1ldGVyU3BlYyI6IkkrSGlFcTBWUjMzbk5xVGYiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
-[![CircleCI](https://circleci.com/gh/tongueroo/lono.svg?style=svg)](https://circleci.com/gh/tongueroo/lono)
 [![Support](https://img.shields.io/badge/get-support-blue.svg)](https://boltops.com?utm_source=badge&utm_medium=badge&utm_campaign=lono)
 
 [![BoltOps Badge](https://img.boltops.com/boltops/badges/boltops-badge.png)](https://www.boltops.com)
