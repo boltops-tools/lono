@@ -1,5 +1,6 @@
 $stdout.sync = true unless ENV["LONO_STDOUT_SYNC"] == "0"
 
+require "active_support"
 require "active_support/core_ext/class"
 require 'active_support/core_ext/hash'
 require 'active_support/core_ext/string'
