@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
 
+## [7.5.2] - 2022-02-08
+- [#74](https://github.com/boltops-tools/lono/pull/74) activesupport require fix
+- fix activesupport require
+
 ## [7.5.1] - 2021-05-03
 - remove registration check
 - fix brew install graphviz message
