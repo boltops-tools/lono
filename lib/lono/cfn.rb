@@ -56,14 +56,6 @@ module Lono
       Download.new(options.merge(stack: stack)).run
     end
 
-    desc "current", "Current stack that you're working with."
-    long_desc Lono::Help.text("cfn/current")
-    option :rm, type: :boolean, desc: "Remove all current settings. Removes `.lono/current`"
-    option :name, desc: "Current stack name."
-    def current
-      Current.new(options).run
-    end
-
     desc "status", "Shows current status of stack."
     long_desc Lono::Help.text("cfn/status")
     def status(stack)
