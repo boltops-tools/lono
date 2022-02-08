@@ -1,7 +1,7 @@
 require "digest"
 require "fileutils"
 
-class Lono::Script
+module Lono::Script
   class Build < Base
     # Only avaialble after script has been built.
     def self.scripts_name
@@ -9,18 +9,17 @@ class Lono::Script
     end
 
     def run
-      Lono::ProjectChecker.check
       reset
-      if Dir["#{Lono.blueprint_root}/app/scripts/*"].empty?
+      if Dir["#{@blueprint.root}/scripts/*"].empty?
         return
       else
-        puts "Detected app/scripts for blueprint #{@blueprint}"
+        logger.info "Detected scripts"
       end
 
-      puts "Tarballing app/scripts folder to scripts.tgz"
+      logger.info "Tarballing scripts folder to scripts.tgz"
       tarball_path = create_tarball
       save_scripts_info(tarball_path)
-      puts "Tarball created at #{tarball_path}"
+      logger.info "Tarball created at #{tarball_path}"
     end
 
     # Only avaialble after script has been built.
@@ -35,12 +34,12 @@ class Lono::Script
     def create_tarball
       # https://apple.stackexchange.com/questions/14980/why-are-dot-underscore-files-created-and-how-can-i-avoid-them
       # using system to avoid displaying command
-      system "cd #{Lono.blueprint_root}/app && dot_clean ." if system("type dot_clean > /dev/null 2>&1")
+      system "cd #{@blueprint.root} && dot_clean ." if system("type dot_clean > /dev/null 2>&1")
 
       # https://serverfault.com/questions/110208/different-md5sums-for-same-tar-contents
       # Using tar czf directly results in a new m5sum each time because the gzip
       # timestamp is included.  So using:  tar -c ... | gzip -n
-      sh "cd #{Lono.blueprint_root}/app && tar -c scripts | gzip -n > scripts.tgz" # temporary app/scripts.tgz file
+      sh "cd #{@blueprint.root} && tar -c scripts | gzip -n > scripts.tgz" # temporary scripts.tgz file
 
       rename_with_md5!
     end
@@ -48,9 +47,9 @@ class Lono::Script
     # Apppend a md5 to file after it's been created and moves it to
     # output/scripts/scripts-[MD5].tgz
     def rename_with_md5!
-      md5_path = "output/#{@blueprint}/scripts/scripts-#{md5sum}.tgz"
+      md5_path = "output/#{@blueprint.name}/scripts/scripts-#{md5sum}.tgz"
       FileUtils.mkdir_p(File.dirname(md5_path))
-      FileUtils.mv("#{Lono.blueprint_root}/app/scripts.tgz", md5_path)
+      FileUtils.mv("#{@blueprint.root}/scripts.tgz", md5_path)
       md5_path
     end
 
@@ -61,11 +60,11 @@ class Lono::Script
 
     # cache this because the file will get removed
     def md5sum
-      @md5sum ||= Digest::MD5.file("#{Lono.blueprint_root}/app/scripts.tgz").to_s[0..7]
+      @md5sum ||= Digest::MD5.file("#{@blueprint.root}/scripts.tgz").to_s[0..7]
     end
 
     def sh(command)
-      puts "=> #{command}"
+      logger.info "=> #{command}"
       system command
     end
 

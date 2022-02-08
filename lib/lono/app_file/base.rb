@@ -1,6 +1,6 @@
 # Naming AppFile instead of File so we dont to use ::File for normal regular File class
 module Lono::AppFile
-  class Base < Lono::AbstractBase
+  class Base < Lono::CLI::Base
     # What's needed for a Thor::Group or "Sequence". Gives us Thor::Actions commands like create_file
     # Must be included before `def initialize` as we override the Thor initialize
     include Thor::Actions

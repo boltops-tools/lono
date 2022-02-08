@@ -14,7 +14,7 @@ module Lono::Configset::Strategy
     include Lono::Configset::EvaluateFile
 
     # All Lono DSL Helpers and Fn - so configsets have access to instrinic functions like ref
-    # Not including the Lono::Template::Strategy::Dsl::Builder::Syntax since dont need those methods
+    # Not including the Lono::Builder::Template::Strategy::Dsl::Evaluator::Syntax since dont need those methods
     #
     # Interesting note: must include these modules here so load_project_predefined_variables works.
     # Since load_project_predefined_variables calls evaluate_file / instance eval which seems to only be
@@ -22,15 +22,15 @@ module Lono::Configset::Strategy
     #
     # This allows methods like ref and sub to work in variables files.
     #
-    include Lono::Template::Strategy::Dsl::Builder::Helpers
-    include Lono::Template::Strategy::Dsl::Builder::Fn
+    include Lono::Builder::Template::Strategy::Dsl::Evaluator::Helpers
+    include Lono::Builder::Template::Strategy::Dsl::Evaluator::Fn
 
     def initialize(options={})
       @options = options
       @configset = options[:configset]
       @root = options[:root]
       @resource = options[:resource] || "FakeResource"
-      @blueprint = Lono::Conventions.new(options).blueprint
+      @blueprin = options[:blueprint]
     end
 
     def build
@@ -60,8 +60,8 @@ module Lono::Configset::Strategy
 
     def load_project_predefined_variables
       paths = [
-        "#{Lono.root}/configs/#{@blueprint}/configsets/variables.rb", # global
-        "#{Lono.root}/configs/#{@blueprint}/configsets/variables/#{@configset}.rb", # configset specific
+        "#{Lono.root}/config/#{@blueprint.name}/configsets/variables.rb", # global
+        "#{Lono.root}/config/#{@blueprint.name}/configsets/variables/#{@configset}.rb", # configset specific
       ]
       paths.each do |path|
         evaluate_file(path)

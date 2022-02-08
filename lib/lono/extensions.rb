@@ -1,14 +1,14 @@
 module Lono
   class Extensions
     include Dsl
-    include Lono::Template::Evaluate
+    include Lono::Builder::Template::Evaluate
 
     def initialize(template_path)
       @template_path = template_path
     end
 
     def evaluate
-      evaluate_template_path(@template_path) # handle extend_with
+      evaluate_template_paths(@template_path) # handle extend_with
     end
 
     # The extend_with methods are used in file as the normal DSL evaluation.

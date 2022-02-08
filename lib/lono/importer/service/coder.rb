@@ -22,10 +22,10 @@ class Lono::Importer::Service::Coder
       ruby_code = print(data) # returns data["ruby_code"] / passthrough
       ruby_code
     else
-      puts "Error: Unable to convert template to Ruby code."
-      puts "The error has been reported."
-      puts "Non-successful http response status code: #{res.code}"
-      # puts "headers: #{res.each_header.to_h.inspect}"
+      logger.info "Error: Unable to convert template to Ruby code."
+      logger.info "The error has been reported."
+      logger.info "Non-successful http response status code: #{res.code}"
+      # logger.info "headers: #{res.each_header.to_h.inspect}"
       exit 1
     end
   end
@@ -36,26 +36,26 @@ private
 
     if data["error"]
       # Code was processed but there was this error with an HTTP 200 OK
-      $stderr.puts "ERROR: #{data["error"]}".color(:red)
+      $stderr.logger.info "ERROR: #{data["error"]}".color(:red)
       if data["message"]
-        $stderr.puts data["message"]
+        $stderr.logger.info data["message"]
       end
       return
     end
 
     validity = data["valid_ruby"] ? "valid" : "invalid"
     if validity == "valid"
-      $stderr.puts "INFO: The generated Ruby code is has #{validity} syntax."
+      $stderr.logger.info "INFO: The generated Ruby code is has #{validity} syntax."
     else
-      $stderr.puts "WARN: The generated Ruby code is has #{validity} syntax. Providing because it may be small errors.".color(:yellow) # note redirection disables color
+      $stderr.logger.info "WARN: The generated Ruby code is has #{validity} syntax. Providing because it may be small errors.".color(:yellow) # note redirection disables color
     end
 
-    $stderr.puts <<~EOL
+    $stderr.logger.info <<~EOL
       Translated ruby code below:
 
     EOL
     ruby_code = data["ruby_code"]
-    puts ruby_code
+    logger.info ruby_code
     ruby_code
   end
 

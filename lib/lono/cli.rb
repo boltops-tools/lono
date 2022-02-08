@@ -1,125 +1,124 @@
 module Lono
   class CLI < Command
+    include Help
     include Thor::Actions # for add_runtime_options
     opts = Opts.new(self)
+    cfn_opts = Lono::CLI::Cfn::Opts.new(self)
 
-    long_desc Help.text(:new)
-    New.cli_options.each do |args|
-      option(*args)
-    end
-    register(New, "new", "new NAME", "Generates new lono project.")
-
-    desc "blueprints", "Lists blueprints"
-    long_desc Help.text(:blueprints)
-    def blueprints
-      Finder::Blueprint.list
-    end
-
-    desc "configsets [BLUEPRINT]", "Lists configsets"
-    long_desc Help.text(:configsets)
-    opts.source
-    opts.stack
-    def configsets(blueprint=nil)
-      Configset::List.new(options.merge(blueprint: blueprint)).run
-    end
-
-    desc "extensions [BLUEPRINT]", "Lists extensions"
-    long_desc Help.text(:extensions)
-    opts.source
-    opts.stack
-    def extensions(blueprint=nil)
-      Extension::List.new(options.merge(blueprint: blueprint)).run
-    end
-
-    desc "generate BLUEPRINT", "Generate both CloudFormation templates and parameters files."
-    long_desc Help.text(:generate)
+    desc "build BLUEPRINT", "Build both CloudFormation template and parameters files"
+    long_desc Help.text(:build)
     option :quiet, type: :boolean, desc: "silence the output"
     opts.clean
-    opts.source
-    opts.stack
-    opts.template
-    def generate(blueprint)
-      o = options.merge(
-        blueprint: blueprint,
-        generate_only: true,
-      )
-      Lono::Generate.new(o).all
+    def build(blueprint)
+      Build.new(options.merge(blueprint: blueprint, build_only: true)).all
     end
 
-    desc "user_data NAME", "Generates user_data script for debugging."
-    long_desc Help.text(:user_data)
-    opts.clean
-    def user_data(blueprint, name)
-      Script::Build.new(blueprint, options).run
-      UserData.new(blueprint, options.merge(name: name)).generate
-    end
-
-    desc "summary BLUEPRINT", "Prints summary of CloudFormation templates."
-    long_desc Help.text("summary")
-    opts.source
-    opts.template
-    def summary(blueprint)
-      Lono::Inspector::Summary.new(options.merge(blueprint: blueprint)).run
-    end
-
-    desc "xgraph STACK", "Graphs dependencies tree of CloudFormation template resources."
-    long_desc Help.text("xgraph")
-    option :display, type: :string, desc: "graph or text", default: "graph"
-    option :noop, type: :boolean, desc: "noop mode"
-    opts.source
-    opts.template
-    def xgraph(blueprint)
-      Lono::Inspector::Graph.new(options.merge(blueprint: blueprint)).run
-    end
-
-    desc "seed BLUEPRINT", "Generates starter configs for a blueprint."
-    long_desc Help.text("seed")
-    option :param, desc: "override convention and specify the param file to use"
-    opts.source
-    opts.template
-    add_runtime_options! # Thor::Action options like --force
-    def seed(blueprint)
-      Seed.new(options.merge(blueprint: blueprint)).create
-    end
-
-    desc "app_files BLUEPRINT", "Builds app files", hide: true
-    long_desc Help.text("app_files")
-    add_runtime_options! # Thor::Action options like --force
-    def app_files(blueprint)
-      Lono::AppFile::Build.new(blueprint, options).run
+    desc "bundle", "Bundle with Lonofile."
+    long_desc Help.text(:bundle)
+    def bundle(*args)
+      Bundle.new(options.merge(args: args)).run
     end
 
     desc "clean", "Removes `output` folder."
+    opts.yes
     def clean
       Clean.new(options).run
     end
 
-    desc "upgrade", "Upgrade lono"
-    long_desc Help.text("upgrade")
-    def upgrade
-      Upgrade.new(options).run
+    desc "down BLUEPRINT", "Delete CloudFormation blueprint"
+    long_desc Help.text(:down)
+    cfn_opts.delete
+    def down(blueprint)
+      Lono::Cfn::Delete.new(options.merge(blueprint: blueprint)).run
     end
 
-    desc "completion *PARAMS", "Prints words for auto-completion."
+    desc "list", "List blueprints, configsets, extensions, etc"
+    long_desc Help.text(:list)
+    option :type, aliases: :t, desc: "Type: IE: blueprint, configset, extension. Defaults to all"
+    def list
+      List.new(options).run
+    end
+
+    desc "output BLUEPRINT", "output or preview of the deploy"
+    long_desc Help.text(:output)
+    option :format, desc: "Output formats: #{CliFormat.formats.join(', ')}"
+    def output(blueprint)
+      Lono::Cfn::Output.new(options.merge(blueprint: blueprint)).run
+    end
+
+    desc "plan BLUEPRINT", "Plan or preview of the deploy"
+    long_desc Help.text(:plan)
+    option :out, aliases: :o, desc: "Write Change Set info to path"
+    def plan(blueprint)
+      Lono::Cfn::Plan.new(options.merge(blueprint: blueprint)).run
+    end
+
+    desc "seed BLUEPRINT", "Builds starter configs for a blueprint."
+    long_desc Help.text("seed")
+    option :param, desc: "override convention and specify the param file to use"
+    opts.runtime_options
+    def seed(blueprint)
+      Seed.new(options.merge(blueprint: blueprint)).create
+    end
+
+    desc "show BLUEPRINT", "Deploy CloudFormation stack"
+    long_desc Help.text(:show)
+    def show(blueprint)
+      Lono::Cfn::Show.new(options.merge(blueprint: blueprint)).run
+    end
+
+    desc "status BLUEPRINT", "Shows current status of blueprint."
+    long_desc Help.text(:status)
+    def status(blueprint)
+      names = Lono::Names.new(blueprint: blueprint)
+      status = Lono::Cfn::Status.new(names.stack, options)
+      success = status.run
+      exit 3 unless success
+    end
+
+    desc "summary BLUEPRINT", "Prints summary of CloudFormation template"
+    long_desc Help.text("summary")
+    def summary(blueprint)
+      Lono::Inspector::Summary.new(options.merge(blueprint: blueprint)).run
+    end
+
+    desc "test", "Run test."
+    long_desc Help.text(:test)
+    def test
+      Test.new(options).run
+    end
+
+    desc "up BLUEPRINT", "Deploy CloudFormation stack"
+    long_desc Help.text(:up)
+    cfn_opts.deploy
+    def up(blueprint)
+      Lono::Cfn::Deploy.new(options.merge(blueprint: blueprint)).run
+    end
+
+    desc "user_data BLUEPRINT NAME", "Generates user_data script for debugging."
+    long_desc Help.text(:user_data)
+    opts.clean
+    def user_data(blueprint, name)
+      Script::Build.new(options.merge(blueprint: blueprint)).run
+      UserData.new(options.merge(blueprint: blueprint, name: name)).generate
+    end
+
+    desc "completion *PARAMS", "Prints words for auto-completion"
     long_desc Help.text("completion")
     def completion(*params)
       Completer.new(CLI, *params).run
     end
 
-    desc "completion_script", "Generates a script that can be eval to setup auto-completion."
+    desc "completion_script", "Builds a script that can be eval to setup auto-completion"
     long_desc Help.text("completion_script")
     def completion_script
-      Completer::Script.generate
+      Completer::Script.build
     end
 
     desc "version", "Prints version"
     def version
       puts "Lono: #{VERSION}"
     end
-
-    desc "blueprint SUBCOMMAND", "blueprint subcommands"
-    long_desc Help.text(:blueprint)
-    subcommand "blueprint", Blueprint
 
     desc "cfn SUBCOMMAND", "cfn subcommands"
     long_desc Help.text(:cfn)
@@ -129,25 +128,9 @@ module Lono
     long_desc Help.text(:code)
     subcommand "code", Code
 
-    desc "configset SUBCOMMAND", "configset subcommands"
-    long_desc Help.text(:configset)
-    subcommand "configset", Configset
-
-    desc "extension SUBCOMMAND", "extension subcommands"
-    long_desc Help.text(:extension)
-    subcommand "extension", Extension
-
-    desc "param SUBCOMMAND", "param subcommands"
-    long_desc Help.text(:param)
-    subcommand "param", Param
-
-    desc "pro SUBCOMMAND", "pro subcommands"
-    long_desc Help.text(:pro)
-    subcommand "pro", Pro
-
-    desc "registration SUBCOMMAND", "registration subcommands"
-    long_desc Help.text(:registration)
-    subcommand "registration", Registration
+    desc "new SUBCOMMAND", "new subcommands"
+    long_desc Help.text(:new)
+    subcommand "new", New
 
     desc "s3 SUBCOMMAND", "s3 subcommands"
     long_desc Help.text(:s3)
@@ -156,17 +139,5 @@ module Lono
     desc "script SUBCOMMAND", "script subcommands"
     long_desc Help.text(:script)
     subcommand "script", Script
-
-    desc "sets SUBCOMMAND", "sets subcommands"
-    long_desc Help.text(:sets)
-    subcommand "sets", Sets
-
-    desc "set_instances SUBCOMMAND", "set_instances subcommands"
-    long_desc Help.text(:set_instances)
-    subcommand "set_instances", SetInstances
-
-    desc "template SUBCOMMAND", "template subcommands"
-    long_desc Help.text(:template)
-    subcommand "template", Template
   end
 end

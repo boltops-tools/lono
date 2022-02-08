@@ -1,7 +1,8 @@
-class Lono::S3
+module Lono::S3
   class Uploader
-    include Lono::AwsServices
     extend Memoist
+    include Lono::AwsServices
+    include Lono::Utils::Logging
 
     attr_reader :path
     def initialize(path, options={})
@@ -14,33 +15,30 @@ class Lono::S3
     #   path: can be full path or relative path
     #
     def upload
-      return if @options[:noop] || ENV['LONO_TEST'] == '1'
-
       path = @path.gsub("#{Lono.root}/",'') # remove Lono.root
       key = "#{Lono.env}/#{path}"
 
       pretty_path = path.sub(/^\.\//, '')
-      s3_full_path = "s3://#{s3_bucket}/#{key}"
+      s3_path = "s3://#{s3_bucket}/#{key}"
 
-      local_checksum = Digest::MD5.hexdigest(IO.read(path))
+      local_checksum = Digest::MD5.hexdigest(IO.read(@path))
       remote_checksum = remote_checksum(key)
       if local_checksum == remote_checksum
-        puts("Not modified: #{pretty_path} to #{s3_full_path}".color(:yellow)) unless @options[:noop]
+        logger.debug "Not modified: #{pretty_path} to #{s3_path}"
         return # do not upload unless the checksum has changed
       else
         # Example output:
         # Uploaded: app/files/docker.yml to s3://boltops-dev/s3_folder/templates/development/docker.yml
         # Uploaded: app/files/ecs/private.yml to s3://boltops-dev/s3_folder/templates/development/ecs/private.yml
-        message = "Uploading: #{pretty_path} to #{s3_full_path}".color(:green)
-        message = "NOOP: #{message}" if @options[:noop]
-        puts message
+        message = "Uploading #{pretty_path} to #{s3_path}"
+        logger.debug message
       end
 
       s3.put_object(
-        body: IO.read(path),
+        body: IO.read(@path),
         bucket: s3_bucket,
         key: key,
-      ) unless @options[:noop]
+      )
     end
 
     # https://s3.amazonaws.com/mybucket/development/output/blueprint/templates/blueprint.yml

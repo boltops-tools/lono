@@ -1,25 +1,25 @@
 require "filesize"
 
-class Lono::Script
+module Lono::Script
   class Upload < Base
     include Lono::AwsServices
-    include Lono::Utils::PrettyTime
+    include Lono::Utils::Pretty
+    include Lono::Utils::Logging
 
     def run
-      Lono::ProjectChecker.check
       return unless scripts_built?
 
       upload(tarball_path)
-      puts "Uploaded #{File.basename(s3_dest)} to s3."
+      logger.info "Uploaded #{File.basename(s3_dest)} to s3."
     end
 
     def upload(tarball_path)
-      puts "Uploading scripts.tgz (#{filesize}) to #{s3_dest}"
+      logger.info "Uploading scripts.tgz (#{filesize}) to #{s3_dest}"
       obj = s3_resource.bucket(bucket_name).object(key)
       start_time = Time.now
       obj.upload_file(tarball_path)
       time_took = pretty_time(Time.now-start_time).color(:green)
-      puts "Time took to upload code to s3: #{time_took}"
+      logger.info "Time took to upload code to s3: #{time_took}"
     end
 
     def filesize
@@ -43,7 +43,7 @@ class Lono::Script
       "#{Lono.env}/scripts"
     end
 
-    # Scripts are only built if the app/scripts folder is non empty
+    # Scripts are only built if the scripts folder is non empty
     def scripts_built?
       File.exist?(SCRIPTS_INFO_PATH) && !tarball_path.empty?
     end

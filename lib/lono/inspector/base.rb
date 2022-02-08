@@ -1,29 +1,29 @@
 module Lono::Inspector
-  class Base < Lono::AbstractBase
+  class Base < Lono::CLI::Base
     extend Memoist
 
     def run
-      generate
+      build
       templates = @template_name ? [@template_name] : all_templates
       templates.each do |template_name|
         perform(template_name)
       end
     end
 
-    def generate
+    def build
       if @options[:source]
         Lono::Cfn::Download.new(@options).run
       else
-        generate_templates
+        build_templates
       end
     end
 
-    def generate_templates
-      Lono::Template::Generator.new(@options.merge(quiet: false)).run
+    def build_templates
+      Lono::Builder::Template.new(@options.merge(quiet: false)).run
     end
 
     def all_templates
-      templates_path = "#{Lono.config.output_path}/#{@blueprint}/templates"
+      templates_path = "#{Lono.root}/output/#{@blueprint.name}/templates"
       Dir.glob("#{templates_path}/**").map do |path|
         path.sub("#{templates_path}/", '').sub('.yml','') # template_name
       end

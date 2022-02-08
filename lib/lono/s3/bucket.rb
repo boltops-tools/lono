@@ -1,7 +1,8 @@
-class Lono::S3
+module Lono::S3
   class Bucket
     STACK_NAME = ENV['LONO_STACK_NAME'] || "lono"
     include Lono::AwsServices
+    include Lono::Utils::Logging
     extend Lono::AwsServices
     extend Memoist
 
@@ -15,8 +16,8 @@ class Lono::S3
         stack = new.find_stack
         return unless stack
 
-        resp = cfn.describe_stack_resources(stack_name: STACK_NAME)
-        bucket = resp.stack_resources.find { |r| r.logical_resource_id == "Bucket" }
+        stack_resources = find_stack_resources(STACK_NAME)
+        bucket = stack_resources.find { |r| r.logical_resource_id == "Bucket" }
         @@name = bucket.physical_resource_id # actual bucket name
       end
 
@@ -30,9 +31,8 @@ class Lono::S3
     end
 
     def deploy
-      stack = find_stack
-      if rollback_complete?(stack)
-        puts "Existing '#{STACK_NAME}' stack in ROLLBACK_COMPLETE state. Deleting stack before continuing."
+      if rollback.complete?
+        logger.info "Existing '#{STACK_NAME}' stack in ROLLBACK_COMPLETE state. Deleting stack before continuing."
         cfn.delete_stack(stack_name: STACK_NAME)
         status.wait
         status.reset
@@ -56,15 +56,15 @@ class Lono::S3
 
     def show
       if bucket_name
-        puts "Lono bucket name: #{bucket_name}"
+        logger.info "Lono bucket name: #{bucket_name}"
       else
-        puts "Lono bucket does not exist yet."
+        logger.info "Lono bucket does not exist yet."
       end
     end
 
     # Launches a cloudformation to create an s3 bucket
     def create
-      puts "Creating #{STACK_NAME} stack with the s3 bucket"
+      logger.info "Creating #{STACK_NAME} stack for s3 bucket to store templates"
       cfn.create_stack(
         stack_name: STACK_NAME,
         template_body: template_body,
@@ -73,13 +73,13 @@ class Lono::S3
       success = status.wait
       status.reset
       unless success
-        puts "ERROR: Unable to create lono stack with managed s3 bucket".color(:red)
+        logger.info "ERROR: Unable to create lono stack with managed s3 bucket".color(:red)
         exit 1
       end
     end
 
     def update
-      puts "Updating #{STACK_NAME} stack with the s3 bucket"
+      logger.info "Updating #{STACK_NAME} stack with the s3 bucket"
       cfn.update_stack(stack_name: STACK_NAME, template_body: template_body)
     rescue Aws::CloudFormation::Errors::ValidationError => e
       raise unless e.message.include?("No updates are to be performed")
@@ -88,7 +88,7 @@ class Lono::S3
     def delete
       are_you_sure?
 
-      puts "Deleting #{STACK_NAME} stack with the s3 bucket"
+      logger.info "Deleting #{STACK_NAME} stack with the s3 bucket"
       disable_termination_protect
       empty_bucket!
       cfn.delete_stack(stack_name: STACK_NAME)
@@ -135,18 +135,18 @@ class Lono::S3
 
 
     def are_you_sure?
-      return true if @options[:sure]
+      return true if @options[:yes]
 
       if bucket_name.nil?
-        puts "The lono stack and s3 bucket does not exist."
+        logger.info "The lono stack and s3 bucket does not exist."
         exit
       end
 
-      puts "Are you sure you want the lono bucket #{bucket_name.color(:green)} to be emptied and deleted? (y/N)"
-      sure = $stdin.gets.strip
-      yes = sure =~ /^Y/i
-      unless yes
-        puts "Phew that was close."
+      logger.info "Are you yes you want the lono bucket #{bucket_name.color(:green)} to be emptied and deleted? (y/N)"
+      yes = $stdin.gets.strip
+      confirmed = yes =~ /^Y/i
+      unless confirmed
+        logger.info "Phew that was close."
         exit
       end
     end

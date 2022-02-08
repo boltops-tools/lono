@@ -1,5 +1,5 @@
 class Lono::Importer
-  class Base < Lono::AbstractBase
+  class Base < Lono::CLI::Base
     include Download
     include Thor::Actions
     include Thor::Base
@@ -14,7 +14,7 @@ class Lono::Importer
   private
     def summarize
       return unless @options[:summary]
-      puts "Template Summary:"
+      logger.info "Template Summary:"
       Lono::Inspector::Summary.new(@options).run
     end
 
@@ -24,10 +24,10 @@ class Lono::Importer
     end
 
     def create_params_file(template_path, env)
-      params_path = if @blueprint != @template
-                      "configs/#{@blueprint}/params/#{env}/#{@template}.txt"
+      params_path = if @blueprint.name != @template
+                      "config/#{@blueprint.name}/params/#{env}/#{@template}.txt"
                     else
-                      "configs/#{@blueprint}/params/#{env}.txt"
+                      "config/#{@blueprint.name}/params/#{env}.txt"
                     end
       params = Params.new(template_path, params_path)
       params.create

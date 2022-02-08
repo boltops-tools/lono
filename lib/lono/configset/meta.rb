@@ -1,4 +1,4 @@
-class Lono::Configset
+module Lono::Configset
   class Meta
     extend Memoist
     include EvaluateFile

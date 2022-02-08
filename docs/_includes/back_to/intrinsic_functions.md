@@ -1,1 +1,0 @@
-Back to [Intrinsic Functions List]({% link _docs/intrinsic-functions.md %}).

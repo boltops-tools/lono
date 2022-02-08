@@ -4,10 +4,10 @@ class Lono::AppFile::Build::LambdaLayer
     include Lono::Utils::Rsync
 
     def initialize(blueprint, registry_item)
-      @blueprint, @registry_item = blueprint, registry_item
+      @blueprint.name, @registry_item = blueprint, registry_item
 
       @registry_name = @registry_item.name.sub(/\/$/,'')
-      @app_root = "#{Lono.blueprint_root}/app/files/#{@registry_name}"
+      @app_root = "#{@blueprint.root}/app/files/#{@registry_name}"
     end
 
     def build
@@ -42,7 +42,7 @@ class Lono::AppFile::Build::LambdaLayer
 
       # create symlink in output path not the cache path
       symlink_dest = "#{output_area}/vendor/gems/ruby/#{ruby_folder}"
-      puts "symlink_dest #{symlink_dest}"
+      logger.info "symlink_dest #{symlink_dest}"
       FileUtils.rm_rf(symlink_dest) # blow away original 2.5.0 folder
 
       # Create symlink that will point to the gems in the Lambda Layer:
@@ -68,7 +68,7 @@ class Lono::AppFile::Build::LambdaLayer
     # project gets built again not all the gems from get installed from the
     # beginning.
     def bundle_install
-      puts "Bundling: running bundle install in cache area: #{cache_area}."
+      logger.info "Bundling: running bundle install in cache area: #{cache_area}."
 
       rsync(output_area, cache_area)
 
@@ -85,15 +85,15 @@ class Lono::AppFile::Build::LambdaLayer
       FileUtils.rm_rf("#{cache_area}/.bundle")
       require "bundler" # dynamically require bundler so user can use any bundler
       setup_bundle_config(cache_area)
-      Bundler.with_unbundled_env do
+      ::Bundler.with_unbundled_env do
         sh "cd #{cache_area} && env bundle install"
       end
 
       remove_bundled_with("#{cache_area}/Gemfile.lock")
       # Fixes really tricky bug where Gemfile and Gemfile.lock is out-of-sync. Details: https://gist.github.com/tongueroo/b5b0d0c924a4a1633eee514795e4b04b
-      FileUtils.cp("#{cache_area}/Gemfile.lock", "#{Lono.config.output_path}/#{@blueprint}/files/#{@registry_name}/Gemfile.lock")
+      FileUtils.cp("#{cache_area}/Gemfile.lock", "#{Lono.root}/output/#{@blueprint.name}/files/#{@registry_name}/Gemfile.lock")
 
-      puts 'Bundle install success.'
+      logger.info 'Bundle install success.'
     end
 
     # Remove the BUNDLED WITH line since we don't control the bundler gem version on AWS Lambda
@@ -130,11 +130,11 @@ EOL
     end
 
     def output_area
-      "#{Lono.config.output_path}/#{@blueprint}/files/#{@registry_name}"
+      "#{Lono.root}/output/#{@blueprint.name}/files/#{@registry_name}"
     end
 
     def build_area
-      "#{Lono.config.output_path}/#{@blueprint}/lambda_layers/#{@registry_name}"
+      "#{Lono.root}/output/#{@blueprint.name}/lambda_layers/#{@registry_name}"
     end
 
     def cache_area

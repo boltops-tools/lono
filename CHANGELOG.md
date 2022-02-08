@@ -1,7 +1,7 @@
 # Change Log
 
 All notable changes to this project will be documented in this file.
-This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
+This project *tries* to adhere to [Semantic Versioning](http://semver.org/).
 
 ## [7.5.2] - 2022-02-08
 - [#74](https://github.com/boltops-tools/lono/pull/74) activesupport require fix
@@ -137,7 +137,7 @@ This project *tries* to adhere to [Semantic Versioning](http://semver.org/), eve
 ## [6.1.9]
 - #30 fix md5 sum calcuation for single file
 - #31 Add app files ERB support docs
-- options `--sure` and `--iam` add `CAPABILITY_AUTO_EXPAND` for serverless transform
+- options `-y` and `--iam` add `CAPABILITY_AUTO_EXPAND` for serverless transform
 
 ## [6.1.8]
 - #28 add user_data_script helper
@@ -243,7 +243,7 @@ This project *tries* to adhere to [Semantic Versioning](http://semver.org/), eve
 
 ## [5.2.2]
 - seed only support params for main conventional template in blueprint
-- set --iam with --sure option also
+- set --iam with -y option also
 
 ## [5.2.1]
 - improve param lookup
@@ -265,7 +265,7 @@ This project *tries* to adhere to [Semantic Versioning](http://semver.org/), eve
 ## [5.0.1]
 - Introduce lono DSL and set as default mode
 - Introduce blueprints concept
-- Introduce lono cfn deploy command
+- Introduce lono up command
 - Auto-create lono managed s3 bucket
 - Zeitwerk autoloader
 - Restructure project structure

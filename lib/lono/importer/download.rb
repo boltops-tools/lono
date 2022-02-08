@@ -23,16 +23,16 @@ class Lono::Importer
     def read_source(source)
       open(source).read
     rescue OpenURI::HTTPError, SocketError, Errno::ENOENT
-      puts "ERROR: Unable to read source template provided: #{source}".color(:red)
+      logger.info "ERROR: Unable to read source template provided: #{source}".color(:red)
       e = $!
-      puts "#{e.class}: #{e.message}"
-      puts "Please double check the source provided."
+      logger.info "#{e.class}: #{e.message}"
+      logger.info "Please double check the source provided."
       exit 1
     rescue Exception => e
-      puts "ERROR: Unable to read source template provided: #{source}".color(:red)
-      puts "General Exception Error:"
-      puts "#{e.class}: #{e.message}"
-      puts "Please double check the source provided."
+      logger.info "ERROR: Unable to read source template provided: #{source}".color(:red)
+      logger.info "General Exception Error:"
+      logger.info "#{e.class}: #{e.message}"
+      logger.info "Please double check the source provided."
       exit 1
     end
 

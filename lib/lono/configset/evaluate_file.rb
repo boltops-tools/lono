@@ -1,4 +1,4 @@
-class Lono::Configset
+module Lono::Configset
   module EvaluateFile
     def evaluate_file(path)
       return unless path && File.exist?(path)
