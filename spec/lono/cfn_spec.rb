@@ -10,7 +10,7 @@ describe Lono::Cfn do
     end
 
     it "deploy stack" do
-      out = execute("#{@env} exe/lono cfn deploy example #{@args}")
+      out = execute("#{@env} LONO_GENERATE_ONLY=1 exe/lono cfn deploy example #{@args}")
       expect(out).to include("Deploy")
     end
 

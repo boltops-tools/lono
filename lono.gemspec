@@ -41,6 +41,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "rainbow"
   gem.add_dependency "rb-fsevent"
   gem.add_dependency "render_me_pretty"
+  gem.add_dependency "rexml"
   gem.add_dependency "text-table"
   gem.add_dependency "thor"
   gem.add_dependency "zeitwerk"
