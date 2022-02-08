@@ -5,15 +5,19 @@ module Lono
     def all
       return @@parameters if @@parameters
 
-      ensure_s3_bucket_exist unless @options[:generate_only]
+      ensure_s3_bucket_exist unless generate_only?
       pre_generate
       generate_templates # generates with some placeholders for build_files IE: file://app/files/my.rb
       post_generate
-      upload unless @options[:generate_only]
+      upload unless generate_only?
 
       @@parameters = param_generator.generate  # Writes the json file in CamelCase keys format
       check_for_errors
       @@parameters
+    end
+
+    def generate_only?
+      ENV['LONO_GENERATE_ONLY'] || @options[:generate_only]
     end
 
     def pre_generate
