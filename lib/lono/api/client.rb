@@ -3,6 +3,7 @@ module Lono::Api
     extend Memoist
     include Verify
     include Repos
+    include Lono::Utils::Logging
 
     def http
       Proxy.new
@@ -20,8 +21,8 @@ module Lono::Api
         end
       else
         if ENV['LONO_DEBUG_API']
-          puts "Error: Non-successful http response status code: #{res.code}"
-          puts "headers: #{res.each_header.to_h.inspect}"
+          logger.info "Error: Non-successful http response status code: #{res.code}"
+          logger.info "headers: #{res.each_header.to_h.inspect}"
         end
         nil
       end

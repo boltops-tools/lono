@@ -11,7 +11,7 @@ module Lono::Configset::Strategy::Helpers::Dsl
     end
 
     def s3_key(name)
-      Lono::Configset::S3File::Registry.register(name, blueprint: @blueprint, configset: @configset, root: @root)
+      Lono::Configset::S3File::Registry.register(name, blueprint: @blueprint.name, configset: @configset, root: @root)
       "file://configset/#{@configset}/#{name}"
     end
   end

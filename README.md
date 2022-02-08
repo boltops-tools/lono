@@ -18,7 +18,7 @@ Lono is a CloudFormation framework. It builds, manages, and deploys CloudFormati
 * Simple CLI interface to launch CloudFormation stacks.
 * Ability to use [Existing CloudFormation Templates](https://lono.cloud/docs/existing-templates/).
 * [The Lono DSL](https://lono.cloud/docs/dsl/) - Generate templates from beautiful code.
-* Write your CloudFormation parameters with [simple env-like values](https://lono.cloud/docs/configs/params/).
+* Write your CloudFormation parameters with [simple env-like values](https://lono.cloud/docs/config/params/).
 * Preview CloudFormation changes before pressing the big red button.
 * [Layering](https://lono.cloud/docs/core/layering/) - Allows you to build multiple environments like development and production with the same template.
 * [Variables](https://lono.cloud/docs/layering/variables/) - Allows you to construct templates where runtime Parameters do not suffice.
@@ -39,7 +39,7 @@ It only takes a couple of commands to start using lono.
     lono new infra
     cd infra
     lono blueprint new demo
-    lono cfn deploy demo
+    lono up demo
 
 ![Lono flowchart](https://lono.cloud/img/tutorial/lono-flowchart.png "Lono flowchart")
 
@@ -73,9 +73,9 @@ output("SecurityGroup", get_att("SecurityGroup.GroupId"))
 
 ### Lono Cfn Deploy
 
-Lono provides a `lono cfn` lifecycle command that allows you to launch stacks quickly.  The `lono cfn deploy` generates and launches the CloudFormation stack.  If you are in a lono project and have a `demo` lono blueprint.  To create a stack run:
+Lono provides a `lono cfn` lifecycle command that allows you to launch stacks quickly.  The `lono up` generates and launches the CloudFormation stack.  If you are in a lono project and have a `demo` lono blueprint.  To create a stack run:
 
-    $ lono cfn deploy demo
+    $ lono up demo
 
 ## Contributing
 

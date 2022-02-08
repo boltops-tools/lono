@@ -1,1 +1,0 @@
-The lono upgrade command works for v6 and onward.

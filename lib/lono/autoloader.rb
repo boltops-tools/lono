@@ -1,5 +1,5 @@
-require "lono/bundle"
-Lono::Bundle.setup
+require "lono/bundler"
+Lono::Bundler.setup
 require "zeitwerk"
 
 module Lono

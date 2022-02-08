@@ -1,6 +1,0 @@
-source "https://rubygems.org"
-
-gem "front_matter_parser"
-gem "jekyll"
-gem "jekyll-include-cache"
-gem "webrick"

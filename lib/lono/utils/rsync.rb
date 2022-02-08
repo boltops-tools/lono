@@ -2,10 +2,12 @@ require 'shellwords'
 
 module Lono::Utils
   module Rsync
+    include Lono::Utils::Logging
+
     def sh(command)
-      puts "=> #{command}"
+      logger.info "=> #{command}"
       out = `#{command}`
-      puts out if ENV['LONO_DEBUG_SH']
+      logger.info out if ENV['LONO_DEBUG_SH']
       success = $?.success?
       raise("ERROR: running command #{command}").color(:red) unless success
       success

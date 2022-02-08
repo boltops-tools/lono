@@ -1,15 +1,24 @@
 module Lono
-  class Blueprint < Command
-    long_desc Help.text("blueprint/new")
-    New.cli_options.each do |args|
-      option(*args)
+  class Blueprint
+    attr_reader :name
+    def initialize(options={})
+      @options = options
+      @name = options[:blueprint]
     end
-    register(New, "new", "new NAME", "Generates new lono blueprint.")
 
-    desc "list", "Lists project blueprints"
-    long_desc Help.text("blueprint/list")
-    def list
-      Finder::Blueprint.list
+    def exist?
+      !root.nil?
+    end
+
+    def root
+      paths = Dir.glob("#{Lono.root}/{app,vendor}/blueprints/*")
+      paths.find do |path|
+        path.include?("blueprints/#{@name}")
+      end
+    end
+
+    def output_path
+      "#{Lono.root}/output/#{@name}/template.yml"
     end
   end
 end

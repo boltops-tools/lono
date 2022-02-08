@@ -1,7 +1,9 @@
 require "yaml"
 
-class Lono::Configset
+module Lono::Configset
   class Combiner
+    include Lono::Utils::Logging
+
     def initialize(cfn, options={})
       @cfn, @options = cfn, options
 
@@ -33,8 +35,8 @@ class Lono::Configset
       end
 
       combine
-      Register::Blueprint.clear! # in case of lono generate for all templates
-      Register::Project.clear! # in case of lono generate for all templates
+      Register::Blueprint.clear! # in case of lono build for all templates
+      Register::Project.clear! # in case of lono build for all templates
       @map
     end
 
@@ -134,8 +136,8 @@ class Lono::Configset
     def validate_structure!(name, metadata)
       return if metadata.is_a?(Hash) && metadata.dig("Metadata", "AWS::CloudFormation::Init")
 
-      puts "ERROR: The #{name} configset does not appear to have a AWS::CloudFormation::Init key".color(:red)
-      puts "Please double check the #{name} configset.yml structure"
+      logger.info "ERROR: The #{name} configset does not appear to have a AWS::CloudFormation::Init key".color(:red)
+      logger.info "Please double check the #{name} configset.yml structure"
       exit 1
     end
 
@@ -153,7 +155,7 @@ class Lono::Configset
         if ENV['LONO_TEST']
           raise message
         else
-          puts message.color(:red)
+          logger.info message.color(:red)
           exit 1
         end
       end

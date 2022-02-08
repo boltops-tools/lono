@@ -1,43 +1,45 @@
 module Lono::Inspector
   class Summary < Base
-    delegate :required_parameters, :optional_parameters, :parameters, :parameter_groups, :data,
-             to: :output_template
+    include Lono::Cfn::Concerns::TemplateOutput
 
     def perform(template)
       # little dirty but @template is used in data method so we dont have to pass it to the data method
       @template = template
 
-      puts "=> CloudFormation Template Summary for template #{@template.color(:sienna)}:"
-      return if @options[:noop]
+      logger.info "=> CloudFormation Template Summary for template #{@template.color(:sienna)}:"
+      return if ENV['LONO_NOOP']
 
       print_parameters_summary
-      puts "# Resources:"
+      logger.info "# Resources:"
       print_resource_types
     end
 
     def print_parameters_summary
+      parameters = template_output.parameters
+      parameter_groups = template_output.parameter_groups
+
       if parameters.empty?
-        puts "There are no parameters in this template."
+        logger.info "There are no parameters in this template."
         return
       end
 
       shown = []
-      puts "# Parameters Total (#{parameters.size})"
+      logger.info "# Parameters Total (#{parameters.size})"
       parameter_groups.each do |label, parameters|
-        puts "# Parameter Group (#{parameters.size}): #{label}".color(:sienna)
+        logger.info "# Parameter Group (#{parameters.size}): #{label}".color(:sienna)
         parameters.each do |name|
-          puts parameter_line(name)
+          logger.info parameter_line(name)
           shown << name
         end
-      end if output_template.parameter_groups
+      end if parameter_groups
 
       parameters.each do |name, data|
-        puts parameter_line(name) unless shown.include?(name)
+        logger.info parameter_line(name) unless shown.include?(name)
       end
     end
 
     def parameter_line(name)
-      data = parameters[name]
+      data = template_output.parameters[name]
       example = description_example(data["Description"])
       if data["Default"].nil?
         line = "#{name}=#{example} # (required)"
@@ -58,7 +60,7 @@ module Lono::Inspector
     end
 
     def resource_types
-      resources = data["Resources"]
+      resources = template_output.data["Resources"]
       return unless resources
 
       types = Hash.new(0)
@@ -70,7 +72,7 @@ module Lono::Inspector
 
     def print_resource_types
       unless resource_types
-        puts "No resources found."
+        logger.info "No resources found."
         return
       end
 
@@ -83,9 +85,9 @@ module Lono::Inspector
       printf "%3s %s\n", total, "Total"
     end
 
-    def output_template
-      Lono::Output::Template.new(@blueprint, @template)
+    def template_output
+      Lono::Builder::Template::Output.new(@blueprint)
     end
-    memoize :output_template
+    memoize :template_output
   end
 end

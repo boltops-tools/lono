@@ -1,14 +1,12 @@
 require 'json'
 require 'open-uri'
 
-class Lono::Cfn
-  class Download < Lono::AbstractBase
-    include Lono::AwsServices
-
+module Lono::Cfn
+  class Download < Base
     def run
       pretty_path = download_path.sub("#{Lono.root}/", '')
-      puts "Downloading template to: #{pretty_path}"
-      return if @options[:noop]
+      logger.info "Downloading template to: #{pretty_path}"
+      return if ENV['LONO_NOOP']
       download_template
     end
 
@@ -41,7 +39,7 @@ class Lono::Cfn
     end
 
     def download_path
-      "#{Lono.config.output_path}/#{@blueprint}/templates/#{@blueprint}.yml"
+      "#{Lono.root}/output/#{@blueprint.name}/templates/#{@blueprint.name}.yml"
     end
 
     def name

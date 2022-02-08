@@ -31,7 +31,14 @@ end
 module Lono
   class Command < Thor
     class << self
+      include Lono::Utils::Logging
+
       def dispatch(m, args, options, config)
+        # Lono.argv provides consistency when lono is being called by rspec-lono test harness
+        Lono.argv = args.clone # important to clone since Thor removes the first argv
+
+        check_project!(args.first)
+
         # Allow calling for help via:
         #   lono command help
         #   lono command -h
@@ -56,6 +63,26 @@ module Lono
         end
 
         super
+      end
+
+      def check_project!(command_name)
+        return if subcommand?
+        return if command_name.nil?
+        return if help_flags.include?(Lono.argv.last) # IE: -h help
+        return if %w[-h -v --version completion completion_script help new test version].include?(command_name)
+        return if File.exist?("#{Lono.root}/config/app.rb")
+        return unless Lono.check_project
+        logger.error "ERROR: It doesnt look like this is a lono project. Are you sure you are in a lono project?".color(:red)
+        ENV['LONO_TEST'] ? raise : exit(1)
+      end
+
+      def help_flags
+        Thor::HELP_MAPPINGS + ["help"]
+      end
+      private :help_flags
+
+      def subcommand?
+        !!caller.detect { |l| l.include?('in subcommand') }
       end
 
       # Override command_help to include the description at the top of the

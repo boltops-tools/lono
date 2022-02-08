@@ -17,7 +17,7 @@ module Lono::Configset::S3File
     end
 
     def output_path
-      "#{Lono.config.output_path}/#{@blueprint}/configsets/#{@configset}/files/#{@name}"
+      "#{Lono.root}/output/#{@blueprint.name}/configsets/#{@configset}/files/#{@name}"
     end
 
     def replacement_value

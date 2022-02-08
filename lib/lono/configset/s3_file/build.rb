@@ -1,7 +1,8 @@
 module Lono::Configset::S3File
-  class Build < Lono::AbstractBase
-    include Lono::Utils::Rsync
+  class Build < Lono::CLI::Base
     include Lono::Utils::Item::Zip
+    include Lono::Utils::Logging
+    include Lono::Utils::Rsync
 
     def run
       Lono::Configset::S3File::Registry.items.each do |item|
@@ -16,7 +17,7 @@ module Lono::Configset::S3File
 
     def copy_to_output(item)
       src = "#{item.root}/lib/files/#{item.name}"
-      dest = "#{Lono.config.output_path}/#{@blueprint}/configsets/#{item.configset}/files/#{item.name}"
+      dest = "#{Lono.root}/output/#{@blueprint.name}/configsets/#{item.configset}/files/#{item.name}"
       rsync(src, dest)
     end
 
@@ -25,7 +26,7 @@ module Lono::Configset::S3File
         if item.exist?
           zip(item)
         else
-          puts "WARN: #{item.src_path} does not exist. Double check that the path is correct in the s3_key call.".color(:yellow)
+          logger.info "WARN: #{item.src_path} does not exist. Double check that the path is correct in the s3_key call.".color(:yellow)
         end
       end
     end

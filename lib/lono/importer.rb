@@ -1,14 +1,5 @@
 module Lono
-  class Importer
-    def initialize(options)
-      @options = options
-
-      Lono::ProjectChecker.check
-      @blueprint = Lono::Conventions.new(options).blueprint
-      # Dont use set_blueprint_root because it doesnt exist yet. The import creates it
-      Lono.blueprint_root = "#{Lono.root}/app/blueprints/#{@blueprint}"
-    end
-
+  class Importer < Lono::CLI::Base
     def run
       # Examples:
       #   Lono::Importer::Erb.new(source, options.clone).run

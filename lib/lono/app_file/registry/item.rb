@@ -5,19 +5,19 @@ class Lono::AppFile::Registry
 
     attr_reader :name, :options, :type
     def initialize(name, blueprint, options={})
-      @name, @blueprint, @options = name, blueprint, options
+      @name, @blueprint.name, @options = name, blueprint, options
       @type = options[:type] || "file"
     end
 
     def src_path
-      "#{Lono.blueprint_root}/app/files/#{@name}"
+      "#{@blueprint.root}/app/files/#{@name}"
     end
 
     def output_path
       if @type == "file"
-        "#{Lono.root}/output/#{@blueprint}/files/#{@name}"
+        "#{Lono.root}/output/#{@blueprint.name}/files/#{@name}"
       else
-        "#{Lono.root}/output/#{@blueprint}/lambda_layers/#{@name}/opt"
+        "#{Lono.root}/output/#{@blueprint.name}/lambda_layers/#{@name}/opt"
       end
     end
   end
