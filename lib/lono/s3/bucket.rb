@@ -1,41 +1,23 @@
 module Lono::S3
   class Bucket
-    STACK_NAME = ENV['LONO_STACK_NAME'] || "lono"
     include Lono::AwsServices
+    include Lono::Cfn::Concerns
     include Lono::Utils::Logging
     extend Lono::AwsServices
     extend Memoist
 
-    class << self
-      @@name = nil
-      def name
-        return @@name if @@name # only memoize once bucket has been created
-
-        check_aws_setup!
-
-        stack = new.find_stack
-        return unless stack
-
-        stack_resources = find_stack_resources(STACK_NAME)
-        bucket = stack_resources.find { |r| r.logical_resource_id == "Bucket" }
-        @@name = bucket.physical_resource_id # actual bucket name
-      end
-
-      def check_aws_setup!
-        AwsSetup.new.check!
-      end
-    end
-
+    STACK_NAME = ENV['LONO_STACK_NAME'] || "lono"
     def initialize(options={})
       @options = options
     end
 
     def deploy
+      stack = find_stack
       if rollback.complete?
         logger.info "Existing '#{STACK_NAME}' stack in ROLLBACK_COMPLETE state. Deleting stack before continuing."
+        disable_termination_protection
         cfn.delete_stack(stack_name: STACK_NAME)
         status.wait
-        status.reset
         stack = nil
       end
 
@@ -71,7 +53,6 @@ module Lono::S3
         enable_termination_protection: true,
       )
       success = status.wait
-      status.reset
       unless success
         logger.info "ERROR: Unable to create lono stack with managed s3 bucket".color(:red)
         exit 1
@@ -89,12 +70,12 @@ module Lono::S3
       are_you_sure?
 
       logger.info "Deleting #{STACK_NAME} stack with the s3 bucket"
-      disable_termination_protect
+      disable_termination_protection
       empty_bucket!
       cfn.delete_stack(stack_name: STACK_NAME)
     end
 
-    def disable_termination_protect
+    def disable_termination_protection
       cfn.update_termination_protection(
         stack_name: STACK_NAME,
         enable_termination_protection: false,
@@ -111,7 +92,6 @@ module Lono::S3
     def status
       CfnStatus.new(STACK_NAME)
     end
-    memoize :status
 
   private
 
@@ -166,6 +146,26 @@ module Lono::S3
                 - Key: Name
                   Value: lono
       YAML
+    end
+
+    def rollback
+      Rollback.new(STACK_NAME)
+    end
+
+    class << self
+      @@name = nil
+      def name
+        return @@name if @@name # only memoize once bucket has been created
+
+        AwsSetup.new.check!
+
+        stack = new.find_stack
+        return unless stack
+
+        stack_resources = find_stack_resources(STACK_NAME)
+        bucket = stack_resources.find { |r| r.logical_resource_id == "Bucket" }
+        @@name = bucket.physical_resource_id # actual bucket name
+      end
     end
   end
 end

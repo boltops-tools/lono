@@ -27,18 +27,13 @@ Lono is a CloudFormation framework. It builds, manages, and deploys CloudFormati
 
 See [lono.cloud](http://lono.cloud) for full lono documentation.
 
-## Upgrading
-
-If you are on version 6 and upgrading to 7.  You can run [lono upgrade](https://lono.cloud/reference/lono-upgrade/) within your project. Refer to the [Upgrading Guide](https://lono.cloud/docs/extras/upgrading/).
-
 ## Quick Usage
 
 It only takes a couple of commands to start using lono.
 
-    gem install lono
-    lono new infra
+    gem install lono --prerelease
+    lono new project infra --examples
     cd infra
-    lono blueprint new demo
     lono up demo
 
 ![Lono flowchart](https://lono.cloud/img/tutorial/lono-flowchart.png "Lono flowchart")

@@ -5,21 +5,21 @@ class Lono::CLI
     desc "deploy", "deploys lono managed s3 bucket"
     long_desc Help.text("s3/deploy")
     def deploy
-      Lono::Bucket.new(options).deploy
+      Lono::S3::Bucket.new(options).deploy
     end
 
     desc "show", "shows lono managed s3 bucket"
     long_desc Help.text("s3/show")
     opts.yes
     def show
-      Lono::Bucket.new(options).show
+      Lono::S3::Bucket.new(options).show
     end
 
     desc "delete", "deletes lono managed s3 bucket"
     long_desc Help.text("s3/delete")
     opts.yes
     def delete
-      Lono::Bucket.new(options).delete
+      Lono::S3::Bucket.new(options).delete
     end
   end
 end
