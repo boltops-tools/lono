@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/).
 
+## [8.0.0.rc1] - 2022-02-21
+
+* v8 cleaner and simplier interface
+* commands: lono up, down, bundle, list, new, output, plan
+* conventional stack name
+* lono new generators
+* improve lono plan previews
+* improve layering
+* boot hooks
+* change default env to dev
+* app config support: config.names.stack, etc
+* change --sure to --yes option
+* remove core settings in favor of config/app.rb
+* logger support
+* remove docs. move to separate repo
+* plugin system and test framework
+
 ## [7.5.2] - 2022-02-08
 - [#74](https://github.com/boltops-tools/lono/pull/74) activesupport require fix
 - fix activesupport require
