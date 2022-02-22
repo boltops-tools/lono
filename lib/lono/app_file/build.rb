@@ -59,7 +59,7 @@ module Lono::AppFile
     def copy_to_output
       override_source_paths("#{@blueprint.root}/app/files")
       self.destination_root = @output_files_path
-      directory(".", verbose: false, context: context.get_binding) # Thor::Action
+      directory(".", verbose: false, context: template_context.get_binding) # Thor::Action
     end
 
     def clean_output

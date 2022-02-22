@@ -59,7 +59,7 @@ module Lono
       end
 
       content = lines.join("\n")
-      dest_path = "config/blueprints/#{@blueprint.name}/params/#{Lono.env}.txt" # only support environment level parameters for now
+      dest_path = "#{dest_folder}/params/#{Lono.env}.txt" # only support environment level parameters for now
       create_file(dest_path, content) # Thor::Action
     end
 
@@ -89,8 +89,26 @@ module Lono
 
     def create_variables
       src = "#{@blueprint.root}/seed/vars"
-      dest = "#{Lono.root}/config/blueprints/#{@blueprint.name}/vars"
+      dest = "#{dest_folder}/vars"
       directory(src, dest) if File.exist?(src)
+    end
+
+    # config structure:
+    #
+    #   config/blueprints/demo
+    #
+    # general structure:
+    #
+    #   app/blueprints/demo/config
+    #   vendor/blueprints/demo/config
+    #
+    def dest_folder
+      where = @options[:where] || Lono.config.seed.where
+      if where == "config"
+        "#{Lono.root}/config/blueprints/#{@blueprint.name}"
+      else # app or vendor
+        "#{Lono.root}/#{where}/blueprints/#{@blueprint.name}/config"
+      end
     end
 
   private

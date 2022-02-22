@@ -57,6 +57,7 @@ module Lono
     long_desc Help.text("seed")
     option :param, desc: "override convention and specify the param file to use"
     opts.runtime_options
+    option :where, desc: "Where to create file, you specify the top-level folder. Possible values: app, config, vendor. Defaults to config"
     def seed(blueprint)
       Seed.new(options.merge(blueprint: blueprint)).create
     end

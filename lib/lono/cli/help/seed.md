@@ -1,23 +1,24 @@
 ## Example
 
-    $ lono seed ecs-asg
-    Creating starter config files for ecs-asg
-          create  config/ecs-asg/params/development.txt
-    $ cat config/ecs-asg/params/development.txt
-    # Required parameters:
-    VpcId=vpc-111 # Find at vpc CloudFormation Outputs
-    Subnets=subnet-111,subnet-222,subnet-333 # Find at vpc CloudFormation Outputs
-    # Optional parameters:
-    # InstanceType=m5.large
-    # KeyName=...
-    # SshLocation=...
-    # EcsCluster=development
-    # TagName=ecs-asg-development
-    # ExistingIamInstanceProfile=...
-    # ExistingSecurityGroups=...
-    # EbsVolumeSize=50
-    # MinSize=1
-    # MaxSize=4
-    # MinInstancesInService=2
-    # MaxBatchSize=1
+    $ lono seed demo
+    Creating starter config files for ec2
+          create  config/blueprints/ec2/params/dev.txt
+          create  config/blueprints/ec2/vars/dev.rb
+
+To create the files in the top-level app folder
+
+    $ lono seed ec2 --where app
+    Creating starter config files for ec2
+          create  app/blueprints/ec2/config/params/dev.txt
+          create  app/blueprints/ec2/config/vars/dev.rb
     $
+
+You can also set the default where option with
+
+config/app.rb
+
+```ruby
+Lono.configure do |config|
+  config.seed.where = "app"
+end
+```

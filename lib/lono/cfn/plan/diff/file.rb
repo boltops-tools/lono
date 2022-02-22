@@ -10,7 +10,8 @@ module Lono::Cfn::Plan::Diff
 
     def summary(existing_path, new_path)
       command = "diff #{existing_path} #{new_path} -u -s"
-      pretty_command = "diff #{pretty_path(existing_path)} #{pretty_path(new_path)}"
+      # actually use diff but show colordiff in pretty_command
+      pretty_command = "#{diff_viewer} #{pretty_path(existing_path)} #{pretty_path(new_path)}"
       logger.info "=> #{pretty_command}"
       out = `#{command}`
       lines = out.split("\n")

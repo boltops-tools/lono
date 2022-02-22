@@ -1,7 +1,7 @@
 #!/bin/bash
 
 final_status=0
-function final_status {
+function capture_status {
   if [ "$?" -ne "0" ] && [ $final_status -ne 1 ] ; then
     final_status=1
   fi
@@ -32,21 +32,21 @@ lono new blueprint demo --examples
 set +e
 # Test new stack creation
 lono up demo -y
-final_status
+capture_status
 
 lono seed demo # just to test it. will overwrite file
-final_status
+capture_status
 
 # Test stack update
 cat << EOF > config/blueprints/demo/params/$LONO_ENV.txt
 AccessControl=PublicRead
 EOF
 lono up demo -y
-final_status
+capture_status
 
 # Clean up resources
 lono down demo -y
-final_status
+capture_status
 set -e
 
 exit $final_status

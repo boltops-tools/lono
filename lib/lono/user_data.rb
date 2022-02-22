@@ -16,7 +16,7 @@ module Lono
       pretty_path = pretty_path(@path)
       logger.info "Building user_data for '#{@name}' at #{pretty_path}"
       if File.exist?(@path)
-        logger.info RenderMePretty.result(@path, context: context)
+        logger.info RenderMePretty.result(@path, context: template_context)
       else
         logger.info "ERROR: #{pretty_path} does not exist".color(:red)
         exit 1

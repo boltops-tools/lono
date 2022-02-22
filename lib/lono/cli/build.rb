@@ -6,7 +6,7 @@ class Lono::CLI
     def all
       ensure_s3_bucket_exist unless build_only?
       pre_build
-      build_template # build with some placeholders for build_files IE: file://app/files/my.rb
+      template_builder.run # build with some placeholders for build_files IE: file://app/files/my.rb
       post_build
       upload unless build_only?
 
@@ -47,16 +47,6 @@ class Lono::CLI
     def build_files
       Lono::AppFile::Build.new(@options).run
       Lono::Configset::S3File::Build.new(@options).run # copies files to the output folder
-    end
-
-    def build_template
-      template_builder.run
-      inject_configsets
-    end
-
-    def inject_configsets
-      # The inject_configsets reads it back from disk. Leaving as-is instead of reading all in memory in case there's a reason.
-      # TODO Lono::Builder::Template::ConfigsetInjector.new(@options).run
     end
 
     def post_process_template

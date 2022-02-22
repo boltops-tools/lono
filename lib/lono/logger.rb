@@ -29,5 +29,6 @@ module Lono
     end
 
     public :print
+    public :printf
   end
 end

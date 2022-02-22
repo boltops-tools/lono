@@ -50,6 +50,9 @@ module Lono
       config.layering = ActiveSupport::OrderedOptions.new
       config.layering.names = {}
 
+      config.seed = ActiveSupport::OrderedOptions.new
+      config.seed.where = "config"
+
       config
     end
 
