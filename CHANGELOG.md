@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 This project *tries* to adhere to [Semantic Versioning](http://semver.org/).
 
+## [8.0.0.rc2] - 2022-02-23
+
+* restructure builder and helpers
+* improve template_evaluation_error
+* lono seed --where option and config.seed.where
+* return nil when output not found
+* setup configsets finalizer
+* template_file helper
+* fix coder
+* lono s3 bucket auto-creation
+
 ## [8.0.0.rc1] - 2022-02-21
 
 * v8 cleaner and simplier interface
