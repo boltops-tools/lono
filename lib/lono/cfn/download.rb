@@ -6,7 +6,6 @@ module Lono::Cfn
     def run
       pretty_path = download_path.sub("#{Lono.root}/", '')
       logger.info "Downloading template to: #{pretty_path}"
-      return if ENV['LONO_NOOP']
       download_template
     end
 

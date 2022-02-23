@@ -23,7 +23,7 @@ class Lono::Cfn::Deploy
 
             #{command_with_iam(capabilities)}
 
-        You can also avoid this prompt with config.up.capabilities in config/app.rb.
+        You can also avoid this prompt by setting config.up.capabilities in config/app.rb
         See: https://lono.cloud/docs/config/reference/
 
       EOL

@@ -1,0 +1,21 @@
+{
+  "AWS::CloudFormation::Init": {
+    "configSets": {
+      "default": ["bbb1", "bbb2"]
+    },
+    "bbb1": {
+      "commands": {
+        "test": {
+          "command": "echo from-bbb1 > test2.txt"
+        }
+      }
+    },
+    "bbb2": {
+      "commands": {
+        "test": {
+          "command": "echo from-bbb2 > test2.txt"
+        }
+      }
+    }
+  }
+}

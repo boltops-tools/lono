@@ -3,8 +3,8 @@ class Lono::CLI::New
     argument :name
     def self.cli_options
       [
-        [:force, type: :boolean, desc: "Bypass overwrite are you sure prompt for existing files"],
         [:examples, type: :boolean, desc: "Whether not to generate examples"],
+        [:force, type: :boolean, desc: "Bypass overwrite are you sure prompt for existing files"],
         [:project, desc: "Project name"],
       ]
     end
@@ -20,14 +20,10 @@ class Lono::CLI::New
       end
     end
 
-    # for specs
-    def set_dest
-      @dest = [@options[:project], "app/blueprints"].compact.join('/')
-    end
-
     def create_blueprint
       logger.info "=> Creating new blueprint called #{name}."
-      directory ".", "#{@dest}/#{name}"
+      dest = [@options[:project], "app/blueprints"].compact.join('/')
+      directory ".", "#{dest}/#{name}"
     end
   end
 end

@@ -46,7 +46,7 @@ class Lono::CLI
 
     def build_files
       Lono::AppFile::Build.new(@options).run
-      Lono::Configset::S3File::Build.new(@options).run # copies files to the output folder
+      # Lono::Configset::S3File::Build.new(@options).run # copies files to the output folder
     end
 
     def post_process_template
@@ -70,7 +70,7 @@ class Lono::CLI
 
     def upload_files
       Lono::AppFile::Upload.new(@options).upload
-      Lono::Configset::S3File::Upload.new(@options).upload
+      # Lono::Configset::S3File::Upload.new(@options).upload
     end
 
     def param_builder

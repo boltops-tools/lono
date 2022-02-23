@@ -71,10 +71,7 @@ module Lono
     desc "status BLUEPRINT", "Shows current status of blueprint."
     long_desc Help.text(:status)
     def status(blueprint)
-      names = Lono::Names.new(blueprint: blueprint)
-      status = Lono::Cfn::Status.new(names.stack, options)
-      success = status.run
-      exit 3 unless success
+      Status.new(options.merge(blueprint: blueprint)).run
     end
 
     desc "summary BLUEPRINT", "Prints summary of CloudFormation template"

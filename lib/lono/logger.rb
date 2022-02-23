@@ -17,9 +17,7 @@ module Lono
       line =~ /\n$/ ? line : "#{line}\n"
     end
 
-    # Used to allow terraform output to always go to stdout
-    # Terraspace output goes to stderr by default
-    # See: terraspace/shell.rb
+    # Used to allow output to always go to stdout
     def stdout(msg, newline: true)
       if newline
         puts msg

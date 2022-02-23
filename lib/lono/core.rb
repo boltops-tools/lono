@@ -37,7 +37,7 @@ module Lono
       App.instance.configure(&block)
     end
 
-    # Generally, use the Terraspace.config instead of App.instance.config since it guarantees the load_project_config call
+    # Generally, use the Lono.config instead of App.instance.config since it guarantees the load_project_config call
     def config
       App.instance.load_project_config
       App.instance.config

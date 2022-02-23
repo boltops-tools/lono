@@ -13,13 +13,10 @@ class Lono::CLI
 
   private
     def list_type(type)
-      lookup.list(type)
+      Dir.glob("#{Lono.root}/{app,vendor}/#{type}/*").each do |path|
+        logger.info pretty_path(path)
+      end
     end
-
-    def lookup
-      Lono::Lookup.new
-    end
-    memoize :lookup
 
     def show?(type)
       @options[:type] == type || @options[:type].nil? || @options[:type] == "all"

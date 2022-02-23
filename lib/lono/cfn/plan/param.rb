@@ -1,7 +1,7 @@
 class Lono::Cfn::Plan
   class Param < Base
     def run
-      return unless Lono.config.diff.params && stack_exists?(@stack)
+      return unless Lono.config.plan.params && stack_exists?(@stack)
       logger.info "Parameter Changes:".color(:green)
       write_to_tmp(existing_path, existing_params)
       write_to_tmp(new_path, new_params)

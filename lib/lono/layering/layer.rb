@@ -81,15 +81,8 @@ module Lono::Layering
       ext = exts[@type.to_sym]
 
       paths.map! do |path|
-        if path.include?("teams")
-          puts "path: #{path}"
-        end
-
-        if path.ends_with?('/')
-          "#{path.sub(/\/$/,'')}.#{ext}"
-        else
-          "#{path}.#{ext}"
-        end
+        path = path.sub(/\/$/,'') if path.ends_with?('/')
+        "#{path}.#{ext}"
       end
     end
 

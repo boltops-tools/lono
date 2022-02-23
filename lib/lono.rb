@@ -11,6 +11,7 @@ require 'cli-format'
 require 'dsl_evaluator'
 require 'fileutils'
 require 'json'
+require 'lono/ext'
 require 'memoist'
 require 'plissken'
 require 'rainbow/ext/string'
@@ -25,6 +26,13 @@ module Lono
   API_DEFAULT = 'https://api.lono.cloud/v1'
   API = ENV['LONO_API'] || API_DEFAULT
   extend Core
+end
+
+DslEvaluator.configure do |config|
+  config.backtrace.select_pattern = Lono.root.to_s
+  config.logger = Lono.logger
+  config.on_exception = :exit
+  config.root = Lono.root
 end
 
 Lono::Booter.boot

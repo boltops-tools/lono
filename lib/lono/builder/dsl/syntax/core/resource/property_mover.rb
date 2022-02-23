@@ -5,8 +5,18 @@ class Lono::Builder::Dsl::Syntax::Core::Resource
       @resource, @logical_id, @properties = resource, logical_id, properties
     end
 
+    # AWS Docs: Resource attribute reference
+    # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-product-attribute-reference.html
     def move!
-      %w[Condition DeletionPolicy DependsOn].each do |attribute_name|
+      %w[
+        Condition
+        CreationPolicy
+        DeletionPolicy
+        DependsOn
+        Metadata
+        UpdatePolicy
+        UpdateReplacePolicy
+      ].each do |attribute_name|
         # Account for camelize, underscore, String, and Symbol
         move(attribute_name.to_sym)
         move(attribute_name.camelize.to_sym)

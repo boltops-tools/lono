@@ -15,8 +15,8 @@ module Lono::Builder::Dsl::Helpers
 
     # Caller lines are different for OSes:
     #
-    #   windows: "C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/terraspace-1.1.1/lib/terraspace/builder.rb:34:in `build'"
-    #   linux: "/home/ec2-user/.rvm/gems/ruby-3.0.3/gems/terraspace-1.1.1/lib/terraspace/compiler/dsl/syntax/mod.rb:4:in `<module:Mod>'"
+    #   windows: "C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/lono-1.1.1/lib/lono/builder.rb:34:in `build'"
+    #   linux: "/home/ec2-user/.rvm/gems/ruby-3.0.3/gems/lono-1.1.1/lib/lono/compiler/dsl/syntax/mod.rb:4:in `<module:Mod>'"
     #
     class TempleFileNotFoundError < StandardError; end
     def template_file_missing(path)
@@ -30,15 +30,27 @@ module Lono::Builder::Dsl::Helpers
     end
 
     def render_file(path)
-      RenderMePretty.result(path, context: template_context)
+      if File.exist?(path)
+        RenderMePretty.result(path, context: self)
+      else
+        lines = caller.select { |l| l.include?(Lono.root.to_s) } # TODO: show code itself
+        caller_line = pretty_path(lines.first)
+        message =<<~EOL
+          WARN: #{pretty_path(path)} does not exist
+          Called from: #{caller_line}
+        EOL
+        logger.info message.color(:yellow)
+        message
+      end
     end
-    memoize :render_file
+    alias_method :render_path, :render_file
 
     def user_data_script
       unless @user_data_script
+        script_example = pretty_path("#{@blueprint.root}/template/user_data.sh")
         return <<~EOL
-          # @user_data_script variable not set. IE: @user_data_script = "#{pretty_path(@blueprint.root)}/template/user_data.sh"
-          # Also, make sure that "config/#{@blueprint.name}/user_data/boostrap.sh" path you're using exists.
+          # @user_data_script variable not set. IE: @user_data_script = "#{script_example}"
+          # Also, make sure that "#{script_example}" exists.
         EOL
       end
 

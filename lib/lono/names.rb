@@ -9,7 +9,7 @@ module Lono
     end
 
     def stack
-      expansion(Lono.config.names.stack)
+      expansion(Lono.config.names.stack) # IE: :APP-:BLUEPRINT-:ENV
     end
     memoize :stack
 

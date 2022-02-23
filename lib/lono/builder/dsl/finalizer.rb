@@ -6,7 +6,7 @@ class Lono::Builder::Dsl
 
     def run
       @cfn = ParameterGroups.new(@cfn, @options[:parameters]).run
-      @cfn = Configsets.new(@cfn).run
+      @cfn = Configsets.new(@options.merge(cfn: @cfn)).run
       @cfn
     end
   end

@@ -12,7 +12,8 @@ class Lono::CLI::New
 
   private
     def self.set_template_source(folder)
-      source_root File.expand_path("../../../templates/#{folder}", __dir__)
+      path = File.expand_path("../../../templates/#{folder}", __dir__)
+      source_root path
     end
 
     def set_template_source(*paths)

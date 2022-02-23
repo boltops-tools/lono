@@ -1,41 +1,25 @@
 class Lono::Builder::Dsl::Finalizer
-  class Configsets
-    extend Memoist
-
-    def initialize(cfn)
-      @cfn = cfn
+  class Configsets < Lono::CLI::Base
+    def initialize(options={})
+      super
+      @cfn = options[:cfn]
     end
 
+    # Replaces metadata under each logical id resource.
     def run
-      @cfn = add # overwrite
-      @cfn
-    end
-
-    def add
-      metadata_map.each do |logical_id, metadata_configset|
+      dsl = Lono::Builder::Configset::Evaluator.new(@options.merge(cfn: @cfn))
+      metadata_map = dsl.evaluate
+      metadata_map.each do |logical_id, cs|
         resource = @cfn["Resources"][logical_id]
-
         unless resource
-          logger.info "WARN: Resources.#{logical_id} not found in the template. Are you sure you are specifying the correct resource id in your configsets configs?".color(:yellow)
+          puts "WARN: Resources.#{logical_id} not found in the template. Are you sure you specified the correct resource logical id in your configsets.rb?".color(:yellow)
           next
         end
 
-        resource["Metadata"] ||= metadata_configset["Metadata"]
-
-        # metdata = resource["Metadata"] ||= {}
-        # metdata["AWS::CloudFormation::Init"] ||= {}
-        # # The metadata_configset has been combined with the original AWS::CloudFormation::Init if it exists
-        # metdata["AWS::CloudFormation::Init"] = metadata_configset["AWS::CloudFormation::Init"]
+        resource["Metadata"] = cs["Metadata"]
       end
 
       @cfn
     end
-
-    def metadata_map
-      []
-      # combiner = Lono::Configset::Combiner.new(@cfn, @options)
-      # combiner.metadata_map
-    end
-    memoize :metadata_map
   end
 end

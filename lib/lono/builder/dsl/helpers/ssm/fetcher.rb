@@ -3,6 +3,7 @@ require 'aws-sdk-ssm'
 module Lono::Builder::Dsl::Helpers::Ssm
   class Fetcher
     extend Memoist
+    include Lono::Utils::Logging
 
     def get(name)
       fetch_ssm_value(name)
@@ -12,7 +13,8 @@ module Lono::Builder::Dsl::Helpers::Ssm
       resp = ssm.get_parameter(name: name, with_decryption: true)
       resp.parameter.value
     rescue Aws::SSM::Errors::ParameterNotFound
-      'SSM-PARAM-NOT-FOUND'
+      logger.warn 'WARN: SSM-PARAM-NOT-FOUND'
+      nil
     end
 
     def ssm

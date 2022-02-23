@@ -8,7 +8,7 @@ class Lono::Cfn::Plan
     def create
       @build.all
       @changed = false
-      logger.info "Change Set Changes:".color(:green) if Lono.config.diff.changeset
+      logger.info "Change Set Changes:".color(:green) if Lono.config.plan.changeset
       preview_change_set
       logger.info "" # newline
     end
@@ -83,7 +83,7 @@ class Lono::Cfn::Plan
     end
 
     def display(change_set)
-      return unless Lono.config.diff.changeset
+      return unless Lono.config.plan.changeset
       case change_set.status
       when "CREATE_COMPLETE"
         display_changes(change_set)

@@ -8,7 +8,6 @@ module Lono::Builder::Dsl::Helpers
     def s3_key(name, options={})
       default = {type: "file"}
       options.reverse_merge!(default)
-      Lono::AppFile::Registry.register(name, @blueprint.name, options)
       "file://app/files/#{options[:type]}/#{name}" # placeholder for post processing
     end
     alias_method :file_s3_key, :s3_key

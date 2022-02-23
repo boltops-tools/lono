@@ -6,6 +6,8 @@ module Lono
   # Normally, the Lono::Erb#run method generates the CloudFormation template
   # and embeds user-data script into the template.
   class UserData < Lono::CLI::Base
+    include Lono::Builder::Dsl::Syntax
+
     def initialize(options={})
       super
       @name = options[:name]
@@ -16,7 +18,7 @@ module Lono
       pretty_path = pretty_path(@path)
       logger.info "Building user_data for '#{@name}' at #{pretty_path}"
       if File.exist?(@path)
-        logger.info RenderMePretty.result(@path, context: template_context)
+        logger.info RenderMePretty.result(@path, context: self)
       else
         logger.info "ERROR: #{pretty_path} does not exist".color(:red)
         exit 1

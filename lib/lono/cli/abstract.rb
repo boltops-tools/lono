@@ -1,7 +1,6 @@
 class Lono::CLI
   class Abstract
     extend Memoist
-    include Lono::Utils::Contexts
     include Lono::Utils::Logging
     include Lono::Utils::Pretty
 

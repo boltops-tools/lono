@@ -28,7 +28,6 @@ module Lono
       config.paths = ActiveSupport::OrderedOptions.new
       config.paths.scripts = "scripts"
       config.paths.content = "content"
-      config.paths.helpers = "helpers"
       config.paths.user_data = "user_data"
 
       config.up = ActiveSupport::OrderedOptions.new
@@ -37,10 +36,10 @@ module Lono
       config.up.rollback = true
       config.up.tags = nil
 
-      config.diff = ActiveSupport::OrderedOptions.new
-      config.diff.changeset = true
-      config.diff.params = "full"
-      config.diff.template = "summary" # summary is same as true
+      config.plan = ActiveSupport::OrderedOptions.new
+      config.plan.changeset = true
+      config.plan.params = "full"
+      config.plan.template = "summary" # summary is same as true
 
       config.extract_scripts = {}
 

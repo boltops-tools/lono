@@ -3,6 +3,7 @@ require "thor"
 module Lono::AppFile
   class Build < Base
     include Lono::Utils::Item::Zip
+    include Lono::Builder::Dsl::Syntax
 
     def initialize_variables
       @output_files_path = "#{Lono.root}/output/#{@blueprint.name}/files"
@@ -59,7 +60,7 @@ module Lono::AppFile
     def copy_to_output
       override_source_paths("#{@blueprint.root}/app/files")
       self.destination_root = @output_files_path
-      directory(".", verbose: false, context: template_context.get_binding) # Thor::Action
+      directory(".", verbose: false, context: self) # Thor::Action
     end
 
     def clean_output

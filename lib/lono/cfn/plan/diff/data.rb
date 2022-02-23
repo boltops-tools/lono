@@ -29,12 +29,22 @@ module Lono::Cfn::Plan::Diff
       unless @modified_keys.empty?
         logger.info "Modified:"
         @modified_keys.each do |k|
-          logger.info "    #{k}: #{@old[k]} -> #{@new[k]}"
+          logger.info "    #{k}: #{show_old(@old[k])} -> #{@new[k]}"
         end
       end
 
       unless changes
         logger.info "No changes"
+      end
+    end
+
+    def show_old(v)
+      if v.nil?
+        '(unset)'
+      elsif v == ''
+        "''"
+      else
+        v
       end
     end
 

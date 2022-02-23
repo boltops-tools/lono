@@ -8,7 +8,7 @@ module Lono::Builder
 
     def build_template
       evaluator = Evaluator.new(@options)
-      evaluator.build
+      evaluator.evaluate
     end
   end
 end

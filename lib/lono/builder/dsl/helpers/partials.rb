@@ -22,62 +22,54 @@ module Lono::Builder::Dsl::Helpers
       end
     end
 
-    # Adjust the partial path so that it will use app/user_data
-    def user_data(path,vars={}, options={})
-      options.merge!(user_data: true)
-      partial(path,vars, options)
+    # The partial's path is a relative path.
+    #
+    # Example:
+    # Given file in app/partials/iam/docker.yml
+    #
+    #   <%= partial("iam/docker", {}, indent: 10) %>
+    #   <%= partial("iam/docker.yml", {}, indent: 10) %>
+    #
+    # If the user specifies the extension then use that instead of auto-adding
+    # the detected format.
+    def partial(path,vars={}, options={})
+      path = partial_path_for(path)
+      path = auto_add_format(path)
+
+      instance_variables!(vars)
+      result = render_path(path)
+
+      result = indent(result, options[:indent]) if options[:indent]
+      result + "\n"
     end
 
-    def current_region
-      region = Aws.config[:region]
-      region ||= ENV['AWS_REGION']
-      return region if region
-
-      default_region = 'us-east-1' # fallback if default not found in ~/.aws/config
-      if ENV['AWS_PROFILE']
-        path = "#{ENV['HOME']}/.aws/config"
-        if File.exist?(path)
-          lines = IO.readlines(path)
-          capture_default, capture_current = false, false
-          lines.each do | line|
-            if line.include?('[default]')
-              capture_default = true # next line
-              next
-            end
-            if capture_default && line.match(/region = /)
-              # over default from above
-              default_region = line.split(' = ').last.strip
-              capture_default = false
-            end
-
-            md = line.match(/\[profile (.*)\]/)
-            if md && md[1] == ENV['AWS_PROFILE']
-              capture_current = true
-              next
-            end
-            if capture_current && line.match(/region = /)
-              region = line.split(' = ').last.strip
-              capture_current = false
-            end
-          end
-        end
-
-        region ||= default_region
-        return region if region
+    # Take a hash and makes them instance variables in the current scope.
+    # Use this in custom helper methods to make variables accessible to ERB templates.
+    def instance_variables!(variables)
+      variables.each do |key, value|
+        instance_variable_set('@' + key.to_s, value)
       end
-
-      'us-east-1' # default
     end
+
+    # add indentation
+    def indent(text, indentation_amount)
+      text.split("\n").map do |line|
+        " " * indentation_amount + line
+      end.join("\n")
+    end
+
+    def partial_exist?(path)
+      path = partial_path_for(path)
+      path = auto_add_format(path)
+      path && File.exist?(path)
+    end
+
+    def region
+      AwsData.region
+    end
+    alias_method :current_region, :region
 
   private
-    def render_path(path)
-      RenderMePretty.result(path, context: self)
-    end
-
-    def user_data_path_for(path)
-      "#{Lono.config.paths.user_data}/#{path}"
-    end
-
     def auto_add_format(path)
       # Return immediately if user provided explicit extension
       extension = File.extname(path) # current extension
@@ -116,7 +108,7 @@ module Lono::Builder::Dsl::Helpers
       if Dir.glob("#{Lono.config.paths.scripts}/*").empty?
         logger.info "WARN: you are using the extract_scripts helper method but you do not have any scripts.".color(:yellow)
         calling_line = caller[0].split(':')[0..1].join(':')
-        logger.info "Called from: #{calling_line}"
+        logger.info "Called from1: #{calling_line}"
         return ""
       end
 
@@ -140,6 +132,12 @@ module Lono::Builder::Dsl::Helpers
     def scripts_s3_path
       upload = Lono::Script::Upload.new(@options)
       upload.s3_dest
+    end
+
+    def indent(text, indentation_amount)
+      text.split("\n").map do |line|
+        " " * indentation_amount + line
+      end.join("\n")
     end
   end
 end

@@ -1,6 +1,9 @@
 module Lono::Builder
   class Param < Lono::CLI::Base
     attr_reader :env_path, :base_path # set when build is called
+    include Lono::Builder::Dsl::Syntax
+    # Overriding output resource DSL method
+    alias_method :output, :stack_output
 
     def build
       logger.info "Building parameters"
@@ -36,7 +39,7 @@ module Lono::Builder
     def render_erb(path)
       return unless path
       if File.exist?(path)
-        RenderMePretty.result(path, context: params_context)
+        RenderMePretty.result(path, context: self)
       end
     end
 

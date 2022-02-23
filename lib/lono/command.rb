@@ -48,7 +48,6 @@ module Lono
         # as well thor's normal way:
         #
         #   lono help command
-        help_flags = Thor::HELP_MAPPINGS + ["help"]
         if args.length > 1 && !(args & help_flags).empty?
           args -= help_flags
           args.insert(-2, "help")

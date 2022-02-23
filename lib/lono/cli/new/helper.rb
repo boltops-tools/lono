@@ -1,32 +1,13 @@
 class Lono::CLI::New
-  class Helper < Sequence
-    def self.cli_options
-      [
-        [:force, type: :boolean, desc: "Bypass overwrite are you sure prompt for existing files"],
-        [:blueprint, required: true, desc: "Blueprint name"],
-        [:name, default: "custom", desc: "Helper name"],
-      ]
-    end
-    cli_options.each do |args|
-      class_option(*args)
-    end
+  class Helper < Lono::Command
+    Help = Lono::CLI::Help
 
-    def set_source
-      set_template_source "helper"
-    end
+    long_desc Help.text("new/helper/blueprint")
+    Blueprint.cli_options.each { |args| option(*args) }
+    register(Blueprint, "blueprint", "blueprint HELPER_NAME --blueprint", "Generates new blueprint helper")
 
-    def set_vars
-      @blueprint = @options[:blueprint]
-      @name = @options[:name]
-    end
-
-    def create_blueprint
-      puts "underscore_name #{underscore_name}"
-      logger.info "=> Generating helper: #{@name}"
-      directory ".", "app/blueprints/#{@blueprint}/helpers"
-    end
-
-  private
-    attr_reader :name # required for templates/helper/%name%_helper.rb.tt
+    long_desc Help.text("new/helper/project")
+    Project.cli_options.each { |args| option(*args) }
+    register(Project, "project", "project HELPER_NAME", "Generates new project helper")
   end
 end

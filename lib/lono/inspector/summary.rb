@@ -5,10 +5,7 @@ module Lono::Inspector
     def perform(template)
       # little dirty but @template is used in data method so we dont have to pass it to the data method
       @template = template
-
       logger.info "=> CloudFormation Template Summary for template #{@template.color(:sienna)}:"
-      return if ENV['LONO_NOOP']
-
       print_parameters_summary
       logger.info "# Resources:"
       print_resource_types

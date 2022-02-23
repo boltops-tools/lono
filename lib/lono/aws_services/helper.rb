@@ -1,8 +1,6 @@
 module Lono::AwsServices
   module Helper
     def stack_exists?(stack_name)
-      return false if ENV['LONO_NOOP']
-
       exist = nil
       begin
         # When the stack does not exist an exception is raised. Example:

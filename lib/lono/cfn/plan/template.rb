@@ -1,11 +1,11 @@
 class Lono::Cfn::Plan
   class Template < Base
     def run
-      return unless Lono.config.diff.template
+      return unless Lono.config.plan.template
       @build.all
       logger.info "Template Changes:".color(:green)
       download_existing_cfn_template
-      diff = Diff::File.new(mode: Lono.config.diff.template)
+      diff = Diff::File.new(mode: Lono.config.plan.template)
       diff.show(existing_template_path, new_cfn_template)
       logger.info "" # newline
     end
