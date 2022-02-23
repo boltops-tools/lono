@@ -1,6 +1,7 @@
 module Lono::Cfn
   class Plan < Base
     def run
+      build.all
       if stack_exists?(@stack)
         for_update
       else
