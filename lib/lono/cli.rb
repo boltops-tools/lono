@@ -5,7 +5,7 @@ module Lono
     opts = Opts.new(self)
     cfn_opts = Lono::CLI::Cfn::Opts.new(self)
 
-    desc "build BLUEPRINT", "Build both CloudFormation template and parameters files"
+    desc "build BLUEPRINT", "Build template"
     long_desc Help.text(:build)
     option :quiet, type: :boolean, desc: "silence the output"
     opts.clean
@@ -25,14 +25,14 @@ module Lono
       Clean.new(options).run
     end
 
-    desc "down BLUEPRINT", "Delete CloudFormation blueprint"
+    desc "down BLUEPRINT", "Delete stack"
     long_desc Help.text(:down)
     cfn_opts.delete
     def down(blueprint)
       Lono::Cfn::Delete.new(options.merge(blueprint: blueprint)).run
     end
 
-    desc "list", "List blueprints, configsets, extensions, etc"
+    desc "list", "List blueprints"
     long_desc Help.text(:list)
     option :type, aliases: :t, desc: "Type: IE: blueprint, configset, extension. Defaults to all"
     def list
@@ -46,7 +46,7 @@ module Lono
       Lono::Cfn::Output.new(options.merge(blueprint: blueprint)).run
     end
 
-    desc "plan BLUEPRINT", "Plan or preview of the deploy"
+    desc "plan BLUEPRINT", "Preview deploy"
     long_desc Help.text(:plan)
     option :out, aliases: :o, desc: "Write Change Set info to path"
     def plan(blueprint)
@@ -86,7 +86,7 @@ module Lono
       Test.new(options).run
     end
 
-    desc "up BLUEPRINT", "Deploy CloudFormation stack"
+    desc "up BLUEPRINT", "Deploy stack"
     long_desc Help.text(:up)
     cfn_opts.deploy
     def up(blueprint)

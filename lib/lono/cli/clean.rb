@@ -8,15 +8,16 @@ class Lono::CLI
     attr_reader :options
     def initialize(options={})
       @options = options
+      @mute = options[:mute] # used by CLI::Build at beginning to clear out the output folder
     end
 
     def run
       folders = %w[output tmp]
-      sure?("Will remove folders: #{folders.join(' ')}")
+      @mute || sure?("Will remove folders: #{folders.join(' ')}")
       folders.each do |folder|
         FileUtils.rm_rf("#{Lono.root}/#{folder}")
       end
-      logger.info "Removed folders: #{folders.join(' ')}"
+      logger.info "Removed folders: #{folders.join(' ')}" unless @mute
     end
   end
 end

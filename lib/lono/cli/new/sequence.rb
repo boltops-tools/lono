@@ -48,5 +48,9 @@ class Lono::CLI::New
       puts "=> Initialize git repo"
       run("git init")
     end
+
+    def env
+      Lono.env # allows for seed/vars/%env%.rb.tt
+    end
   end
 end

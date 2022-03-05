@@ -5,8 +5,10 @@ class Lono::Builder::Dsl
     end
 
     def run
-      @cfn = ParameterGroups.new(@cfn, @options[:parameters]).run
-      @cfn = Configsets.new(@options.merge(cfn: @cfn)).run
+      o = @options.merge(cfn: @cfn)
+      @cfn = ParameterGroups.new(o).run
+      @cfn = Configsets.new(o).run
+      @cfn = Files.new(o).run
       @cfn
     end
   end

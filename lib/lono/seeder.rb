@@ -5,37 +5,21 @@ require "yaml"
 
 module Lono
   class Seeder < Lono::CLI::Base
+    extend Memoist
     include Lono::AwsServices
     include Lono::Cfn::Concerns::TemplateOutput
-    include ServiceRole
-
-    # What's needed for a Thor::Group or "Sequence"
-    # Gives us Thor::Actions commands like create_file
-    include Thor::Actions
-    include Thor::Base
-    # Override Thor::Base initialize
-    def initialize(options={})
-      reinitialize(options)
-    end
-
-    extend Memoist
 
     def run
       build_template
-      self.destination_root = Dir.pwd # Thor::Actions require destination_root to be set
-      create_params
-      create_variables
+      build_params
+      build_vars
     end
 
     def build_template
       Lono::Builder::Template.new(@options).run
     end
 
-    def create_params
-      create_param_file
-    end
-
-    def create_param_file
+    def build_params
       if template_output.parameters.empty?
         logger.info "Template has no parameters."
         return
@@ -83,11 +67,7 @@ module Lono
       md[2]
     end
 
-    def self.source_root
-      Lono.root
-    end
-
-    def create_variables
+    def build_vars
       src = "#{@blueprint.root}/seed/vars"
       dest = "#{dest_folder}/vars"
       directory(src, dest) if File.exist?(src)
@@ -112,8 +92,19 @@ module Lono
     end
 
   private
-    def env
-      Lono.env # allows for seed/vars/%env%.rb.tt
+    def create_file(dest_path, content) # Thor::Action)
+      sequence.create_file(dest_path, content)
     end
+
+    def directory(src, dest)
+      sequence.send(:set_template_paths, src)
+      sequence.destination_root = Lono.root
+      sequence.directory(".", dest, context: binding) # Thor::Action
+    end
+
+    def sequence
+      sequence = Lono::CLI::New::Sequence.new(@options)
+    end
+    memoize :sequence
   end
 end

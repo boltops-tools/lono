@@ -5,7 +5,7 @@ class Lono::Importer
     include Thor::Base
 
     def initialize(options)
-      reinitialize(options)
+      super
       @source = options[:source]
       @tmp_path = "/tmp/lono/import/template.yml"
       self.destination_root = Dir.pwd # Thor::Actions require destination_root to be set

@@ -9,9 +9,7 @@ module Lono::Builder::Dsl::Helpers
     end
 
     def template_params(param_name)
-      o = {
-        allow_not_exists: true
-      }.merge(@options)
+      o = @options.dup
       o["param"] = param_name
       generator = Lono::CLI::Param::Generator.new(o)
       # do not generate because lono cfn calling logic already generated it we only need the values
@@ -99,13 +97,12 @@ module Lono::Builder::Dsl::Helpers
 
     # Bash code that is meant to included in user-data
     def extract_scripts(options={})
-      settings = Lono.config.extract_scripts
-      options = settings.merge(options)
       # defaults also here in case they are removed from settings
+      path = options[:path]
       to = options[:to] || "/opt"
       user = options[:as] || "ec2-user"
 
-      if Dir.glob("#{Lono.config.paths.scripts}/*").empty?
+      if Dir.glob("#{@bluepint.root}/#{path}*").empty?
         logger.info "WARN: you are using the extract_scripts helper method but you do not have any scripts.".color(:yellow)
         calling_line = caller[0].split(':')[0..1].join(':')
         logger.info "Called from1: #{calling_line}"

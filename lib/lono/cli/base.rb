@@ -1,9 +1,11 @@
 class Lono::CLI
   class Base < Abstract
-    def reinitialize(options={})
+    include Lono::Concerns::Names
+
+    def initialize(options={})
       super
       @blueprint = Lono::Blueprint.new(options.merge(name: options[:blueprint]))
-      @stack = Lono::Names.new(options).stack
+      @stack = names.stack
     end
   end
 end

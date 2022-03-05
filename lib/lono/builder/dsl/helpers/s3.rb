@@ -4,6 +4,7 @@ module Lono::Builder::Dsl::Helpers
       Lono::S3::Bucket.name
     end
     alias_method :lono_bucket_name, :s3_bucket
+    alias_method :files_bucket, :s3_bucket
 
     def s3_key(name, options={})
       default = {type: "file"}

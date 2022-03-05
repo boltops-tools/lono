@@ -14,9 +14,8 @@ module Lono::Layering
     include Lono::Layering
     include Lono::Utils::Logging
     include Lono::Utils::Pretty
+    include Lono::Concerns::AwsInfo
     extend Memoist
-
-    delegate :region, to: :aws_data
 
     def initialize(blueprint, type)
       @blueprint, @type = blueprint, type
@@ -109,11 +108,5 @@ module Lono::Layering
       logger.debug ""
       @@shown_layers[@type] = true
     end
-
-  private
-    def aws_data
-      AwsData.new
-    end
-    memoize :aws_data
   end
 end

@@ -1,10 +1,11 @@
 class Lono::Builder::Dsl::Finalizer
-  class ParameterGroups
+  class ParameterGroups < Base
     extend Memoist
     include Lono::Builder::Util::Stringify
 
-    def initialize(cfn, parameters)
-      @cfn, @parameters = cfn, parameters
+    def initialize(options={})
+      super
+      @parameters = options[:parameters]
     end
 
     def run

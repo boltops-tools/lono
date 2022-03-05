@@ -1,10 +1,5 @@
 class Lono::Builder::Dsl::Finalizer
-  class Configsets < Lono::CLI::Base
-    def initialize(options={})
-      super
-      @cfn = options[:cfn]
-    end
-
+  class Configsets < Base
     # Replaces metadata under each logical id resource.
     def run
       dsl = Lono::Builder::Configset::Evaluator.new(@options.merge(cfn: @cfn))

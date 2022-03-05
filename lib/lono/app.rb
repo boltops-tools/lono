@@ -13,6 +13,16 @@ module Lono
     def defaults
       config = ActiveSupport::OrderedOptions.new
 
+      config.allow = ActiveSupport::OrderedOptions.new
+      config.allow.envs = nil
+      config.allow.regions = nil
+      config.deny = ActiveSupport::OrderedOptions.new
+      config.deny.envs = nil
+      config.deny.regions = nil
+
+      config.layering = ActiveSupport::OrderedOptions.new
+      config.layering.names = {}
+
       config.log = ActiveSupport::OrderedOptions.new
       config.log.root = Lono.log_root
       config.logger = lono_logger
@@ -20,37 +30,27 @@ module Lono
       config.logger.level = ENV['LONO_LOG_LEVEL'] || :info
 
       config.names = ActiveSupport::OrderedOptions.new
-      config.names.stack = ":APP-:BLUEPRINT-:ENV"
       config.names.output = ActiveSupport::OrderedOptions.new
-      config.names.output.stack = ":BLUEPRINT-:ENV" # does not include APP by default. Think this is more common
       config.names.output.expand = true
-
-      config.paths = ActiveSupport::OrderedOptions.new
-      config.paths.scripts = "scripts"
-      config.paths.content = "content"
-      config.paths.user_data = "user_data"
-
-      config.up = ActiveSupport::OrderedOptions.new
-      config.up.capabilities = nil
-      config.up.notification_arns = nil
-      config.up.rollback = true
-      config.up.tags = nil
+      config.names.output.stack = ":BLUEPRINT-:ENV" # does not include APP by default. Think this is more common
+      config.names.stack = ":APP-:BLUEPRINT-:ENV"
 
       config.plan = ActiveSupport::OrderedOptions.new
       config.plan.changeset = true
       config.plan.params = "full"
       config.plan.template = "summary" # summary is same as true
 
-      config.extract_scripts = {}
+      config.seed = ActiveSupport::OrderedOptions.new
+      config.seed.where = "config"
 
       config.test = ActiveSupport::OrderedOptions.new
       config.test.framework = "rspec"
 
-      config.layering = ActiveSupport::OrderedOptions.new
-      config.layering.names = {}
-
-      config.seed = ActiveSupport::OrderedOptions.new
-      config.seed.where = "config"
+      config.up = ActiveSupport::OrderedOptions.new
+      config.up.capabilities = nil
+      config.up.notification_arns = nil
+      config.up.rollback = true
+      config.up.tags = nil
 
       config
     end
