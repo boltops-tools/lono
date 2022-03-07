@@ -1,4 +1,4 @@
-module Lono::Builder
+class Lono::Builder
   class Allow < Lono::CLI::Base
     def check!
       Env.new(@options).check!

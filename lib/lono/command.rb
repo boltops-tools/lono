@@ -37,6 +37,7 @@ module Lono
         # Lono.argv provides consistency when lono is being called by rspec-lono test harness
         Lono.argv = args.clone # important to clone since Thor removes the first argv
 
+        check_version_structure!
         check_project!(args.first)
 
         # Allow calling for help via:
@@ -68,11 +69,37 @@ module Lono
         return if subcommand?
         return if command_name.nil?
         return if help_flags.include?(Lono.argv.last) # IE: -h help
-        return if %w[-h -v --version completion completion_script help new test version].include?(command_name)
+        return if non_project_command?
         return if File.exist?("#{Lono.root}/config/app.rb")
         return unless Lono.check_project
         logger.error "ERROR: It doesnt look like this is a lono project. Are you sure you are in a lono project?".color(:red)
         ENV['LONO_TEST'] ? raise : exit(1)
+      end
+
+      # Also, using ARGV instead of args because args is called by thor in multiple passes
+      # For `lono new project`:
+      # * 1st pass: "new"
+      # * 2nd pass: "project"
+      def non_project_command?
+        commands = %w[-h -v --version completion completion_script help new test version]
+        commands.include?(ARGV[0])
+      end
+
+      def check_version_structure!
+        return if non_project_command?
+        return unless File.exist?('configs')
+        puts "ERROR: Old lono project structure detected".color(:red)
+        puts <<~EOL
+          It looks like this Lono project with an old structure.
+          The old structure does not work with this version of Lono.
+
+          Current Installed Lono Version: #{Lono::VERSION}
+
+          Please upgrade the lono project structure.
+
+          See: https://lono.com/docs/upgrading/version8/
+        EOL
+        exit 1
       end
 
       def help_flags

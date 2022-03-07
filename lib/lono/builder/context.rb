@@ -1,4 +1,4 @@
-module Lono::Builder
+class Lono::Builder
   module Context
     include DslEvaluator
 

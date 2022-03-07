@@ -36,7 +36,7 @@ class Lono::Cfn::Plan
         change_set = describe_change_set
         sleep 1
         unless newline_needed
-          logger.print "Determining Change Set"
+          logger.print "Calculating Change Set"
         end
         newline_needed = true
         logger.print '.'

@@ -1,6 +1,0 @@
-module <%= extension_class_name %>::Helpers
-  module Variables
-    # AWS::Service::Resource example
-    attr_reader :property1, :property2
-  end
-end

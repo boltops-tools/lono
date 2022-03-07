@@ -3,7 +3,7 @@ module Lono::Cfn::Concerns
     extend Memoist
 
     def build
-      Lono::CLI::Build.new(@options)
+      Lono::Builder.new(@options)
     end
     memoize :build
   end

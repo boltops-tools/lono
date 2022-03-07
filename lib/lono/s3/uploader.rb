@@ -42,6 +42,10 @@ module Lono::S3
     end
 
     def presigned_url
+      # Here because want to lazily create this bucket only after user has confirmed lono up
+      # This is the first time bucket needs to exists
+      # Called at Deploy::Opts#template_url which gets passed to cfn.create and calls template_url
+      Lono::S3::Bucket.ensure_exist
       s3_presigner.presigned_url(:get_object, bucket: s3_bucket, key: s3_key)
     end
 

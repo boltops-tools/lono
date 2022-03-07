@@ -9,7 +9,9 @@ module Lono::Builder::Dsl::Syntax::Core
 
       case data
       when Array
-        data.map! { |v| squeeze(v) }
+        # .compact prevents infinite loop when data = [nil] on accident
+        # IE: data[:key] = [nil]
+        data.compact.map! { |v| squeeze(v) }
       when Hash
         data.each_with_object({}) do |(k,v), squeezed|
           # only remove nil and empty Array values within Hash structures

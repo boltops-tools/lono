@@ -6,8 +6,11 @@ module Lono::Files::Concerns
       end
     end
 
+    # IE:
+    #   LONO:://files/function-normal
+    #   LONO:://files/function-layer
     def marker
-      "LONO://#{@path}"
+      "LONO://#{@path}-#{@type}"
     end
   end
 end

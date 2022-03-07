@@ -43,7 +43,7 @@ module Lono
       end
 
       content = lines.join("\n")
-      dest_path = "#{dest_folder}/params/#{Lono.env}.txt" # only support environment level parameters for now
+      dest_path = "#{dest_folder}/params/#{Lono.env}.env" # only support environment level parameters for now
       create_file(dest_path, content) # Thor::Action
     end
 

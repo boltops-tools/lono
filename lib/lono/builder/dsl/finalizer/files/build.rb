@@ -11,26 +11,18 @@ class Lono::Builder::Dsl::Finalizer::Files
       clean
       validate!
       build_files
-      # build_layers
     end
 
     def build_files
       Lono::Files.files.each do |file| # using singular file, but is like a "file_list"
         file.build
+        file.build_lambda_layer(@cfn)
         file.compress
-        # Note: Uploading files happen right before create_stack or execute_change_set
-        # after user confirms action, instead of part of the build process
+        # UploadNote: Instead of part of the build process here, uploading happen as part
+        # of create_stack or execute_change_set after user confirms action. IE:
+        #   Cfn::Deploy#create and Cfn::Deploy#update
       end
     end
-
-    # TODO: LambdaLayer support
-    # def build_layers
-    #   layer_items = Registry.layers
-    #   layer_items.each do |item|
-    #     LambdaLayer.new(@blueprint, item).build
-    #   end
-    # end
-    #
 
     def clean
       FileUtils.rm_rf(@output_path)

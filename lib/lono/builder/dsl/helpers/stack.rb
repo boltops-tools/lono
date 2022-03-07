@@ -15,7 +15,7 @@ module Lono::Builder::Dsl::Helpers
       if o
         o.output_value
       else
-        logger.info "WARN2: NOT FOUND: output #{key} for stack #{stack_name}"
+        logger.info "WARN: STACK OUTPUT NOT FOUND: output #{key} for stack #{stack_name}"
         nil
       end
     end
@@ -35,10 +35,8 @@ module Lono::Builder::Dsl::Helpers
     end
 
     def stack_name(blueprint)
-      return blueprint unless Lono.config.names.output.expand
       names = Lono::Names.new(blueprint: blueprint)
-      # explicit expansion pattern provided by user
-      pattern = blueprint.include?(':') ? blueprint : Lono.config.names.output.stack
+      pattern = blueprint # blueprint can be a pattern provided by user. IE: :BLUEPRINT-:ENV
       names.expansion(pattern)
     end
 

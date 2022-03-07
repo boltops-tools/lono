@@ -1,22 +1,7 @@
 module Lono::Bundler::Util
   module Git
     include Logging
-
-    def sh(command)
-      command = "#{command} 2>&1" # always need output for the sha
-      logger.debug "=> #{command}"
-      out = `#{command}`
-      unless $?.success?
-        if command.include?("git")
-          raise LB::GitError.new("#{command}\n#{out}")
-        else
-          logger.error "ERROR: running #{command}".color(:red)
-          logger.error out
-          exit $?.exitstatus
-        end
-      end
-      out
-    end
+    include Lono::Utils::Sh
 
     def git(command)
       sh("git #{command}")
@@ -32,6 +17,23 @@ module Lono::Bundler::Util
         logger.error e.message
       end
       exit 1
+    end
+
+    # Different from Lono::Utils::Sh
+    def sh(command)
+      command = "#{command} 2>&1" # always need output for the sha
+      logger.debug "=> #{command}"
+      out = `#{command}`
+      unless $?.success?
+        if command.include?("git")
+          raise LB::GitError.new("#{command}\n#{out}")
+        else
+          logger.error "ERROR: running #{command}".color(:red)
+          logger.error out
+          exit $?.exitstatus
+        end
+      end
+      out
     end
   end
 end

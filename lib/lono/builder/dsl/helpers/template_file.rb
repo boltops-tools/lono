@@ -21,7 +21,7 @@ module Lono::Builder::Dsl::Helpers
     class TempleFileNotFoundError < StandardError; end
     def template_file_missing(path)
       message = "ERROR: path #{pretty_path(path)} not found"
-      caller_line = caller.find { |l| l =~ %r{/blueprints/} } # TODO: show code itself
+      caller_line = caller.find { |l| l =~ %r{/blueprints/} }
       logger.error message.color(:red)
       logger.error "Called from:"
       logger.error "    #{pretty_path(caller_line)}"
@@ -33,7 +33,7 @@ module Lono::Builder::Dsl::Helpers
       if File.exist?(path)
         RenderMePretty.result(path, context: self)
       else
-        lines = caller.select { |l| l.include?(Lono.root.to_s) } # TODO: show code itself
+        lines = caller.select { |l| l.include?(Lono.root.to_s) }
         caller_line = pretty_path(lines.first)
         message =<<~EOL
           WARN: #{pretty_path(path)} does not exist

@@ -1,4 +1,4 @@
-module Lono::Builder
+class Lono::Builder
   class Dsl < Lono::CLI::Base
     attr_reader :results
     def run

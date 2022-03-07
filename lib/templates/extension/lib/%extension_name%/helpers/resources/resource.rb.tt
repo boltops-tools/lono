@@ -1,4 +1,0 @@
-module <%= extension_class_name %>::Helpers::Resources
-  module Resource
-  end
-end

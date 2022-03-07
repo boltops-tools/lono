@@ -8,9 +8,14 @@ class Lono::Builder::Dsl::Finalizer::Files
     end
 
     def replacements
-      Lono::Files.files.inject({}) do |result, file|
+      data = Lono::Files.files.inject({}) do |result, file|
         result.merge(file.marker => file.s3_key)
       end
+      # Edge case when bucket is created for the first time and files_bucket is
+      # not available yet. So we call it at this point.
+      Lono::S3::Bucket.ensure_exist
+      data["LONO://S3_BUCKET"] = Lono::S3::Bucket.name
+      data
     end
 
     def update_template!(hash)

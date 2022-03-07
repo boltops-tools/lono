@@ -2,7 +2,9 @@ module Lono::Cfn
   class Deploy < Base
     def run
       start_message
-      perform # create or update
+      run_hooks("up") do
+        perform # create or update
+      end
       success = status.wait
       if success
         finish_message
@@ -29,7 +31,7 @@ module Lono::Cfn
         # e.message: Template format error: YAML not well-formed. (line 207, column 9)
         print_code(e)
       else
-        logger.info "ERROR: #{e.message}".color(:red)
+        logger.info "ERROR: Deploy#perform #{e.class} #{e.message}".color(:red)
         logger.info "Check: #{pretty_path(@blueprint.output_path)}"
         quit 1
       end
@@ -50,7 +52,6 @@ module Lono::Cfn
     def create
       plan.for_create
       @sure || sure?("Going to create stack #{@stack} with blueprint #{@blueprint.name}.")
-      upload_files
       options = {
         stack_name: @stack,
         parameters: build.parameters,
@@ -58,6 +59,7 @@ module Lono::Cfn
       opts = Opts.new(@blueprint, "create_stack", iam, options)
       opts.show
       options = opts.values
+      upload_all
       cfn.create_stack(options)
     end
 
@@ -68,10 +70,20 @@ module Lono::Cfn
       end
 
       operable.check!
+      upload_all # important to call before plan.for_update.
+      # plan.for_update creates the changeset and requires the template to already be uploaded to s3
       changeset = plan.for_update
       !changeset.changed? || @sure || sure?("Are you sure you want to update the #{@stack} stack?")
-      upload_files
       changeset.execute_change_set
+    end
+
+    def upload_all
+      upload_templates
+      upload_files
+    end
+
+    def upload_templates
+      Lono::Builder::Template::Upload.new(@options).run
     end
 
     # Upload files right before create_stack or execute_change_set

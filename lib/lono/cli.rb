@@ -10,7 +10,7 @@ module Lono
     option :quiet, type: :boolean, desc: "silence the output"
     opts.clean
     def build(blueprint)
-      Build.new(options.merge(blueprint: blueprint, build_only: true)).all
+      Lono::Builder.new(options.merge(blueprint: blueprint, build_only: true)).all
     end
 
     desc "bundle", "Bundle with Lonofile."
@@ -32,6 +32,12 @@ module Lono
       Lono::Cfn::Delete.new(options.merge(blueprint: blueprint)).run
     end
 
+    desc "iam BLUEPRINT", "Generate IAM policy"
+    long_desc Help.text(:down)
+    def iam(blueprint)
+      Iam.new(options.merge(blueprint: blueprint)).run
+    end
+
     desc "list", "List blueprints"
     long_desc Help.text(:list)
     option :type, aliases: :t, desc: "Type: IE: blueprint, configset, extension. Defaults to all"
@@ -41,7 +47,7 @@ module Lono
 
     desc "output BLUEPRINT", "output or preview of the deploy"
     long_desc Help.text(:output)
-    option :format, desc: "Output formats: #{CliFormat.formats.join(', ')}"
+    option :format, aliases: :f, desc: "Output formats: #{CliFormat.formats.join(', ')}"
     def output(blueprint)
       Lono::Cfn::Output.new(options.merge(blueprint: blueprint)).run
     end
@@ -77,7 +83,7 @@ module Lono
     desc "summary BLUEPRINT", "Prints summary of CloudFormation template"
     long_desc Help.text("summary")
     def summary(blueprint)
-      Lono::Inspector::Summary.new(options.merge(blueprint: blueprint)).run
+      Summary.new(options.merge(blueprint: blueprint)).run
     end
 
     desc "test", "Run test."
@@ -121,10 +127,6 @@ module Lono
     desc "cfn SUBCOMMAND", "cfn subcommands"
     long_desc Help.text(:cfn)
     subcommand "cfn", Cfn
-
-    desc "code SUBCOMMAND", "code subcommands"
-    long_desc Help.text(:code)
-    subcommand "code", Code
 
     desc "new SUBCOMMAND", "new subcommands"
     long_desc Help.text(:new)

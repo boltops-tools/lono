@@ -21,30 +21,27 @@ module Lono
       vars.each do |var|
         string.gsub!(var, var_value(var))
       end
-      strip(string)
+      cleanse(string)
     end
 
     def var_value(unexpanded)
       name = unexpanded.sub(':','').downcase
       if respond_to?(name)
-        value = send(name).to_s
+        send(name).to_s # value
       else
         unexpanded
       end
     end
 
-    def strip(string)
+    def cleanse(string)
       string.sub(/^-+/,'').sub(/-+$/,'') # remove leading and trailing -
             .gsub(%r{-+},'-') # remove double dashes are more. IE: -- => -
             .gsub('_','-')    # underscores are not allowed in CloudFormation stack names
     end
 
-    def app
-      Lono.app
-    end
-
-    def env
-      Lono.env
+    delegate :app, :role, :env, :extra, to: :lono
+    def lono
+      Lono
     end
   end
 end

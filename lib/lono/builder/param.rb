@@ -1,4 +1,4 @@
-module Lono::Builder
+class Lono::Builder
   class Param < Lono::CLI::Base
     attr_reader :env_path, :base_path # set when build is called
     include Lono::Builder::Dsl::Syntax

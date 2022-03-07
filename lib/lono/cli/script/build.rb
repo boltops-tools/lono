@@ -63,10 +63,5 @@ class Lono::CLI::Script
       @md5sum ||= Digest::MD5.file("#{@blueprint.root}/scripts.tgz").to_s[0..7]
     end
 
-    def sh(command)
-      puts "=> #{command}"
-      system command
-    end
-
   end
 end

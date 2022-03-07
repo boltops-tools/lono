@@ -1,22 +1,15 @@
 ## Example
 
     $ lono new project infra
+    Other infra
     => Creating new project called infra.
           create  infra
           create  infra/.gitignore
           create  infra/Gemfile
           create  infra/README.md
           create  infra/config/app.rb
-    => Initialize git repo
-             run  git init from "."
-    Initialized empty Git repository in /home/ec2-user/environment/infra/.git/
     => Installing dependencies with: bundle install
-    Resolving dependencies...Fetching gem metadata from https://rubygems.org/.......
-    ............................
-    Using concurrent-ruby 1.1.9
-    ...
-    Bundle complete! 1 Gemfile dependency, 40 gems now installed.
-    Use `bundle info [gemname]` to see where a bundled gem is installed.
+    Bundle complete! 2 Gemfile dependencies, 47 gems now installed.
     ================================================================
     Congrats 🎉 You have successfully created a lono project.
 

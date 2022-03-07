@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "cfn-status"
   spec.add_dependency "cfn_camelizer"
   spec.add_dependency "cli-format"
-  spec.add_dependency "dsl_evaluator", ">= 0.2.5" # for DslEvaluator.print_code
+  spec.add_dependency "dsl_evaluator", ">= 0.3.0" # for DslEvaluator.print_code
   spec.add_dependency "filesize"
   spec.add_dependency "graph" # lono graph command dependency
   spec.add_dependency "hashie"

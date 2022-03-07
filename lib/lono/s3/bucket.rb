@@ -1,10 +1,11 @@
 module Lono::S3
   class Bucket
+    extend Lono::AwsServices
+    extend Memoist
     include Lono::AwsServices
     include Lono::Cfn::Concerns
     include Lono::Utils::Logging
-    extend Lono::AwsServices
-    extend Memoist
+    include Lono::Utils::Sure
 
     STACK_NAME = ENV['LONO_STACK_NAME'] || "lono"
     def initialize(options={})
@@ -115,20 +116,12 @@ module Lono::S3
 
 
     def are_you_sure?
-      return true if @options[:yes]
-
       if bucket_name.nil?
         logger.info "The lono stack and s3 bucket does not exist."
         exit
       end
 
-      logger.info "Are you yes you want the lono bucket #{bucket_name.color(:green)} to be emptied and deleted? (y/N)"
-      yes = $stdin.gets.strip
-      confirmed = yes =~ /^Y/i
-      unless confirmed
-        logger.info "Phew that was close."
-        exit
-      end
+      sure?("Will empty and delete bucket #{bucket_name.color(:green)}. Are you sure?")
     end
 
     def template_body
@@ -145,6 +138,10 @@ module Lono::S3
               Tags:
                 - Key: Name
                   Value: lono
+        Outputs:
+          Bucket:
+            Value:
+              Ref: Bucket
       YAML
     end
 
@@ -165,6 +162,15 @@ module Lono::S3
         stack_resources = find_stack_resources(STACK_NAME)
         bucket = stack_resources.find { |r| r.logical_resource_id == "Bucket" }
         @@name = bucket.physical_resource_id # actual bucket name
+      end
+
+      @@ensure_exist = false
+      def ensure_exist
+        return if @@ensure_exist
+        bucket = Lono::S3::Bucket.new
+        return if bucket.exist?
+        bucket.deploy
+        @@ensure_exist = true
       end
     end
   end

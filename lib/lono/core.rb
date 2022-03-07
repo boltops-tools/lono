@@ -19,10 +19,20 @@ module Lono
     end
     memoize :app
 
+    def role
+      ENV['LONO_ROLE']
+    end
+    memoize :role
+
     def env
       ENV['LONO_ENV'] || 'dev'
     end
     memoize :env
+
+    def extra
+      ENV['LONO_EXTRA']
+    end
+    memoize :extra
 
     def tmp_root
       ENV['LONO_TMP_ROOT'] || "/tmp/lono"

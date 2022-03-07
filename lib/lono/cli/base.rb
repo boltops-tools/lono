@@ -1,6 +1,7 @@
 class Lono::CLI
   class Base < Abstract
     include Lono::Concerns::Names
+    include Lono::Utils::Sh
 
     def initialize(options={})
       super

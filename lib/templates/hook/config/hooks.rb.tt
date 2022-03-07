@@ -1,0 +1,14 @@
+<%
+message = if blueprint
+  "app/blueprints/#{blueprint}/config/hooks.rb: test blueprint hook for build"
+else
+  "config/hooks.rb: test project hook for build"
+end
+-%>
+before("build",
+  execute: "echo '<%= message %> before hook'",
+)
+
+after("build",
+  execute: "echo '<%= message %> after hook'"
+)

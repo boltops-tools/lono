@@ -6,10 +6,12 @@ module Lono
     include Concerns::Registration
     include Concerns::PostProcessing
 
-    attr_reader :path
+    attr_reader :path, :layer, :type
     def initialize(options={})
       super
       @path = options[:path]
+      @layer = options[:layer]
+      @type = @layer ? "layer" : "normal"
       @caller = options[:caller] # original caller stack at registration time
     end
 
@@ -20,7 +22,9 @@ module Lono
     class << self
       def register(options={})
         path = options[:path]
-        file = files.find { |f| f.path == path }
+        layer = options[:layer]
+        # Registration uniquess based on both path and layer option
+        file = files.find { |f| f.path == path && f.layer == layer }
         unless file
           file = Files.new(options.merge(caller: caller))
           files << file

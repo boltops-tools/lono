@@ -1,6 +1,4 @@
-require "yaml"
-
-module Lono::Builder
+class Lono::Builder
   class Template < Lono::CLI::Base
     extend Memoist
 

@@ -11,10 +11,8 @@ class Lono::Cfn::Deploy
 
     def continue_update
       continue_update?
-      options = {stack_name: @stack}
-      show_options(options, "continue_update_rollback")
       begin
-        cfn.continue_update_rollback(options)
+        cfn.continue_update_rollback(stack_name: @stack)
       rescue Aws::CloudFormation::Errors::ValidationError => e
         logger.info "ERROR: Continue update: #{e.message}".color(:red)
         quit 1
