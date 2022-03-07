@@ -1,7 +1,13 @@
 describe Lono::Builder::Configset::Definition::Erb do
   let(:erb) do
     path = "spec/fixtures/configsets/erb/httpd/configset.yml"
-    Lono::Builder::Configset::Definition::Erb.new(path)
+    meta = {path: path, resource: "LaunchTemplate", name: "main"}
+    erb = Lono::Builder::Configset::Definition::Erb.new(blueprint: "demo", meta: meta)
+    configset = Lono::Configset.new(meta)
+    allow(configset).to receive(:path).and_return path
+    allow(configset).to receive(:root).and_return "spec/fixtures/configsets/erb/httpd"
+    erb.instance_variable_set(:@configset, configset)
+    erb
   end
 
   context("example") do

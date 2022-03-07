@@ -1,6 +1,6 @@
 describe Lono::Builder::Configset::Combiner do
   let(:combiner) do
-    combiner = Lono::Builder::Configset::Combiner.new(cfn, []) # metas is empty since we'll call combiner.add directly
+    combiner = Lono::Builder::Configset::Combiner.new(cfn: cfn, metas: []) # metas is empty since we'll call combiner.add directly
     allow(combiner).to receive(:metas_empty?).and_return false
     combiner
   end
@@ -35,7 +35,8 @@ describe Lono::Builder::Configset::Combiner do
     let(:configset2) { configset_metadata("config2.json") }
 
     it "combines" do
-      combiner.add(build_configset(name: "ssm", resource: "Instance", metadata: configset1))
+      x = build_configset(name: "ssm", resource: "Instance", metadata: configset1)
+      combiner.add(x)
       combiner.add(build_configset(name: "httpd", resource: "Instance", metadata: configset2))
       map = combiner.combine
       json =<<~EOL

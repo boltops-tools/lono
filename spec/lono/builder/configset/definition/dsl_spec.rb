@@ -1,7 +1,12 @@
 describe Lono::Builder::Configset::Definition::Dsl do
   let(:dsl) do
     path = "spec/fixtures/configsets/dsl/httpd/configset.rb"
-    Lono::Builder::Configset::Definition::Dsl.new(path)
+    meta = {path: path, resource: "LaunchTemplate", name: "main"}
+    dsl = Lono::Builder::Configset::Definition::Dsl.new(meta: meta)
+    configset = Lono::Configset.new(meta)
+    allow(configset).to receive(:path).and_return path
+    dsl.instance_variable_set(:@configset, configset)
+    dsl
   end
 
   context("example") do
