@@ -1,7 +1,20 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-This project *tries* to adhere to [Semantic Versioning](http://semver.org/).
+## [8.0.0.rc3] - 2022-03-06
+
+* lono files support for lambda functions
+  * new structure: remove Appfile
+  * allow regions and envs support
+  * print friend message with exact line of yaml code in case of aws
+  * cloudformation yaml validation error
+  * improve cli help
+* configsets new structure
+  * lono new helper blueprint and project commands
+  * project helpers support
+  * include_modules improvements
+  * support vendor level helpers
+  * improve plan params diff
+* lono plan build all first
 
 ## [8.0.0.rc2] - 2022-02-23
 
