@@ -1,5 +1,38 @@
 # Change Log
 
+## [8.0.0.rc4] - 2022-03-19
+
+Notable:
+
+* lono app and role concept
+* extra layering support
+* hooks support: project and blueprint level
+
+Misc:
+
+* add lono bucket output
+* alias blueprint with -b
+* change params extension to .env
+* config.hooks.show = true default
+* config.layering.show = true option
+* extra layering support
+* github templates
+* improve simplier new helper cli interface
+* improve squeezer: edge case Array with nil elements
+* hooks generator
+* lambda layer
+* layering full mode default
+* lazy create lono stack and lono bucket
+* lono extra support
+* lono iam
+* lono summary
+* lono up: edge case fix continue after rollback
+* parse_for_layering_show
+* remove extensions and add new hook generator
+* show configset layering
+* update dsl_evaluator dependency to at least 0.3.0
+* version structure check
+
 ## [8.0.0.rc3] - 2022-03-06
 
 * lono files support for lambda functions
