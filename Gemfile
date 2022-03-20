@@ -3,4 +3,6 @@ source "https://rubygems.org"
 # Specify your gem dependencies in lono.gemspec
 gemspec
 
-gem "codeclimate-test-reporter", group: :test, require: nil
+group :test do
+  gem "rspec-lono", git: "https://github.com/boltops-tools/rspec-lono", branch: "master"
+end

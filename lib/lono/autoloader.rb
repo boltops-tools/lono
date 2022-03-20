@@ -1,5 +1,5 @@
-require "lono/bundle"
-Lono::Bundle.setup
+require "lono/bundler"
+Lono::Bundler.setup
 require "zeitwerk"
 
 module Lono
@@ -17,6 +17,7 @@ module Lono
         loader.inflector = Inflector.new
         loader.push_dir(File.dirname(__dir__)) # lib
         loader.log! if ENV["LONO_AUTOLOAD_LOG"]
+        loader.ignore("#{__dir__}/ext.rb")
         loader.setup
       end
     end

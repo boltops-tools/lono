@@ -1,8 +1,8 @@
 module Lono::Utils
   module Sure
     def sure?(message, desc=nil)
-      if @options[:sure]
-        sure = 'y'
+      if @options[:yes]
+        yes = 'y'
       else
         out = message
         if desc
@@ -11,10 +11,10 @@ module Lono::Utils
           out += " (y/N) "
         end
         print out
-        sure = $stdin.gets
+        yes = $stdin.gets
       end
 
-      unless sure =~ /^y/
+      unless yes =~ /^y/
         puts "Whew! Exiting."
         exit 0
       end

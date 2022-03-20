@@ -1,1 +1,0 @@
-InstanceType=t2.small

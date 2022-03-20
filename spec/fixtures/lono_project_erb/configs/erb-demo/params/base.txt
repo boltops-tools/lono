@@ -1,3 +1,0 @@
-Ami=<%= @ami %>
-InstanceType=t2.micro
-KeyName=default

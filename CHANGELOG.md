@@ -1,7 +1,81 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-This project *tries* to adhere to [Semantic Versioning](http://semver.org/), even before v1.0.
+## [8.0.0.rc4] - 2022-03-19
+
+Notable:
+
+* lono app and role concept
+* extra layering support
+* hooks support: project and blueprint level
+
+Misc:
+
+* add lono bucket output
+* alias blueprint with -b
+* change params extension to .env
+* config.hooks.show = true default
+* config.layering.show = true option
+* extra layering support
+* github templates
+* improve simplier new helper cli interface
+* improve squeezer: edge case Array with nil elements
+* hooks generator
+* lambda layer
+* layering full mode default
+* lazy create lono stack and lono bucket
+* lono extra support
+* lono iam
+* lono summary
+* lono up: edge case fix continue after rollback
+* parse_for_layering_show
+* remove extensions and add new hook generator
+* show configset layering
+* update dsl_evaluator dependency to at least 0.3.0
+* version structure check
+
+## [8.0.0.rc3] - 2022-03-06
+
+* lono files support for lambda functions
+  * new structure: remove Appfile
+  * allow regions and envs support
+  * print friend message with exact line of yaml code in case of aws
+  * cloudformation yaml validation error
+  * improve cli help
+* configsets new structure
+  * lono new helper blueprint and project commands
+  * project helpers support
+  * include_modules improvements
+  * support vendor level helpers
+  * improve plan params diff
+* lono plan build all first
+
+## [8.0.0.rc2] - 2022-02-23
+
+* restructure builder and helpers
+* improve template_evaluation_error
+* lono seed --where option and config.seed.where
+* return nil when output not found
+* setup configsets finalizer
+* template_file helper
+* fix coder
+* lono s3 bucket auto-creation
+
+## [8.0.0.rc1] - 2022-02-21
+
+* v8 cleaner and simplier interface
+* commands: lono up, down, bundle, list, new, output, plan
+* conventional stack name
+* lono new generators
+* improve lono plan previews
+* improve layering
+* boot hooks
+* change default env to dev
+* app config support: config.names.stack, etc
+* change --sure to --yes option
+* remove core settings in favor of config/app.rb
+* logger support
+* remove docs. move to separate repo
+* plugin system and test framework
 
 ## [7.5.2] - 2022-02-08
 - [#74](https://github.com/boltops-tools/lono/pull/74) activesupport require fix
@@ -137,7 +211,7 @@ This project *tries* to adhere to [Semantic Versioning](http://semver.org/), eve
 ## [6.1.9]
 - #30 fix md5 sum calcuation for single file
 - #31 Add app files ERB support docs
-- options `--sure` and `--iam` add `CAPABILITY_AUTO_EXPAND` for serverless transform
+- options `-y` and `--iam` add `CAPABILITY_AUTO_EXPAND` for serverless transform
 
 ## [6.1.8]
 - #28 add user_data_script helper
@@ -243,7 +317,7 @@ This project *tries* to adhere to [Semantic Versioning](http://semver.org/), eve
 
 ## [5.2.2]
 - seed only support params for main conventional template in blueprint
-- set --iam with --sure option also
+- set --iam with -y option also
 
 ## [5.2.1]
 - improve param lookup
@@ -265,7 +339,7 @@ This project *tries* to adhere to [Semantic Versioning](http://semver.org/), eve
 ## [5.0.1]
 - Introduce lono DSL and set as default mode
 - Introduce blueprints concept
-- Introduce lono cfn deploy command
+- Introduce lono up command
 - Auto-create lono managed s3 bucket
 - Zeitwerk autoloader
 - Restructure project structure

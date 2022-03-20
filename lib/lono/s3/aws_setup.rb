@@ -1,12 +1,13 @@
-class Lono::S3
+module Lono::S3
   class AwsSetup
     include Lono::AwsServices
+    include Lono::Utils::Logging
 
     def check!
       s3.config.region
     rescue Aws::Errors::MissingRegionError => e
-      puts "ERROR: #{e.class}: #{e.message}".color(:red)
-      puts <<~EOL
+      logger.info "ERROR: #{e.class}: #{e.message}".color(:red)
+      logger.info <<~EOL
         Unable to detect the AWS_REGION to make AWS API calls. This is might be because the AWS access
         has not been set up yet. Please either your ~/.aws files.
       EOL

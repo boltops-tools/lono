@@ -1,16 +1,17 @@
 module Lono
-  class Configset < Command
-    long_desc Help.text("configset/new")
-    New.cli_options.each do |args|
-      option(*args)
+  class Configset < Component
+    attr_reader :resource
+    attr_accessor :metadata
+    def initialize(options={})
+      super
+      @resource = options[:resource]
     end
-    register(New, "new", "new NAME", "Generates new lono configset.")
 
-    desc "generate", "Generate configset from DSL"
-    long_desc Help.text(:generate)
-    option :resource, default: "PretendResource", desc: "Set the @resource instance variable availalbe in the configset"
-    def generate(configset)
-      Generator.new(options.merge(configset: configset, cli: true)).run
+    def path
+      return unless root
+      exts = %w[rb yml json] # rb highest precedence
+      paths = exts.map { |ext| "#{root}/configset.#{ext}" }
+      paths.find { |p| File.exist?(p) }
     end
   end
 end
