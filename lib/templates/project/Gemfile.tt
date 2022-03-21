@@ -2,10 +2,5 @@ source "https://rubygems.org"
 
 # gem "lono", "~> <%= Lono::VERSION %>"
 
-if ENV['C9_USER']
-  gem "lono", path: "~/boltops-tools/lono"
-  gem "rspec-lono", path: "~/boltops-tools/rspec-lono"
-else
-  gem "lono", git: "https://github.com/boltops-tools/lono", branch: "v8"
-  gem "rspec-lono", git: "https://github.com/boltops-tools/rspec-lono", branch: "master"
-end
+gem "lono", git: "https://github.com/boltops-tools/lono", branch: "master"
+gem "rspec-lono", git: "https://github.com/boltops-tools/rspec-lono", branch: "master"
