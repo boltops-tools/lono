@@ -1,6 +1,7 @@
 module Lono::Builder::Dsl::Helpers
   module TemplateFile
     extend Memoist
+    include Lono::Utils::CallLine
     include Lono::Utils::Pretty
 
     def template_file(path)
@@ -18,32 +19,23 @@ module Lono::Builder::Dsl::Helpers
     #   windows: "C:/Ruby31-x64/lib/ruby/gems/3.1.0/gems/lono-1.1.1/lib/lono/builder.rb:34:in `build'"
     #   linux: "/home/ec2-user/.rvm/gems/ruby-3.0.3/gems/lono-1.1.1/lib/lono/compiler/dsl/syntax/mod.rb:4:in `<module:Mod>'"
     #
-    class TempleFileNotFoundError < StandardError; end
     def template_file_missing(path)
-      message = "ERROR: path #{pretty_path(path)} not found"
-      caller_line = caller.find { |l| l =~ %r{/blueprints/} }
-      logger.error message.color(:red)
-      logger.error "Called from:"
-      logger.error "    #{pretty_path(caller_line)}"
-      # Raise an error so Dsl::Evaluator#template_evaluation_error provides user friendly info
-      raise TempleFileNotFoundError.new
+      logger.warn "WARN: File path not found: #{pretty_path(path)}".color(:yellow)
+      call_line = lono_call_line
+      DslEvaluator.print_code(call_line) # returns true right now
+      ""
     end
 
     def render_file(path)
       if File.exist?(path)
         RenderMePretty.result(path, context: self)
       else
-        lines = caller.select { |l| l.include?(Lono.root.to_s) }
-        caller_line = pretty_path(lines.first)
-        message =<<~EOL
-          WARN: #{pretty_path(path)} does not exist
-          Called from: #{caller_line}
-        EOL
-        logger.info message.color(:yellow)
-        message
+        template_file_missing(path)
       end
     end
     alias_method :render_path, :render_file
+    alias_method :user_data, :render_file
+    alias_method :content, :render_file
 
     def user_data_script
       unless @user_data_script
@@ -53,14 +45,7 @@ module Lono::Builder::Dsl::Helpers
           # Also, make sure that "#{script_example}" exists.
         EOL
       end
-
-      if File.exist?(@user_data_script)
-        render_file(@user_data_script)
-      else
-        message = "WARN: #{@user_data_script} not found"
-        logger.info message.color(:yellow)
-        "# #{message}"
-      end
+      user_data(@user_data_script)
     end
   end
 end
