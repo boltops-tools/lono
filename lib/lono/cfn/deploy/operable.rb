@@ -3,7 +3,7 @@ class Lono::Cfn::Deploy
     def check!
       status = stack_status
       unless status =~ /_COMPLETE$/ || status == "UPDATE_ROLLBACK_FAILED"
-        logger.info "Cannot create run operation on stack #{@stack} is not in an updatable state.  Stack status: #{status}".color(:red)
+        logger.info "Cannot run operation on stack #{@stack} is not in an updatable state.  Stack status: #{status}".color(:red)
         quit 1
       end
     end

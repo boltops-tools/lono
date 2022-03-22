@@ -4,15 +4,20 @@ module Lono::Builder::Dsl::Helpers
     include Lono::Utils::CallLine
     include Lono::Utils::Pretty
 
+    # Do not memoize :template_file - it'll hide the template_file_missing error
     def template_file(path)
-      path = "#{@blueprint.root}/#{path}"
+      path = "#{@blueprint.root}/#{path}" unless path.starts_with?('/')
       if File.exist?(path)
-        render_file(path)
+        RenderMePretty.result(path, context: self)
       else
         template_file_missing(path)
       end
     end
-    # do not memoize :template_file - it'll hide the template_file_missing error
+    alias_method :render_file, :template_file
+    alias_method :render_path, :template_file
+    alias_method :user_data, :template_file
+    alias_method :content, :template_file
+
 
     # Caller lines are different for OSes:
     #
@@ -26,26 +31,18 @@ module Lono::Builder::Dsl::Helpers
       ""
     end
 
-    def render_file(path)
-      if File.exist?(path)
-        RenderMePretty.result(path, context: self)
-      else
-        template_file_missing(path)
-      end
-    end
-    alias_method :render_path, :render_file
-    alias_method :user_data, :render_file
-    alias_method :content, :render_file
-
     def user_data_script
-      unless @user_data_script
-        script_example = pretty_path("#{@blueprint.root}/template/user_data.sh")
+      path = @user_data_script || @user_data_script_path
+      unless path
+        # script_example = pretty_path("#{@blueprint.root}/template/bootstrap.sh")
+        script_example = "bootstrap.sh"
         return <<~EOL
-          # @user_data_script variable not set. IE: @user_data_script = "#{script_example}"
+          # @user_data_script_path variable not set. IE: @user_data_script_path = "#{script_example}"
           # Also, make sure that "#{script_example}" exists.
         EOL
       end
-      user_data(@user_data_script)
+      user_data(path)
     end
+    alias_method :user_data_script_path, :user_data_script
   end
 end
