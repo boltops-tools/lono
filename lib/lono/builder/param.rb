@@ -2,10 +2,12 @@ class Lono::Builder
   class Param < Lono::CLI::Base
     attr_reader :env_path, :base_path # set when build is called
     include Lono::Builder::Dsl::Syntax
+    include Lono::Builder::Context
     # Overriding output resource DSL method
     alias_method :output, :stack_output
 
     def build
+      load_context
       logger.info "Building parameters"
 
       contents = []

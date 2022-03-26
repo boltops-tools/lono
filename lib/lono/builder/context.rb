@@ -3,8 +3,8 @@ class Lono::Builder
     include DslEvaluator
 
     def load_context
+      load_helpers # load helpers before variable so user custom helpers are available in vars files
       load_variables
-      load_helpers
     end
 
     # Variables in base.rb are overridden by their environment specific variables
