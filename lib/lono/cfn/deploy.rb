@@ -59,7 +59,6 @@ module Lono::Cfn
       opts = Opts.new(@blueprint, "create_stack", iam, options)
       opts.show
       options = opts.values
-      upload_all
       cfn.create_stack(options)
     end
 
@@ -70,31 +69,9 @@ module Lono::Cfn
       end
 
       operable.check!
-      upload_all # important to call before plan.for_update.
-      # plan.for_update creates the changeset and requires the template to already be uploaded to s3
       changeset = plan.for_update
       !changeset.changed? || @sure || sure?("Are you sure you want to update the #{@stack} stack?")
       changeset.execute_change_set
-    end
-
-    def upload_all
-      upload_templates
-      upload_files
-    end
-
-    def upload_templates
-      Lono::Builder::Template::Upload.new(@options).run
-    end
-
-    # Upload files right before create_stack or execute_change_set
-    # Its better to upload here as part of a deploy vs a build
-    # IE: lono build should try not to do a remote write to s3 if possible
-    def upload_files
-      # Files built and compressed in
-      #     Lono::Builder::Dsl::Finalizer::Files::Build#build_files
-      Lono::Files.files.each do |file| # using singular file, but is like a "file_list"
-        file.upload
-      end
     end
 
     def create?
