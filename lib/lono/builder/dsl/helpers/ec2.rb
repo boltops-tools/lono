@@ -2,12 +2,25 @@ module Lono::Builder::Dsl::Helpers
   module Ec2
     extend Memoist
 
+    # Returns vpc object
+    def vpc(name)
+      filters = name == "default" ?
+                [name: "isDefault", values: ["true"]] :
+                [name: "tag:Name", values: [name]]
+      resp = ec2.describe_vpcs(filters: filters)
+      resp.vpcs.first
+    end
+    memoize :vpc
+
     def default_vpc
-      resp = ec2.describe_vpcs(filters: [name: "isDefault", values: ["true"]])
-      vpc = resp.vpcs.first
+      vpc = vpc("default")
       vpc ? vpc.vpc_id : "no default vpc found"
     end
-    memoize :default_vpc
+
+    def default_vpc_cidr
+      vpc = vpc("default")
+      vpc.cidr_block
+    end
 
     def default_subnets
       return "no default subnets because no default vpc found" if default_vpc == "no default vpc found"
