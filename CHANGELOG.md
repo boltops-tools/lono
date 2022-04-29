@@ -1,5 +1,13 @@
 # Change Log
 
+## [8.0.0.rc5] - 2022-04-29
+
+* #76 fix plan: upload template to s3
+* #75 user_data helper improvements
+* Improve lono error reported to use with better call line backtrace
+* load helpers before variables so they're available in vars files
+* vpc helper returns object
+
 ## [8.0.0.rc4] - 2022-03-19
 
 Notable:
