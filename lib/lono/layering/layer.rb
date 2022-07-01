@@ -77,7 +77,7 @@ module Lono::Layering
     # Interface method: layers = pre_layers + main_layers + post_layers
     # Simple layering is default. Can set with:
     #
-    #      config.layering.mode = "simple" # simple of full
+    #      config.layering.mode = "simple" # simple or full
     #
     def main_layers
       if Lono.config.layering.mode == "simple"
@@ -120,7 +120,6 @@ module Lono::Layering
           logger.info "    #{pretty_path(path)}" if File.exist?(path)
         end
       end
-      logger.debug ""
       @@shown_layers[@type] = true
     end
 
