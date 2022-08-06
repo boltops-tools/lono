@@ -66,9 +66,9 @@ output("Instance")
 output("SecurityGroup", get_att("SecurityGroup.GroupId"))
 ```
 
-### Lono Cfn Deploy
+### Lono Up
 
-Lono provides a `lono cfn` lifecycle command that allows you to launch stacks quickly.  The `lono up` generates and launches the CloudFormation stack.  If you are in a lono project and have a `demo` lono blueprint.  To create a stack run:
+The `lono up` command deploys the CloudFormation stack.
 
     $ lono up demo
 
