@@ -108,6 +108,12 @@ module Lono::Builder::Dsl::Syntax
 
     def join(delimiter, *list)
       list = list.flatten
+      if list.size == 1 # IE: join(",", get_att("Vpc.Ipv6CidrBlocks"))
+        first = list.first
+        if first.is_a?(Hash) && first.keys.first == "Fn::GetAtt"
+          list = first
+        end
+      end
       { "Fn::Join" => [delimiter, list] }
     end
 
