@@ -26,7 +26,9 @@ class Object
       #     path:        app/blueprints/demo/helpers/outputs.rb
       #     module_name: Outputs
       require path
-      self.class.send :include, module_name.constantize
+      if path.include?("_helper.rb")
+        self.class.send :include, module_name.constantize
+      end
     end
   end
 end
