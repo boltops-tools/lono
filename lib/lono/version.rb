@@ -1,3 +1,3 @@
 module Lono
-  VERSION = "8.0.0-rc5"
+  VERSION = "8.0.0-rc6"
 end

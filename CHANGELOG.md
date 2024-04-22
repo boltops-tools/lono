@@ -1,5 +1,10 @@
 # Change Log
 
+## [8.0.0.rc6] - 2024-04-22
+
+*  allow require files in helpers folder that are not helpers
+* join with single item list that uses get_att
+
 ## [8.0.0.rc5] - 2022-04-29
 
 * #76 fix plan: upload template to s3
